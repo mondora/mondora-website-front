@@ -1,5 +1,16 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+.mnd-content{
+	position:relative;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+}
 #mnd-video-background {
-	position: fixed;
+	position: absolute;
 	height: 100%;
 	width: 100%;
 	z-index: -1;
@@ -20,14 +31,14 @@
 	z-index: -10;
 }
 #mnd-fixed-position {
-	position: fixed;
+	position: absolute;
 	height: 100%;
 	width: 100%;
 	overflow: scroll;
 }
 #mnd-sprinkle-container {
 	position: absolute;
-	width: 600px;
+	width: 620px;
 	padding: 0px;
 	margin-left: -350px;
 	margin-top: -50px;
@@ -38,7 +49,7 @@
 #mnd-hidden-payoff {
 	position: absolute;
 	width: 100%;
-	z-index: -1;
+	z-index: 10;
 	margin-left: -50px;
 	padding-top: 30px;
 	color: #fff;
@@ -81,9 +92,20 @@
 	margin-right: 10px;
 }
 #mnd-home-banner-content {
-	height: 140px;
+	height: 130px;
 	width: 300px;
+	padding: 0 10px;
 	background-color: rgba(0, 0, 0, 0.5);
+	overflow: scroll;
+	color: #fff;
+	line-height: 5px;
+}
+#mnd-home-banner-content h1{
+	text-transform: uppercase;
+	font-size: 30px;
+}
+#mnd-home-banner-content h2{
+	font-size: 20px;
 }
 #mnd-sign-in {
 	position: absolute;
