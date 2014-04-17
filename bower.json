@@ -1,0 +1,36 @@
+{
+  "name": "mnd-web",
+  "version": "0.1.0",
+  "authors": [
+    "Paolo Scanferla <paolo.scanferla@mondora.com>",
+    "Gabriel Cismondi <gabriel.cismondi@mondora.com>"
+  ],
+  "description": "Mondora website",
+  "main": "index.html",
+  "keywords": [
+    "mondora"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/mondora/mnd-web",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.10.0",
+    "angular-medium-editor": "*",
+    "angular-ui-router": "~0.2.10",
+    "angular": "~1.2.16",
+    "bootstrap": "~3.1.1",
+    "ddp.js": "~0.3.2",
+    "fontawesome": "~4.0.3",
+    "mnd-dashboard": "~0.1.2",
+    "mnd-sprinkle": "~0.1.2",
+    "ng-asteroid": "~0.1.0",
+    "medium-editor": "~1.8.0",
+    "asteroid": "~0.1.5"
+  }
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+bower update
+gulp buildVendor
