@@ -9,7 +9,6 @@ angular.module("mnd.web", [
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
-    //$urlRouterProvider.otherwise("/");
 
     $stateProvider.state("home", {
         url: "/",
@@ -28,6 +27,15 @@ angular.module("mnd.web", [
         templateUrl: "pages/post/edit/postEdit.html",
 		controller: "PostEditController"
     });
+
+    $stateProvider.state("postList", {
+        url: "/posts",
+        templateUrl: "pages/post/list/postList.html",
+		controller: "PostListController"
+    });
+
+
+    //$urlRouterProvider.otherwise("/");
 
 })
 
@@ -94,7 +102,7 @@ angular.module("mnd.web", [
 	options.ddpOptions = {
 		endpoint: "ws://localhost:3000/websocket",
 		SocketConstructor: WebSocket,
-		debug: true
+		//debug: true
 	};
 
 	var Rocket = new Asteroid(options);

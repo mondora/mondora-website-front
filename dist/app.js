@@ -9,7 +9,6 @@ angular.module('mnd.web', [
   '$stateProvider',
   '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
-    //$urlRouterProvider.otherwise("/");
     $stateProvider.state('home', {
       url: '/',
       templateUrl: 'pages/home/home.html',
@@ -25,6 +24,11 @@ angular.module('mnd.web', [
       templateUrl: 'pages/post/edit/postEdit.html',
       controller: 'PostEditController'
     });
+    $stateProvider.state('postList', {
+      url: '/posts',
+      templateUrl: 'pages/post/list/postList.html',
+      controller: 'PostListController'
+    });  //$urlRouterProvider.otherwise("/");
   }
 ]).run([
   '$rootScope',
@@ -87,8 +91,7 @@ angular.module('mnd.web', [
       };
     options.ddpOptions = {
       endpoint: 'ws://localhost:3000/websocket',
-      SocketConstructor: WebSocket,
-      debug: true
+      SocketConstructor: WebSocket
     };
     var Rocket = new Asteroid(options);
     Rocket.on('connected', function () {
@@ -129,51 +132,57 @@ angular.module('mnd.web').controller('PostEditController', [
   '$stateParams',
   function ($timeout, $scope, $interval, $stateParams) {
     var id;
-    $timeout(function () {
-      window.postsSubscription.then(function () {
-        $scope.$apply(function () {
-          id = $stateParams.postId;
-          $scope.post = $scope.Posts.db.get(id);
-        });
-      });
-      $scope.post = {};
-      $interval($scope.save, 10000);
-    }, 500);
+    var title = document.getElementById('postTitleEditor');
+    var subtitle = document.getElementById('postSubtitleEditor');
+    var body = document.getElementById('postBodyEditor');
     $scope.save = function () {
       var post = {
-          title: $scope.post.title,
-          subtitle: $scope.post.subtitle,
-          body: $scope.post.body
+          title: title.innerHTML,
+          subtitle: subtitle.innerHTML,
+          body: body.innerHTML
         };
       $scope.Posts._localMarkForUpdate(id, post);
       $scope.Posts._remoteUpdate(id, post);
     };
-    $scope.titleEditorOptions = JSON.stringify({
-      placeholder: 'Titolo',
-      disableToolbar: true,
-      forcePlainText: true,
-      disableReturn: true
-    });
-    $scope.subtitleEditorOptions = JSON.stringify({
-      placeholder: 'Sottotitolo',
-      disableToolbar: true,
-      forcePlainText: true,
-      disableReturn: true
-    });
-    $scope.bodyEditorOptions = JSON.stringify({
-      placeholder: 'Corpo',
-      buttons: [
-        'bold',
-        'italic',
-        'underline',
-        'anchor',
-        'header1',
-        'header2',
-        'quote',
-        'orderedlist',
-        'unorderedlist'
-      ]
-    });
+    var titleEditorOptions = {
+        placeholder: 'Titolo',
+        disableToolbar: true,
+        forcePlainText: true,
+        disableReturn: true
+      };
+    var subtitleEditorOptions = {
+        placeholder: 'Sottotitolo',
+        disableToolbar: true,
+        forcePlainText: true,
+        disableReturn: true
+      };
+    var bodyEditorOptions = {
+        placeholder: 'Corpo',
+        buttons: [
+          'bold',
+          'italic',
+          'underline',
+          'anchor',
+          'header1',
+          'header2',
+          'quote',
+          'orderedlist',
+          'unorderedlist'
+        ]
+      };
+    $timeout(function () {
+      window.postsSubscription.then(function () {
+        id = $stateParams.postId;
+        var post = $scope.Posts.db.get(id);
+        title.innerHTML = post.title || '';
+        new MediumEditor(title, titleEditorOptions);
+        subtitle.innerHTML = post.subtitle || '';
+        new MediumEditor(subtitle, subtitleEditorOptions);
+        body.innerHTML = post.body || '';
+        new MediumEditor(body, bodyEditorOptions);
+      });
+      $interval($scope.save, 5000);
+    }, 500);
   }
 ]);
 angular.module('mnd.web').controller('PostInsertController', [
@@ -189,5 +198,15 @@ angular.module('mnd.web').controller('PostInsertController', [
     } else {
       createAndGo();
     }
+  }
+]);
+angular.module('mnd.web').controller('PostListController', [
+  '$timeout',
+  '$scope',
+  '$collection',
+  function ($timeout, $scope, $collection) {
+    $timeout(function () {
+      $scope.posts = $scope.Posts.db.itemsArray;
+    }, 500);
   }
 ]);

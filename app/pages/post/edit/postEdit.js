@@ -1,37 +1,30 @@
 angular.module("mnd.web").controller("PostEditController", function ($timeout, $scope, $interval, $stateParams) {
 	var id;
-	$timeout(function () {
-		window.postsSubscription.then(function () {
-			$scope.$apply(function () {
-				id = $stateParams.postId;
-				$scope.post = $scope.Posts.db.get(id);
-			});
-		});
-		$scope.post = {};
-		$interval($scope.save, 10000);
-	}, 500);
+	var title = document.getElementById("postTitleEditor");
+	var subtitle = document.getElementById("postSubtitleEditor");
+	var body = document.getElementById("postBodyEditor");
 	$scope.save = function () {
 		var post = {
-			title: $scope.post.title,
-			subtitle: $scope.post.subtitle,
-			body: $scope.post.body
+			title: title.innerHTML,
+			subtitle: subtitle.innerHTML,
+			body: body.innerHTML
 		};
 		$scope.Posts._localMarkForUpdate(id, post);
 		$scope.Posts._remoteUpdate(id, post);
 	};
-	$scope.titleEditorOptions = JSON.stringify({
+	var titleEditorOptions = {
 		placeholder: "Titolo",
 		disableToolbar: true,
 		forcePlainText: true,
 		disableReturn: true
-	});
-	$scope.subtitleEditorOptions = JSON.stringify({
+	};
+	var subtitleEditorOptions = {
 		placeholder: "Sottotitolo",
 		disableToolbar: true,
 		forcePlainText: true,
 		disableReturn: true
-	});
-	$scope.bodyEditorOptions = JSON.stringify({
+	};
+	var bodyEditorOptions = {
 		placeholder: "Corpo",
 		buttons: [
 			"bold",
@@ -44,5 +37,18 @@ angular.module("mnd.web").controller("PostEditController", function ($timeout, $
 			"orderedlist",
 			"unorderedlist"
 		]
-	});
+	};
+	$timeout(function () {
+		window.postsSubscription.then(function () {
+			id = $stateParams.postId;
+			var post = $scope.Posts.db.get(id);
+			title.innerHTML = post.title || "";
+			new MediumEditor(title, titleEditorOptions);
+			subtitle.innerHTML = post.subtitle || "";
+			new MediumEditor(subtitle, subtitleEditorOptions);
+			body.innerHTML = post.body || "";
+			new MediumEditor(body, bodyEditorOptions);
+		});
+		$interval($scope.save, 5000);
+	}, 500);
 });
