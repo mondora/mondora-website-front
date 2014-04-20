@@ -46,16 +46,26 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
     '<div class="col-sm-8 col-sm-offset-2">\n' +
     '	<div id="post-img-upload">\n' +
+    '		<input type="file" ng-file-select="onFileSelect($files)" >\n' +
     '		<i class="fa fa-picture-o"></i>\n' +
     '	</div>\n' +
-    '	<!--\n' +
-    '	<h1 class="simplebox" ng-model="post.title" medium-editor options="{{titleEditorOptions}}"></h1>\n' +
-    '	<h3 class="simplebox" ng-model="post.subtitle" medium-editor options="{{subtitleEditorOptions}}"></h3>\n' +
-    '	<p class="simplebox" ng-model="post.body" medium-editor options="{{bodyEditorOptions}}"></p>\n' +
-    '	-->\n' +
     '	<h1 class="simplebox" id="postTitleEditor"></h1>\n' +
     '	<h3 class="simplebox" id="postSubtitleEditor"></h3>\n' +
     '	<p class="simplebox" id="postBodyEditor"></p>\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd.web');
+} catch (e) {
+  module = angular.module('mnd.web', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/post/insert/postInsert.html',
+    '<div class="col-sm-8 col-sm-offset-2">\n' +
     '</div>\n' +
     '');
 }]);
@@ -75,20 +85,6 @@ module.run(['$templateCache', function($templateCache) {
     '			<h4>Titolo: {{post.title}}</h4>\n' +
     '		</a>\n' +
     '	</div>\n' +
-    '</div>\n' +
-    '');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('mnd.web');
-} catch (e) {
-  module = angular.module('mnd.web', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/post/insert/postInsert.html',
-    '<div class="col-sm-8 col-sm-offset-2">\n' +
     '</div>\n' +
     '');
 }]);

@@ -65,6 +65,7 @@ gulp.task("vendorStyles", function () {
 
 gulp.task("vendorScripts", function () {
 	var sources = [
+		"bower_components/ng-file-upload/angular-file-upload.js",
 		"bower_components/mnd.multi-transclude/multi-transclude.js",
 		"bower_components/mnd-dashboard/dist/dashboard-tpls.js",
 		"bower_components/mnd-sprinkle/dist/sprinkle-tpls.js",

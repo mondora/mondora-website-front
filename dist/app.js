@@ -1,10 +1,22 @@
+(function () {
+  var options = {
+      host: 'http://localhost:3000',
+      do_not_autocreate_collections: true
+    };
+  options.ddpOptions = {
+    endpoint: 'ws://localhost:3000/websocket',
+    SocketConstructor: WebSocket
+  };
+  window.Rocket = new Asteroid(options);
+}());
 angular.module('mnd.web', [
   'ui.bootstrap',
   'ui.router',
   'mnd.sprinkle',
   'mnd.dashboard',
   'asteroid',
-  'angular-medium-editor'
+  'angular-medium-editor',
+  'angularFileUpload'
 ]).config([
   '$stateProvider',
   '$urlRouterProvider',
@@ -22,7 +34,12 @@ angular.module('mnd.web', [
     $stateProvider.state('postEdit', {
       url: '/post/:postId/edit',
       templateUrl: 'pages/post/edit/postEdit.html',
-      controller: 'PostEditController'
+      controller: 'PostEditController',
+      resolve: {
+        postSub: function () {
+          return Rocket.subscribe('posts');
+        }
+      }
     });
     $stateProvider.state('postList', {
       url: '/posts',
@@ -85,22 +102,10 @@ angular.module('mnd.web', [
         }
       ]
     };
-    var options = {
-        host: 'http://localhost:3000',
-        do_not_autocreate_collections: true
-      };
-    options.ddpOptions = {
-      endpoint: 'ws://localhost:3000/websocket',
-      SocketConstructor: WebSocket
-    };
-    var Rocket = new Asteroid(options);
-    Rocket.on('connected', function () {
-      Rocket.status = 'connected';
-      Rocket.subscribe('homeConfig');
-      window.postsSubscription = Rocket.subscribe('posts');
-    });
-    $rootScope.HomeConfig = new Asteroid.Collection('homeConfig', Rocket, Asteroid.DumbDb);
-    $rootScope.Posts = new Asteroid.Collection('posts', Rocket, Asteroid.DumbDb);
+    Rocket.subscribe('posts');
+    Rocket.subscribe('homeConfig');
+    $rootScope.HomeConfig = Rocket.createCollection('homeConfig');
+    $rootScope.Posts = Rocket.createCollection('posts');
     Rocket.on('login', function () {
       $rootScope.safeApply(function () {
         $rootScope.signedIn = true;
@@ -130,19 +135,26 @@ angular.module('mnd.web').controller('PostEditController', [
   '$scope',
   '$interval',
   '$stateParams',
-  function ($timeout, $scope, $interval, $stateParams) {
-    var id;
+  '$upload',
+  function ($timeout, $scope, $interval, $stateParams, $upload) {
+    var id = $stateParams.postId;
+    var post = $scope.Posts.db.get(id);
     var title = document.getElementById('postTitleEditor');
+    title.innerHTML = post.title || '';
+    new MediumEditor(title, titleEditorOptions);
     var subtitle = document.getElementById('postSubtitleEditor');
+    subtitle.innerHTML = post.subtitle || '';
+    new MediumEditor(subtitle, subtitleEditorOptions);
     var body = document.getElementById('postBodyEditor');
+    body.innerHTML = post.body || '';
+    new MediumEditor(body, bodyEditorOptions);
     $scope.save = function () {
       var post = {
           title: title.innerHTML,
           subtitle: subtitle.innerHTML,
           body: body.innerHTML
         };
-      $scope.Posts._localMarkForUpdate(id, post);
-      $scope.Posts._remoteUpdate(id, post);
+      $scope.Posts.update(id, post);
     };
     var titleEditorOptions = {
         placeholder: 'Titolo',
@@ -170,19 +182,32 @@ angular.module('mnd.web').controller('PostEditController', [
           'unorderedlist'
         ]
       };
-    $timeout(function () {
-      window.postsSubscription.then(function () {
-        id = $stateParams.postId;
-        var post = $scope.Posts.db.get(id);
-        title.innerHTML = post.title || '';
-        new MediumEditor(title, titleEditorOptions);
-        subtitle.innerHTML = post.subtitle || '';
-        new MediumEditor(subtitle, subtitleEditorOptions);
-        body.innerHTML = post.body || '';
-        new MediumEditor(body, bodyEditorOptions);
+    $scope.abort = function () {
+      $scope.imgUpload.abort();
+      delete $scope.imgUpload;
+    };
+    $scope.onFileSelect = function (files) {
+      var file = files[0];
+      var randomPrefix = Math.round(Math.random() * 10000000000000000);
+      var fileName = randomPrefix + '__' + file.name;
+      var uploadOptions = {
+          url: 'https://ngtest.s3.amazonaws.com/',
+          method: 'POST',
+          data: {
+            'key': fileName,
+            'acl': 'public-read',
+            'Content-Type': file.type
+          },
+          file: file
+        };
+      $scope.imgUpload = $upload.upload(uploadOptions).then(function (response) {
+        if (response.status === 204) {
+          console.log('Success!');
+        } else {
+          alert('Upload failed.');
+        }
       });
-      $interval($scope.save, 5000);
-    }, 500);
+    };  //$interval($scope.save, 5000);
   }
 ]);
 angular.module('mnd.web').controller('PostInsertController', [

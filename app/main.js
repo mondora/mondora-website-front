@@ -1,10 +1,24 @@
+(function () {
+	var options = {
+		host: "http://localhost:3000",
+		do_not_autocreate_collections: true
+	};
+	options.ddpOptions = {
+		endpoint: "ws://localhost:3000/websocket",
+		SocketConstructor: WebSocket,
+		//debug: true
+	};
+	window.Rocket = new Asteroid(options);
+})();
+
 angular.module("mnd.web", [
 	"ui.bootstrap",
 	"ui.router",
 	"mnd.sprinkle",
 	"mnd.dashboard",
 	"asteroid",
-	"angular-medium-editor"
+	"angular-medium-editor",
+	"angularFileUpload"
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -25,7 +39,12 @@ angular.module("mnd.web", [
     $stateProvider.state("postEdit", {
         url: "/post/:postId/edit",
         templateUrl: "pages/post/edit/postEdit.html",
-		controller: "PostEditController"
+		controller: "PostEditController",
+		resolve: {
+			postSub: function () {
+				return Rocket.subscribe("posts");
+			}
+		}
     });
 
     $stateProvider.state("postList", {
@@ -95,24 +114,11 @@ angular.module("mnd.web", [
         ]
     };
 
-	var options = {
-		host: "http://localhost:3000",
-		do_not_autocreate_collections: true
-	};
-	options.ddpOptions = {
-		endpoint: "ws://localhost:3000/websocket",
-		SocketConstructor: WebSocket,
-		//debug: true
-	};
 
-	var Rocket = new Asteroid(options);
-	Rocket.on("connected", function () {
-		Rocket.status = "connected";
-		Rocket.subscribe("homeConfig");
-		window.postsSubscription = Rocket.subscribe("posts");
-	});
-	$rootScope.HomeConfig = new Asteroid.Collection("homeConfig", Rocket, Asteroid.DumbDb);
-	$rootScope.Posts = new Asteroid.Collection("posts", Rocket, Asteroid.DumbDb);
+	Rocket.subscribe("posts");
+	Rocket.subscribe("homeConfig");
+	$rootScope.HomeConfig = Rocket.createCollection("homeConfig");
+	$rootScope.Posts = Rocket.createCollection("posts");
 	Rocket.on("login", function () {
 		$rootScope.safeApply(function () {
 			$rootScope.signedIn = true;

@@ -1,3 +1,244 @@
+/**!
+ * AngularJS file upload/drop directive with http post and progress
+ * @author  Danial  <danial.farid@gmail.com>
+ * @version 1.3.1
+ */
+(function() {
+	
+var angularFileUpload = angular.module('angularFileUpload', []);
+
+angularFileUpload.service('$upload', ['$http', '$timeout', function($http, $timeout) {
+	function sendHttp(config) {
+		config.method = config.method || 'POST';
+		config.headers = config.headers || {};
+		config.transformRequest = config.transformRequest || function(data, headersGetter) {
+			if (window.ArrayBuffer && data instanceof window.ArrayBuffer) {
+				return data;
+			}
+			return $http.defaults.transformRequest[0](data, headersGetter);
+		};
+
+		if (window.XMLHttpRequest.__isShim) {
+			config.headers['__setXHR_'] = function() {
+				return function(xhr) {
+					config.__XHR = xhr;
+					config.xhrFn && config.xhrFn(xhr);
+					xhr.upload.addEventListener('progress', function(e) {
+						if (config.progress) {
+							$timeout(function() {
+								if(config.progress) config.progress(e);
+							});
+						}
+					}, false);
+					//fix for firefox not firing upload progress end, also IE8-9
+					xhr.upload.addEventListener('load', function(e) {
+						if (e.lengthComputable) {
+							$timeout(function() {
+								if(config.progress) config.progress(e);
+							});
+						}
+					}, false);
+				}	
+			};
+		}
+
+		var promise = $http(config);
+
+		promise.progress = function(fn) {
+			config.progress = fn;
+			return promise;
+		};
+		promise.abort = function() {
+			if (config.__XHR) {
+				$timeout(function() {
+					config.__XHR.abort();
+				});
+			}
+			return promise;
+		};
+		promise.xhr = function(fn) {
+			config.xhrFn = fn;
+			return promise;
+		};
+		promise.then = (function(promise, origThen) {
+			return function(s, e, p) {
+				config.progress = p || config.progress;
+				var result = origThen.apply(promise, [s, e, p]);
+				result.abort = promise.abort;
+				result.progress = promise.progress;
+				result.xhr = promise.xhr;
+				return result;
+			};
+		})(promise, promise.then);
+		
+		return promise;
+	}
+
+	this.upload = function(config) {
+		config.headers = config.headers || {};
+		config.headers['Content-Type'] = undefined;
+		config.transformRequest = config.transformRequest || $http.defaults.transformRequest;
+		var formData = new FormData();
+		var origTransformRequest = config.transformRequest;
+		var origData = config.data;
+		config.transformRequest = function(formData, headerGetter) {
+			if (origData) {
+				if (config.formDataAppender) {
+					for (var key in origData) {
+						var val = origData[key];
+						config.formDataAppender(formData, key, val);
+					}
+				} else {
+					for (var key in origData) {
+						var val = origData[key];
+						if (typeof origTransformRequest == 'function') {
+							val = origTransformRequest(val, headerGetter);
+						} else {
+							for (var i = 0; i < origTransformRequest.length; i++) {
+								var transformFn = origTransformRequest[i];
+								if (typeof transformFn == 'function') {
+									val = transformFn(val, headerGetter);
+								}
+							}
+						}
+						formData.append(key, val);
+					}
+				}
+			}
+
+			if (config.file != null) {
+				var fileFormName = config.fileFormDataName || 'file';
+
+				if (Object.prototype.toString.call(config.file) === '[object Array]') {
+					var isFileFormNameString = Object.prototype.toString.call(fileFormName) === '[object String]'; 
+					for (var i = 0; i < config.file.length; i++) {
+						formData.append(isFileFormNameString ? fileFormName + i : fileFormName[i], config.file[i], config.file[i].name);
+					}
+				} else {
+					formData.append(fileFormName, config.file, config.file.name);
+				}
+			}
+			return formData;
+		};
+
+		config.data = formData;
+
+		return sendHttp(config);
+	};
+
+	this.http = function(config) {
+		return sendHttp(config);
+	}
+}]);
+
+angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($parse, $timeout) {
+	return function(scope, elem, attr) {
+		var fn = $parse(attr['ngFileSelect']);
+		elem.bind('change', function(evt) {
+			var files = [], fileList, i;
+			fileList = evt.target.files;
+			if (fileList != null) {
+				for (i = 0; i < fileList.length; i++) {
+					files.push(fileList.item(i));
+				}
+			}
+			$timeout(function() {
+				fn(scope, {
+					$files : files,
+					$event : evt
+				});
+			});
+		});
+		elem.bind('click', function(){
+			this.value = null;
+		});
+	};
+} ]);
+
+angularFileUpload.directive('ngFileDropAvailable', [ '$parse', '$timeout', function($parse, $timeout) {
+	return function(scope, elem, attr) {
+		if ('draggable' in document.createElement('span')) {
+			var fn = $parse(attr['ngFileDropAvailable']);
+			$timeout(function() {
+				fn(scope);
+			});
+		}
+	};
+} ]);
+
+angularFileUpload.directive('ngFileDrop', [ '$parse', '$timeout', function($parse, $timeout) {
+	return function(scope, elem, attr) {		
+		if ('draggable' in document.createElement('span')) {
+			var cancel = null;
+			var fn = $parse(attr['ngFileDrop']);
+			elem[0].addEventListener("dragover", function(evt) {
+				$timeout.cancel(cancel);
+				evt.stopPropagation();
+				evt.preventDefault();
+				elem.addClass(attr['ngFileDragOverClass'] || "dragover");
+			}, false);
+			elem[0].addEventListener("dragleave", function(evt) {
+				cancel = $timeout(function() {
+					elem.removeClass(attr['ngFileDragOverClass'] || "dragover");
+				});
+			}, false);
+			
+			var processing = 0;
+			function traverseFileTree(files, item) {
+				if (item.isDirectory) {
+					var dirReader = item.createReader();
+					processing++;
+					dirReader.readEntries(function(entries) {
+						for (var i = 0; i < entries.length; i++) {
+							traverseFileTree(files, entries[i]);
+						}
+						processing--;
+					});
+				} else {
+					processing++;
+		    	    item.file(function(file) {
+		    	    	processing--;
+		    	    	files.push(file);
+		    	    });
+	    	  }
+			}
+			
+			elem[0].addEventListener("drop", function(evt) {
+				evt.stopPropagation();
+				evt.preventDefault();
+				elem.removeClass(attr['ngFileDragOverClass'] || "dragover");
+				var files = [], items = evt.dataTransfer.items;
+				if (items && items.length > 0 && items[0].webkitGetAsEntry) {
+					for (var i = 0; i < items.length; i++) {
+						traverseFileTree(files, items[i].webkitGetAsEntry());
+					}
+				} else {
+					var fileList = evt.dataTransfer.files;
+					if (fileList != null) {
+						for (var i = 0; i < fileList.length; i++) {
+							files.push(fileList.item(i));
+						}
+					}
+				}
+				(function callback(delay) {
+					$timeout(function() {
+						if (!processing) {
+							fn(scope, {
+								$files : files,
+								$event : evt
+							});
+						} else {
+							callback(10);
+						}
+					}, delay || 0)
+				})();
+			}, false);
+		}
+	};
+} ]);
+
+})();
+
 angular.module("mnd.multi-transclude", [])
 
 .directive("mndMultiTransclude", function () {
@@ -2278,6 +2519,8 @@ return Q;
         this._onResultCallbacks  = {};
         this._onUpdatedCallbacks = {};
         this._events = {};
+		this._queue = [];
+		this.readyState = -1;
 		this._reconnect_count = 0;
 		this._reconnect_incremental_timer = 0;
         if (!options.do_not_autoconnect) this.connect();
@@ -2286,6 +2529,7 @@ return Q;
 
     DDP.prototype.connect = function () {
         this._socket = new this._SocketConstructor(this._endpoint);
+		this.readyState = 0;
         this._socket.onopen    = this._on_socket_open.bind(this);
         this._socket.onmessage = this._on_socket_message.bind(this);
         this._socket.onerror   = this._on_socket_error.bind(this);
@@ -2342,6 +2586,10 @@ return Q;
     };
 
     DDP.prototype._send = function (object) {
+		if (this.readyState !== 1 && object.msg !== "connect") {
+			this._queue.push(object);
+			return;
+		}
         var message;
         if (typeof EJSON === "undefined") {
             message = JSON.stringify(object);
@@ -2402,11 +2650,17 @@ return Q;
         this._emit("error", data);
     };
     DDP.prototype._on_connected = function (data) {
+		this.readyState = 1;
         this._reconnect_count = 0;
         this._reconnect_incremental_timer = 0;
         this._emit("connected", data);
+		var length = this._queue.length;
+		for (var i=0; i<length; i++) {
+			this._send(this._queue.shift());
+		}
     };
     DDP.prototype._on_failed = function (data) {
+		this.readyState = 4;
         this._emit("failed", data);
     };
     DDP.prototype._on_added = function (data) {
@@ -2420,10 +2674,12 @@ return Q;
     };
 
     DDP.prototype._on_socket_close = function () {
+		this.readyState = 4;
         this._emit("socket_close");
         if (this._autoreconnect) this._try_reconnect();
     };
     DDP.prototype._on_socket_error = function (e) {
+		this.readyState = 4;
         this._emit("socket_error", e);
         if (this._autoreconnect) this._try_reconnect();
     };
@@ -2470,8 +2726,26 @@ return Q;
 "use strict";
 
 function clone (obj) {
-	if (obj === null) return null;
-	return JSON.parse(JSON.stringify(obj));
+	if (typeof EJSON !== "undefined") {
+		return EJSON.clone(obj);
+	}
+	var type = typeof obj;
+	switch (type) {
+		case "undefined":
+		case "function":
+			return undefined;
+		case "string":
+		case "number":
+		case "boolean":
+			return obj;
+		case "object":
+			if (obj === null) {
+				return null;
+			}
+			return JSON.parse(JSON.stringify(obj));
+		default:
+			return;
+	}
 }
 
 var EventEmitter = function () {};
@@ -2531,6 +2805,7 @@ var Asteroid = function (options) {
 	this._ddpOptions.do_not_autoconnect = true;
 	this._do_not_autocreate_collections = options._do_not_autocreate_collections;
 	this.collections = {};
+	this.subscriptions = {};
 	this._init();
 };
 Asteroid.prototype = new EventEmitter();
@@ -2544,45 +2819,64 @@ Asteroid.prototype._init = function () {
 		self.ddp.sub("meteor.loginServiceConfiguration");
 		self._emit("connected");
 	});
-	self.ddp.on("added", self._onAdded.bind(self));
-	self.ddp.on("changed", self._onChanged.bind(self));
-	self.ddp.on("removed", self._onRemoved.bind(self));
+	self.ddp.on("added", function (data) {
+		self._onAdded(data);
+	});
+	self.ddp.on("changed", function (data) {
+		self._onChanged(data);
+	});
+	self.ddp.on("removed", function (data) {
+		self._onRemoved(data);
+	});
 	self.ddp.connect();
 };
 
 Asteroid.prototype._onAdded = function (data) {
-	var loginConfigCollectionName = "meteor_accounts_loginServiceConfiguration";
+	var alwaysAutocreate = [
+		"meteor_accounts_loginServiceConfiguration",
+		"users"
+	];
 	var cName = data.collection;
 	if (!this.collections[cName]) {
 		if (this._do_not_autocreate_collections) {
-			if (cName !== loginConfigCollectionName && cName !== "users") {
+			if (alwaysAutocreate.indexOf(cName) === -1) {
 				return;
 			}
 		}
-		new Asteroid.Collection(cName, this, Asteroid.DumbDb);
+		this.createCollection(cName);
 	}
 	var item = data.fields || {};
 	item._id = data.id;
-	this.collections[cName]._localInsert(item, true);
+	this.collections[cName]._remoteToLocalInsert(item);
 };
 
 Asteroid.prototype._onRemoved = function (data) {
-	if (!this.collections[data.collection]) return;
-	this.collections[data.collection]._localRemove(data.id);
+	if (this.collections[data.collection]) {
+		this.collections[data.collection]._remoteToLocalRemove(data.id);
+	}
 };
 
 Asteroid.prototype._onChanged = function (data) {
-	if (!this.collections[data.collection]) return;
+	if (!this.collections[data.collection]) {
+		return;
+	}
+	if (!data.fields) {
+		data.fields = {};
+	}
 	if (data.cleared) {
 		data.cleared.forEach(function (key) {
 			data.fields[key] = undefined;
 		});
 	}
-	this.collections[data.collection]._localUpdate(data.id, data.fields);
+	this.collections[data.collection]._remoteToLocalUpdate(data.id, data.fields);
 };
 
 Asteroid.prototype.subscribe = function (name /* , param1, param2, ... */) {
+	if (this.subscriptions[name]) {
+		return this.subscriptions[name];
+	}
 	var deferred = Q.defer();
+	this.subscriptions[name] = deferred.promise;
 	var params = Array.prototype.slice.call(arguments, 1);
 	this.ddp.sub(name, params, function (err, id) {
 		if (err) {
@@ -2591,7 +2885,7 @@ Asteroid.prototype.subscribe = function (name /* , param1, param2, ... */) {
 			deferred.resolve(id);
 		}
 	});
-	return deferred.promise;
+	return this.subscriptions[name];
 };
 
 Asteroid.prototype.unsubscribe = function (id) {
@@ -2618,145 +2912,192 @@ Asteroid.prototype.apply = function (method, params) {
 		updatedDeferred.resolve();
 	};
 	this.ddp.method(method, params, onResult, onUpdated);
-	return [resultDeferred.promise, updatedDeferred.promise];
+	return {
+		result: resultDeferred.promise,
+		updated: updatedDeferred.promise
+	};
 };
 
+Asteroid.prototype.createCollection = function (name) {
+	if (!this.collections[name]) {
+		this.collections[name] = new Collection(name, this, DumbDb);
+	}
+	return this.collections[name];
+};
+
+// Collection class constructor definition
 var Collection = function (name, asteroidRef, DbConstructor) {
 	this.name = name;
 	this.asteroid = asteroidRef;
-	this.asteroid.collections[name] = this;
 	this.db = new DbConstructor();
 };
 Collection.prototype = new EventEmitter();
 Collection.prototype.constructor = Collection;
 
-Collection.prototype._localInsert = function (item, fromRemote) {
+
+
+// Insert-related private and public methods
+Collection.prototype._localToLocalInsert = function (item) {
 	var existing = this.db.get(item._id);
-	if (fromRemote && isEqual(existing, item)) return;
-	if (!fromRemote && existing) throw new Error("Item exists.");
+	if (existing) {
+		throw new Error("Item exists");
+	}
 	this.db.set(item._id, item);
-	this._emit("change");
+	this._emit("insert", item._id);
 };
-Collection.prototype._remoteInsert = function (item) {
+Collection.prototype._remoteToLocalInsert = function (item) {
+	var existing = this.db.get(item._id);
+	if (isEqual(existing, item)) {
+		return;
+	}
+	this.db.set(item._id, item);
+	this._emit("insert", item._id);
+};
+Collection.prototype._restoreInserted = function (id) {
+	self.db.del(id);
+	self._emit("restore", id);
+};
+Collection.prototype._localToRemoteInsert = function (item) {
 	var self = this;
+	var deferred = Q.defer();
 	var methodName = "/" + self.name + "/insert";
 	this.asteroid.ddp.method(methodName, [item], function (err, res) {
 		if (err) {
-			self._localRemove(item._id);
-			throw err;
+			self._restoreInserted(item._id);
+			deferred.reject(err);
+		} else {
+			deferred.resolve(res);
 		}
 	});
+	return deferred.promise;
 };
 Collection.prototype.insert = function (item) {
-	if (!item._id) item._id = guid();
-	this._localInsert(item, false);
-	this._remoteInsert(item);
-	return item._id;
+	if (!item._id) {
+		item._id = guid();
+	}
+	this._localToLocalInsert(item, false);
+	return this._localToRemoteInsert(item);
 };
 
-var removal_suffix = "__del__";
-Collection.prototype._localRemove = function (id) {
+
+
+// Remove-related private and public methods
+var mf_removal_suffix = "__del__";
+Collection.prototype._localToLocalRemove = function (id) {
+	var existing = this.db.get(id);
+	if (!existing) {
+		console.warn("Item not present.");
+		return;
+	}
+	this.db.set(id + mf_removal_suffix, existing);
+	this.db.del(id);
+	this._emit("remove", id);
+};
+Collection.prototype._remoteToLocalRemove = function (id) {
 	var existing = this.db.get(id);
 	if (!existing) {
 		console.warn("Item not present.");
 		return;
 	}
 	this.db.del(id);
-	this.db.del(id + removal_suffix);
-	this._emit("change");
+	this.db.del(id + mf_removal_suffix);
+	this._emit("remove", id);
 };
-Collection.prototype._localRestoreRemoved = function (id) {
-	var existing = this.db.get(id + removal_suffix);
-	this.db.set(id, existing);
-	this.db.del(id + removal_suffix);
-	this._emit("change");
+Collection.prototype._restoreRemoved = function (id) {
+	var backup = this.db.get(id + mf_removal_suffix);
+	this.db.set(id, backup);
+	this.db.del(id + mf_removal_suffix);
+	this._emit("restore", id);
 };
-Collection.prototype._localMarkForRemoval = function (id) {
-	var existing = this.db.get(id);
-	if (!existing) {
-		console.warn("Item not present.");
-		return;
-	}
-	this.db.set(id + removal_suffix, existing);
-	this.db.del(id);
-	this._emit("change");
-};
-Collection.prototype._remoteRemove = function (id) {
+Collection.prototype._localToRemoteRemove = function (id) {
 	var self = this;
+	var deferred = Q.defer();
 	var methodName = "/" + self.name + "/remove";
 	this.asteroid.ddp.method(methodName, [{_id: id}], function (err, res) {
 		if (err) {
-			self._localRestoreRemoved(id);
-			throw err;
+			self._restoreRemoved(id);
+			deferred.reject(err);
+		} else {
+			deferred.resolve(res);
 		}
 	});
+	return deferred.promise;
 };
 Collection.prototype.remove = function (id) {
-	this._localMarkForRemoval(id);
-	this._remoteRemove(id);
+	this._localToLocalRemove(id);
+	return this._localToRemoteRemove(id);
 };
 
-var update_suffix = "__upd__";
-Collection.prototype._localUpdate = function (id, fields) {
+
+
+// Update-related private and public methods
+var mf_update_suffix = "__upd__";
+Collection.prototype._localToLocalUpdate = function (id, item) {
 	var existing = this.db.get(id);
 	if (!existing) {
-		console.warn("Item not present.");
+		throw new Error("Item not present");
+	}
+	this.db.set(id + mf_update_suffix, existing);
+	this.db.set(id, item);
+	this._emit("update", id);
+};
+Collection.prototype._remoteToLocalUpdate = function (id, fields) {
+	var existing = this.db.get(id);
+	if (!existing) {
+		console.warn("Item not present");
 		return;
 	}
 	for (var field in fields) {
 		existing[field] = fields[field];
 	}
 	this.db.set(id, existing);
-	this.db.del(id + update_suffix);
-	this._emit("change");
+	this.db.del(id + mf_update_suffix);
+	this._emit("update", id);
 };
-Collection.prototype._localRestoreUpdated = function (id) {
-	var existing = this.db.get(id + update_suffix);
-	this.db.set(id, existing);
-	this.db.del(id + update_suffix);
-	this._emit("change");
+Collection.prototype._restoreUpdated = function (id) {
+	var backup = this.db.get(id + mf_update_suffix);
+	this.db.set(id, backup);
+	this.db.del(id + mf_update_suffix);
+	this._emit("restore", id);
 };
-Collection.prototype._localMarkForUpdate = function (id, item) {
-	var existing = this.db.get(id);
-	if (!existing) {
-		console.warn("Item not present.");
-		return;
-	}
-	this.db.set(id + update_suffix, existing);
-	this.db.set(id, item);
-	this._emit("change");
-};
-Collection.prototype._remoteUpdate = function (id, item) {
+Collection.prototype._localToRemoteUpdate = function (id, item) {
 	var self = this;
 	var methodName = "/" + self.name + "/update";
-	this.asteroid.ddp.method(methodName, [{_id: id}, {$set: item}], function (err, res) {
+	var sel = {
+		_id: id
+	};
+	var mod = {
+		$set: item
+	};
+	this.asteroid.ddp.method(methodName, [sel, mod], function (err, res) {
 		if (err) {
-			self._localRestoreUpdated(id);
-			throw err;
+			self._restoreUpdated(id);
+			deferred.reject(err);
+		} else {
+			deferred.resolve(res);
 		}
 	});
+	return deferred.promise;
 };
 Collection.prototype.update = function (id, item) {
-	this._localMarkForUpdate(id, item);
-	this._remoteUpdate(id, item);
+	this._localToLocalUpdate(id, item);
+	return this._localToRemoteUpdate(id, item);
 };
-
-Asteroid.Collection = Collection;
 
 var DumbDb = function () {
 	this.itemsHash = {};
 	this.itemsArray = [];
 };
+DumbDb.prototype.constructor = DumbDb;
 
 DumbDb.prototype.set = function (id, item) {
+	item = clone(item);
 	this.itemsHash[id] = item;
 	this.itemsArray.push(item);
 };
 
 DumbDb.prototype.get = function (id) {
-	if (this.itemsHash[id]) {
-		return clone(this.itemsHash[id]);
-	}
+	return clone(this.itemsHash[id]);
 };
 
 DumbDb.prototype.del = function (id) {
@@ -2811,11 +3152,19 @@ Asteroid.prototype._initOauthLogin = function (service, credentialToken, loginUr
 				}
 			};
 			self.ddp.method("login", [loginParameters], function (err, res) {
-				if (err) return deferred.reject();
-				self.userId = res.id;
-				localStorage[self._host + "__login_token__"] = res.token;
-				self._emit("login", res);
-				deferred.resolve(res.id);
+				if (err) {
+					delete self.userId;
+					delete self.loggedIn;
+					delete localStorage[self._host + "__login_token__"];
+					deferred.reject(err);
+					self._emit("loginError", err);
+				} else {
+					self.userId = res.id;
+					self.loggedIn = true;
+					localStorage[self._host + "__login_token__"] = res.token;
+					self._emit("login", res);
+					deferred.resolve(res.id);
+				}
 			});
 			return deferred.promise;
 		});
@@ -2824,7 +3173,9 @@ Asteroid.prototype._initOauthLogin = function (service, credentialToken, loginUr
 Asteroid.prototype._tryResumeLogin = function () {
 	var self = this;
 	var token = localStorage[self._host + "__login_token__"];
-	if (!token) return;
+	if (!token) {
+		return;
+	}
 	return Q()
 		.then(function () {
 			var deferred = Q.defer();
@@ -2832,18 +3183,21 @@ Asteroid.prototype._tryResumeLogin = function () {
 				resume: token
 			};
 			self.ddp.method("login", [loginParameters], function (err, res) {
-				if (err) return deferred.reject();
-				self.userId = res.id;
-				localStorage[self._host + "__login_token__"] = res.token;
-				self._emit("login", res);
-				deferred.resolve(res.id);
+				if (err) {
+					delete self.userId;
+					delete self.loggedIn;
+					delete localStorage[self._host + "__login_token__"];
+					self._emit("loginError", err);
+					deferred.reject(err);
+				} else {
+					self.userId = res.id;
+					self.loggedIn = true;
+					localStorage[self._host + "__login_token__"] = res.token;
+					self._emit("login", res);
+					deferred.resolve(res.id);
+				}
 			});
 			return deferred.promise;
-		})
-		.fail(function () {
-			self.userId = null;
-			delete localStorage[self._host + "__login_token__"];
-			self._emit("logout");
 		});
 };
 
@@ -2896,7 +3250,20 @@ Asteroid.prototype.loginWithTwitter = function (scope) {
 };
 
 Asteroid.prototype.logout = function () {
-	
+	var deferred = Q.defer();
+	self.ddp.method("logout", [], function (err, res) {
+		if (err) {
+			self._emit("logoutError", err);
+			deferred.reject(err);
+		} else {
+			delete self.userId;
+			delete self.loggedIn;
+			delete localStorage[self._host + "__login_token__"];
+			self._emit("logout", res);
+			deferred.resolve(res);
+		}
+	});
+	return deferred.promise;
 };
 
 return Asteroid;
