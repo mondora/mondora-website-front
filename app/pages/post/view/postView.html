@@ -1,0 +1,28 @@
+<img id="postViewTitleImage" ng-src="{{post.titleImageSource}}" />
+
+<div class="col-sm-12">
+	<div class="pull-right">
+		<br />
+		<button type="button" class="btn btn-default">
+			Salva nei preferiti
+		</button>
+		<button type="button" class="btn btn-default">
+			Condividi
+		</button>
+	</div>
+</div>
+
+<div id="postViewTitleSpacer"></div>
+
+<div>
+	<div class="col-sm-8 col-sm-offset-2">
+		<h1 ng-bind-html="post.title"></h1>
+		<h2 ng-bind-html="post.subtitle"></h2>
+	</div>
+</div>
+
+<div id="postViewBodySpacer"></div>
+
+<div class="col-sm-8 col-sm-offset-2">
+	<p ng-bind-html="post.body"></p>
+</div>

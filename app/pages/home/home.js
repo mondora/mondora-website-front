@@ -4,7 +4,7 @@ angular.module("mnd.web").controller("HomeController", function ($scope, $collec
 	$scope.text = lorem;
 
 	$scope.login = function () {
-		$scope.Rocket.loginWithTwitter();
+		$scope.Ceres.loginWithTwitter();
 	};
 
 });

@@ -1,0 +1,14 @@
+#postViewTitleImage {
+	position: absolute;
+	width: 100%;
+}
+
+#postViewTitleSpacer {
+	width: 100%;
+	height: 500px;
+}
+
+#postViewBodySpacer {
+	width: 100%;
+	height: 500px;
+}

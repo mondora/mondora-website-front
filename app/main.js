@@ -8,7 +8,7 @@
 		SocketConstructor: WebSocket,
 		//debug: true
 	};
-	window.Rocket = new Asteroid(options);
+	window.Ceres = new Asteroid(options);
 })();
 
 angular.module("mnd.web", [
@@ -17,8 +17,8 @@ angular.module("mnd.web", [
 	"mnd.sprinkle",
 	"mnd.dashboard",
 	"asteroid",
-	"angular-medium-editor",
-	"angularFileUpload"
+	"angularFileUpload",
+	"ngSanitize"
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -27,13 +27,34 @@ angular.module("mnd.web", [
     $stateProvider.state("home", {
         url: "/",
         templateUrl: "pages/home/home.html",
-		controller: "HomeController"
+		controller: "HomeController",
+		resolve: {
+			homeConfig: function () {
+				return Ceres.subscribe("homeConfig");
+			}
+		}
     });
 
     $stateProvider.state("postInsert", {
         url: "/post/insert",
         templateUrl: "pages/post/insert/postInsert.html",
-		controller: "PostInsertController"
+		controller: "PostInsertController",
+		resolve: {
+			postSub: function () {
+				return Ceres.subscribe("posts");
+			}
+		}
+    });
+
+    $stateProvider.state("postView", {
+        url: "/post/:postId",
+        templateUrl: "pages/post/view/postView.html",
+		controller: "PostViewController",
+		resolve: {
+			postSub: function () {
+				return Ceres.subscribe("posts");
+			}
+		}
     });
 
     $stateProvider.state("postEdit", {
@@ -42,7 +63,7 @@ angular.module("mnd.web", [
 		controller: "PostEditController",
 		resolve: {
 			postSub: function () {
-				return Rocket.subscribe("posts");
+				return Ceres.subscribe("posts");
 			}
 		}
     });
@@ -50,11 +71,15 @@ angular.module("mnd.web", [
     $stateProvider.state("postList", {
         url: "/posts",
         templateUrl: "pages/post/list/postList.html",
-		controller: "PostListController"
+		controller: "PostListController",
+		resolve: {
+			postSub: function () {
+				return Ceres.subscribe("posts");
+			}
+		}
     });
 
-
-    //$urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/");
 
 })
 
@@ -103,33 +128,29 @@ angular.module("mnd.web", [
                 items: [
                     {
                         title: "pomodoro",
-                        href: "http://reddit.com"
+                        href: "http://www.mondora.com"
                     },
                     {
                         title: "AaS",
-                        href: "http://xkcd.com"
+                        href: "http://www.mondora.com"
                     }
                 ]
             }
         ]
     };
 
-
-	Rocket.subscribe("posts");
-	Rocket.subscribe("homeConfig");
-	$rootScope.HomeConfig = Rocket.createCollection("homeConfig");
-	$rootScope.Posts = Rocket.createCollection("posts");
-	Rocket.on("login", function () {
+	$rootScope.Ceres = Ceres;
+	$rootScope.HomeConfig = Ceres.createCollection("homeConfig");
+	$rootScope.Posts = Ceres.createCollection("posts");
+	Ceres.on("login", function () {
 		$rootScope.safeApply(function () {
 			$rootScope.signedIn = true;
 		});
 	});
-	Rocket.on("logout", function () {
+	Ceres.on("logout", function () {
 		$rootScope.safeApply(function () {
 			$rootScope.signedIn = false;
 		});
 	});
-
-	$rootScope.Rocket = Rocket;
 
 });

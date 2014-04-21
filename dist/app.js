@@ -7,7 +7,7 @@
     endpoint: 'ws://localhost:3000/websocket',
     SocketConstructor: WebSocket
   };
-  window.Rocket = new Asteroid(options);
+  window.Ceres = new Asteroid(options);
 }());
 angular.module('mnd.web', [
   'ui.bootstrap',
@@ -15,8 +15,8 @@ angular.module('mnd.web', [
   'mnd.sprinkle',
   'mnd.dashboard',
   'asteroid',
-  'angular-medium-editor',
-  'angularFileUpload'
+  'angularFileUpload',
+  'ngSanitize'
 ]).config([
   '$stateProvider',
   '$urlRouterProvider',
@@ -24,12 +24,32 @@ angular.module('mnd.web', [
     $stateProvider.state('home', {
       url: '/',
       templateUrl: 'pages/home/home.html',
-      controller: 'HomeController'
+      controller: 'HomeController',
+      resolve: {
+        homeConfig: function () {
+          return Ceres.subscribe('homeConfig');
+        }
+      }
     });
     $stateProvider.state('postInsert', {
       url: '/post/insert',
       templateUrl: 'pages/post/insert/postInsert.html',
-      controller: 'PostInsertController'
+      controller: 'PostInsertController',
+      resolve: {
+        postSub: function () {
+          return Ceres.subscribe('posts');
+        }
+      }
+    });
+    $stateProvider.state('postView', {
+      url: '/post/:postId',
+      templateUrl: 'pages/post/view/postView.html',
+      controller: 'PostViewController',
+      resolve: {
+        postSub: function () {
+          return Ceres.subscribe('posts');
+        }
+      }
     });
     $stateProvider.state('postEdit', {
       url: '/post/:postId/edit',
@@ -37,15 +57,21 @@ angular.module('mnd.web', [
       controller: 'PostEditController',
       resolve: {
         postSub: function () {
-          return Rocket.subscribe('posts');
+          return Ceres.subscribe('posts');
         }
       }
     });
     $stateProvider.state('postList', {
       url: '/posts',
       templateUrl: 'pages/post/list/postList.html',
-      controller: 'PostListController'
-    });  //$urlRouterProvider.otherwise("/");
+      controller: 'PostListController',
+      resolve: {
+        postSub: function () {
+          return Ceres.subscribe('posts');
+        }
+      }
+    });
+    $urlRouterProvider.otherwise('/');
   }
 ]).run([
   '$rootScope',
@@ -92,31 +118,29 @@ angular.module('mnd.web', [
           items: [
             {
               title: 'pomodoro',
-              href: 'http://reddit.com'
+              href: 'http://www.mondora.com'
             },
             {
               title: 'AaS',
-              href: 'http://xkcd.com'
+              href: 'http://www.mondora.com'
             }
           ]
         }
       ]
     };
-    Rocket.subscribe('posts');
-    Rocket.subscribe('homeConfig');
-    $rootScope.HomeConfig = Rocket.createCollection('homeConfig');
-    $rootScope.Posts = Rocket.createCollection('posts');
-    Rocket.on('login', function () {
+    $rootScope.Ceres = Ceres;
+    $rootScope.HomeConfig = Ceres.createCollection('homeConfig');
+    $rootScope.Posts = Ceres.createCollection('posts');
+    Ceres.on('login', function () {
       $rootScope.safeApply(function () {
         $rootScope.signedIn = true;
       });
     });
-    Rocket.on('logout', function () {
+    Ceres.on('logout', function () {
       $rootScope.safeApply(function () {
         $rootScope.signedIn = false;
       });
     });
-    $rootScope.Rocket = Rocket;
   }
 ]);
 angular.module('mnd.web').controller('HomeController', [
@@ -126,68 +150,88 @@ angular.module('mnd.web').controller('HomeController', [
     var lorem = 'Quando tramite la tastiera modifichiamo il volume o regoliamo la luminosit\xe0 dello schermo, vediamo apparire delle semplici grafiche esplicative dell\'operazione. La stessa cosa non succede per\xf2 per il blocco maiuscole, per cui siamo costretti a guardare se la spia sul tasto \xe8 accesa o spenta. CapSee \xe8 una piccola app, compatibile con Mavericks e precedenti, che risolve questo inconveniente, mostrando una grafica in sovraimpressione.';
     $scope.text = lorem;
     $scope.login = function () {
-      $scope.Rocket.loginWithTwitter();
+      $scope.Ceres.loginWithTwitter();
     };
   }
 ]);
 angular.module('mnd.web').controller('PostEditController', [
-  '$timeout',
   '$scope',
   '$interval',
   '$stateParams',
   '$upload',
-  function ($timeout, $scope, $interval, $stateParams, $upload) {
+  function ($scope, $interval, $stateParams, $upload) {
+    ///////////////////////////
+    // Retrieve post to edit //
+    ///////////////////////////
     var id = $stateParams.postId;
-    var post = $scope.Posts.db.get(id);
+    $scope.post = $scope.Posts.db.get(id);
+    /////////////////////////
+    // Init medium editors //
+    /////////////////////////
     var title = document.getElementById('postTitleEditor');
-    title.innerHTML = post.title || '';
-    new MediumEditor(title, titleEditorOptions);
-    var subtitle = document.getElementById('postSubtitleEditor');
-    subtitle.innerHTML = post.subtitle || '';
-    new MediumEditor(subtitle, subtitleEditorOptions);
-    var body = document.getElementById('postBodyEditor');
-    body.innerHTML = post.body || '';
-    new MediumEditor(body, bodyEditorOptions);
-    $scope.save = function () {
-      var post = {
-          title: title.innerHTML,
-          subtitle: subtitle.innerHTML,
-          body: body.innerHTML
-        };
-      $scope.Posts.update(id, post);
-    };
+    title.innerHTML = $scope.post.title || '';
     var titleEditorOptions = {
         placeholder: 'Titolo',
         disableToolbar: true,
         forcePlainText: true,
         disableReturn: true
       };
+    new MediumEditor(title, titleEditorOptions);
+    var subtitle = document.getElementById('postSubtitleEditor');
+    subtitle.innerHTML = $scope.post.subtitle || '';
     var subtitleEditorOptions = {
         placeholder: 'Sottotitolo',
         disableToolbar: true,
         forcePlainText: true,
         disableReturn: true
       };
+    new MediumEditor(subtitle, subtitleEditorOptions);
+    var body = document.getElementById('postBodyEditor');
+    body.innerHTML = $scope.post.body || '';
     var bodyEditorOptions = {
         placeholder: 'Corpo',
+        buttonLabels: 'fontawesome',
         buttons: [
           'bold',
           'italic',
-          'underline',
           'anchor',
           'header1',
           'header2',
-          'quote',
-          'orderedlist',
-          'unorderedlist'
+          'quote'
         ]
       };
-    $scope.abort = function () {
-      $scope.imgUpload.abort();
-      delete $scope.imgUpload;
+    new MediumEditor(body, bodyEditorOptions);
+    /////////////////////
+    // Post publishing //
+    /////////////////////
+    $scope.publishPost = function () {
+      $scope.post.published = true;
+      $scope.save();
+    };
+    $scope.unpublishPost = function () {
+      $scope.post.published = false;
+      $scope.save();
+    };
+    //////////////////
+    // Image upload //
+    //////////////////
+    // Bind click on the image icon to the click on the (hidden) input element
+    $scope.clickFileInput = function () {
+      document.querySelector('#post-edit-image-upload input').click();
+    };
+    $scope.titleImageIsDisplayed = $scope.post.titleImageSource !== undefined;
+    $scope.abortUpload = function () {
+      $scope.uploadProgress = 0;
+      $scope.isUploading = false;
+      $scope.imageUpload.abort();
+      delete $scope.imageUpload;
     };
     $scope.onFileSelect = function (files) {
       var file = files[0];
+      if (!/image/g.test(file.type)) {
+        alert('Devi caricare un\'immagine.');
+        return;
+      }
       var randomPrefix = Math.round(Math.random() * 10000000000000000);
       var fileName = randomPrefix + '__' + file.name;
       var uploadOptions = {
@@ -200,29 +244,40 @@ angular.module('mnd.web').controller('PostEditController', [
           },
           file: file
         };
-      $scope.imgUpload = $upload.upload(uploadOptions).then(function (response) {
-        if (response.status === 204) {
-          console.log('Success!');
-        } else {
-          alert('Upload failed.');
-        }
+      $scope.isUploading = true;
+      $scope.imageUpload = $upload.upload(uploadOptions).progress(function (evt) {
+        $scope.uploadProgress = parseInt(100 * evt.loaded / evt.total);
+      }).success(function (response) {
+        $scope.uploadProgress = 100;
+        $scope.isUploading = false;
+        $scope.post.titleImageSource = 'https://s3-eu-west-1.amazonaws.com/ngtest/' + fileName;
+        $scope.save();
+      }).error(function (err) {
       });
-    };  //$interval($scope.save, 5000);
+    };
+    ///////////////////
+    // Save function //
+    ///////////////////
+    $scope.save = function () {
+      // Update innerHTML-s
+      $scope.post.title = title.innerHTML;
+      $scope.post.subtitle = subtitle.innerHTML;
+      $scope.post.body = body.innerHTML;
+      // Strip the _id property (which can't be set twice)
+      var post = angular.copy($scope.post);
+      delete post._id;
+      $scope.Posts.update(id, post);
+    };
+    $interval($scope.save, 5000);
   }
 ]);
 angular.module('mnd.web').controller('PostInsertController', [
   '$scope',
   '$state',
   function ($scope, $state) {
-    var createAndGo = function () {
-      var id = $scope.Rocket.collections.posts.insert({});
-      $state.go('postEdit', { postId: id });
-    };
-    if ($scope.Rocket.status !== 'connected') {
-      $scope.Rocket.on('connected', createAndGo);
-    } else {
-      createAndGo();
-    }
+    var post = {};
+    $scope.Posts.insert(post);
+    $state.go('postEdit', { postId: post._id });
   }
 ]);
 angular.module('mnd.web').controller('PostListController', [
@@ -233,5 +288,16 @@ angular.module('mnd.web').controller('PostListController', [
     $timeout(function () {
       $scope.posts = $scope.Posts.db.itemsArray;
     }, 500);
+  }
+]);
+angular.module('mnd.web').controller('PostViewController', [
+  '$scope',
+  '$stateParams',
+  function ($scope, $stateParams) {
+    ///////////////////////////
+    // Retrieve post to edit //
+    ///////////////////////////
+    var id = $stateParams.postId;
+    $scope.post = $scope.Posts.db.get(id);
   }
 ]);
