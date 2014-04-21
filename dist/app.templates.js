@@ -28,6 +28,9 @@ module.run(['$templateCache', function($templateCache) {
     '		</div>\n' +
     '		<div id="mnd-home-banner">\n' +
     '			<div id="mnd-home-banner-content">\n' +
+    '				<h1>scrum training</h1>\n' +
+    '				<h2>27th April 2014</h2>\n' +
+    '				Milan... bla bla bla bla bla bla bla bla\n' +
     '			</div>\n' +
     '		</div>\n' +
     '	</div>\n' +
