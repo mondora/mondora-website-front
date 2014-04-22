@@ -18,7 +18,7 @@ module.run(['$templateCache', function($templateCache) {
     '	</div>\n' +
     '	<div id="mnd-hidden-payoff">ONE STEP AHEAD<br />THE FUTURE</div>\n' +
     '	<div id="mnd-sprinkle-container">\n' +
-    '		<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{text}}"></div>\n' +
+    '		<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinkleText}}"></div>\n' +
     '	</div>\n' +
     '	<div id="mnd-home-bottom">\n' +
     '		<div id="mnd-home-logo">\n' +
@@ -28,10 +28,11 @@ module.run(['$templateCache', function($templateCache) {
     '		</div>\n' +
     '		<div id="mnd-home-banner">\n' +
     '			<div id="mnd-home-banner-content">\n' +
-    '				<h1>scrum training</h1>\n' +
-    '				<h2>27th April 2014</h2>\n' +
-    '				Milan... bla bla bla bla bla bla bla bla\n' +
+    '				<h1>{{banner.title}}</h1>\n' +
+    '				<h2>{{banner.date}}</h2>\n' +
+    '				{{banner.text}}\n' +
     '			</div>\n' +
+    '			<div id="mnd-home-banner-arrow"></div>\n' +
     '		</div>\n' +
     '	</div>\n' +
     '</div>\n' +

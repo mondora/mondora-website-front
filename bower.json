@@ -21,11 +21,9 @@
   ],
   "dependencies": {
     "angular-bootstrap": "~0.10.0",
-    "angular-medium-editor": "*",
     "angular-ui-router": "~0.2.10",
     "angular": "~1.2.16",
     "bootstrap": "~3.1.1",
-    "ddp.js": "~0.3.2",
     "fontawesome": "~4.0.3",
     "mnd-dashboard": "~0.1.2",
     "mnd-sprinkle": "~0.1.2",

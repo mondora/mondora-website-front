@@ -1,14 +1,15 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	min-width: 620px;
+	min-height: 900px;
+}
 .simplebox {
 	outline: none;
 	border: none !important;
 	box-shadow: none !important;
 }
 
-html, body {
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
-}
 .mnd-content{
 	position:relative;
 	top: 0px;
@@ -109,6 +110,7 @@ html, body {
 }
 #mnd-home-banner-content h2{
 	font-size: 20px;
+	margin-top: 0px;
 }
 #mnd-sign-in {
 	position: absolute;
@@ -120,7 +122,23 @@ html, body {
 #mnd-sign-in:hover {
 	cursor: pointer;
 }
+#mnd-home-banner-arrow {
+	position: relative;
+	left: 50%;
+	margin-left: -20px;
+	width: 40px;
+	height: 0px;
+	border-top: solid 18px #000;
+	border-bottom: 0px;
+	border-left: solid 20px transparent;
+	border-right: solid 20px transparent;
+	opacity: 0.5;
+}
 
+/*************** MEDIA QUERY****************/
+@media (max-width: 767px) {
+	
+}
 #post-edit-image-upload i {
 	color: #aeaeac;
 	font-size: 70px;
