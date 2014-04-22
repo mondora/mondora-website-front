@@ -30,7 +30,7 @@ angular.module("mnd.web", [
 		controller: "HomeController",
 		resolve: {
 			homeConfig: function () {
-				return Ceres.subscribe("homeConfig");
+				return Ceres.subscribe("configurations");
 			}
 		}
     });
@@ -140,7 +140,7 @@ angular.module("mnd.web", [
     };
 
 	$rootScope.Ceres = Ceres;
-	$rootScope.HomeConfig = Ceres.createCollection("homeConfig");
+	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	Ceres.on("login", function () {
 		$rootScope.safeApply(function () {
