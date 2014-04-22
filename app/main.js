@@ -1,33 +1,85 @@
+(function () {
+	var options = {
+		host: "http://localhost:3000",
+		do_not_autocreate_collections: true
+	};
+	options.ddpOptions = {
+		endpoint: "ws://localhost:3000/websocket",
+		SocketConstructor: WebSocket,
+		//debug: true
+	};
+	window.Ceres = new Asteroid(options);
+})();
+
 angular.module("mnd.web", [
 	"ui.bootstrap",
 	"ui.router",
 	"mnd.sprinkle",
 	"mnd.dashboard",
 	"asteroid",
-	"angular-medium-editor"
+	"angularFileUpload",
+	"ngSanitize"
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
-    //$urlRouterProvider.otherwise("/");
 
     $stateProvider.state("home", {
         url: "/",
         templateUrl: "pages/home/home.html",
-		controller: "HomeController"
+		controller: "HomeController",
+		resolve: {
+			homeConfig: function () {
+				return Ceres.subscribe("homeConfig");
+			}
+		}
     });
 
     $stateProvider.state("postInsert", {
         url: "/post/insert",
         templateUrl: "pages/post/insert/postInsert.html",
-		controller: "PostInsertController"
+		controller: "PostInsertController",
+		resolve: {
+			postSub: function () {
+				return Ceres.subscribe("posts");
+			}
+		}
+    });
+
+    $stateProvider.state("postView", {
+        url: "/post/:postId",
+        templateUrl: "pages/post/view/postView.html",
+		controller: "PostViewController",
+		resolve: {
+			postSub: function () {
+				return Ceres.subscribe("posts");
+			}
+		}
     });
 
     $stateProvider.state("postEdit", {
         url: "/post/:postId/edit",
         templateUrl: "pages/post/edit/postEdit.html",
-		controller: "PostEditController"
+		controller: "PostEditController",
+		resolve: {
+			postSub: function () {
+				return Ceres.subscribe("posts");
+			}
+		}
     });
+
+    $stateProvider.state("postList", {
+        url: "/posts",
+        templateUrl: "pages/post/list/postList.html",
+		controller: "PostListController",
+		resolve: {
+			postSub: function () {
+				return Ceres.subscribe("posts");
+			}
+		}
+    });
+
+    $urlRouterProvider.otherwise("/");
 
 })
 
@@ -76,46 +128,29 @@ angular.module("mnd.web", [
                 items: [
                     {
                         title: "pomodoro",
-                        href: "http://reddit.com"
+                        href: "http://www.mondora.com"
                     },
                     {
                         title: "AaS",
-                        href: "http://xkcd.com"
+                        href: "http://www.mondora.com"
                     }
                 ]
             }
         ]
     };
 
-	var options = {
-		host: "http://localhost:3000",
-		do_not_autocreate_collections: true
-	};
-	options.ddpOptions = {
-		endpoint: "ws://localhost:3000/websocket",
-		SocketConstructor: WebSocket,
-		debug: true
-	};
-
-	var Rocket = new Asteroid(options);
-	Rocket.on("connected", function () {
-		Rocket.status = "connected";
-		Rocket.subscribe("homeConfig");
-		window.postsSubscription = Rocket.subscribe("posts");
-	});
-	$rootScope.HomeConfig = new Asteroid.Collection("homeConfig", Rocket, Asteroid.DumbDb);
-	$rootScope.Posts = new Asteroid.Collection("posts", Rocket, Asteroid.DumbDb);
-	Rocket.on("login", function () {
+	$rootScope.Ceres = Ceres;
+	$rootScope.HomeConfig = Ceres.createCollection("homeConfig");
+	$rootScope.Posts = Ceres.createCollection("posts");
+	Ceres.on("login", function () {
 		$rootScope.safeApply(function () {
 			$rootScope.signedIn = true;
 		});
 	});
-	Rocket.on("logout", function () {
+	Ceres.on("logout", function () {
 		$rootScope.safeApply(function () {
 			$rootScope.signedIn = false;
 		});
 	});
-
-	$rootScope.Rocket = Rocket;
 
 });

@@ -1,0 +1,39 @@
+#post-edit-image-upload i {
+	color: #aeaeac;
+	font-size: 70px;
+	cursor: pointer;
+}
+
+#post-edit-image-upload-progressbar * {
+	height: 10px;
+}
+
+#post-edit-image-upload-progressbar .progress-bar {
+	background-color: #aeaeac;
+}
+
+#post-edit-image-upload-abort i {
+	position: relative;
+	top: -6px;
+	color: #aeaeac;
+	cursor: pointer;
+}
+
+#postBodyEditor {
+	font-size: 18px;
+}
+
+#postEditTitleImage {
+	position: absolute;
+	width: 100%;
+}
+
+#postEditTitleSpacer {
+	width: 100%;
+	height: 500px;
+}
+
+#postEditBodySpacer {
+	width: 100%;
+	height: 500px;
+}

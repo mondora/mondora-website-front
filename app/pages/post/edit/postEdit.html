@@ -1,8 +1,47 @@
-<div class="col-sm-8 col-sm-offset-2">
-	<div id="post-img-upload">
-		<i class="fa fa-picture-o"></i>
+<img id="postEditTitleImage" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+
+<div class="col-sm-12">
+	<div class="pull-right">
+		<br />
+		<button type="button" class="btn btn-default" ng-click="deletePost()">
+			Elimina
+		</button>
+		<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">
+			Pubblica
+		</button>
+		<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">
+			Rendi privato
+		</button>
 	</div>
-	<h1 class="simplebox" ng-model="post.title" medium-editor options="{{titleEditorOptions}}"></h1>
-	<h3 class="simplebox" ng-model="post.subtitle" medium-editor options="{{subtitleEditorOptions}}"></h3>
-	<p class="simplebox" ng-model="post.body" medium-editor options="{{bodyEditorOptions}}"></p>
+</div>
+
+<div id="postEditTitleSpacer" ng-if="titleImageIsDisplayed"></div>
+
+<div>
+	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">
+		<input type="file" ng-file-select="onFileSelect($files)" class="hidden" />
+		<i class="fa fa-picture-o" ng-click="clickFileInput()"></i>
+	</div>
+	<div class="col-sm-5" id="post-edit-image-upload-progressbar">
+		<br />
+		<br />
+		<span ng-show="isUploading">
+			<progressbar value="uploadProgress"></progressbar>
+		</span>
+	</div>
+	<div class="col-sm-1" id="post-edit-image-upload-abort">
+		<br />
+		<br />
+		<i class="fa fa-times" ng-show="isUploading" ng-click="abortUpload()"></i>
+	</div>
+	<div class="col-sm-8 col-sm-offset-2">
+		<h1 class="simplebox" id="postTitleEditor"></h1>
+		<h2 class="simplebox" id="postSubtitleEditor"></h2>
+	</div>
+</div>
+
+<div id="postEditBodySpacer" ng-if="titleImageIsDisplayed"></div>
+
+<div class="col-sm-8 col-sm-offset-2">
+	<p class="simplebox" id="postBodyEditor"></p>
 </div>

@@ -88,7 +88,15 @@ body {
     border-bottom: 2px solid #5e5f5f;
     border-right: 0px; }
   #mnd-show-sidebar {
-    margin: 10px 20px; } }
+    margin: 10px 20px; }
+  #mnd-sidebar-logo {
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    height: 60px;
+    width: 60px;
+    margin-left: -30px;
+    margin-top: 10px; } }
 
 /************************ sidebar MENU ***************************/
 .nav {

@@ -1,3 +1,1179 @@
+/**
+ * @license AngularJS v1.2.16
+ * (c) 2010-2014 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+(function(window, angular, undefined) {'use strict';
+
+var $sanitizeMinErr = angular.$$minErr('$sanitize');
+
+/**
+ * @ngdoc module
+ * @name ngSanitize
+ * @description
+ *
+ * # ngSanitize
+ *
+ * The `ngSanitize` module provides functionality to sanitize HTML.
+ *
+ *
+ * <div doc-module-components="ngSanitize"></div>
+ *
+ * See {@link ngSanitize.$sanitize `$sanitize`} for usage.
+ */
+
+/*
+ * HTML Parser By Misko Hevery (misko@hevery.com)
+ * based on:  HTML Parser By John Resig (ejohn.org)
+ * Original code by Erik Arvidsson, Mozilla Public License
+ * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
+ *
+ * // Use like so:
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ */
+
+
+/**
+ * @ngdoc service
+ * @name $sanitize
+ * @function
+ *
+ * @description
+ *   The input is sanitized by parsing the html into tokens. All safe tokens (from a whitelist) are
+ *   then serialized back to properly escaped html string. This means that no unsafe input can make
+ *   it into the returned string, however, since our parser is more strict than a typical browser
+ *   parser, it's possible that some obscure input, which would be recognized as valid HTML by a
+ *   browser, won't make it through the sanitizer.
+ *   The whitelist is configured using the functions `aHrefSanitizationWhitelist` and
+ *   `imgSrcSanitizationWhitelist` of {@link ng.$compileProvider `$compileProvider`}.
+ *
+ * @param {string} html Html input.
+ * @returns {string} Sanitized html.
+ *
+ * @example
+   <example module="ngSanitize" deps="angular-sanitize.js">
+   <file name="index.html">
+     <script>
+       function Ctrl($scope, $sce) {
+         $scope.snippet =
+           '<p style="color:blue">an html\n' +
+           '<em onmouseover="this.textContent=\'PWN3D!\'">click here</em>\n' +
+           'snippet</p>';
+         $scope.deliberatelyTrustDangerousSnippet = function() {
+           return $sce.trustAsHtml($scope.snippet);
+         };
+       }
+     </script>
+     <div ng-controller="Ctrl">
+        Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+       <table>
+         <tr>
+           <td>Directive</td>
+           <td>How</td>
+           <td>Source</td>
+           <td>Rendered</td>
+         </tr>
+         <tr id="bind-html-with-sanitize">
+           <td>ng-bind-html</td>
+           <td>Automatically uses $sanitize</td>
+           <td><pre>&lt;div ng-bind-html="snippet"&gt;<br/>&lt;/div&gt;</pre></td>
+           <td><div ng-bind-html="snippet"></div></td>
+         </tr>
+         <tr id="bind-html-with-trust">
+           <td>ng-bind-html</td>
+           <td>Bypass $sanitize by explicitly trusting the dangerous value</td>
+           <td>
+           <pre>&lt;div ng-bind-html="deliberatelyTrustDangerousSnippet()"&gt;
+&lt;/div&gt;</pre>
+           </td>
+           <td><div ng-bind-html="deliberatelyTrustDangerousSnippet()"></div></td>
+         </tr>
+         <tr id="bind-default">
+           <td>ng-bind</td>
+           <td>Automatically escapes</td>
+           <td><pre>&lt;div ng-bind="snippet"&gt;<br/>&lt;/div&gt;</pre></td>
+           <td><div ng-bind="snippet"></div></td>
+         </tr>
+       </table>
+       </div>
+   </file>
+   <file name="protractor.js" type="protractor">
+     it('should sanitize the html snippet by default', function() {
+       expect(element(by.css('#bind-html-with-sanitize div')).getInnerHtml()).
+         toBe('<p>an html\n<em>click here</em>\nsnippet</p>');
+     });
+
+     it('should inline raw snippet if bound to a trusted value', function() {
+       expect(element(by.css('#bind-html-with-trust div')).getInnerHtml()).
+         toBe("<p style=\"color:blue\">an html\n" +
+              "<em onmouseover=\"this.textContent='PWN3D!'\">click here</em>\n" +
+              "snippet</p>");
+     });
+
+     it('should escape snippet without any filter', function() {
+       expect(element(by.css('#bind-default div')).getInnerHtml()).
+         toBe("&lt;p style=\"color:blue\"&gt;an html\n" +
+              "&lt;em onmouseover=\"this.textContent='PWN3D!'\"&gt;click here&lt;/em&gt;\n" +
+              "snippet&lt;/p&gt;");
+     });
+
+     it('should update', function() {
+       element(by.model('snippet')).clear();
+       element(by.model('snippet')).sendKeys('new <b onclick="alert(1)">text</b>');
+       expect(element(by.css('#bind-html-with-sanitize div')).getInnerHtml()).
+         toBe('new <b>text</b>');
+       expect(element(by.css('#bind-html-with-trust div')).getInnerHtml()).toBe(
+         'new <b onclick="alert(1)">text</b>');
+       expect(element(by.css('#bind-default div')).getInnerHtml()).toBe(
+         "new &lt;b onclick=\"alert(1)\"&gt;text&lt;/b&gt;");
+     });
+   </file>
+   </example>
+ */
+function $SanitizeProvider() {
+  this.$get = ['$$sanitizeUri', function($$sanitizeUri) {
+    return function(html) {
+      var buf = [];
+      htmlParser(html, htmlSanitizeWriter(buf, function(uri, isImage) {
+        return !/^unsafe/.test($$sanitizeUri(uri, isImage));
+      }));
+      return buf.join('');
+    };
+  }];
+}
+
+function sanitizeText(chars) {
+  var buf = [];
+  var writer = htmlSanitizeWriter(buf, angular.noop);
+  writer.chars(chars);
+  return buf.join('');
+}
+
+
+// Regular Expressions for parsing tags and attributes
+var START_TAG_REGEXP =
+       /^<\s*([\w:-]+)((?:\s+[\w:-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*>/,
+  END_TAG_REGEXP = /^<\s*\/\s*([\w:-]+)[^>]*>/,
+  ATTR_REGEXP = /([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g,
+  BEGIN_TAG_REGEXP = /^</,
+  BEGING_END_TAGE_REGEXP = /^<\s*\//,
+  COMMENT_REGEXP = /<!--(.*?)-->/g,
+  DOCTYPE_REGEXP = /<!DOCTYPE([^>]*?)>/i,
+  CDATA_REGEXP = /<!\[CDATA\[(.*?)]]>/g,
+  // Match everything outside of normal chars and " (quote character)
+  NON_ALPHANUMERIC_REGEXP = /([^\#-~| |!])/g;
+
+
+// Good source of info about elements and attributes
+// http://dev.w3.org/html5/spec/Overview.html#semantics
+// http://simon.html5.org/html-elements
+
+// Safe Void Elements - HTML5
+// http://dev.w3.org/html5/spec/Overview.html#void-elements
+var voidElements = makeMap("area,br,col,hr,img,wbr");
+
+// Elements that you can, intentionally, leave open (and which close themselves)
+// http://dev.w3.org/html5/spec/Overview.html#optional-tags
+var optionalEndTagBlockElements = makeMap("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"),
+    optionalEndTagInlineElements = makeMap("rp,rt"),
+    optionalEndTagElements = angular.extend({},
+                                            optionalEndTagInlineElements,
+                                            optionalEndTagBlockElements);
+
+// Safe Block Elements - HTML5
+var blockElements = angular.extend({}, optionalEndTagBlockElements, makeMap("address,article," +
+        "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +
+        "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));
+
+// Inline Elements - HTML5
+var inlineElements = angular.extend({}, optionalEndTagInlineElements, makeMap("a,abbr,acronym,b," +
+        "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +
+        "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
+
+
+// Special Elements (can contain anything)
+var specialElements = makeMap("script,style");
+
+var validElements = angular.extend({},
+                                   voidElements,
+                                   blockElements,
+                                   inlineElements,
+                                   optionalEndTagElements);
+
+//Attributes that have href and hence need to be sanitized
+var uriAttrs = makeMap("background,cite,href,longdesc,src,usemap");
+var validAttrs = angular.extend({}, uriAttrs, makeMap(
+    'abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,'+
+    'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,'+
+    'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,'+
+    'scope,scrolling,shape,size,span,start,summary,target,title,type,'+
+    'valign,value,vspace,width'));
+
+function makeMap(str) {
+  var obj = {}, items = str.split(','), i;
+  for (i = 0; i < items.length; i++) obj[items[i]] = true;
+  return obj;
+}
+
+
+/**
+ * @example
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ * @param {string} html string
+ * @param {object} handler
+ */
+function htmlParser( html, handler ) {
+  var index, chars, match, stack = [], last = html;
+  stack.last = function() { return stack[ stack.length - 1 ]; };
+
+  while ( html ) {
+    chars = true;
+
+    // Make sure we're not in a script or style element
+    if ( !stack.last() || !specialElements[ stack.last() ] ) {
+
+      // Comment
+      if ( html.indexOf("<!--") === 0 ) {
+        // comments containing -- are not allowed unless they terminate the comment
+        index = html.indexOf("--", 4);
+
+        if ( index >= 0 && html.lastIndexOf("-->", index) === index) {
+          if (handler.comment) handler.comment( html.substring( 4, index ) );
+          html = html.substring( index + 3 );
+          chars = false;
+        }
+      // DOCTYPE
+      } else if ( DOCTYPE_REGEXP.test(html) ) {
+        match = html.match( DOCTYPE_REGEXP );
+
+        if ( match ) {
+          html = html.replace( match[0], '');
+          chars = false;
+        }
+      // end tag
+      } else if ( BEGING_END_TAGE_REGEXP.test(html) ) {
+        match = html.match( END_TAG_REGEXP );
+
+        if ( match ) {
+          html = html.substring( match[0].length );
+          match[0].replace( END_TAG_REGEXP, parseEndTag );
+          chars = false;
+        }
+
+      // start tag
+      } else if ( BEGIN_TAG_REGEXP.test(html) ) {
+        match = html.match( START_TAG_REGEXP );
+
+        if ( match ) {
+          html = html.substring( match[0].length );
+          match[0].replace( START_TAG_REGEXP, parseStartTag );
+          chars = false;
+        }
+      }
+
+      if ( chars ) {
+        index = html.indexOf("<");
+
+        var text = index < 0 ? html : html.substring( 0, index );
+        html = index < 0 ? "" : html.substring( index );
+
+        if (handler.chars) handler.chars( decodeEntities(text) );
+      }
+
+    } else {
+      html = html.replace(new RegExp("(.*)<\\s*\\/\\s*" + stack.last() + "[^>]*>", 'i'),
+        function(all, text){
+          text = text.replace(COMMENT_REGEXP, "$1").replace(CDATA_REGEXP, "$1");
+
+          if (handler.chars) handler.chars( decodeEntities(text) );
+
+          return "";
+      });
+
+      parseEndTag( "", stack.last() );
+    }
+
+    if ( html == last ) {
+      throw $sanitizeMinErr('badparse', "The sanitizer was unable to parse the following block " +
+                                        "of html: {0}", html);
+    }
+    last = html;
+  }
+
+  // Clean up any remaining tags
+  parseEndTag();
+
+  function parseStartTag( tag, tagName, rest, unary ) {
+    tagName = angular.lowercase(tagName);
+    if ( blockElements[ tagName ] ) {
+      while ( stack.last() && inlineElements[ stack.last() ] ) {
+        parseEndTag( "", stack.last() );
+      }
+    }
+
+    if ( optionalEndTagElements[ tagName ] && stack.last() == tagName ) {
+      parseEndTag( "", tagName );
+    }
+
+    unary = voidElements[ tagName ] || !!unary;
+
+    if ( !unary )
+      stack.push( tagName );
+
+    var attrs = {};
+
+    rest.replace(ATTR_REGEXP,
+      function(match, name, doubleQuotedValue, singleQuotedValue, unquotedValue) {
+        var value = doubleQuotedValue
+          || singleQuotedValue
+          || unquotedValue
+          || '';
+
+        attrs[name] = decodeEntities(value);
+    });
+    if (handler.start) handler.start( tagName, attrs, unary );
+  }
+
+  function parseEndTag( tag, tagName ) {
+    var pos = 0, i;
+    tagName = angular.lowercase(tagName);
+    if ( tagName )
+      // Find the closest opened tag of the same type
+      for ( pos = stack.length - 1; pos >= 0; pos-- )
+        if ( stack[ pos ] == tagName )
+          break;
+
+    if ( pos >= 0 ) {
+      // Close all the open elements, up the stack
+      for ( i = stack.length - 1; i >= pos; i-- )
+        if (handler.end) handler.end( stack[ i ] );
+
+      // Remove the open elements from the stack
+      stack.length = pos;
+    }
+  }
+}
+
+var hiddenPre=document.createElement("pre");
+var spaceRe = /^(\s*)([\s\S]*?)(\s*)$/;
+/**
+ * decodes all entities into regular string
+ * @param value
+ * @returns {string} A string with decoded entities.
+ */
+function decodeEntities(value) {
+  if (!value) { return ''; }
+
+  // Note: IE8 does not preserve spaces at the start/end of innerHTML
+  // so we must capture them and reattach them afterward
+  var parts = spaceRe.exec(value);
+  var spaceBefore = parts[1];
+  var spaceAfter = parts[3];
+  var content = parts[2];
+  if (content) {
+    hiddenPre.innerHTML=content.replace(/</g,"&lt;");
+    // innerText depends on styling as it doesn't display hidden elements.
+    // Therefore, it's better to use textContent not to cause unnecessary
+    // reflows. However, IE<9 don't support textContent so the innerText
+    // fallback is necessary.
+    content = 'textContent' in hiddenPre ?
+      hiddenPre.textContent : hiddenPre.innerText;
+  }
+  return spaceBefore + content + spaceAfter;
+}
+
+/**
+ * Escapes all potentially dangerous characters, so that the
+ * resulting string can be safely inserted into attribute or
+ * element text.
+ * @param value
+ * @returns {string} escaped text
+ */
+function encodeEntities(value) {
+  return value.
+    replace(/&/g, '&amp;').
+    replace(NON_ALPHANUMERIC_REGEXP, function(value){
+      return '&#' + value.charCodeAt(0) + ';';
+    }).
+    replace(/</g, '&lt;').
+    replace(/>/g, '&gt;');
+}
+
+/**
+ * create an HTML/XML writer which writes to buffer
+ * @param {Array} buf use buf.jain('') to get out sanitized html string
+ * @returns {object} in the form of {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * }
+ */
+function htmlSanitizeWriter(buf, uriValidator){
+  var ignore = false;
+  var out = angular.bind(buf, buf.push);
+  return {
+    start: function(tag, attrs, unary){
+      tag = angular.lowercase(tag);
+      if (!ignore && specialElements[tag]) {
+        ignore = tag;
+      }
+      if (!ignore && validElements[tag] === true) {
+        out('<');
+        out(tag);
+        angular.forEach(attrs, function(value, key){
+          var lkey=angular.lowercase(key);
+          var isImage = (tag === 'img' && lkey === 'src') || (lkey === 'background');
+          if (validAttrs[lkey] === true &&
+            (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {
+            out(' ');
+            out(key);
+            out('="');
+            out(encodeEntities(value));
+            out('"');
+          }
+        });
+        out(unary ? '/>' : '>');
+      }
+    },
+    end: function(tag){
+        tag = angular.lowercase(tag);
+        if (!ignore && validElements[tag] === true) {
+          out('</');
+          out(tag);
+          out('>');
+        }
+        if (tag == ignore) {
+          ignore = false;
+        }
+      },
+    chars: function(chars){
+        if (!ignore) {
+          out(encodeEntities(chars));
+        }
+      }
+  };
+}
+
+
+// define ngSanitize module and register $sanitize service
+angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
+
+/* global sanitizeText: false */
+
+/**
+ * @ngdoc filter
+ * @name linky
+ * @function
+ *
+ * @description
+ * Finds links in text input and turns them into html links. Supports http/https/ftp/mailto and
+ * plain email address links.
+ *
+ * Requires the {@link ngSanitize `ngSanitize`} module to be installed.
+ *
+ * @param {string} text Input text.
+ * @param {string} target Window (_blank|_self|_parent|_top) or named frame to open links in.
+ * @returns {string} Html-linkified text.
+ *
+ * @usage
+   <span ng-bind-html="linky_expression | linky"></span>
+ *
+ * @example
+   <example module="ngSanitize" deps="angular-sanitize.js">
+     <file name="index.html">
+       <script>
+         function Ctrl($scope) {
+           $scope.snippet =
+             'Pretty text with some links:\n'+
+             'http://angularjs.org/,\n'+
+             'mailto:us@somewhere.org,\n'+
+             'another@somewhere.org,\n'+
+             'and one more: ftp://127.0.0.1/.';
+           $scope.snippetWithTarget = 'http://angularjs.org/';
+         }
+       </script>
+       <div ng-controller="Ctrl">
+       Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+       <table>
+         <tr>
+           <td>Filter</td>
+           <td>Source</td>
+           <td>Rendered</td>
+         </tr>
+         <tr id="linky-filter">
+           <td>linky filter</td>
+           <td>
+             <pre>&lt;div ng-bind-html="snippet | linky"&gt;<br>&lt;/div&gt;</pre>
+           </td>
+           <td>
+             <div ng-bind-html="snippet | linky"></div>
+           </td>
+         </tr>
+         <tr id="linky-target">
+          <td>linky target</td>
+          <td>
+            <pre>&lt;div ng-bind-html="snippetWithTarget | linky:'_blank'"&gt;<br>&lt;/div&gt;</pre>
+          </td>
+          <td>
+            <div ng-bind-html="snippetWithTarget | linky:'_blank'"></div>
+          </td>
+         </tr>
+         <tr id="escaped-html">
+           <td>no filter</td>
+           <td><pre>&lt;div ng-bind="snippet"&gt;<br>&lt;/div&gt;</pre></td>
+           <td><div ng-bind="snippet"></div></td>
+         </tr>
+       </table>
+     </file>
+     <file name="protractor.js" type="protractor">
+       it('should linkify the snippet with urls', function() {
+         expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
+             toBe('Pretty text with some links: http://angularjs.org/, us@somewhere.org, ' +
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#linky-filter a')).count()).toEqual(4);
+       });
+
+       it('should not linkify snippet without the linky filter', function() {
+         expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText()).
+             toBe('Pretty text with some links: http://angularjs.org/, mailto:us@somewhere.org, ' +
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#escaped-html a')).count()).toEqual(0);
+       });
+
+       it('should update', function() {
+         element(by.model('snippet')).clear();
+         element(by.model('snippet')).sendKeys('new http://link.');
+         expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
+             toBe('new http://link.');
+         expect(element.all(by.css('#linky-filter a')).count()).toEqual(1);
+         expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText())
+             .toBe('new http://link.');
+       });
+
+       it('should work with the target property', function() {
+        expect(element(by.id('linky-target')).
+            element(by.binding("snippetWithTarget | linky:'_blank'")).getText()).
+            toBe('http://angularjs.org/');
+        expect(element(by.css('#linky-target a')).getAttribute('target')).toEqual('_blank');
+       });
+     </file>
+   </example>
+ */
+angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
+  var LINKY_URL_REGEXP =
+        /((ftp|https?):\/\/|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>]/,
+      MAILTO_REGEXP = /^mailto:/;
+
+  return function(text, target) {
+    if (!text) return text;
+    var match;
+    var raw = text;
+    var html = [];
+    var url;
+    var i;
+    while ((match = raw.match(LINKY_URL_REGEXP))) {
+      // We can not end in these as they are sometimes found at the end of the sentence
+      url = match[0];
+      // if we did not match ftp/http/mailto then assume mailto
+      if (match[2] == match[3]) url = 'mailto:' + url;
+      i = match.index;
+      addText(raw.substr(0, i));
+      addLink(url, match[0].replace(MAILTO_REGEXP, ''));
+      raw = raw.substring(i + match[0].length);
+    }
+    addText(raw);
+    return $sanitize(html.join(''));
+
+    function addText(text) {
+      if (!text) {
+        return;
+      }
+      html.push(sanitizeText(text));
+    }
+
+    function addLink(url, text) {
+      html.push('<a ');
+      if (angular.isDefined(target)) {
+        html.push('target="');
+        html.push(target);
+        html.push('" ');
+      }
+      html.push('href="');
+      html.push(url);
+      html.push('">');
+      addText(text);
+      html.push('</a>');
+    }
+  };
+}]);
+
+
+})(window, window.angular);
+
+/**!
+ * AngularJS file upload/drop directive with http post and progress
+ * @author  Danial  <danial.farid@gmail.com>
+ * @version 1.3.1
+ */
+(function() {
+	
+var angularFileUpload = angular.module('angularFileUpload', []);
+
+angularFileUpload.service('$upload', ['$http', '$timeout', function($http, $timeout) {
+	function sendHttp(config) {
+		config.method = config.method || 'POST';
+		config.headers = config.headers || {};
+		config.transformRequest = config.transformRequest || function(data, headersGetter) {
+			if (window.ArrayBuffer && data instanceof window.ArrayBuffer) {
+				return data;
+			}
+			return $http.defaults.transformRequest[0](data, headersGetter);
+		};
+
+		if (window.XMLHttpRequest.__isShim) {
+			config.headers['__setXHR_'] = function() {
+				return function(xhr) {
+					config.__XHR = xhr;
+					config.xhrFn && config.xhrFn(xhr);
+					xhr.upload.addEventListener('progress', function(e) {
+						if (config.progress) {
+							$timeout(function() {
+								if(config.progress) config.progress(e);
+							});
+						}
+					}, false);
+					//fix for firefox not firing upload progress end, also IE8-9
+					xhr.upload.addEventListener('load', function(e) {
+						if (e.lengthComputable) {
+							$timeout(function() {
+								if(config.progress) config.progress(e);
+							});
+						}
+					}, false);
+				}	
+			};
+		}
+
+		var promise = $http(config);
+
+		promise.progress = function(fn) {
+			config.progress = fn;
+			return promise;
+		};
+		promise.abort = function() {
+			if (config.__XHR) {
+				$timeout(function() {
+					config.__XHR.abort();
+				});
+			}
+			return promise;
+		};
+		promise.xhr = function(fn) {
+			config.xhrFn = fn;
+			return promise;
+		};
+		promise.then = (function(promise, origThen) {
+			return function(s, e, p) {
+				config.progress = p || config.progress;
+				var result = origThen.apply(promise, [s, e, p]);
+				result.abort = promise.abort;
+				result.progress = promise.progress;
+				result.xhr = promise.xhr;
+				return result;
+			};
+		})(promise, promise.then);
+		
+		return promise;
+	}
+
+	this.upload = function(config) {
+		config.headers = config.headers || {};
+		config.headers['Content-Type'] = undefined;
+		config.transformRequest = config.transformRequest || $http.defaults.transformRequest;
+		var formData = new FormData();
+		var origTransformRequest = config.transformRequest;
+		var origData = config.data;
+		config.transformRequest = function(formData, headerGetter) {
+			if (origData) {
+				if (config.formDataAppender) {
+					for (var key in origData) {
+						var val = origData[key];
+						config.formDataAppender(formData, key, val);
+					}
+				} else {
+					for (var key in origData) {
+						var val = origData[key];
+						if (typeof origTransformRequest == 'function') {
+							val = origTransformRequest(val, headerGetter);
+						} else {
+							for (var i = 0; i < origTransformRequest.length; i++) {
+								var transformFn = origTransformRequest[i];
+								if (typeof transformFn == 'function') {
+									val = transformFn(val, headerGetter);
+								}
+							}
+						}
+						formData.append(key, val);
+					}
+				}
+			}
+
+			if (config.file != null) {
+				var fileFormName = config.fileFormDataName || 'file';
+
+				if (Object.prototype.toString.call(config.file) === '[object Array]') {
+					var isFileFormNameString = Object.prototype.toString.call(fileFormName) === '[object String]'; 
+					for (var i = 0; i < config.file.length; i++) {
+						formData.append(isFileFormNameString ? fileFormName + i : fileFormName[i], config.file[i], config.file[i].name);
+					}
+				} else {
+					formData.append(fileFormName, config.file, config.file.name);
+				}
+			}
+			return formData;
+		};
+
+		config.data = formData;
+
+		return sendHttp(config);
+	};
+
+	this.http = function(config) {
+		return sendHttp(config);
+	}
+}]);
+
+angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($parse, $timeout) {
+	return function(scope, elem, attr) {
+		var fn = $parse(attr['ngFileSelect']);
+		elem.bind('change', function(evt) {
+			var files = [], fileList, i;
+			fileList = evt.target.files;
+			if (fileList != null) {
+				for (i = 0; i < fileList.length; i++) {
+					files.push(fileList.item(i));
+				}
+			}
+			$timeout(function() {
+				fn(scope, {
+					$files : files,
+					$event : evt
+				});
+			});
+		});
+		elem.bind('click', function(){
+			this.value = null;
+		});
+	};
+} ]);
+
+angularFileUpload.directive('ngFileDropAvailable', [ '$parse', '$timeout', function($parse, $timeout) {
+	return function(scope, elem, attr) {
+		if ('draggable' in document.createElement('span')) {
+			var fn = $parse(attr['ngFileDropAvailable']);
+			$timeout(function() {
+				fn(scope);
+			});
+		}
+	};
+} ]);
+
+angularFileUpload.directive('ngFileDrop', [ '$parse', '$timeout', function($parse, $timeout) {
+	return function(scope, elem, attr) {		
+		if ('draggable' in document.createElement('span')) {
+			var cancel = null;
+			var fn = $parse(attr['ngFileDrop']);
+			elem[0].addEventListener("dragover", function(evt) {
+				$timeout.cancel(cancel);
+				evt.stopPropagation();
+				evt.preventDefault();
+				elem.addClass(attr['ngFileDragOverClass'] || "dragover");
+			}, false);
+			elem[0].addEventListener("dragleave", function(evt) {
+				cancel = $timeout(function() {
+					elem.removeClass(attr['ngFileDragOverClass'] || "dragover");
+				});
+			}, false);
+			
+			var processing = 0;
+			function traverseFileTree(files, item) {
+				if (item.isDirectory) {
+					var dirReader = item.createReader();
+					processing++;
+					dirReader.readEntries(function(entries) {
+						for (var i = 0; i < entries.length; i++) {
+							traverseFileTree(files, entries[i]);
+						}
+						processing--;
+					});
+				} else {
+					processing++;
+		    	    item.file(function(file) {
+		    	    	processing--;
+		    	    	files.push(file);
+		    	    });
+	    	  }
+			}
+			
+			elem[0].addEventListener("drop", function(evt) {
+				evt.stopPropagation();
+				evt.preventDefault();
+				elem.removeClass(attr['ngFileDragOverClass'] || "dragover");
+				var files = [], items = evt.dataTransfer.items;
+				if (items && items.length > 0 && items[0].webkitGetAsEntry) {
+					for (var i = 0; i < items.length; i++) {
+						traverseFileTree(files, items[i].webkitGetAsEntry());
+					}
+				} else {
+					var fileList = evt.dataTransfer.files;
+					if (fileList != null) {
+						for (var i = 0; i < fileList.length; i++) {
+							files.push(fileList.item(i));
+						}
+					}
+				}
+				(function callback(delay) {
+					$timeout(function() {
+						if (!processing) {
+							fn(scope, {
+								$files : files,
+								$event : evt
+							});
+						} else {
+							callback(10);
+						}
+					}, delay || 0)
+				})();
+			}, false);
+		}
+	};
+} ]);
+
+})();
+
+/**!
+ * AngularJS file upload shim for HTML5 FormData
+ * @author  Danial  <danial.farid@gmail.com>
+ * @version 1.3.1
+ */
+(function() {
+
+var hasFlash = function() {
+	try {
+	  var fo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+	  if (fo) return true;
+	} catch(e) {
+	  if (navigator.mimeTypes["application/x-shockwave-flash"] != undefined) return true;
+	}
+	return false;
+}
+	
+if (window.XMLHttpRequest) {
+	if (window.FormData) {
+		// allow access to Angular XHR private field: https://github.com/angular/angular.js/issues/1934
+		window.XMLHttpRequest = (function(origXHR) {
+			return function() {
+				var xhr = new origXHR();
+				xhr.setRequestHeader = (function(orig) {
+					return function(header, value) {
+						if (header === '__setXHR_') {
+							var val = value(xhr);
+							// fix for angular < 1.2.0
+							if (val instanceof Function) {
+								val(xhr);
+							}
+						} else {
+							orig.apply(xhr, arguments);
+						}
+					}
+				})(xhr.setRequestHeader);
+				return xhr;
+			}
+		})(window.XMLHttpRequest);
+	} else {
+		window.XMLHttpRequest = (function(origXHR) {
+			return function() {
+				var xhr = new origXHR();
+				var origSend = xhr.send;
+				xhr.__requestHeaders = [];
+				xhr.open = (function(orig) {
+					if (!xhr.upload) xhr.upload = {};
+					xhr.__listeners = [];
+					xhr.upload.addEventListener = function(t, fn, b) {
+						xhr.__listeners[t] = fn;
+					};
+					return function(m, url, b) {
+						orig.apply(xhr, [m, url, b]);
+						xhr.__url = url;
+					}
+				})(xhr.open);
+				xhr.getResponseHeader = (function(orig) {
+					return function(h) {
+						return xhr.__fileApiXHR ? xhr.__fileApiXHR.getResponseHeader(h) : orig.apply(xhr, [h]);
+					}
+				})(xhr.getResponseHeader);
+				xhr.getAllResponseHeaders = (function(orig) {
+					return function() {
+						return xhr.__fileApiXHR ? xhr.__fileApiXHR.getAllResponseHeaders() : orig.apply(xhr);
+					}
+				})(xhr.getAllResponseHeaders);
+				xhr.abort = (function(orig) {
+					return function() {
+						return xhr.__fileApiXHR ? xhr.__fileApiXHR.abort() : (orig == null ? null : orig.apply(xhr));
+					}
+				})(xhr.abort);
+				xhr.setRequestHeader = (function(orig) {
+					return function(header, value) {
+						if (header === '__setXHR_') {
+							var val = value(xhr);
+							// fix for angular < 1.2.0
+							if (val instanceof Function) {
+								val(xhr);
+							}
+						} else {
+							orig.apply(xhr, arguments);
+						}
+					}
+				})(xhr.setRequestHeader);
+
+				xhr.send = function() {
+					if (arguments[0] && arguments[0].__isShim) {
+						var formData = arguments[0];
+						var config = {
+							url: xhr.__url,
+							complete: function(err, fileApiXHR) {
+								if (!err && xhr.__listeners['load']) 
+									xhr.__listeners['load']({type: 'load', loaded: xhr.__loaded, total: xhr.__total, target: xhr, lengthComputable: true});
+								if (!err && xhr.__listeners['loadend']) 
+									xhr.__listeners['loadend']({type: 'loadend', loaded: xhr.__loaded, total: xhr.__total, target: xhr, lengthComputable: true});
+								if (err === 'abort' && xhr.__listeners['abort']) 
+									xhr.__listeners['abort']({type: 'abort', loaded: xhr.__loaded, total: xhr.__total, target: xhr, lengthComputable: true});
+								if (fileApiXHR.status !== undefined) Object.defineProperty(xhr, 'status', {get: function() {return fileApiXHR.status}});
+								if (fileApiXHR.statusText !== undefined) Object.defineProperty(xhr, 'statusText', {get: function() {return fileApiXHR.statusText}});
+								Object.defineProperty(xhr, 'readyState', {get: function() {return 4}});
+								if (fileApiXHR.response !== undefined) Object.defineProperty(xhr, 'response', {get: function() {return fileApiXHR.response}});
+								Object.defineProperty(xhr, 'responseText', {get: function() {return fileApiXHR.responseText}});
+								xhr.__fileApiXHR = fileApiXHR;
+								xhr.onreadystatechange();
+							},
+							progress: function(e) {
+								e.target = xhr;
+								xhr.__listeners['progress'] && xhr.__listeners['progress'](e);
+								xhr.__total = e.total;
+								xhr.__loaded = e.loaded;
+							},
+							headers: xhr.__requestHeaders
+						}
+						config.data = {};
+						config.files = {}
+						for (var i = 0; i < formData.data.length; i++) {
+							var item = formData.data[i];
+							if (item.val != null && item.val.name != null && item.val.size != null && item.val.type != null) {
+								config.files[item.key] = item.val;
+							} else {
+								config.data[item.key] = item.val;
+							}
+						}
+
+						setTimeout(function() {
+							if (!hasFlash()) {
+								throw 'Adode Flash Player need to be installed. To check ahead use "FileAPI.hasFlash"';
+							}
+							xhr.__fileApiXHR = FileAPI.upload(config);
+						}, 1);
+					} else {
+						origSend.apply(xhr, arguments);
+					}
+				}
+				return xhr;
+			}
+		})(window.XMLHttpRequest);
+		window.XMLHttpRequest.__hasFlash = hasFlash();
+	}
+	window.XMLHttpRequest.__isShim = true;
+}
+
+if (!window.FormData) {
+	var wrapFileApi = function(elem) {
+		if (!hasFlash()) {
+			throw 'Adode Flash Player need to be installed. To check ahead use "FileAPI.hasFlash"';
+		}
+		if (!elem.__isWrapped && (elem.getAttribute('ng-file-select') != null || elem.getAttribute('data-ng-file-select') != null)) {
+			var wrap = document.createElement('div');
+			wrap.innerHTML = '<div class="js-fileapi-wrapper" style="position:relative; overflow:hidden"></div>';
+			wrap = wrap.firstChild;
+			var parent = elem.parentNode;
+			parent.insertBefore(wrap, elem);
+			parent.removeChild(elem);
+			wrap.appendChild(elem);
+			elem.__isWrapped = true;
+		}
+	};
+	var changeFnWrapper = function(fn) {
+		return function(evt) {
+			var files = FileAPI.getFiles(evt);
+			if (!evt.target) {
+				evt.target = {};
+			}
+			evt.target.files = files;
+			evt.target.files.item = function(i) {
+				return evt.target.files[i] || null;
+			}
+			fn(evt);
+		};
+	};
+	var isFileChange = function(elem, e) {
+		return (e.toLowerCase() === 'change' || e.toLowerCase() === 'onchange') && elem.getAttribute('type') == 'file';
+	}
+	if (HTMLInputElement.prototype.addEventListener) {
+		HTMLInputElement.prototype.addEventListener = (function(origAddEventListener) {
+			return function(e, fn, b, d) {
+				if (isFileChange(this, e)) {
+					wrapFileApi(this);
+					origAddEventListener.apply(this, [e, changeFnWrapper(fn), b, d]);
+				} else {
+					origAddEventListener.apply(this, [e, fn, b, d]);
+				}
+			}
+		})(HTMLInputElement.prototype.addEventListener);
+	}
+	if (HTMLInputElement.prototype.attachEvent) {
+		HTMLInputElement.prototype.attachEvent = (function(origAttachEvent) {
+			return function(e, fn) {
+				if (isFileChange(this, e)) {
+					wrapFileApi(this);
+					origAttachEvent.apply(this, [e, changeFnWrapper(fn)]);
+				} else {
+					origAttachEvent.apply(this, [e, fn]);
+				}
+			}
+		})(HTMLInputElement.prototype.attachEvent);
+	}
+
+	window.FormData = FormData = function() {
+		return {
+			append: function(key, val, name) {
+				this.data.push({
+					key: key,
+					val: val,
+					name: name
+				});
+			},
+			data: [],
+			__isShim: true
+		};
+	};
+
+	(function () {
+		//load FileAPI
+		if (!window.FileAPI) {
+			window.FileAPI = {};
+		}
+		if (!FileAPI.upload) {
+			var jsUrl, basePath, script = document.createElement('script'), allScripts = document.getElementsByTagName('script'), i, index, src;
+			if (window.FileAPI.jsUrl) {
+				jsUrl = window.FileAPI.jsUrl;
+			} else if (window.FileAPI.jsPath) {
+				basePath = window.FileAPI.jsPath;
+			} else {
+				for (i = 0; i < allScripts.length; i++) {
+					src = allScripts[i].src;
+					index = src.indexOf('angular-file-upload-shim.js')
+					if (index == -1) {
+						index = src.indexOf('angular-file-upload-shim.min.js');
+					}
+					if (index > -1) {
+						basePath = src.substring(0, index);
+						break;
+					}
+				}
+			}
+
+			if (FileAPI.staticPath == null) FileAPI.staticPath = basePath;
+			script.setAttribute('src', jsUrl || basePath + "FileAPI.min.js");
+			document.getElementsByTagName('head')[0].appendChild(script);
+			FileAPI.hasFlash = hasFlash();
+		}
+	})();
+}
+
+
+if (!window.FileReader) {
+	window.FileReader = function() {
+		var _this = this, loadStarted = false;
+		this.listeners = {};
+		this.addEventListener = function(type, fn) {
+			_this.listeners[type] = _this.listeners[type] || [];
+			_this.listeners[type].push(fn);
+		};
+		this.removeEventListener = function(type, fn) {
+			_this.listeners[type] && _this.listeners[type].splice(_this.listeners[type].indexOf(fn), 1);
+		};
+		this.dispatchEvent = function(evt) {
+			var list = _this.listeners[evt.type];
+			if (list) {
+				for (var i = 0; i < list.length; i++) {
+					list[i].call(_this, evt);
+				}
+			}
+		};
+		this.onabort = this.onerror = this.onload = this.onloadstart = this.onloadend = this.onprogress = null;
+
+		function constructEvent(type, evt) {
+			var e = {type: type, target: _this, loaded: evt.loaded, total: evt.total, error: evt.error};
+			if (evt.result != null) e.target.result = evt.result;
+			return e;
+		};
+		var listener = function(evt) {
+			if (!loadStarted) {
+				loadStarted = true;
+				_this.onloadstart && this.onloadstart(constructEvent('loadstart', evt));
+			}
+			if (evt.type === 'load') {
+				_this.onloadend && _this.onloadend(constructEvent('loadend', evt));
+				var e = constructEvent('load', evt);
+				_this.onload && _this.onload(e);
+				_this.dispatchEvent(e);
+			} else if (evt.type === 'progress') {
+				var e = constructEvent('progress', evt);
+				_this.onprogress && _this.onprogress(e);
+				_this.dispatchEvent(e);
+			} else {
+				var e = constructEvent('error', evt);
+				_this.onerror && _this.onerror(e);
+				_this.dispatchEvent(e);
+			}
+		};
+		this.readAsArrayBuffer = function(file) {
+			FileAPI.readAsBinaryString(file, listener);
+		}
+		this.readAsBinaryString = function(file) {
+			FileAPI.readAsBinaryString(file, listener);
+		}
+		this.readAsDataURL = function(file) {
+			FileAPI.readAsDataURL(file, listener);
+		}
+		this.readAsText = function(file) {
+			FileAPI.readAsText(file, listener);
+		}
+	}
+}
+
+})();
+
 angular.module("mnd.multi-transclude", [])
 
 .directive("mndMultiTransclude", function () {
@@ -2278,6 +3454,8 @@ return Q;
         this._onResultCallbacks  = {};
         this._onUpdatedCallbacks = {};
         this._events = {};
+		this._queue = [];
+		this.readyState = -1;
 		this._reconnect_count = 0;
 		this._reconnect_incremental_timer = 0;
         if (!options.do_not_autoconnect) this.connect();
@@ -2286,6 +3464,7 @@ return Q;
 
     DDP.prototype.connect = function () {
         this._socket = new this._SocketConstructor(this._endpoint);
+		this.readyState = 0;
         this._socket.onopen    = this._on_socket_open.bind(this);
         this._socket.onmessage = this._on_socket_message.bind(this);
         this._socket.onerror   = this._on_socket_error.bind(this);
@@ -2342,6 +3521,10 @@ return Q;
     };
 
     DDP.prototype._send = function (object) {
+		if (this.readyState !== 1 && object.msg !== "connect") {
+			this._queue.push(object);
+			return;
+		}
         var message;
         if (typeof EJSON === "undefined") {
             message = JSON.stringify(object);
@@ -2402,11 +3585,17 @@ return Q;
         this._emit("error", data);
     };
     DDP.prototype._on_connected = function (data) {
+		this.readyState = 1;
         this._reconnect_count = 0;
         this._reconnect_incremental_timer = 0;
         this._emit("connected", data);
+		var length = this._queue.length;
+		for (var i=0; i<length; i++) {
+			this._send(this._queue.shift());
+		}
     };
     DDP.prototype._on_failed = function (data) {
+		this.readyState = 4;
         this._emit("failed", data);
     };
     DDP.prototype._on_added = function (data) {
@@ -2420,10 +3609,12 @@ return Q;
     };
 
     DDP.prototype._on_socket_close = function () {
+		this.readyState = 4;
         this._emit("socket_close");
         if (this._autoreconnect) this._try_reconnect();
     };
     DDP.prototype._on_socket_error = function (e) {
+		this.readyState = 4;
         this._emit("socket_error", e);
         if (this._autoreconnect) this._try_reconnect();
     };
@@ -2470,8 +3661,26 @@ return Q;
 "use strict";
 
 function clone (obj) {
-	if (obj === null) return null;
-	return JSON.parse(JSON.stringify(obj));
+	if (typeof EJSON !== "undefined") {
+		return EJSON.clone(obj);
+	}
+	var type = typeof obj;
+	switch (type) {
+		case "undefined":
+		case "function":
+			return undefined;
+		case "string":
+		case "number":
+		case "boolean":
+			return obj;
+		case "object":
+			if (obj === null) {
+				return null;
+			}
+			return JSON.parse(JSON.stringify(obj));
+		default:
+			return;
+	}
 }
 
 var EventEmitter = function () {};
@@ -2531,6 +3740,7 @@ var Asteroid = function (options) {
 	this._ddpOptions.do_not_autoconnect = true;
 	this._do_not_autocreate_collections = options._do_not_autocreate_collections;
 	this.collections = {};
+	this.subscriptions = {};
 	this._init();
 };
 Asteroid.prototype = new EventEmitter();
@@ -2544,45 +3754,64 @@ Asteroid.prototype._init = function () {
 		self.ddp.sub("meteor.loginServiceConfiguration");
 		self._emit("connected");
 	});
-	self.ddp.on("added", self._onAdded.bind(self));
-	self.ddp.on("changed", self._onChanged.bind(self));
-	self.ddp.on("removed", self._onRemoved.bind(self));
+	self.ddp.on("added", function (data) {
+		self._onAdded(data);
+	});
+	self.ddp.on("changed", function (data) {
+		self._onChanged(data);
+	});
+	self.ddp.on("removed", function (data) {
+		self._onRemoved(data);
+	});
 	self.ddp.connect();
 };
 
 Asteroid.prototype._onAdded = function (data) {
-	var loginConfigCollectionName = "meteor_accounts_loginServiceConfiguration";
+	var alwaysAutocreate = [
+		"meteor_accounts_loginServiceConfiguration",
+		"users"
+	];
 	var cName = data.collection;
 	if (!this.collections[cName]) {
 		if (this._do_not_autocreate_collections) {
-			if (cName !== loginConfigCollectionName && cName !== "users") {
+			if (alwaysAutocreate.indexOf(cName) === -1) {
 				return;
 			}
 		}
-		new Asteroid.Collection(cName, this, Asteroid.DumbDb);
+		this.createCollection(cName);
 	}
 	var item = data.fields || {};
 	item._id = data.id;
-	this.collections[cName]._localInsert(item, true);
+	this.collections[cName]._remoteToLocalInsert(item);
 };
 
 Asteroid.prototype._onRemoved = function (data) {
-	if (!this.collections[data.collection]) return;
-	this.collections[data.collection]._localRemove(data.id);
+	if (this.collections[data.collection]) {
+		this.collections[data.collection]._remoteToLocalRemove(data.id);
+	}
 };
 
 Asteroid.prototype._onChanged = function (data) {
-	if (!this.collections[data.collection]) return;
+	if (!this.collections[data.collection]) {
+		return;
+	}
+	if (!data.fields) {
+		data.fields = {};
+	}
 	if (data.cleared) {
 		data.cleared.forEach(function (key) {
 			data.fields[key] = undefined;
 		});
 	}
-	this.collections[data.collection]._localUpdate(data.id, data.fields);
+	this.collections[data.collection]._remoteToLocalUpdate(data.id, data.fields);
 };
 
 Asteroid.prototype.subscribe = function (name /* , param1, param2, ... */) {
+	if (this.subscriptions[name]) {
+		return this.subscriptions[name];
+	}
 	var deferred = Q.defer();
+	this.subscriptions[name] = deferred.promise;
 	var params = Array.prototype.slice.call(arguments, 1);
 	this.ddp.sub(name, params, function (err, id) {
 		if (err) {
@@ -2591,7 +3820,7 @@ Asteroid.prototype.subscribe = function (name /* , param1, param2, ... */) {
 			deferred.resolve(id);
 		}
 	});
-	return deferred.promise;
+	return this.subscriptions[name];
 };
 
 Asteroid.prototype.unsubscribe = function (id) {
@@ -2618,145 +3847,192 @@ Asteroid.prototype.apply = function (method, params) {
 		updatedDeferred.resolve();
 	};
 	this.ddp.method(method, params, onResult, onUpdated);
-	return [resultDeferred.promise, updatedDeferred.promise];
+	return {
+		result: resultDeferred.promise,
+		updated: updatedDeferred.promise
+	};
 };
 
+Asteroid.prototype.createCollection = function (name) {
+	if (!this.collections[name]) {
+		this.collections[name] = new Collection(name, this, DumbDb);
+	}
+	return this.collections[name];
+};
+
+// Collection class constructor definition
 var Collection = function (name, asteroidRef, DbConstructor) {
 	this.name = name;
 	this.asteroid = asteroidRef;
-	this.asteroid.collections[name] = this;
 	this.db = new DbConstructor();
 };
 Collection.prototype = new EventEmitter();
 Collection.prototype.constructor = Collection;
 
-Collection.prototype._localInsert = function (item, fromRemote) {
+
+
+// Insert-related private and public methods
+Collection.prototype._localToLocalInsert = function (item) {
 	var existing = this.db.get(item._id);
-	if (fromRemote && isEqual(existing, item)) return;
-	if (!fromRemote && existing) throw new Error("Item exists.");
+	if (existing) {
+		throw new Error("Item exists");
+	}
 	this.db.set(item._id, item);
-	this._emit("change");
+	this._emit("insert", item._id);
 };
-Collection.prototype._remoteInsert = function (item) {
+Collection.prototype._remoteToLocalInsert = function (item) {
+	var existing = this.db.get(item._id);
+	if (isEqual(existing, item)) {
+		return;
+	}
+	this.db.set(item._id, item);
+	this._emit("insert", item._id);
+};
+Collection.prototype._restoreInserted = function (id) {
+	self.db.del(id);
+	self._emit("restore", id);
+};
+Collection.prototype._localToRemoteInsert = function (item) {
 	var self = this;
+	var deferred = Q.defer();
 	var methodName = "/" + self.name + "/insert";
 	this.asteroid.ddp.method(methodName, [item], function (err, res) {
 		if (err) {
-			self._localRemove(item._id);
-			throw err;
+			self._restoreInserted(item._id);
+			deferred.reject(err);
+		} else {
+			deferred.resolve(res);
 		}
 	});
+	return deferred.promise;
 };
 Collection.prototype.insert = function (item) {
-	if (!item._id) item._id = guid();
-	this._localInsert(item, false);
-	this._remoteInsert(item);
-	return item._id;
+	if (!item._id) {
+		item._id = guid();
+	}
+	this._localToLocalInsert(item, false);
+	return this._localToRemoteInsert(item);
 };
 
-var removal_suffix = "__del__";
-Collection.prototype._localRemove = function (id) {
+
+
+// Remove-related private and public methods
+var mf_removal_suffix = "__del__";
+Collection.prototype._localToLocalRemove = function (id) {
+	var existing = this.db.get(id);
+	if (!existing) {
+		console.warn("Item not present.");
+		return;
+	}
+	this.db.set(id + mf_removal_suffix, existing);
+	this.db.del(id);
+	this._emit("remove", id);
+};
+Collection.prototype._remoteToLocalRemove = function (id) {
 	var existing = this.db.get(id);
 	if (!existing) {
 		console.warn("Item not present.");
 		return;
 	}
 	this.db.del(id);
-	this.db.del(id + removal_suffix);
-	this._emit("change");
+	this.db.del(id + mf_removal_suffix);
+	this._emit("remove", id);
 };
-Collection.prototype._localRestoreRemoved = function (id) {
-	var existing = this.db.get(id + removal_suffix);
-	this.db.set(id, existing);
-	this.db.del(id + removal_suffix);
-	this._emit("change");
+Collection.prototype._restoreRemoved = function (id) {
+	var backup = this.db.get(id + mf_removal_suffix);
+	this.db.set(id, backup);
+	this.db.del(id + mf_removal_suffix);
+	this._emit("restore", id);
 };
-Collection.prototype._localMarkForRemoval = function (id) {
-	var existing = this.db.get(id);
-	if (!existing) {
-		console.warn("Item not present.");
-		return;
-	}
-	this.db.set(id + removal_suffix, existing);
-	this.db.del(id);
-	this._emit("change");
-};
-Collection.prototype._remoteRemove = function (id) {
+Collection.prototype._localToRemoteRemove = function (id) {
 	var self = this;
+	var deferred = Q.defer();
 	var methodName = "/" + self.name + "/remove";
 	this.asteroid.ddp.method(methodName, [{_id: id}], function (err, res) {
 		if (err) {
-			self._localRestoreRemoved(id);
-			throw err;
+			self._restoreRemoved(id);
+			deferred.reject(err);
+		} else {
+			deferred.resolve(res);
 		}
 	});
+	return deferred.promise;
 };
 Collection.prototype.remove = function (id) {
-	this._localMarkForRemoval(id);
-	this._remoteRemove(id);
+	this._localToLocalRemove(id);
+	return this._localToRemoteRemove(id);
 };
 
-var update_suffix = "__upd__";
-Collection.prototype._localUpdate = function (id, fields) {
+
+
+// Update-related private and public methods
+var mf_update_suffix = "__upd__";
+Collection.prototype._localToLocalUpdate = function (id, item) {
 	var existing = this.db.get(id);
 	if (!existing) {
-		console.warn("Item not present.");
+		throw new Error("Item not present");
+	}
+	this.db.set(id + mf_update_suffix, existing);
+	this.db.set(id, item);
+	this._emit("update", id);
+};
+Collection.prototype._remoteToLocalUpdate = function (id, fields) {
+	var existing = this.db.get(id);
+	if (!existing) {
+		console.warn("Item not present");
 		return;
 	}
 	for (var field in fields) {
 		existing[field] = fields[field];
 	}
 	this.db.set(id, existing);
-	this.db.del(id + update_suffix);
-	this._emit("change");
+	this.db.del(id + mf_update_suffix);
+	this._emit("update", id);
 };
-Collection.prototype._localRestoreUpdated = function (id) {
-	var existing = this.db.get(id + update_suffix);
-	this.db.set(id, existing);
-	this.db.del(id + update_suffix);
-	this._emit("change");
+Collection.prototype._restoreUpdated = function (id) {
+	var backup = this.db.get(id + mf_update_suffix);
+	this.db.set(id, backup);
+	this.db.del(id + mf_update_suffix);
+	this._emit("restore", id);
 };
-Collection.prototype._localMarkForUpdate = function (id, item) {
-	var existing = this.db.get(id);
-	if (!existing) {
-		console.warn("Item not present.");
-		return;
-	}
-	this.db.set(id + update_suffix, existing);
-	this.db.set(id, item);
-	this._emit("change");
-};
-Collection.prototype._remoteUpdate = function (id, item) {
+Collection.prototype._localToRemoteUpdate = function (id, item) {
 	var self = this;
 	var methodName = "/" + self.name + "/update";
-	this.asteroid.ddp.method(methodName, [{_id: id}, {$set: item}], function (err, res) {
+	var sel = {
+		_id: id
+	};
+	var mod = {
+		$set: item
+	};
+	this.asteroid.ddp.method(methodName, [sel, mod], function (err, res) {
 		if (err) {
-			self._localRestoreUpdated(id);
-			throw err;
+			self._restoreUpdated(id);
+			deferred.reject(err);
+		} else {
+			deferred.resolve(res);
 		}
 	});
+	return deferred.promise;
 };
 Collection.prototype.update = function (id, item) {
-	this._localMarkForUpdate(id, item);
-	this._remoteUpdate(id, item);
+	this._localToLocalUpdate(id, item);
+	return this._localToRemoteUpdate(id, item);
 };
-
-Asteroid.Collection = Collection;
 
 var DumbDb = function () {
 	this.itemsHash = {};
 	this.itemsArray = [];
 };
+DumbDb.prototype.constructor = DumbDb;
 
 DumbDb.prototype.set = function (id, item) {
+	item = clone(item);
 	this.itemsHash[id] = item;
 	this.itemsArray.push(item);
 };
 
 DumbDb.prototype.get = function (id) {
-	if (this.itemsHash[id]) {
-		return clone(this.itemsHash[id]);
-	}
+	return clone(this.itemsHash[id]);
 };
 
 DumbDb.prototype.del = function (id) {
@@ -2811,11 +4087,19 @@ Asteroid.prototype._initOauthLogin = function (service, credentialToken, loginUr
 				}
 			};
 			self.ddp.method("login", [loginParameters], function (err, res) {
-				if (err) return deferred.reject();
-				self.userId = res.id;
-				localStorage[self._host + "__login_token__"] = res.token;
-				self._emit("login", res);
-				deferred.resolve(res.id);
+				if (err) {
+					delete self.userId;
+					delete self.loggedIn;
+					delete localStorage[self._host + "__login_token__"];
+					deferred.reject(err);
+					self._emit("loginError", err);
+				} else {
+					self.userId = res.id;
+					self.loggedIn = true;
+					localStorage[self._host + "__login_token__"] = res.token;
+					self._emit("login", res);
+					deferred.resolve(res.id);
+				}
 			});
 			return deferred.promise;
 		});
@@ -2824,7 +4108,9 @@ Asteroid.prototype._initOauthLogin = function (service, credentialToken, loginUr
 Asteroid.prototype._tryResumeLogin = function () {
 	var self = this;
 	var token = localStorage[self._host + "__login_token__"];
-	if (!token) return;
+	if (!token) {
+		return;
+	}
 	return Q()
 		.then(function () {
 			var deferred = Q.defer();
@@ -2832,18 +4118,21 @@ Asteroid.prototype._tryResumeLogin = function () {
 				resume: token
 			};
 			self.ddp.method("login", [loginParameters], function (err, res) {
-				if (err) return deferred.reject();
-				self.userId = res.id;
-				localStorage[self._host + "__login_token__"] = res.token;
-				self._emit("login", res);
-				deferred.resolve(res.id);
+				if (err) {
+					delete self.userId;
+					delete self.loggedIn;
+					delete localStorage[self._host + "__login_token__"];
+					self._emit("loginError", err);
+					deferred.reject(err);
+				} else {
+					self.userId = res.id;
+					self.loggedIn = true;
+					localStorage[self._host + "__login_token__"] = res.token;
+					self._emit("login", res);
+					deferred.resolve(res.id);
+				}
 			});
 			return deferred.promise;
-		})
-		.fail(function () {
-			self.userId = null;
-			delete localStorage[self._host + "__login_token__"];
-			self._emit("logout");
 		});
 };
 
@@ -2896,7 +4185,20 @@ Asteroid.prototype.loginWithTwitter = function (scope) {
 };
 
 Asteroid.prototype.logout = function () {
-	
+	var deferred = Q.defer();
+	self.ddp.method("logout", [], function (err, res) {
+		if (err) {
+			self._emit("logoutError", err);
+			deferred.reject(err);
+		} else {
+			delete self.userId;
+			delete self.loggedIn;
+			delete localStorage[self._host + "__login_token__"];
+			self._emit("logout", res);
+			deferred.resolve(res);
+		}
+	});
+	return deferred.promise;
 };
 
 return Asteroid;
