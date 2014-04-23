@@ -44,7 +44,7 @@ elb-describe-lbs --region $region > LOAD_B_DESC.out
 cat LOAD_B_DESC.out
 
 echo "launch new EC2 instance from AMI-ID ($amiid) with user data file: $userdatafile"
-ec2-run-instances --instance-count $instancecount --key=$key --instance-type=$ec2_instance_type --user-data-file=$userdatafile --group=$group --region=$region $amiid > NEW_INSTANCE.out
+ec2-run-instances --instance-count $instancecount --key=$key --instance-type=$ec2_instance_type --group=$group --region=$region $amiid > NEW_INSTANCE.out
 
 instanceId=`./getInstanceId.pl NEW_INSTANCE.out`
 echo "created new EC2 instance: $instanceId"
