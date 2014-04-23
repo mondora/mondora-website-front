@@ -14,7 +14,8 @@ var dvServer =http.createServer(function (req, res) {
 });
 
 gulp.task("styles", function () {
-	gulp.src("app/**/*.css")
+	gulp.src("app/**/*.scss")
+		.pipe(plugins.sass())
 		.pipe(plugins.concat("app.css"))
 		.pipe(plugins.autoprefixer("last 2 version"))
 		.pipe(gulp.dest("dist/"))
@@ -50,7 +51,6 @@ gulp.task("templates", function () {
 
 gulp.task("vendorStyles", function () {
 	var sources = [
-		"bower_components/mnd-dashboard/dist/dashboard.css",
 		"bower_components/mnd-sprinkle/dist/sprinkle.css",
 		"bower_components/medium-editor/dist/css/medium-editor.css",
 		"bower_components/medium-editor/dist/css/themes/default.css"
@@ -91,7 +91,7 @@ gulp.task("buildVendor", ["vendorStyles", "vendorScripts"]);
 gulp.task("default", function () {
 	dvServer.listen(8080);
 	lrServer.listen(35729);
-	gulp.watch("app/**/*.css", ["styles"]);
+	gulp.watch("app/**/*.scss", ["styles"]);
 	gulp.watch("app/**/*.js", ["scripts"]);
 	gulp.watch("app/**/*.html", ["templates"]);
 });

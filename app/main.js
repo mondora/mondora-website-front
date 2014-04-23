@@ -35,17 +35,6 @@ angular.module("mnd.web", [
 		}
     });
 
-    $stateProvider.state("postInsert", {
-        url: "/post/insert",
-        templateUrl: "pages/post/insert/postInsert.html",
-		controller: "PostInsertController",
-		resolve: {
-			postSub: function () {
-				return Ceres.subscribe("posts");
-			}
-		}
-    });
-
     $stateProvider.state("postView", {
         url: "/post/:postId",
         templateUrl: "pages/post/view/postView.html",
@@ -94,49 +83,6 @@ angular.module("mnd.web", [
         } else {
             this.$apply(fn);
         }
-    };
-
-    $rootScope.menu = {
-        items: [
-            {
-                title: "home",
-                href: "http://www.mondora.com"
-            },
-            {
-                title: "cloud",
-                href: "http://www.mondora.com"
-            },
-            {
-                title: "governance",
-                href: "http://www.mondora.com"
-            },
-            {
-                title: "team",
-                href: "http://www.mondora.com"
-            },
-            {
-                title: "formazione",
-                href: "http://www.mondora.com"
-            },
-            {
-                title: "community",
-                href: "http://www.mondora.com"
-            },
-            {
-                title: "my mondora",
-                type: "submenu",
-                items: [
-                    {
-                        title: "pomodoro",
-                        href: "http://www.mondora.com"
-                    },
-                    {
-                        title: "AaS",
-                        href: "http://www.mondora.com"
-                    }
-                ]
-            }
-        ]
     };
 
 	$rootScope.Ceres = Ceres;

@@ -6,20 +6,19 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/home/home.html',
-    '<div id="mnd-video-background">\n' +
-    '	<div class="mnd-video-overlay"></div>\n' +
-    '	<video muted autoplay="1" loop="1"> \n' +
-    '		<source src="http://download.mondora.s3.amazonaws.com/mondora.mp4" />\n' +
-    '	</video>\n' +
-    '</div>\n' +
-    '<div id="mnd-fixed-position">\n' +
+    '<div id="mnd-home-container">\n' +
     '	<div id="mnd-sign-in" ng-click="login()">\n' +
-    '		<span ng-if="!signedIn">Sign In</span>\n' +
+    '		<span ng-if="signedIn">Sign In</span>\n' +
     '	</div>\n' +
-    '	<div id="mnd-hidden-payoff">ONE STEP AHEAD<br />THE FUTURE</div>\n' +
+    '\n' +
+    '	<div id="mnd-hidden-payoff">\n' +
+    '		ONE STEP AHEAD<br />THE FUTURE\n' +
+    '	</div>\n' +
+    '\n' +
     '	<div id="mnd-sprinkle-container">\n' +
     '		<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinkleText}}"></div>\n' +
     '	</div>\n' +
+    '\n' +
     '	<div id="mnd-home-bottom">\n' +
     '		<div id="mnd-home-logo">\n' +
     '			<div class="mnd-mondora-logo">\n' +
@@ -35,6 +34,13 @@ module.run(['$templateCache', function($templateCache) {
     '			<div id="mnd-home-banner-arrow"></div>\n' +
     '		</div>\n' +
     '	</div>\n' +
+    '</div>\n' +
+    '\n' +
+    '<div id="mnd-video-background">\n' +
+    '	<div class="mnd-video-overlay"></div>\n' +
+    '	<video muted autoplay="1" loop="1"> \n' +
+    '		<source src="http://download.mondora.s3.amazonaws.com/mondora.mp4" />\n' +
+    '	</video>\n' +
     '</div>\n' +
     '');
 }]);
@@ -94,20 +100,6 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div class="col-sm-8 col-sm-offset-2">\n' +
     '	<p class="simplebox" id="postBodyEditor"></p>\n' +
-    '</div>\n' +
-    '');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('mnd.web');
-} catch (e) {
-  module = angular.module('mnd.web', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/post/insert/postInsert.html',
-    '<div class="col-sm-8 col-sm-offset-2">\n' +
     '</div>\n' +
     '');
 }]);
