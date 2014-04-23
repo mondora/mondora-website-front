@@ -31,16 +31,6 @@ angular.module('mnd.web', [
         }
       }
     });
-    $stateProvider.state('postInsert', {
-      url: '/post/insert',
-      templateUrl: 'pages/post/insert/postInsert.html',
-      controller: 'PostInsertController',
-      resolve: {
-        postSub: function () {
-          return Ceres.subscribe('posts');
-        }
-      }
-    });
     $stateProvider.state('postView', {
       url: '/post/:postId',
       templateUrl: 'pages/post/view/postView.html',
@@ -86,11 +76,39 @@ angular.module('mnd.web', [
         this.$apply(fn);
       }
     };
-    $rootScope.menu = {
+    $rootScope.Ceres = Ceres;
+    $rootScope.Configurations = Ceres.createCollection('configurations');
+    $rootScope.Posts = Ceres.createCollection('posts');
+    Ceres.on('login', function () {
+      $rootScope.safeApply(function () {
+        $rootScope.signedIn = true;
+      });
+    });
+    Ceres.on('logout', function () {
+      $rootScope.safeApply(function () {
+        $rootScope.signedIn = false;
+      });
+    });
+  }
+]);
+angular.module('mnd.web').controller('SidebarController', [
+  '$scope',
+  '$state',
+  function ($scope, $state) {
+    $scope.addPost = function () {
+      var post = {};
+      $scope.Posts.insert(post);
+      $state.go('postEdit', { postId: post._id });
+    };
+    $scope.menu = {
       items: [
         {
-          title: 'home',
-          href: 'http://www.mondora.com'
+          title: 'Home',
+          href: '/'
+        },
+        {
+          title: 'Nuovo post',
+          ngClick: 'addPost'
         },
         {
           title: 'cloud',
@@ -127,28 +145,6 @@ angular.module('mnd.web', [
           ]
         }
       ]
-    };
-    $rootScope.Ceres = Ceres;
-    $rootScope.Configurations = Ceres.createCollection('configurations');
-    $rootScope.Posts = Ceres.createCollection('posts');
-    Ceres.on('login', function () {
-      $rootScope.safeApply(function () {
-        $rootScope.signedIn = true;
-      });
-    });
-    Ceres.on('logout', function () {
-      $rootScope.safeApply(function () {
-        $rootScope.signedIn = false;
-      });
-    });
-  }
-]);
-angular.module('mnd.web').controller('SidebarController', [
-  '$scope',
-  '$state',
-  function ($scope, $state) {
-    $scope.addPost = function () {
-      console.log('AAA');
     };
   }
 ]);
@@ -285,15 +281,6 @@ angular.module('mnd.web').controller('PostEditController', [
       $scope.Posts.update(id, post);
     };
     $interval($scope.save, 5000);
-  }
-]);
-angular.module('mnd.web').controller('PostInsertController', [
-  '$scope',
-  '$state',
-  function ($scope, $state) {
-    var post = {};
-    $scope.Posts.insert(post);
-    $state.go('postEdit', { postId: post._id });
   }
 ]);
 angular.module('mnd.web').controller('PostListController', [

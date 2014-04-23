@@ -1,17 +1,16 @@
-<div id="mnd-video-background">
-	<div class="mnd-video-overlay"></div>
-	<video muted autoplay="1" loop="1"> 
-		<source src="http://download.mondora.s3.amazonaws.com/mondora.mp4" />
-	</video>
-</div>
-<div id="mnd-fixed-position">
+<div id="mnd-home-container">
 	<div id="mnd-sign-in" ng-click="login()">
-		<span ng-if="!signedIn">Sign In</span>
+		<span ng-if="signedIn">Sign In</span>
 	</div>
-	<div id="mnd-hidden-payoff">ONE STEP AHEAD<br />THE FUTURE</div>
+
+	<div id="mnd-hidden-payoff">
+		ONE STEP AHEAD<br />THE FUTURE
+	</div>
+
 	<div id="mnd-sprinkle-container">
 		<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinkleText}}"></div>
 	</div>
+
 	<div id="mnd-home-bottom">
 		<div id="mnd-home-logo">
 			<div class="mnd-mondora-logo">
@@ -27,4 +26,11 @@
 			<div id="mnd-home-banner-arrow"></div>
 		</div>
 	</div>
+</div>
+
+<div id="mnd-video-background">
+	<div class="mnd-video-overlay"></div>
+	<video muted autoplay="1" loop="1"> 
+		<source src="http://download.mondora.s3.amazonaws.com/mondora.mp4" />
+	</video>
 </div>

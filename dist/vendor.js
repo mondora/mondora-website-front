@@ -1215,8 +1215,15 @@ angular.module('mnd.dashboard', [
       templateUrl: 'template/sidebar.html',
       replace: true,
       transclude: true,
-      scope: { menu: '=' },
+      scope: true,
       link: function ($scope) {
+        $scope.call = function (name) {
+          if (!name) {
+            return;
+          }
+          var args = Array.prototype.slice.call(arguments, 1);
+          $scope[name].call(null, args);
+        };
         $scope.isSubmenu = function (item) {
           return item.type === 'submenu';
         };
@@ -1239,7 +1246,8 @@ angular.module('mnd.dashboard', [
       restrict: 'EA',
       templateUrl: 'template/toggle-sidebar.html',
       replace: true,
-      scope: {},
+      transclude: true,
+      scope: true,
       link: function ($scope) {
         $scope.sidebarOpen = MndSidebarService.getSidebarStatus();
         $scope.toggle = function () {
@@ -1260,7 +1268,7 @@ angular.module('mnd.dashboard', [
       templateUrl: 'template/content.html',
       replace: true,
       transclude: true,
-      scope: {},
+      scope: true,
       link: function ($scope) {
         $scope.sidebarOpen = MndSidebarService.getSidebarStatus();
         $scope.$on('sidebarStatusChanged', function () {
@@ -1295,7 +1303,7 @@ module.run(['$templateCache', function($templateCache) {
     '	<div mnd-multi-transclude="before"></div>\n' +
     '	<ul class="nav">\n' +
     '		<li ng-repeat="item in menu.items" ng-click="toggleSubmenu(item)" class="mnd-clickable">\n' +
-    '			<a ng-href="{{item.href}}">\n' +
+    '			<a ng-href="{{item.href}}" ng-click="call(item.ngClick)">\n' +
     '				<span class="mnd-width-20" ng-if="item.icon">\n' +
     '					<i class="fa {{item.icon}}"></i>\n' +
     '				</span>\n' +
@@ -1318,17 +1326,7 @@ module.run(['$templateCache', function($templateCache) {
     '			</ul>\n' +
     '		</li>\n' +
     '	</ul>\n' +
-    '	<div mnd-multi-transclude="after">\n' +
-    '		<div id="mnd-sidebar-footer">\n' +
-    '			<span>\n' +
-    '				MONDORA Srl \n' +
-    '			</span>\n' +
-    '			<br />\n' +
-    '			Milano, Morbegno, Novara, St. Moritz (CH)<br />\n' +
-    '			Via Cornalia 7 <br />\n' +
-    '			20154, Milano <br />\n' +
-    '		</div>\n' +
-    '	</div>\n' +
+    '	<div mnd-multi-transclude="after"></div>\n' +
     '</div>\n' +
     '');
 }]);
@@ -1347,11 +1345,7 @@ module.run(['$templateCache', function($templateCache) {
     '		<i class="fa fa-bars" ng-show="!sidebarOpen"></i>\n' +
     '		<i class="fa fa-times" ng-show="sidebarOpen"></i>\n' +
     '	</div>\n' +
-    '	<div id="mnd-sidebar-logo">\n' +
-    '		<div class="mnd-mondora-logo">\n' +
-    '			<img src="http://mnd-website.s3.amazonaws.com/img/mondora-logo.png" />\n' +
-    '		</div>\n' +
-    '	</div>\n' +
+    '	<div mnd-multi-transclude="center"></div>\n' +
     '</div>\n' +
     '');
 }]);

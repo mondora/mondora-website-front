@@ -1,14 +1,7 @@
-.mnd-content{
-	position:relative;
-	top: 0px;
-	left: 0px;
-	height: 100%;
-}
 #mnd-video-background {
-	position: absolute;
-	height: 100%;
-	width: 100%;
 	z-index: -1;
+	padding: 0px;
+	margin: 0px;
 	overflow: hidden;
 }
 .mnd-video-overlay{
@@ -18,52 +11,48 @@
 	min-height: 100%;
 }
 #mnd-video-background video{
-	position:absolute;
 	top: 0px;
 	left: 0px;
 	min-height: 100%;
 	min-width: 100%;
 	z-index: -10;
 }
-#mnd-fixed-position {
+
+#mnd-home-container {
 	position: absolute;
+	top: 0px;
+	left: 0px;
+	padding: 0px;
+	margin: 0px;
 	height: 100%;
 	width: 100%;
-	overflow: scroll;
+	z-index: 1;
 }
+
 #mnd-sprinkle-container {
 	position: absolute;
 	width: 620px;
-	padding: 0px;
-	margin-left: -350px;
-	margin-top: -50px;
 	left: 50%;
 	top: 50%;
+	margin-left: -310px;
+	margin-top: -50px;
 	z-index: 1;
 }
 #mnd-hidden-payoff {
-	position: absolute;
-	width: 100%;
 	z-index: 10;
-	margin-left: -50px;
-	padding-top: 30px;
 	color: #fff;
+	padding-top: 30px;
 	font-size: 80px;
 	font-style: bold;
 	text-align: center;
 	text-transform: uppercase;
 	opacity: 0;
-	-o-transition:opacity 2s ease-in;
-	-ms-transition:opacity 2s ease-in;
-    -moz-transition:opacity 2s ease-in;
-    -webkit-transition:opacity 2s ease-in;
-    transition:opacity 2s ease-in;
+    transition: opacity 0s ease-in;
 }
 #mnd-hidden-payoff:hover {
 	opacity: 0.5;
 }
 #mnd-home-bottom {
-	position: absolute;
 	bottom: 0px;
 	height: 150px;
 	width: 100%;
@@ -72,7 +61,7 @@
 	width: 140px;
 	height: 140px;
 	float: right;
-	margin-right: 110px;
+	padding-right: 10px;
 	opacity: 0.5;
 	overflow: hidden;
 }
@@ -104,10 +93,10 @@
 	margin-top: 0px;
 }
 #mnd-sign-in {
-	position: absolute;
-	right: 110px;
+	float: right;
+	padding-right: 10px;
 	padding-top: 10px;
-	color: #fff;
+	color: #f0f;
 	font-size: 20px;
 }
 #mnd-sign-in:hover {

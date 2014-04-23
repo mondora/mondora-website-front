@@ -1,0 +1,201 @@
+$mnd-yellow: #ffcc00;
+$mnd-grey: #5e5f5f;
+$mnd-light-grey: #abadad;
+$mnd-font: 'Source Sans Pro', sans-serif;
+
+/************************ HTML ***************************/
+body {
+	font-family: $mnd-font;	
+}
+
+/************************ Sidebar *************************/
+#mnd-sidebar {
+	box-sizing: border-box;
+	position: fixed;
+	top: 0px;
+	left: -300px;
+	width: 300px;
+	background: $mnd-yellow;
+	height: 100%;
+	overflow-y: hidden;
+	z-index: 1;
+	border-right: 2px solid $mnd-grey;
+	transition: left 0.4s ease 0s;
+}
+#mnd-toggle-sidebar {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	height: 100%;
+	display: block;
+	z-index: 100;
+	margin: 0px;
+	min-width: 100px;
+	text-align: center;
+	background-color: $mnd-yellow;
+	border-right: 2px solid $mnd-grey;
+	transition: left 0.4s ease 0s;
+}
+#mnd-show-sidebar {
+	width: 60px;
+	height: 60px;
+	margin: 20px;
+	border: none;
+	font-size: 40px;
+	cursor: pointer;
+	background-color: $mnd-yellow;
+	color: $mnd-grey;
+	text-align: center;
+}
+#mnd-sidebar.sidebar-open{
+	left: 0px;
+}
+#mnd-toggle-sidebar.sidebar-open{
+	left: 300px;
+}
+#mnd-sidebar-footer {
+	position: absolute;
+	bottom: 0px;
+	padding: 0 10px 10px 15px; 
+	color: $mnd-grey;
+	font-size: 16px;
+}
+#mnd-sidebar-footer span{
+	font-size: 30px;
+}
+#mnd-sidebar-logo {
+	position: absolute;
+	top: 50%;
+	height: 80px;
+	width: 80px;
+	margin-top: -40px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.mnd-mondora-logo img{
+	width: 100%;
+	height: 100%;
+}
+@media (max-width: 767px) {
+	#mnd-sidebar {
+		left: -300px;
+		transition: left 0.4s ease 0s;
+	}
+	#mnd-sidebar.sidebar-open {
+		left: 0px;
+	}
+	#mnd-toggle-sidebar {
+		height: 80px;
+		min-width: 100%;
+		left: 0px;
+		text-align: left;
+		border-bottom: 2px solid $mnd-grey;
+		border-right: 0px;
+	}
+	#mnd-show-sidebar {
+		margin: 10px 20px;
+	}
+	#mnd-sidebar-logo {
+	position: absolute;
+	left: 50%;
+	top: 0px;
+	height: 60px;
+	width: 60px;
+	margin-left: -30px;
+	margin-top: 10px;
+	}
+}
+
+
+/************************ sidebar MENU ***************************/
+.nav {
+  margin-top: 50px;
+  font: {
+  	family: $mnd-font;
+  	size: 30px;
+  	weight: normal;
+  }
+  text-transform: uppercase;
+}
+
+#mnd-sidebar > ul > li:first-child { 
+}
+
+#mnd-sidebar > ul > li {
+}
+.nav li a{
+	padding: 0 15px;
+	color: $mnd-grey;
+	font-weight: bold;
+	font-weight: 600;
+	transition:color 1s ease,padding .5s ease;
+}
+.nav li a:hover{
+	padding: 0 15px 0 20px;
+	color: $mnd-light-grey;
+	background-color: initial;
+}
+.nav-second-level {
+	margin-top: 0px;
+}
+.nav-second-level li a{
+	font-weight: normal;
+}
+/************************ Content *************************/
+#mnd-content {
+	box-sizing: border-box;
+	position: relative;
+	padding-left: 100px;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+	background-color: #ffffff;
+	transition: left 0.4s ease 0s;
+}
+#mnd-content.sidebar-open{
+	left: 300px;
+}
+@media (max-width: 767px) {
+	#mnd-content {
+		padding-left: 0px;
+		transition: left 0.4s ease 0s;
+	}
+	#mnd-content.sidebar-open {
+		left: 250px;
+	}
+}
+/********************* Misc *******************************/
+.mnd-clickable {
+	cursor: pointer;
+}
+.mnd-clickable:hover {
+	background-color:$mnd-yellow;
+}	
+.mnd-vsp-4 {
+	width: 100%;
+	height: 4px;
+}
+.mnd-width-30 {
+	width: 30px;
+}
+span.mnd-width-30 {
+	display: inline-block;
+}
+.mnd-width-20 {
+	width: 20px;
+}
+span.mnd-width-20 {
+	display: inline-block;
+}
+.mnd-width-15 {
+	width: 15px;
+}
+span.mnd-width-15 {
+	display: inline-block;
+}
+.mnd-width-10 {
+	width: 10px;
+}
+span.mnd-width-10 {
+	display: inline-block;
+}
