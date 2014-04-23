@@ -29,10 +29,12 @@
 
 	</head>
 
-	<body>
+	<body ng-controller="MainController">
 
 		<div mnd-sidebar ng-controller="SidebarController">
 			<div name="before">
+				<img ng-src="{{user.profile_image_url}}" />
+				<button ng-click="login()">Login</button>
 			</div>
 			<div name="after">
 				<div id="mnd-sidebar-footer">
@@ -55,8 +57,8 @@
 				</div>
 			</div>
 		</div>
-		<div mnd-content class="mnd-content">
-			<div ui-view></div>
+		<div mnd-content>
+			<div ui-view class="mnd-content"></div>
 		</div>
 
 	</body>

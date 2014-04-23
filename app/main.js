@@ -88,9 +88,11 @@ angular.module("mnd.web", [
 	$rootScope.Ceres = Ceres;
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
+	$rootScope.Users = Ceres.createCollection("users");
 	Ceres.on("login", function () {
 		$rootScope.safeApply(function () {
 			$rootScope.signedIn = true;
+			$rootScope.user = $rootScope.Users.findOne({});
 		});
 	});
 	Ceres.on("logout", function () {
@@ -99,4 +101,10 @@ angular.module("mnd.web", [
 		});
 	});
 
+})
+
+.controller("MainController", function ($scope) {
+	$scope.login = function () {
+		$scope.Ceres.loginWithTwitter();
+	};
 });

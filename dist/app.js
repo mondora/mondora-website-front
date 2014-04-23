@@ -79,9 +79,11 @@ angular.module('mnd.web', [
     $rootScope.Ceres = Ceres;
     $rootScope.Configurations = Ceres.createCollection('configurations');
     $rootScope.Posts = Ceres.createCollection('posts');
+    $rootScope.Users = Ceres.createCollection('users');
     Ceres.on('login', function () {
       $rootScope.safeApply(function () {
         $rootScope.signedIn = true;
+        $rootScope.user = $rootScope.Users.findOne({});
       });
     });
     Ceres.on('logout', function () {
@@ -89,6 +91,13 @@ angular.module('mnd.web', [
         $rootScope.signedIn = false;
       });
     });
+  }
+]).controller('MainController', [
+  '$scope',
+  function ($scope) {
+    $scope.login = function () {
+      $scope.Ceres.loginWithTwitter();
+    };  //$scope.avatarUrl = $scope.user.profile_image_url;
   }
 ]);
 angular.module('mnd.web').controller('SidebarController', [
@@ -152,12 +161,7 @@ angular.module('mnd.web').controller('HomeController', [
   '$scope',
   '$collection',
   function ($scope, $collection) {
-    var homeConfig;
-    $scope.Configurations.db.itemsArray.forEach(function (config) {
-      if (config.page === 'home') {
-        homeConfig = config;
-      }
-    });
+    var homeConfig = $scope.Configurations.findOne({ page: 'home' });
     $scope.sprinkleText = homeConfig.sprinkleText;
     $scope.banner = homeConfig.banner;
     $scope.login = function () {
