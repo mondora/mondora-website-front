@@ -3892,8 +3892,8 @@ Collection.prototype._remoteToLocalInsert = function (item) {
 	this._emit("insert", item._id);
 };
 Collection.prototype._restoreInserted = function (id) {
-	self.db.del(id);
-	self._emit("restore", id);
+	this.db.del(id);
+	this._emit("restore", id);
 };
 Collection.prototype._localToRemoteInsert = function (item) {
 	var self = this;
@@ -4000,6 +4000,7 @@ Collection.prototype._restoreUpdated = function (id) {
 };
 Collection.prototype._localToRemoteUpdate = function (id, item) {
 	var self = this;
+	var deferred = Q.defer();
 	var methodName = "/" + self.name + "/update";
 	var sel = {
 		_id: id
@@ -4036,6 +4037,27 @@ DumbDb.prototype.set = function (id, item) {
 
 DumbDb.prototype.get = function (id) {
 	return clone(this.itemsHash[id]);
+};
+
+DumbDb.prototype.find = function (selector) {
+	var getItemVal = function (item, key) {
+		return key.split(".").reduce(function (prev, curr) {
+			prev = prev[curr];
+			return prev;
+		}, item);
+	};
+	var keys = Object.keys(selector);
+	var matches = [];
+	this.itemsArray.forEach(function (item) {
+		for (var i=0; i<matchers.length; i++) {
+			var itemVal = getItemVal(item, keys[i]);
+			if (itemVal !== selector[keys[i]]) {
+				return;
+			}
+		}
+		matches.push(item);
+	});
+	return matches;
 };
 
 DumbDb.prototype.del = function (id) {
@@ -5527,45 +5549,3 @@ if (typeof module === 'object') {
     };
 
 }(window, document));
-
-'use strict';
-angular.module('angular-medium-editor', []).directive('mediumEditor', function () {
-  return {
-    require: 'ngModel',
-    restrict: 'AE',
-    link: function (scope, iElement, iAttrs, ctrl) {
-      angular.element(iElement).addClass('angular-medium-editor');
-      // Parse options
-      var opts = {};
-      if (iAttrs.options) {
-        opts = angular.fromJson(iAttrs.options);
-      }
-      var placeholder = opts.placeholder || 'Type your text';
-      var onChange = function () {
-        scope.$apply(function () {
-          // If user cleared the whole text, we have to reset the editor because MediumEditor
-          // lacks an API method to alter placeholder after initialization
-          if (iElement.html() == '<p><br></p>') {
-            opts.placeholder = placeholder;
-            var editor = new MediumEditor(iElement, opts);
-          }
-          ctrl.$setViewValue(iElement.html());
-        });
-      };
-      // view -> model
-      iElement.on('blur', onChange);
-      iElement.on('input', onChange);
-      // model -> view
-      ctrl.$render = function () {
-        if (!editor) {
-          // Hide placeholder when the model is not empty
-          if (!ctrl.$isEmpty(ctrl.$viewValue)) {
-            opts.placeholder = '';
-          }
-          var editor = new MediumEditor(iElement, opts);
-        }
-        iElement.html(ctrl.$isEmpty(ctrl.$viewValue) ? '' : ctrl.$viewValue);
-      };
-    }
-  };
-});

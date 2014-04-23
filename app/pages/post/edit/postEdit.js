@@ -8,6 +8,7 @@ angular.module("mnd.web")
 
 	var id = $stateParams.postId;
 	$scope.post = $scope.Posts.db.get(id);
+	window.Posts = $scope.Posts;
 
 
 

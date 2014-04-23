@@ -143,6 +143,15 @@ angular.module('mnd.web', [
     });
   }
 ]);
+angular.module('mnd.web').controller('SidebarController', [
+  '$scope',
+  '$state',
+  function ($scope, $state) {
+    $scope.addPost = function () {
+      console.log('AAA');
+    };
+  }
+]);
 angular.module('mnd.web').controller('HomeController', [
   '$scope',
   '$collection',
@@ -171,6 +180,7 @@ angular.module('mnd.web').controller('PostEditController', [
     ///////////////////////////
     var id = $stateParams.postId;
     $scope.post = $scope.Posts.db.get(id);
+    window.Posts = $scope.Posts;
     /////////////////////////
     // Init medium editors //
     /////////////////////////

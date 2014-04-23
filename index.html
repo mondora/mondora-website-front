@@ -31,7 +31,11 @@
 
 	<body>
 
-		<div mnd-sidebar menu="menu">
+		<div mnd-sidebar menu="menu" ng-controller="SidebarController">
+			<div name="before">
+				<button class="btn btn-default" ng-click="addPost()">Add post</button>
+				{{menu}}
+			</div>
 			<div name="after">
 				<div id="mnd-sidebar-footer">
 					<span>
