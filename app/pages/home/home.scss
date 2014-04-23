@@ -53,6 +53,7 @@
 	opacity: 0.5;
 }
 #mnd-home-bottom {
+	position: absolute;
 	bottom: 0px;
 	height: 150px;
 	width: 100%;
@@ -93,11 +94,12 @@
 	margin-top: 0px;
 }
 #mnd-sign-in {
-	float: right;
-	padding-right: 10px;
-	padding-top: 10px;
-	color: #f0f;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	color: #fff;
 	font-size: 20px;
+	z-index: 20;
 }
 #mnd-sign-in:hover {
 	cursor: pointer;
