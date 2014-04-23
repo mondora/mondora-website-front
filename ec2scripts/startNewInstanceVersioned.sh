@@ -9,6 +9,7 @@ export PATH=$PATH:$EC2_HOME/bin:$AWS_ELB_HOME/bin
 
 export JAVA_HOME=/usr/bin/java
 
+echo "direttore $1 $2 $3 $4"
 export AWS_ACCESS_KEY=$1
 export AWS_SECRET_KEY=$2
 export EC2_PRIVATE_KEY=$3
