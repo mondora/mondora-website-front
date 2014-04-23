@@ -29,9 +29,8 @@ echo "EC2_INSTANCE_TYPE: $ec2_instance_type"
 
 ## build userdatafile
 userdatafile="initawsParametrized.sh"
-cp initaws_header.sh $userdatafile
-echo "export APPLICATION_WAR='$applicationWarName'" >> $userdatafile
-echo "puppet apply -v -e 'include startup'" >> $userdatafile
+echo "cd /var/www" >> $userdatafile
+echo "git clone https://github.com/mondora/mnd-website.git" >> $userdatafile
 chmod +x $userdatafile
 
 cat $userdatafile
