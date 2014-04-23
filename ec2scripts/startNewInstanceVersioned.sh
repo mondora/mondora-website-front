@@ -40,7 +40,7 @@ echo
 rm *out
 
 echo "describe existing Elastic Load Balancers for region $region"
-/var/lib/jenkins/ElasticLoadBalancing-1.0.34.0/elb-describe-lbs --region $region > LOAD_B_DESC.out
+elb-describe-lbs --region $region > LOAD_B_DESC.out
 cat LOAD_B_DESC.out
 
 echo "launch new EC2 instance from AMI-ID ($amiid) with user data file: $userdatafile"
