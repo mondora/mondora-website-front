@@ -1,11 +1,6 @@
 angular.module("mnd.web").controller("HomeController", function ($scope, $collection) {
 
-	var homeConfig;
-	$scope.Configurations.db.itemsArray.forEach(function (config) {
-		if (config.page === "home") {
-			homeConfig = config;
-		}
-	});
+	var homeConfig = $scope.Configurations.findOne({page: "home"});
 	$scope.sprinkleText = homeConfig.sprinkleText;
 	$scope.banner = homeConfig.banner;
 
