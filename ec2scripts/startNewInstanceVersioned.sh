@@ -13,8 +13,8 @@ export AWS_ACCESS_KEY=$1
 export AWS_SECRET_KEY=$2
 export EC2_PRIVATE_KEY=$3
 
-amiid=ami-c3200caa
-region=us-east-1
+amiid=ami-78a1d448
+region=us-west-2b
 instancecount=1
 key=dino_telecom
 group=sg-f235d09b
