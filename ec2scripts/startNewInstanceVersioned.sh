@@ -44,8 +44,10 @@ echo "describe existing Elastic Load Balancers for region $region"
 elb-describe-lbs --region $region > LOAD_B_DESC.out
 cat LOAD_B_DESC.out
 
+echo "$AWS_ACCESS_KEY $AWS_SECRET_KEY $EC2_PRIVATE_KEY"
+
 echo "launch new EC2 instance from AMI-ID ($amiid) with user data file: $userdatafile"
-ec2-run-instances --instance-count $instancecount --cert="/var/lib/jenkins/meteor.pem" --instance-type=$ec2_instance_type --group=$group --region=$region $amiid > NEW_INSTANCE.out
+ec2-run-instances --instance-count $instancecount --user-data-file=$userdatafile --cert="/var/lib/jenkins/meteor.pem" --instance-type=$ec2_instance_type --group=$group --region=$region $amiid > NEW_INSTANCE.out
 
 instanceId=`./getInstanceId.pl NEW_INSTANCE.out`
 echo "created new EC2 instance: $instanceId"
