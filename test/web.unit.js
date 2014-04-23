@@ -1,7 +1,7 @@
-var should = require("should");
+var assert = require("assert");
 
 describe("The SidebarController", function () {
 	it("should have a menu property defined", function () {
-		true.should.be.true;
+		assert(true);
 	});
 });
