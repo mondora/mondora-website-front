@@ -1,12 +1,14 @@
 (function () {
 	var options = {
 		host: "http://api.nocheros.info",
+		//host: "http://localhost:3000",
 		do_not_autocreate_collections: true
 	};
 	options.ddpOptions = {
 		endpoint: "ws://api.nocheros.info/websocket",
+		//endpoint: "ws://localhost:3000/websocket",
 		SocketConstructor: WebSocket,
-		//debug: true
+		debug: true
 	};
 	window.Ceres = new Asteroid(options);
 })();
@@ -86,6 +88,7 @@ angular.module("mnd.web", [
     };
 
 	$rootScope.Ceres = Ceres;
+	$rootScope.Ceres.subscribe("userProfileImage");
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");

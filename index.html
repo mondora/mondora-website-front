@@ -33,8 +33,15 @@
 
 		<div mnd-sidebar ng-controller="SidebarController">
 			<div name="before">
-				<img ng-src="{{user.profile_image_url}}" />
-				<button ng-click="login()">Login</button>
+				<div id="mnd-sidebar-user">
+					<div ng-if="user">
+						<img class="img-circle" ng-src="{{user.services.twitter.profile_image_url}}" />
+						@{{user.profile.name}}
+					</div>
+					<div ng-if="!user" ng-click="login()" class="login">
+						<i class="fa fa-twitter"></i> LOGIN
+					</div>
+				</div>	
 			</div>
 			<div name="after">
 				<div id="mnd-sidebar-footer">

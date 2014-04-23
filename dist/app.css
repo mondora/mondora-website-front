@@ -61,6 +61,21 @@ body {
 #mnd-toggle-sidebar.sidebar-open {
   left: 300px; }
 
+#mnd-sidebar-user {
+  padding: 15px 10px 10px 15px;
+  color: #5e5f5f;
+  font-size: 30px;
+  font-weight: 600; }
+
+#mnd-sidebar-user .login {
+  cursor: pointer; }
+
+#mnd-sidebar-user .login:hover {
+  cursor: pointer;
+  color: #abadad;
+  -webkit-transition: color 1s ease, padding 0.5s ease;
+  transition: color 1s ease, padding 0.5s ease; }
+
 #mnd-sidebar-footer {
   position: absolute;
   bottom: 0px;

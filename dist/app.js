@@ -5,7 +5,8 @@
     };
   options.ddpOptions = {
     endpoint: 'ws://api.nocheros.info/websocket',
-    SocketConstructor: WebSocket
+    SocketConstructor: WebSocket,
+    debug: true
   };
   window.Ceres = new Asteroid(options);
 }());
@@ -77,6 +78,7 @@ angular.module('mnd.web', [
       }
     };
     $rootScope.Ceres = Ceres;
+    $rootScope.Ceres.subscribe('userProfileImage');
     $rootScope.Configurations = Ceres.createCollection('configurations');
     $rootScope.Posts = Ceres.createCollection('posts');
     $rootScope.Users = Ceres.createCollection('users');
@@ -97,7 +99,7 @@ angular.module('mnd.web', [
   function ($scope) {
     $scope.login = function () {
       $scope.Ceres.loginWithTwitter();
-    };  //$scope.avatarUrl = $scope.user.profile_image_url;
+    };
   }
 ]);
 angular.module('mnd.web').controller('SidebarController', [

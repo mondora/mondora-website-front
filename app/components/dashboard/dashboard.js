@@ -6,7 +6,6 @@ angular.module("mnd.web")
 		$scope.Posts.insert(post);
 		$state.go("postEdit", {postId: post._id});
 	};
-
     $scope.menu = {
         items: [
             {
