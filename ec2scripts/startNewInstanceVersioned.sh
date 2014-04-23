@@ -3,8 +3,8 @@
 cd $2/src/main/ec2scripts
 
 #!/bin/bash
-export EC2_HOME=/home/ubuntu/ec2-api-tools-1.6.12.0
-export AWS_ELB_HOME=/home/ubuntu/ElasticLoadBalancing-1.0.34.0
+export EC2_HOME=/var/lib/jenkins/ec2-api-tools-1.6.12.0
+export AWS_ELB_HOME=/var/lib/jenkins/ElasticLoadBalancing-1.0.34.0
 export PATH=$PATH:$EC2_HOME/bin:$AWS_ELB_HOME/bin
 
 export JAVA_HOME=/usr/bin/java
@@ -40,7 +40,7 @@ echo
 rm *out
 
 echo "describe existing Elastic Load Balancers for region $region"
-/home/ubuntu/ElasticLoadBalancing-1.0.34.0/elb-describe-lbs --region $region > LOAD_B_DESC.out
+/var/lib/jenkins/ElasticLoadBalancing-1.0.34.0/elb-describe-lbs --region $region > LOAD_B_DESC.out
 cat LOAD_B_DESC.out
 
 echo "launch new EC2 instance from AMI-ID ($amiid) with user data file: $userdatafile"
