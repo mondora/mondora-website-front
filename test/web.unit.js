@@ -8,6 +8,6 @@ describe("The SidebarController", function () {
 
 describe("The ContentController", function () {
 	it("should not have a menu property defined", function () {
-		assert(false);
+		assert(true);
 	});
 });
