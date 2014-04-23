@@ -2,7 +2,7 @@ html, body {
   height: 100%;
   width: 100%;
   min-width: 620px;
-  min-height: 900px; }
+  min-height: 580px; }
 
 .simplebox {
   outline: none;
@@ -251,6 +251,7 @@ span.mnd-width-10 {
   opacity: 0.5; }
 
 #mnd-home-bottom {
+  position: absolute;
   bottom: 0px;
   height: 150px;
   width: 100%; }
@@ -291,11 +292,12 @@ span.mnd-width-10 {
   margin-top: 0px; }
 
 #mnd-sign-in {
-  float: right;
-  padding-right: 10px;
-  padding-top: 10px;
-  color: #f0f;
-  font-size: 20px; }
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #fff;
+  font-size: 20px;
+  z-index: 20; }
 
 #mnd-sign-in:hover {
   cursor: pointer; }
