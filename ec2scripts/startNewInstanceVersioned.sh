@@ -18,8 +18,8 @@ region=us-west-2b
 instancecount=1
 key=dino_telecom
 group=sg-f235d09b
-lbId="Demo2"
-tagname="Demo Telecom"
+lbId="mondora-app-balancer"
+tagname="mondora-app"
 
 ec2_instance_type="t1.micro"
 
