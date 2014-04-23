@@ -1,10 +1,10 @@
 (function () {
   var options = {
-      host: 'http://localhost:3000',
+      host: 'http://api.nocheros.info',
       do_not_autocreate_collections: true
     };
   options.ddpOptions = {
-    endpoint: 'ws://localhost:3000/websocket',
+    endpoint: 'ws://api.nocheros.info/websocket',
     SocketConstructor: WebSocket
   };
   window.Ceres = new Asteroid(options);
