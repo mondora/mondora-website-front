@@ -13,6 +13,7 @@ echo "direttore $1 $2 $3 $4"
 export AWS_ACCESS_KEY=$1
 export AWS_SECRET_KEY=$2
 export EC2_PRIVATE_KEY=$3
+export EC2_CERT='/var/lib/jenkins/meteor.pem'
 
 amiid=$4
 region=us-west-2b
