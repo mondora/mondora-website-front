@@ -156,7 +156,6 @@ module.run(['$templateCache', function($templateCache) {
     '		<h1 ng-bind-html="post.title" class="post-title" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h1>\n' +
     '		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h2>\n' +
     '		<div ng-repeat="author in post.authors">\n' +
-    '			{{author.imageUrl}}\n' +
     '			<img class="img-circle" ng-src="author.imageUrl" />\n' +
     '			by {{author.screenName}}\n' +
     '		</div>\n' +
