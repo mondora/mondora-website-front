@@ -1,11 +1,11 @@
-html, body {
+$mnd-font: "Source Sans Pro", sans-serif;
+
+html,
+body {
 	height: 100%;
 	width: 100%;
 	min-width: 620px;
 	min-height: 580px;
-}
-.simplebox {
-	outline: none;
-	border: none !important;
-	box-shadow: none !important;
+	font-family: $mnd-font;	
+	overflow-x: hidden;
 }

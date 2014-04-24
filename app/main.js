@@ -110,4 +110,7 @@ angular.module("mnd.web", [
 	$scope.login = function () {
 		$scope.Ceres.loginWithTwitter();
 	};
+	$scope.logout = function () {
+		$scope.Ceres.logout();
+	};
 });

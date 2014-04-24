@@ -1,8 +1,14 @@
+// Video
 #mnd-video-background {
-	z-index: -1;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
 	padding: 0px;
 	margin: 0px;
 	overflow: hidden;
+	z-index: -1;
 }
 .mnd-video-overlay{
 	background-color: #000;
@@ -11,58 +17,79 @@
 	min-height: 100%;
 }
 #mnd-video-background video{
+	position: absolute;
 	top: 0px;
 	left: 0px;
-	min-height: 100%;
 	min-width: 100%;
+	min-height: 100%;
 	z-index: -10;
 }
 
+// Home contents
 #mnd-home-container {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	padding: 0px;
-	margin: 0px;
 	height: 100%;
 	width: 100%;
 	z-index: 1;
 }
 
-#mnd-sprinkle-container {
+// Sign in
+#mnd-sign-in {
 	position: absolute;
-	width: 620px;
-	left: 50%;
-	top: 50%;
-	margin-left: -310px;
-	margin-top: -50px;
-	z-index: 1;
+	right: 20px;
+	top: 20px;
+	color: #fff;
+	font-size: 20px;
+	z-index: 20;
 }
+#mnd-sign-in:hover {
+	cursor: pointer;
+}
+
+// Payoff
 #mnd-hidden-payoff {
-	z-index: 10;
 	color: #fff;
 	padding-top: 30px;
+	padding-left: 100px;
 	font-size: 80px;
 	font-style: bold;
 	text-align: center;
 	text-transform: uppercase;
 	opacity: 0;
-    transition: opacity 0s ease-in;
+    transition: opacity 1s ease-in;
+	z-index: 10;
 }
 #mnd-hidden-payoff:hover {
 	opacity: 0.5;
 }
+
+// Sprinkle
+#mnd-sprinkle-container {
+	position: absolute;
+	width: 620px;
+	left: 50%;
+	top: 50%;
+	margin-left: -260px;
+	margin-top: -50px;
+	z-index: 1;
+}
+
+// Footer
 #mnd-home-bottom {
 	position: absolute;
 	bottom: 0px;
 	height: 150px;
 	width: 100%;
 }
+
+// Logo
 #mnd-home-logo {
 	width: 140px;
 	height: 140px;
 	float: right;
-	padding-right: 10px;
+	padding-right: 20px;
 	opacity: 0.5;
 	overflow: hidden;
 }
@@ -70,6 +97,8 @@
 	width: 100%;
 	height: 100%;
 }
+
+// Banner
 #mnd-home-banner {
 	float:right;
 	width: 300px;
@@ -93,17 +122,7 @@
 	font-size: 20px;
 	margin-top: 0px;
 }
-#mnd-sign-in {
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	color: #fff;
-	font-size: 20px;
-	z-index: 20;
-}
-#mnd-sign-in:hover {
-	cursor: pointer;
-}
+
 #mnd-home-banner-arrow {
 	position: relative;
 	left: 50%;
@@ -115,9 +134,4 @@
 	border-left: solid 20px transparent;
 	border-right: solid 20px transparent;
 	opacity: 0.5;
-}
-
-/*************** MEDIA QUERY****************/
-@media (max-width: 767px) {
-	
 }

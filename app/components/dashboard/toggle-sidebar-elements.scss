@@ -1,0 +1,48 @@
+$mnd-yellow: #ffcc00;
+$mnd-grey: #5e5f5f;
+$mnd-light-grey: #abadad;
+$mnd-font: "Source Sans Pro", sans-serif;
+
+// Toggle button
+#mnd-show-sidebar {
+	width: 60px;
+	height: 60px;
+	margin: 20px;
+	border: none;
+	font-size: 40px;
+	cursor: pointer;
+	background-color: $mnd-yellow;
+	color: $mnd-grey;
+	text-align: center;
+}
+@media (max-width: 767px) {
+	#mnd-show-sidebar {
+		margin: 10px 20px;
+	}
+}
+
+// Logo
+#mnd-sidebar-logo {
+	position: absolute;
+	top: 50%;
+	height: 80px;
+	width: 80px;
+	margin-top: -40px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.mnd-mondora-logo img{
+	width: 100%;
+	height: 100%;
+}
+@media (max-width: 767px) {
+	#mnd-sidebar-logo {
+		position: absolute;
+		left: 50%;
+		top: 0px;
+		height: 60px;
+		width: 60px;
+		margin-left: -30px;
+		margin-top: 10px;
+	}
+}

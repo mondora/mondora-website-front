@@ -1,4 +1,4 @@
-angular.module("mnd.web").controller("HomeController", function ($scope, $collection) {
+angular.module("mnd.web").controller("HomeController", function ($scope, $collection, $sce) {
 
 	var homeConfig = $scope.Configurations.findOne({page: "home"});
 	$scope.sprinkleText = homeConfig.sprinkleText;
@@ -7,5 +7,9 @@ angular.module("mnd.web").controller("HomeController", function ($scope, $collec
 	$scope.login = function () {
 		$scope.Ceres.loginWithTwitter();
 	};
+
+	//$scope.videoSource = "http://download.mondora.s3.amazonaws.com/mondora.mp4";
+	var videoSource = "http://download.mondora.s3.amazonaws.com/mondora.mp4";
+	$scope.videoSource = $sce.trustAsResourceUrl(videoSource);
 
 });

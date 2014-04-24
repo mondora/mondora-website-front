@@ -1,215 +1,94 @@
 $mnd-yellow: #ffcc00;
 $mnd-grey: #5e5f5f;
 $mnd-light-grey: #abadad;
-$mnd-font: 'Source Sans Pro', sans-serif;
+$mnd-font: "Source Sans Pro", sans-serif;
 
-/************************ HTML ***************************/
-body {
-	font-family: $mnd-font;	
-}
-
-/************************ Sidebar *************************/
+// Sidebar
 #mnd-sidebar {
 	box-sizing: border-box;
 	position: fixed;
 	top: 0px;
 	left: -300px;
-	width: 300px;
-	background: $mnd-yellow;
 	height: 100%;
+	width: 300px;
 	overflow-y: hidden;
 	z-index: 1;
+	background: $mnd-yellow;
 	border-right: 2px solid $mnd-grey;
-	transition: left 0.4s ease 0s;
-}
-#mnd-toggle-sidebar {
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	height: 100%;
-	display: block;
-	z-index: 100;
-	margin: 0px;
-	min-width: 100px;
-	text-align: center;
-	background-color: $mnd-yellow;
-	border-right: 2px solid $mnd-grey;
-	transition: left 0.4s ease 0s;
-}
-#mnd-show-sidebar {
-	width: 60px;
-	height: 60px;
-	margin: 20px;
-	border: none;
-	font-size: 40px;
-	cursor: pointer;
-	background-color: $mnd-yellow;
-	color: $mnd-grey;
-	text-align: center;
+	transform: translate3d(0, 0, 0);
+	transform: translateX(0px);
+	transition: transform 0.4s ease 0s;
+	backface-visibility: hidden;
 }
 #mnd-sidebar.sidebar-open{
-	left: 0px;
-}
-#mnd-toggle-sidebar.sidebar-open{
-	left: 300px;
-}
-#mnd-sidebar-user {
-	padding: 15px 10px 10px 15px; 
-	color: $mnd-grey;
-	font-size: 30px;
-	font-weight: 600;
-}
-#mnd-sidebar-user .login {
-	cursor: pointer;
-}
-#mnd-sidebar-user .login:hover {
-	cursor: pointer;
-	color: $mnd-light-grey;
-	transition:color 1s ease,padding .5s ease;
-}
-#mnd-sidebar-footer {
-	position: absolute;
-	bottom: 0px;
-	padding: 0 10px 10px 15px; 
-	color: $mnd-grey;
-	font-size: 16px;
-}
-#mnd-sidebar-footer span{
-	font-size: 30px;
-}
-#mnd-sidebar-logo {
-	position: absolute;
-	top: 50%;
-	height: 80px;
-	width: 80px;
-	margin-top: -40px;
-	margin-left: 10px;
-	margin-right: 10px;
-}
-.mnd-mondora-logo img{
-	width: 100%;
-	height: 100%;
+	transform: translateX(300px);
 }
 @media (max-width: 767px) {
 	#mnd-sidebar {
-		left: -300px;
-		transition: left 0.4s ease 0s;
+		left: -240px;
+		width: 240px;
 	}
 	#mnd-sidebar.sidebar-open {
-		left: 0px;
+		transform: translateX(240px);
 	}
+}
+
+// Toggle-sidebar
+#mnd-toggle-sidebar {
+	box-sizing: border-box;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100px;
+	z-index: 100;
+	margin: 0px;
+	background-color: $mnd-yellow;
+	border-right: 2px solid $mnd-grey;
+	text-align: center;
+	transform: translate3d(0, 0, 0);
+	transform: translateX(0px);
+	transition: transform 0.4s ease 0s;
+}
+#mnd-toggle-sidebar.sidebar-open{
+	transform: translateX(300px);
+}
+@media (max-width: 767px) {
 	#mnd-toggle-sidebar {
 		height: 80px;
-		min-width: 100%;
-		left: 0px;
+		width: 100%;
 		text-align: left;
 		border-bottom: 2px solid $mnd-grey;
 		border-right: 0px;
 	}
-	#mnd-show-sidebar {
-		margin: 10px 20px;
-	}
-	#mnd-sidebar-logo {
-	position: absolute;
-	left: 50%;
-	top: 0px;
-	height: 60px;
-	width: 60px;
-	margin-left: -30px;
-	margin-top: 10px;
+	#mnd-toggle-sidebar.sidebar-open{
+		transform: translateX(240px);
 	}
 }
 
-
-/************************ sidebar MENU ***************************/
-.nav {
-  margin-top: 50px;
-  font: {
-  	family: $mnd-font;
-  	size: 30px;
-  	weight: normal;
-  }
-  text-transform: uppercase;
-}
-
-#mnd-sidebar > ul > li:first-child { 
-}
-
-#mnd-sidebar > ul > li {
-}
-.nav li a{
-	padding: 0 15px;
-	color: $mnd-grey;
-	font-weight: bold;
-	font-weight: 600;
-	transition:color 1s ease,padding .5s ease;
-}
-.nav li a:hover{
-	padding: 0 15px 0 20px;
-	color: $mnd-light-grey;
-	background-color: initial;
-}
-.nav-second-level {
-	margin-top: 0px;
-}
-.nav-second-level li a{
-	font-weight: normal;
-}
-/************************ Content *************************/
+// Content
 #mnd-content {
 	box-sizing: border-box;
 	position: relative;
-	padding-left: 100px;
+	top: 0px;
+	left: 0px;
 	width: 100%;
 	height: 100%;
+	padding-left: 100px;
 	z-index: 0;
 	background-color: #ffffff;
-	transition: left 0.4s ease 0s;
+	transform: translate3d(0, 0, 0);
+	transform: translateX(0px);
+	transition: transform 0.4s ease 0s;
 }
 #mnd-content.sidebar-open{
-	left: 300px;
+	transform: translateX(300px);
 }
 @media (max-width: 767px) {
 	#mnd-content {
 		padding-left: 0px;
-		transition: left 0.4s ease 0s;
 	}
 	#mnd-content.sidebar-open {
-		left: 250px;
+		transform: translateX(240px);
 	}
-}
-/********************* Misc *******************************/
-.mnd-clickable {
-	cursor: pointer;
-}
-.mnd-clickable:hover {
-	background-color:$mnd-yellow;
-}	
-.mnd-vsp-4 {
-	width: 100%;
-	height: 4px;
-}
-.mnd-width-30 {
-	width: 30px;
-}
-span.mnd-width-30 {
-	display: inline-block;
-}
-.mnd-width-20 {
-	width: 20px;
-}
-span.mnd-width-20 {
-	display: inline-block;
-}
-.mnd-width-15 {
-	width: 15px;
-}
-span.mnd-width-15 {
-	display: inline-block;
-}
-.mnd-width-10 {
-	width: 10px;
-}
-span.mnd-width-10 {
-	display: inline-block;
 }

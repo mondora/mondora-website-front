@@ -38,8 +38,7 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div id="mnd-video-background">\n' +
     '	<div class="mnd-video-overlay"></div>\n' +
-    '	<video muted autoplay="1" loop="1"> \n' +
-    '		<source src="http://download.mondora.s3.amazonaws.com/mondora.mp4" />\n' +
+    '	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}"> \n' +
     '	</video>\n' +
     '</div>\n' +
     '');
@@ -54,7 +53,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
-    '<img id="postEditTitleImage" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '<img class="postTitleImage" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
     '\n' +
     '<div class="col-sm-12">\n' +
     '	<div class="pull-right">\n' +

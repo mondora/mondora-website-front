@@ -1,0 +1,43 @@
+// Misc
+.mnd-clickable {
+	cursor: pointer;
+}
+
+// Vertical spaces
+.mnd-vsp-4 {
+	width: 100%;
+	height: 4px;
+}
+
+// Horizontal alignement classes
+.mnd-width-30 {
+	width: 30px;
+}
+span.mnd-width-30 {
+	display: inline-block;
+}
+.mnd-width-20 {
+	width: 20px;
+}
+span.mnd-width-20 {
+	display: inline-block;
+}
+.mnd-width-15 {
+	width: 15px;
+}
+span.mnd-width-15 {
+	display: inline-block;
+}
+.mnd-width-10 {
+	width: 10px;
+}
+span.mnd-width-10 {
+	display: inline-block;
+}
+
+// Bootstrap resetting classes
+.simplebox {
+	outline: none;
+	border: none !important;
+	box-shadow: none !important;
+}

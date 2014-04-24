@@ -100,6 +100,9 @@ angular.module('mnd.web', [
     $scope.login = function () {
       $scope.Ceres.loginWithTwitter();
     };
+    $scope.logout = function () {
+      $scope.Ceres.logout();
+    };
   }
 ]);
 angular.module('mnd.web').controller('SidebarController', [
@@ -162,13 +165,17 @@ angular.module('mnd.web').controller('SidebarController', [
 angular.module('mnd.web').controller('HomeController', [
   '$scope',
   '$collection',
-  function ($scope, $collection) {
+  '$sce',
+  function ($scope, $collection, $sce) {
     var homeConfig = $scope.Configurations.findOne({ page: 'home' });
     $scope.sprinkleText = homeConfig.sprinkleText;
     $scope.banner = homeConfig.banner;
     $scope.login = function () {
       $scope.Ceres.loginWithTwitter();
     };
+    //$scope.videoSource = "http://download.mondora.s3.amazonaws.com/mondora.mp4";
+    var videoSource = 'http://download.mondora.s3.amazonaws.com/mondora.mp4';
+    $scope.videoSource = $sce.trustAsResourceUrl(videoSource);
   }
 ]);
 angular.module('mnd.web').controller('PostEditController', [
@@ -269,6 +276,7 @@ angular.module('mnd.web').controller('PostEditController', [
         $scope.uploadProgress = 100;
         $scope.isUploading = false;
         $scope.post.titleImageSource = 'https://s3-eu-west-1.amazonaws.com/ngtest/' + fileName;
+        $scope.titleImageIsDisplayed = true;
         $scope.save();
       }).error(function (err) {
       });

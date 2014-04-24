@@ -17,7 +17,7 @@ gulp.task("styles", function () {
 	gulp.src("app/**/*.scss")
 		.pipe(plugins.sass())
 		.pipe(plugins.concat("app.css"))
-		.pipe(plugins.autoprefixer("last 2 version"))
+		.pipe(plugins.autoprefixer("last 3 version"))
 		.pipe(gulp.dest("dist/"))
 		.pipe(plugins.minifyCss())
 		.pipe(plugins.rename("app.min.css"))

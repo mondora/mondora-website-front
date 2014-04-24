@@ -114,6 +114,7 @@ angular.module("mnd.web")
 				$scope.uploadProgress = 100;
 				$scope.isUploading = false;
 				$scope.post.titleImageSource = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
+				$scope.titleImageIsDisplayed = true;
 				$scope.save();
 			})
 			.error(function (err) {
