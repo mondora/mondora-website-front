@@ -17,6 +17,7 @@
 	min-height: 100%;
 }
 #mnd-video-background video{
+	background-color: transparent;
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -39,7 +40,7 @@
 #mnd-sign-in {
 	position: fixed;
 	right: 20px;
-	top: 10px;
+	top: 20px;
 	color: #fff;
 	font-size: 20px;
 	z-index: 20;

@@ -39,7 +39,7 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div id="mnd-video-background">\n' +
     '	<div class="mnd-video-overlay"></div>\n' +
-    '	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}"> \n' +
+    '	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}" ng-attr-poster="{{videoPoster}}"> \n' +
     '	</video>\n' +
     '</div>\n' +
     '');
