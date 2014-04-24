@@ -132,6 +132,13 @@ angular.module("mnd.web")
 		$scope.post.title = title.innerHTML;
 		$scope.post.subtitle = subtitle.innerHTML;
 		$scope.post.body = body.innerHTML;
+		$scope.post.user = $scope.user._id;
+		$scope.post.authors = [{
+			userId: $scope.user._id,
+			name: $scope.user.profile.name,
+			screenName: $scope.user.services.twitter.screenName,
+			imageUrl: $scope.user.services.twitter.post_img_url
+		}];
 		// Strip the _id property (which can't be set twice)
 		var post = angular.copy($scope.post);
 		delete post._id;

@@ -5,13 +5,6 @@ var static	= require("node-static");
 var http	= require("http");
 
 var lrServer = tinyLr();
-var dvServer =http.createServer(function (req, res) {
-	var stServer = new static.Server("./", {cache: false});
-	req.on("end", function () {
-		stServer.serve(req, res);
-	});
-	req.resume();
-});
 
 gulp.task("styles", function () {
 	gulp.src("app/**/*.scss")
@@ -46,6 +39,13 @@ gulp.task("templates", function () {
 		.pipe(plugins.uglify())
 		.pipe(plugins.rename("app.templates.min.js"))
 		.pipe(gulp.dest("dist/"))
+		.pipe(plugins.livereload(lrServer));
+});
+
+gulp.task("unit_tests", function () {
+	gulp.src("test/unit/**/*.unit.js")
+		.pipe(plugins.concat("app.unit.js"))
+		.pipe(gulp.dest("test/"))
 		.pipe(plugins.livereload(lrServer));
 });
 
@@ -88,9 +88,31 @@ gulp.task("vendorScripts", function () {
 
 gulp.task("buildVendor", ["vendorStyles", "vendorScripts"]);
 
-gulp.task("default", function () {
-	dvServer.listen(8080);
+gulp.task("tdd", function () {
 	lrServer.listen(35729);
+	var dvServer =http.createServer(function (req, res) {
+		var stServer = new static.Server("./test/", {cache: false});
+		req.on("end", function () {
+			stServer.serve(req, res);
+		});
+		req.resume();
+	}).listen(8081);
+	gulp.watch("app/**/*.scss", ["styles"]);
+	gulp.watch("app/**/*.js", ["scripts"]);
+	gulp.watch("app/**/*.html", ["templates"]);
+	gulp.watch("test/**/*.unit.js", ["unit_tests"]);
+});
+
+
+gulp.task("default", function () {
+	lrServer.listen(35729);
+	var dvServer =http.createServer(function (req, res) {
+		var stServer = new static.Server("./", {cache: false});
+		req.on("end", function () {
+			stServer.serve(req, res);
+		});
+		req.resume();
+	}).listen(8080);
 	gulp.watch("app/**/*.scss", ["styles"]);
 	gulp.watch("app/**/*.js", ["scripts"]);
 	gulp.watch("app/**/*.html", ["templates"]);

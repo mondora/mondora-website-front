@@ -84,6 +84,11 @@ $mnd-font: "Source Sans Pro", sans-serif;
 #mnd-content.sidebar-open{
 	transform: translateX(300px);
 }
+.mnd-content {
+	height: 100%;
+	width: 100%;
+}
+
 @media (max-width: 767px) {
 	#mnd-content {
 		padding-left: 0px;

@@ -1,4 +1,4 @@
-<img id="postViewTitleImage" ng-src="{{post.titleImageSource}}" />
+<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
 
 <div class="col-sm-12">
 	<div class="pull-right">
@@ -12,17 +12,23 @@
 	</div>
 </div>
 
-<div id="postViewTitleSpacer"></div>
+<div id="mnd-post-sprinkle-container">
+	<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinklePostText}}"></div>
+</div>
 
-<div>
+<div class="post-header">
 	<div class="col-sm-8 col-sm-offset-2">
-		<h1 ng-bind-html="post.title"></h1>
-		<h2 ng-bind-html="post.subtitle"></h2>
+		<h1 ng-bind-html="post.title" class="post-title" ng-class="{'color-me-white': titleImageIsDisplayed}"></h1>
+		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed}"></h2>
+		<div ng-repeat="author in post.authors">
+			<img class="img-circle" ng-src="author.imageUrl" />
+			by {{author.screenName}}
+		</div>
 	</div>
 </div>
 
-<div id="postViewBodySpacer"></div>
-
-<div class="col-sm-8 col-sm-offset-2">
-	<p ng-bind-html="post.body"></p>
+<div class="post-body">
+	<div class="col-sm-8 col-sm-offset-2">
+		<p ng-bind-html="post.body"></p>
+	</div>
 </div>

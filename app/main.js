@@ -1,15 +1,30 @@
 (function () {
+	var currentVersion = "v0.1.0b";
+	var config = {
+		dev: {
+			host: "http://localhost:3000",
+			endpoint: "ws://localhost:3000/websocket"
+		},
+		prod: {
+			host: "http://api.nocheros.info",
+			endpoint: "ws://api.nocheros.info/websocket"
+		}
+	};
+	if (/b/.test(currentVersion)) {
+		currentConfig = config.dev;
+	} else {
+		currentConfig = config.prod;
+	}
 	var options = {
-		host: "http://api.nocheros.info",
-		//host: "http://localhost:3000",
+		host: currentConfig.host,
 		do_not_autocreate_collections: true
 	};
 	options.ddpOptions = {
-		endpoint: "ws://api.nocheros.info/websocket",
-		//endpoint: "ws://localhost:3000/websocket",
+		endpoint: currentConfig.endpoint,
 		SocketConstructor: WebSocket,
 		debug: true
 	};
+	//TODO Use ng-asteroid, fool!
 	window.Ceres = new Asteroid(options);
 })();
 

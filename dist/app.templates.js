@@ -53,26 +53,25 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
-    '<img class="postTitleImage" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
     '\n' +
-    '<div class="col-sm-12">\n' +
-    '	<div class="pull-right">\n' +
-    '		<br />\n' +
-    '		<button type="button" class="btn btn-default" ng-click="deletePost()">\n' +
-    '			Elimina\n' +
-    '		</button>\n' +
-    '		<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">\n' +
-    '			Pubblica\n' +
-    '		</button>\n' +
-    '		<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">\n' +
-    '			Rendi privato\n' +
-    '		</button>\n' +
+    '<div class="post-top-buttons">\n' +
+    '	<div class="col-sm-12">\n' +
+    '		<div class="pull-right">\n' +
+    '			<button type="button" class="btn btn-default" ng-click="deletePost()">\n' +
+    '				Elimina\n' +
+    '			</button>\n' +
+    '			<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">\n' +
+    '				Pubblica\n' +
+    '			</button>\n' +
+    '			<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">\n' +
+    '				Rendi privato\n' +
+    '			</button>\n' +
+    '		</div>\n' +
     '	</div>\n' +
     '</div>\n' +
     '\n' +
-    '<div id="postEditTitleSpacer" ng-if="titleImageIsDisplayed"></div>\n' +
-    '\n' +
-    '<div>\n' +
+    '<div class="post-header">\n' +
     '	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">\n' +
     '		<input type="file" ng-file-select="onFileSelect($files)" class="hidden" />\n' +
     '		<i class="fa fa-picture-o" ng-click="clickFileInput()"></i>\n' +
@@ -90,16 +89,18 @@ module.run(['$templateCache', function($templateCache) {
     '		<i class="fa fa-times" ng-show="isUploading" ng-click="abortUpload()"></i>\n' +
     '	</div>\n' +
     '	<div class="col-sm-8 col-sm-offset-2">\n' +
-    '		<h1 class="simplebox" id="postTitleEditor"></h1>\n' +
-    '		<h2 class="simplebox" id="postSubtitleEditor"></h2>\n' +
+    '		<h1 class="simplebox post-title" ng-class="{\'color-me-white\': titleImageIsDisplayed}" id="postTitleEditor"></h1>\n' +
+    '		<h2 class="simplebox post-subtitle" ng-class="{\'color-me-white\': titleImageIsDisplayed}" id="postSubtitleEditor"></h2>\n' +
     '	</div>\n' +
     '</div>\n' +
     '\n' +
-    '<div id="postEditBodySpacer" ng-if="titleImageIsDisplayed"></div>\n' +
-    '\n' +
-    '<div class="col-sm-8 col-sm-offset-2">\n' +
-    '	<p class="simplebox" id="postBodyEditor"></p>\n' +
+    '<div class="post-body">\n' +
+    '	<div class="col-sm-8 col-sm-offset-2">\n' +
+    '		<p class="simplebox" id="postBodyEditor"></p>\n' +
+    '	</div>\n' +
     '</div>\n' +
+    '\n' +
+    '<div class="post-end-spacer"></div>\n' +
     '');
 }]);
 })();
@@ -131,7 +132,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/view/postView.html',
-    '<img id="postViewTitleImage" ng-src="{{post.titleImageSource}}" />\n' +
+    '<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
     '\n' +
     '<div class="col-sm-12">\n' +
     '	<div class="pull-right">\n' +
@@ -145,19 +146,26 @@ module.run(['$templateCache', function($templateCache) {
     '	</div>\n' +
     '</div>\n' +
     '\n' +
-    '<div id="postViewTitleSpacer"></div>\n' +
+    '<div id="mnd-post-sprinkle-container">\n' +
+    '	<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinklePostText}}"></div>\n' +
+    '</div>\n' +
     '\n' +
-    '<div>\n' +
+    '<div class="post-header">\n' +
     '	<div class="col-sm-8 col-sm-offset-2">\n' +
-    '		<h1 ng-bind-html="post.title"></h1>\n' +
-    '		<h2 ng-bind-html="post.subtitle"></h2>\n' +
+    '		<h1 ng-bind-html="post.title" class="post-title" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h1>\n' +
+    '		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h2>\n' +
+    '		<div ng-repeat="author in post.authors">\n' +
+    '			{{author.imageUrl}}\n' +
+    '			<img class="img-circle" ng-src="author.imageUrl" />\n' +
+    '			by {{author.screenName}}\n' +
+    '		</div>\n' +
     '	</div>\n' +
     '</div>\n' +
     '\n' +
-    '<div id="postViewBodySpacer"></div>\n' +
-    '\n' +
-    '<div class="col-sm-8 col-sm-offset-2">\n' +
-    '	<p ng-bind-html="post.body"></p>\n' +
+    '<div class="post-body">\n' +
+    '	<div class="col-sm-8 col-sm-offset-2">\n' +
+    '		<p ng-bind-html="post.body"></p>\n' +
+    '	</div>\n' +
     '</div>\n' +
     '');
 }]);

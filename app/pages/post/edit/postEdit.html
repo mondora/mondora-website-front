@@ -1,23 +1,22 @@
-<img class="postTitleImage" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
 
-<div class="col-sm-12">
-	<div class="pull-right">
-		<br />
-		<button type="button" class="btn btn-default" ng-click="deletePost()">
-			Elimina
-		</button>
-		<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">
-			Pubblica
-		</button>
-		<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">
-			Rendi privato
-		</button>
+<div class="post-top-buttons">
+	<div class="col-sm-12">
+		<div class="pull-right">
+			<button type="button" class="btn btn-default" ng-click="deletePost()">
+				Elimina
+			</button>
+			<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">
+				Pubblica
+			</button>
+			<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">
+				Rendi privato
+			</button>
+		</div>
 	</div>
 </div>
 
-<div id="postEditTitleSpacer" ng-if="titleImageIsDisplayed"></div>
-
-<div>
+<div class="post-header">
 	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">
 		<input type="file" ng-file-select="onFileSelect($files)" class="hidden" />
 		<i class="fa fa-picture-o" ng-click="clickFileInput()"></i>
@@ -35,13 +34,15 @@
 		<i class="fa fa-times" ng-show="isUploading" ng-click="abortUpload()"></i>
 	</div>
 	<div class="col-sm-8 col-sm-offset-2">
-		<h1 class="simplebox" id="postTitleEditor"></h1>
-		<h2 class="simplebox" id="postSubtitleEditor"></h2>
+		<h1 class="simplebox post-title" ng-class="{'color-me-white': titleImageIsDisplayed}" id="postTitleEditor"></h1>
+		<h2 class="simplebox post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed}" id="postSubtitleEditor"></h2>
 	</div>
 </div>
 
-<div id="postEditBodySpacer" ng-if="titleImageIsDisplayed"></div>
-
-<div class="col-sm-8 col-sm-offset-2">
-	<p class="simplebox" id="postBodyEditor"></p>
+<div class="post-body">
+	<div class="col-sm-8 col-sm-offset-2">
+		<p class="simplebox" id="postBodyEditor"></p>
+	</div>
 </div>
+
+<div class="post-end-spacer"></div>

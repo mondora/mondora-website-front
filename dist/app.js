@@ -1,13 +1,30 @@
 (function () {
+  var currentVersion = 'v0.1.0b';
+  var config = {
+      dev: {
+        host: 'http://localhost:3000',
+        endpoint: 'ws://localhost:3000/websocket'
+      },
+      prod: {
+        host: 'http://api.nocheros.info',
+        endpoint: 'ws://api.nocheros.info/websocket'
+      }
+    };
+  if (/b/.test(currentVersion)) {
+    currentConfig = config.dev;
+  } else {
+    currentConfig = config.prod;
+  }
   var options = {
-      host: 'http://api.nocheros.info',
+      host: currentConfig.host,
       do_not_autocreate_collections: true
     };
   options.ddpOptions = {
-    endpoint: 'ws://api.nocheros.info/websocket',
+    endpoint: currentConfig.endpoint,
     SocketConstructor: WebSocket,
     debug: true
   };
+  //TODO Use ng-asteroid, fool!
   window.Ceres = new Asteroid(options);
 }());
 angular.module('mnd.web', [
@@ -162,6 +179,15 @@ angular.module('mnd.web').controller('SidebarController', [
     };
   }
 ]);
+angular.module('mnd.web').factory('MndTagStrippingService', function () {
+  return {
+    strip: function (html) {
+      var div = document.createElement('div');
+      div.innerHTML = html;
+      return div.textContent;
+    }
+  };
+});
 angular.module('mnd.web').controller('HomeController', [
   '$scope',
   '$collection',
@@ -289,6 +315,13 @@ angular.module('mnd.web').controller('PostEditController', [
       $scope.post.title = title.innerHTML;
       $scope.post.subtitle = subtitle.innerHTML;
       $scope.post.body = body.innerHTML;
+      $scope.post.user = $scope.user._id;
+      $scope.post.authors = [{
+          userId: $scope.user._id,
+          name: $scope.user.profile.name,
+          screenName: $scope.user.services.twitter.screenName,
+          imageUrl: $scope.user.services.twitter.post_img_url
+        }];
       // Strip the _id property (which can't be set twice)
       var post = angular.copy($scope.post);
       delete post._id;
@@ -310,11 +343,15 @@ angular.module('mnd.web').controller('PostListController', [
 angular.module('mnd.web').controller('PostViewController', [
   '$scope',
   '$stateParams',
-  function ($scope, $stateParams) {
+  'MndTagStrippingService',
+  function ($scope, $stateParams, MndTagStrippingService) {
     ///////////////////////////
     // Retrieve post to edit //
     ///////////////////////////
     var id = $stateParams.postId;
     $scope.post = $scope.Posts.db.get(id);
+    $scope.titleImageIsDisplayed = $scope.post.titleImageSource !== undefined;
+    $scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
+    console.log($scope.post);
   }
 ]);
