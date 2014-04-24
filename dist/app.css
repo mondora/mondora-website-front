@@ -156,7 +156,12 @@ span.mnd-width-10 {
   padding: 15px 10px 10px 15px;
   color: #5e5f5f;
   font-size: 30px;
-  font-weight: 600; }
+  font-weight: 400; }
+
+#mnd-sidebar-user div span {
+  padding-left: 10px;
+  word-break: break-word;
+  font-size: 20px; }
 
 #mnd-sidebar-user .login {
   cursor: pointer; }
@@ -180,15 +185,17 @@ span.mnd-width-10 {
 .nav {
   margin-top: 50px;
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: normal;
+  color: #000;
+  line-height: 30px;
   text-transform: uppercase; }
 
 .nav li a {
   padding: 0 15px;
-  color: #5e5f5f;
-  font-weight: bold;
-  font-weight: 600;
+  color: #000;
+  font-weight: normal;
+  font-weight: 400;
   -webkit-transition: color 1s ease, padding 0.5s ease;
   transition: color 1s ease, padding 0.5s ease; }
 
@@ -201,7 +208,8 @@ span.mnd-width-10 {
   margin-top: 0px; }
 
 .nav-second-level li a {
-  font-weight: normal; }
+  font-weight: 200;
+  font-size: 20px; }
 
 #mnd-show-sidebar {
   width: 60px;

@@ -36,7 +36,7 @@
 				<div id="mnd-sidebar-user">
 					<div ng-if="user">
 						<img class="img-circle" ng-src="{{user.services.twitter.profile_image_url}}" />
-						@{{user.profile.name}}
+						<span>{{user.profile.name}}</span>
 					</div>
 					<div ng-if="!user" ng-click="login()" class="login">
 						<i class="fa fa-twitter"></i> LOGIN
