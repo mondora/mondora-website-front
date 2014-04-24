@@ -155,7 +155,7 @@ span.mnd-width-10 {
 #mnd-sidebar-user {
   padding: 15px 10px 10px 15px;
   color: #5e5f5f;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 400; }
 
 #mnd-sidebar-user div span {
@@ -249,6 +249,13 @@ span.mnd-width-10 {
     margin-left: -30px;
     margin-top: 10px; } }
 
+.postTitleImage {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%; }
+
 #mnd-video-background {
   position: absolute;
   top: 0px;
@@ -283,9 +290,9 @@ span.mnd-width-10 {
   z-index: 1; }
 
 #mnd-sign-in {
-  position: absolute;
+  position: fixed;
   right: 20px;
-  top: 20px;
+  top: 10px;
   color: #fff;
   font-size: 20px;
   z-index: 20; }
@@ -370,13 +377,6 @@ span.mnd-width-10 {
   border-left: solid 20px transparent;
   border-right: solid 20px transparent;
   opacity: 0.5; }
-
-.postTitleImage {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%; }
 
 #post-edit-image-upload i {
   color: #aeaeac;

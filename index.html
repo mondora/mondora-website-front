@@ -37,9 +37,10 @@
 					<div ng-if="user">
 						<img class="img-circle" ng-src="{{user.services.twitter.profile_image_url}}" />
 						<span>{{user.profile.name}}</span>
+						<span ng-click="logout()" class="logout"><i class="fa fa-times-circle"></i></span>
 					</div>
 					<div ng-if="!user" ng-click="login()" class="login">
-						<i class="fa fa-twitter"></i> LOGIN
+						<i class="fa fa-twitter"></i> Sign in with twitter
 					</div>
 				</div>	
 			</div>

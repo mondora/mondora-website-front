@@ -7,8 +7,9 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/home/home.html',
     '<div id="mnd-home-container">\n' +
-    '	<div id="mnd-sign-in" ng-click="login()">\n' +
-    '		<span ng-if="!signedIn">Sign In</span>\n' +
+    '	<div id="mnd-sign-in">\n' +
+    '		<span ng-if="!signedIn" ng-click="login()"><i class="fa fa-twitter"></i> Sign In</span>\n' +
+    '		<span ng-if="signedIn" ng-click="logout()"><i class="fa fa-twitter"></i> Sign Out</span>\n' +
     '	</div>\n' +
     '\n' +
     '	<div id="mnd-hidden-payoff">\n' +
