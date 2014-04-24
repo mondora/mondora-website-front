@@ -7,8 +7,9 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/home/home.html',
     '<div id="mnd-home-container">\n' +
-    '	<div id="mnd-sign-in" ng-click="login()">\n' +
-    '		<span ng-if="!signedIn">Sign In</span>\n' +
+    '	<div id="mnd-sign-in">\n' +
+    '		<span ng-if="!signedIn" ng-click="login()"><i class="fa fa-twitter"></i> Sign In</span>\n' +
+    '		<span ng-if="signedIn" ng-click="logout()"><i class="fa fa-twitter"></i> Sign Out</span>\n' +
     '	</div>\n' +
     '\n' +
     '	<div id="mnd-hidden-payoff">\n' +
@@ -38,7 +39,7 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div id="mnd-video-background">\n' +
     '	<div class="mnd-video-overlay"></div>\n' +
-    '	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}"> \n' +
+    '	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}" ng-attr-poster="{{videoPoster}}"> \n' +
     '	</video>\n' +
     '</div>\n' +
     '');

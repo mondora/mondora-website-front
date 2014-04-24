@@ -18,31 +18,31 @@ angular.module("mnd.web")
             },
 
             {
-                title: "cloud",
+                title: "Cloud",
                 href: "http://www.mondora.com"
             },
             {
-                title: "governance",
+                title: "Governance",
                 href: "http://www.mondora.com"
             },
             {
-                title: "team",
+                title: "Team",
                 href: "http://www.mondora.com"
             },
             {
-                title: "formazione",
+                title: "Formazione",
                 href: "http://www.mondora.com"
             },
             {
-                title: "community",
+                title: "Community",
                 href: "http://www.mondora.com"
             },
             {
-                title: "my mondora",
+                title: "My mondora",
                 type: "submenu",
                 items: [
                     {
-                        title: "pomodoro",
+                        title: "Pomodoro",
                         href: "http://www.mondora.com"
                     },
                     {

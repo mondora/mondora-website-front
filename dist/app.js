@@ -142,31 +142,31 @@ angular.module('mnd.web').controller('SidebarController', [
           ngClick: 'addPost'
         },
         {
-          title: 'cloud',
+          title: 'Cloud',
           href: 'http://www.mondora.com'
         },
         {
-          title: 'governance',
+          title: 'Governance',
           href: 'http://www.mondora.com'
         },
         {
-          title: 'team',
+          title: 'Team',
           href: 'http://www.mondora.com'
         },
         {
-          title: 'formazione',
+          title: 'Formazione',
           href: 'http://www.mondora.com'
         },
         {
-          title: 'community',
+          title: 'Community',
           href: 'http://www.mondora.com'
         },
         {
-          title: 'my mondora',
+          title: 'My mondora',
           type: 'submenu',
           items: [
             {
-              title: 'pomodoro',
+              title: 'Pomodoro',
               href: 'http://www.mondora.com'
             },
             {
@@ -199,9 +199,12 @@ angular.module('mnd.web').controller('HomeController', [
     $scope.login = function () {
       $scope.Ceres.loginWithTwitter();
     };
-    //$scope.videoSource = "http://download.mondora.s3.amazonaws.com/mondora.mp4";
-    var videoSource = 'http://download.mondora.s3.amazonaws.com/mondora.mp4';
+    //$scope.videoSource = "http://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4";
+    var videoSource = 'http://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4';
     $scope.videoSource = $sce.trustAsResourceUrl(videoSource);
+    //video poster
+    var videoPoster = 'http://s3.amazonaws.com/mnd-website/vd-back.jpg';
+    $scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
   }
 ]);
 angular.module('mnd.web').controller('PostEditController', [

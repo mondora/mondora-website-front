@@ -5,10 +5,15 @@ $mnd-font: "Source Sans Pro", sans-serif;
 
 // Sidebar user
 #mnd-sidebar-user {
-	padding: 15px 10px 10px 15px; 
+	padding: 30px 10px 10px 15px; 
 	color: $mnd-grey;
-	font-size: 30px;
-	font-weight: 600;
+	font-size: 20px;
+	font-weight: 400;
+}
+#mnd-sidebar-user div span{
+	padding-left: 10px;
+	word-break: break-word;
+	font-size: 20px;
 }
 #mnd-sidebar-user .login {
 	cursor: pointer;
@@ -33,20 +38,26 @@ $mnd-font: "Source Sans Pro", sans-serif;
 
 // Menu
 .nav {
-  margin-top: 50px;
-  font: {
-  	family: $mnd-font;
-  	size: 30px;
-  	weight: normal;
-  }
-  text-transform: uppercase;
+  	margin-top: 50px;
+  	font: {
+  		family: $mnd-font;
+  		size: 25px;
+  		weight: normal;
+  	}
+  	color: #000;
+	line-height: 30px;
 }
 .nav li a{
 	padding: 0 15px;
-	color: $mnd-grey;
-	font-weight: bold;
-	font-weight: 600;
+	color: #000;
+	font-weight: normal;
+	font-weight: 400;
 	transition:color 1s ease,padding .5s ease;
+	border-top: 1px solid lighten($mnd-yellow, 1%);
+    border-bottom: 1px solid darken($mnd-yellow, 1%);
+    &:nth-child(1){
+     border-top: 0; 
+    }
 }
 .nav li a:hover{
 	padding: 0 15px 0 20px;
@@ -57,5 +68,6 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	margin-top: 0px;
 }
 .nav-second-level li a{
-	font-weight: normal;
+	font-weight: 200;
+	font-size: 20px;
 }
