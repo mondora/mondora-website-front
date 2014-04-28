@@ -9,6 +9,7 @@
 	margin: 0px;
 	overflow: hidden;
 	z-index: -1;
+	background-image: url('')
 }
 .mnd-video-overlay{
 	background-color: #000;
@@ -16,7 +17,7 @@
 	min-width: 100%;
 	min-height: 100%;
 }
-#mnd-video-background video{
+#mnd-video-background video {
 	background-color: transparent;
 	position: absolute;
 	top: 0px;
@@ -24,6 +25,19 @@
 	min-width: 100%;
 	min-height: 100%;
 	z-index: -10;
+}
+#mnd-video-background img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -20;
+}
+@media (max-width: 767px) {
+  #mnd-video-background video {
+    display: none;
+  }
 }
 
 // Home contents
@@ -48,6 +62,11 @@
 #mnd-sign-in:hover {
 	cursor: pointer;
 }
+@media (max-width: 767px) {
+  #mnd-sign-in {
+    display: none;
+  }
+}
 
 // Payoff
 #mnd-hidden-payoff {
@@ -59,11 +78,21 @@
 	text-align: center;
 	text-transform: uppercase;
 	opacity: 0;
-    transition: opacity 1s ease-in;
+  transition: opacity 1s ease-in;
 	z-index: 10;
 }
 #mnd-hidden-payoff:hover {
 	opacity: 0.5;
+}
+@media (max-width: 767px) {
+  #mnd-hidden-payoff{
+    padding-top: 90px;
+    padding-left: 0px;
+    font-size: 40px;
+    font-weight: 600;
+    display: block;
+    opacity: 1;
+  }
 }
 
 // Sprinkle
@@ -75,6 +104,13 @@
 	margin-left: -260px;
 	margin-top: -50px;
 	z-index: 1;
+}
+@media (max-width: 767px) {
+  #mnd-sprinkle-container {
+    width: 98%;
+    top: 45%;
+    margin-left: -49%;
+  }
 }
 
 // Footer
@@ -97,6 +133,11 @@
 .mnd-mondora-logo img{
 	width: 100%;
 	height: 100%;
+}
+@media (max-width: 767px) {
+  #mnd-home-logo {
+    display: none;
+  }
 }
 
 // Banner
@@ -135,4 +176,22 @@
 	border-left: solid 20px transparent;
 	border-right: solid 20px transparent;
 	opacity: 0.5;
+}
+@media (max-width: 767px) {
+  #mnd-home-banner {
+    width: 100%;
+    height: 150px;
+    margin-right: 0px;
+  }
+  #mnd-home-banner-content {
+    height: 150px;
+    width: 100%;
+  }
+  #mnd-home-banner-content h1{
+    text-transform: uppercase;
+    font-size: 25px;
+  }
+  #mnd-home-banner-arrow {
+    display: none;
+  }
 }

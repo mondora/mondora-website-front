@@ -41,6 +41,7 @@ module.run(['$templateCache', function($templateCache) {
     '	<div class="mnd-video-overlay"></div>\n' +
     '	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}" ng-attr-poster="{{videoPoster}}"> \n' +
     '	</video>\n' +
+    '	<img ng-src="{{videoPoster}}" />\n' +
     '</div>\n' +
     '');
 }]);

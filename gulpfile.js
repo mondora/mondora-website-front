@@ -51,7 +51,6 @@ gulp.task("unit_tests", function () {
 
 gulp.task("vendorStyles", function () {
 	var sources = [
-		"bower_components/mnd-sprinkle/dist/sprinkle.css",
 		"bower_components/medium-editor/dist/css/medium-editor.css",
 		"bower_components/medium-editor/dist/css/themes/default.css"
 	];
