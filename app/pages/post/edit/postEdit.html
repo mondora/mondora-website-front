@@ -1,19 +1,24 @@
 <img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
 
-<div class="post-top-buttons">
-	<div class="col-sm-12">
-		<div class="pull-right">
-			<button type="button" class="btn btn-default" ng-click="deletePost()">
-				Elimina
-			</button>
-			<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">
-				Pubblica
-			</button>
-			<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">
-				Rendi privato
-			</button>
-		</div>
-	</div>
+<div class="post-top-buttons" ng-if="isOwner()">
+	<span ng-if="showDelete">
+		Sei sicuro di voler eliminare il post?
+		<button type="button" class="btn btn-default" ng-click="deletePost()">
+			Sì
+		</button>
+		<button type="button" class="btn btn-default" ng-click="toggleDelete()">
+			No
+		</button>
+	</span>
+	<button type="button" class="btn btn-default" ng-click="toggleDelete()" ng-if="!showDelete">
+		Elimina
+	</button>
+	<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">
+		Pubblica
+	</button>
+	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">
+		Rendi privato
+	</button>
 </div>
 
 <div class="post-header">
@@ -41,7 +46,8 @@
 
 <div class="post-body">
 	<div class="col-sm-8 col-sm-offset-2">
-		<p class="simplebox" id="postBodyEditor"></p>
+		<div class="simplebox" id="postBodyEditor"></div>
+		<div class="post-body-bottom-spacer"></div>
 	</div>
 </div>
 

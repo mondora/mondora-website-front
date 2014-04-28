@@ -1,15 +1,7 @@
 <img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
 
-<div class="col-sm-12">
-	<div class="pull-right">
-		<br />
-		<button type="button" class="btn btn-default">
-			Salva nei preferiti
-		</button>
-		<button type="button" class="btn btn-default">
-			Condividi
-		</button>
-	</div>
+<div ng-if="isAuthor()" class="post-top-buttons">
+	<a ui-sref="postEdit({postId: post._id})" class="btn btn-default">Modifica</a>
 </div>
 
 <div id="mnd-post-sprinkle-container">
@@ -20,9 +12,9 @@
 	<div class="col-sm-8 col-sm-offset-2">
 		<h1 ng-bind-html="post.title" class="post-title" ng-class="{'color-me-white': titleImageIsDisplayed}"></h1>
 		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed}"></h2>
-		<div ng-repeat="author in post.authors">
-			<img class="img-circle" ng-src="author.imageUrl" />
-			by {{author.screenName}}
+		<div class="post-author" ng-repeat="author in post.authors">
+			<img class="img-circle" ng-src="{{author.imageUrl}}" />
+			&nbsp;&nbsp;by {{author.screenName}}
 		</div>
 	</div>
 </div>
@@ -30,5 +22,6 @@
 <div class="post-body">
 	<div class="col-sm-8 col-sm-offset-2">
 		<p ng-bind-html="post.body"></p>
+		<div class="post-body-bottom-spacer"></div>
 	</div>
 </div>

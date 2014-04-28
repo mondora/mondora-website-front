@@ -1,5 +1,5 @@
 (function () {
-  var currentVersion = 'v0.1.0';
+  var currentVersion = 'v0.1.0b';
   var config = {
       dev: {
         host: 'http://localhost:3000',
@@ -21,8 +21,7 @@
     };
   options.ddpOptions = {
     endpoint: currentConfig.endpoint,
-    SocketConstructor: WebSocket,
-    debug: true
+    SocketConstructor: WebSocket
   };
   //TODO Use ng-asteroid, fool!
   window.Ceres = new Asteroid(options);
@@ -210,9 +209,10 @@ angular.module('mnd.web').controller('HomeController', [
 angular.module('mnd.web').controller('PostEditController', [
   '$scope',
   '$interval',
+  '$state',
   '$stateParams',
   '$upload',
-  function ($scope, $interval, $stateParams, $upload) {
+  function ($scope, $interval, $state, $stateParams, $upload) {
     ///////////////////////////
     // Retrieve post to edit //
     ///////////////////////////
@@ -255,9 +255,16 @@ angular.module('mnd.web').controller('PostEditController', [
         ]
       };
     new MediumEditor(body, bodyEditorOptions);
-    /////////////////////
-    // Post publishing //
-    /////////////////////
+    //////////////////////////////////
+    // Post publishing and deleting //
+    //////////////////////////////////
+    $scope.toggleDelete = function () {
+      $scope.showDelete = !$scope.showDelete;
+    };
+    $scope.deletePost = function () {
+      $scope.Posts.remove(id);
+      $state.go('home');
+    };
     $scope.publishPost = function () {
       $scope.post.published = true;
       $scope.save();
@@ -265,6 +272,9 @@ angular.module('mnd.web').controller('PostEditController', [
     $scope.unpublishPost = function () {
       $scope.post.published = false;
       $scope.save();
+    };
+    $scope.isOwner = function () {
+      return $scope.user && $scope.post.user === $scope.user._id;
     };
     //////////////////
     // Image upload //
@@ -323,14 +333,17 @@ angular.module('mnd.web').controller('PostEditController', [
           userId: $scope.user._id,
           name: $scope.user.profile.name,
           screenName: $scope.user.services.twitter.screenName,
-          imageUrl: $scope.user.services.twitter.post_img_url
+          imageUrl: $scope.user.services.twitter.profile_image_url
         }];
       // Strip the _id property (which can't be set twice)
       var post = angular.copy($scope.post);
       delete post._id;
       $scope.Posts.update(id, post);
     };
-    $interval($scope.save, 5000);
+    var interval = $interval($scope.save, 5000);
+    $scope.$on('$destroy', function () {
+      $interval.cancel(interval);
+    });
   }
 ]);
 angular.module('mnd.web').controller('PostListController', [
@@ -355,6 +368,16 @@ angular.module('mnd.web').controller('PostViewController', [
     $scope.post = $scope.Posts.db.get(id);
     $scope.titleImageIsDisplayed = $scope.post.titleImageSource !== undefined;
     $scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
-    console.log($scope.post);
+    $scope.isAuthor = function () {
+      var isAuthor = false;
+      if ($scope.user) {
+        $scope.post.authors.forEach(function (author) {
+          if (author.userId === $scope.user._id) {
+            isAuthor = true;
+          }
+        });
+      }
+      return isAuthor;
+    };
   }
 ]);

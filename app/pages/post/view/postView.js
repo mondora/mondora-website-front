@@ -12,7 +12,17 @@ angular.module("mnd.web")
 	$scope.titleImageIsDisplayed = ($scope.post.titleImageSource !== undefined);
 
 	$scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
-	console.log($scope.post);
 
+	$scope.isAuthor = function () {
+		var isAuthor = false;
+		if ($scope.user) {
+			$scope.post.authors.forEach(function (author) {
+				if (author.userId === $scope.user._id) {
+					isAuthor = true;
+				}
+			});
+		}
+		return isAuthor;
+	};
 
 });

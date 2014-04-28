@@ -7,18 +7,19 @@
 }
 
 .post-top-buttons {
-	position: relative;
+	position: absolute;
+	right: 20px;
 	top: 20px;
 }
 
 .post-header {
 	position: relative;
-	top: 50%;
+	top: 65%;
 }
 
 .post-body {
 	position: relative;
-	top: 80%;
+	top: 85%;
 	font-size: 18px;
 }
 
@@ -37,4 +38,12 @@
 }
 .post-subtitle.color-me-white {
 	color: #aeaeac;
+}
+
+.post-author {
+	color: #aeaeac;
+}
+
+.post-body-bottom-spacer {
+	height: 100px;
 }

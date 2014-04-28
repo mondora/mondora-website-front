@@ -1,6 +1,6 @@
 angular.module("mnd.web")
 
-.controller("PostEditController", function ($scope, $interval, $stateParams, $upload) {
+.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -54,10 +54,17 @@ angular.module("mnd.web")
 
 
 
-	/////////////////////
-	// Post publishing //
-	/////////////////////
+	//////////////////////////////////
+	// Post publishing and deleting //
+	//////////////////////////////////
 
+	$scope.toggleDelete = function () {
+		$scope.showDelete = !$scope.showDelete;
+	};
+	$scope.deletePost = function () {
+		$scope.Posts.remove(id);
+		$state.go("home");
+	};
 	$scope.publishPost = function () {
 		$scope.post.published = true;
 		$scope.save();
@@ -65,6 +72,9 @@ angular.module("mnd.web")
 	$scope.unpublishPost = function () {
 		$scope.post.published = false;
 		$scope.save();
+	};
+	$scope.isOwner = function () {
+		return $scope.user && $scope.post.user === $scope.user._id;
 	};
 
 
@@ -137,13 +147,15 @@ angular.module("mnd.web")
 			userId: $scope.user._id,
 			name: $scope.user.profile.name,
 			screenName: $scope.user.services.twitter.screenName,
-			imageUrl: $scope.user.services.twitter.post_img_url
+			imageUrl: $scope.user.services.twitter.profile_image_url
 		}];
 		// Strip the _id property (which can't be set twice)
 		var post = angular.copy($scope.post);
 		delete post._id;
 		$scope.Posts.update(id, post);
 	};
-	$interval($scope.save, 5000);
-
+	var interval = $interval($scope.save, 5000);
+	$scope.$on("$destroy", function () {
+		$interval.cancel(interval);
+	});
 });

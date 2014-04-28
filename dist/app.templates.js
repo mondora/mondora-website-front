@@ -53,23 +53,47 @@ try {
   module = angular.module('mnd.web', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/post/list/postList.html',
+    '<div class="col-sm-8 col-sm-offset-4">\n' +
+    '	<div ng-repeat="post in posts">\n' +
+    '		<a ui-sref="postEdit({postId: post._id})">\n' +
+    '			<h4>Titolo: {{post.title}}</h4>\n' +
+    '		</a>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd.web');
+} catch (e) {
+  module = angular.module('mnd.web', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
     '<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
     '\n' +
-    '<div class="post-top-buttons">\n' +
-    '	<div class="col-sm-12">\n' +
-    '		<div class="pull-right">\n' +
-    '			<button type="button" class="btn btn-default" ng-click="deletePost()">\n' +
-    '				Elimina\n' +
-    '			</button>\n' +
-    '			<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">\n' +
-    '				Pubblica\n' +
-    '			</button>\n' +
-    '			<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">\n' +
-    '				Rendi privato\n' +
-    '			</button>\n' +
-    '		</div>\n' +
-    '	</div>\n' +
+    '<div class="post-top-buttons" ng-if="isOwner()">\n' +
+    '	<span ng-if="showDelete">\n' +
+    '		Sei sicuro di voler eliminare il post?\n' +
+    '		<button type="button" class="btn btn-default" ng-click="deletePost()">\n' +
+    '			Sì\n' +
+    '		</button>\n' +
+    '		<button type="button" class="btn btn-default" ng-click="toggleDelete()">\n' +
+    '			No\n' +
+    '		</button>\n' +
+    '	</span>\n' +
+    '	<button type="button" class="btn btn-default" ng-click="toggleDelete()" ng-if="!showDelete">\n' +
+    '		Elimina\n' +
+    '	</button>\n' +
+    '	<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">\n' +
+    '		Pubblica\n' +
+    '	</button>\n' +
+    '	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">\n' +
+    '		Rendi privato\n' +
+    '	</button>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-header">\n' +
@@ -97,7 +121,8 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div class="post-body">\n' +
     '	<div class="col-sm-8 col-sm-offset-2">\n' +
-    '		<p class="simplebox" id="postBodyEditor"></p>\n' +
+    '		<div class="simplebox" id="postBodyEditor"></div>\n' +
+    '		<div class="post-body-bottom-spacer"></div>\n' +
     '	</div>\n' +
     '</div>\n' +
     '\n' +
@@ -113,38 +138,11 @@ try {
   module = angular.module('mnd.web', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/post/list/postList.html',
-    '<div class="col-sm-8 col-sm-offset-4">\n' +
-    '	<div ng-repeat="post in posts">\n' +
-    '		<a ui-sref="postEdit({postId: post._id})">\n' +
-    '			<h4>Titolo: {{post.title}}</h4>\n' +
-    '		</a>\n' +
-    '	</div>\n' +
-    '</div>\n' +
-    '');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('mnd.web');
-} catch (e) {
-  module = angular.module('mnd.web', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/view/postView.html',
     '<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
     '\n' +
-    '<div class="col-sm-12">\n' +
-    '	<div class="pull-right">\n' +
-    '		<br />\n' +
-    '		<button type="button" class="btn btn-default">\n' +
-    '			Salva nei preferiti\n' +
-    '		</button>\n' +
-    '		<button type="button" class="btn btn-default">\n' +
-    '			Condividi\n' +
-    '		</button>\n' +
-    '	</div>\n' +
+    '<div ng-if="isAuthor()" class="post-top-buttons">\n' +
+    '	<a ui-sref="postEdit({postId: post._id})" class="btn btn-default">Modifica</a>\n' +
     '</div>\n' +
     '\n' +
     '<div id="mnd-post-sprinkle-container">\n' +
@@ -155,9 +153,9 @@ module.run(['$templateCache', function($templateCache) {
     '	<div class="col-sm-8 col-sm-offset-2">\n' +
     '		<h1 ng-bind-html="post.title" class="post-title" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h1>\n' +
     '		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h2>\n' +
-    '		<div ng-repeat="author in post.authors">\n' +
-    '			<img class="img-circle" ng-src="author.imageUrl" />\n' +
-    '			by {{author.screenName}}\n' +
+    '		<div class="post-author" ng-repeat="author in post.authors">\n' +
+    '			<img class="img-circle" ng-src="{{author.imageUrl}}" />\n' +
+    '			&nbsp;&nbsp;by {{author.screenName}}\n' +
     '		</div>\n' +
     '	</div>\n' +
     '</div>\n' +
@@ -165,6 +163,7 @@ module.run(['$templateCache', function($templateCache) {
     '<div class="post-body">\n' +
     '	<div class="col-sm-8 col-sm-offset-2">\n' +
     '		<p ng-bind-html="post.body"></p>\n' +
+    '		<div class="post-body-bottom-spacer"></div>\n' +
     '	</div>\n' +
     '</div>\n' +
     '');
