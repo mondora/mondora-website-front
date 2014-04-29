@@ -30,11 +30,23 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	bottom: 0px;
 	padding: 0 10px 10px 15px; 
 	color: $mnd-grey;
-	font-size: 16px;
 }
 #mnd-sidebar-footer span{
-	font-size: 30px;
+	font-size: 25px;
+	line-height: 2px;
 }
+.mnd-sidebar-footer-address {
+	font-size: 15px !important;
+}
+@media (max-height: 500px) {
+	#mnd-sidebar-footer span {
+		padding-bottom: 15px;
+	}
+	.mnd-sidebar-footer-address {
+		display: none;
+	}
+}
+
 
 // Menu
 .nav {
