@@ -1,6 +1,6 @@
 html, body {
   min-width: 400px;
-  min-height: 500px;
+  min-height: 450px;
   height: 100%;
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
@@ -49,7 +49,7 @@ span.mnd-width-10 {
   top: 0px;
   left: -300px;
   height: 100%;
-  min-height: 500px;
+  min-height: 450px;
   width: 300px;
   overflow-y: hidden;
   z-index: 1;
@@ -88,7 +88,7 @@ span.mnd-width-10 {
   top: 0px;
   left: 0px;
   height: 100%;
-  min-height: 500px;
+  min-height: 450px;
   width: 100px;
   z-index: 100;
   margin: 0px;
@@ -180,6 +180,10 @@ span.mnd-width-10 {
   -webkit-transition: color 1s ease, padding 0.5s ease;
   transition: color 1s ease, padding 0.5s ease; }
 
+@media (max-height: 580px) {
+  #mnd-sidebar-user {
+    padding: 15px 10px 10px 15px; } }
+
 #mnd-sidebar-footer {
   position: absolute;
   bottom: 0px;
@@ -231,6 +235,10 @@ span.mnd-width-10 {
   font-weight: 200;
   font-size: 20px; }
 
+@media (max-height: 580px) {
+  .nav {
+    margin-top: 30px; } }
+
 #mnd-show-sidebar {
   width: 60px;
   height: 60px;
@@ -244,7 +252,7 @@ span.mnd-width-10 {
 
 @media (max-width: 767px) {
   #mnd-show-sidebar {
-    margin: 10px 20px; } }
+    margin: 10px; } }
 
 #mnd-sidebar-logo {
   position: absolute;

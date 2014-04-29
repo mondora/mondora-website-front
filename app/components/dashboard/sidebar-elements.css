@@ -17,6 +17,10 @@
   color: #abadad;
   transition: color 1s ease, padding 0.5s ease; }
 
+@media (max-height: 580px) {
+  #mnd-sidebar-user {
+    padding: 15px 10px 10px 15px; } }
+
 #mnd-sidebar-footer {
   position: absolute;
   bottom: 0px;
@@ -66,5 +70,9 @@
 .nav-second-level li a {
   font-weight: 200;
   font-size: 20px; }
+
+@media (max-height: 580px) {
+  .nav {
+    margin-top: 30px; } }
 
 /*# sourceMappingURL=sidebar-elements.css.map */
