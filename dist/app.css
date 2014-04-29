@@ -193,7 +193,7 @@ span.mnd-width-10 {
 .mnd-sidebar-footer-address {
   font-size: 15px !important; }
 
-@media (max-height: 550px) {
+@media (max-height: 580px) {
   #mnd-sidebar-footer span {
     padding-bottom: 15px; }
   .mnd-sidebar-footer-address {
