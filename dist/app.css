@@ -193,7 +193,7 @@ span.mnd-width-10 {
 .mnd-sidebar-footer-address {
   font-size: 15px !important; }
 
-@media (max-height: 500px) {
+@media (max-height: 550px) {
   #mnd-sidebar-footer span {
     padding-bottom: 15px; }
   .mnd-sidebar-footer-address {
@@ -385,6 +385,48 @@ span.mnd-width-10 {
   .sprinkle-control-btn, .sprinkle-control-wpm {
     font-size: 30px; } }
 
+.post-title-image {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%; }
+
+.post-top-buttons {
+  position: absolute;
+  right: 20px;
+  top: 20px; }
+
+.post-header {
+  position: relative;
+  top: 65%; }
+
+.post-body {
+  position: relative;
+  top: 85%;
+  font-size: 18px; }
+
+.post-title {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 50px;
+  font-weight: bold; }
+
+.post-title.color-me-white {
+  color: #ffffff; }
+
+.post-subtitle {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 30px; }
+
+.post-subtitle.color-me-white {
+  color: #aeaeac; }
+
+.post-author {
+  color: #aeaeac; }
+
+.post-body-bottom-spacer {
+  height: 100px; }
+
 #mnd-video-background {
   position: absolute;
   top: 0px;
@@ -465,7 +507,7 @@ span.mnd-width-10 {
 
 @media (max-width: 767px) {
   #mnd-hidden-payoff {
-    padding-top: 90px;
+    padding-top: 80px;
     padding-left: 0px;
     font-size: 40px;
     font-weight: 600;
@@ -484,7 +526,7 @@ span.mnd-width-10 {
 @media (max-width: 767px) {
   #mnd-sprinkle-container {
     width: 98%;
-    top: 45%;
+    top: 47%;
     margin-left: -49%; } }
 
 #mnd-home-bottom {
@@ -557,48 +599,6 @@ span.mnd-width-10 {
     font-size: 25px; }
   #mnd-home-banner-arrow {
     display: none; } }
-
-.post-title-image {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%; }
-
-.post-top-buttons {
-  position: absolute;
-  right: 20px;
-  top: 20px; }
-
-.post-header {
-  position: relative;
-  top: 65%; }
-
-.post-body {
-  position: relative;
-  top: 85%;
-  font-size: 18px; }
-
-.post-title {
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 50px;
-  font-weight: bold; }
-
-.post-title.color-me-white {
-  color: #ffffff; }
-
-.post-subtitle {
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 30px; }
-
-.post-subtitle.color-me-white {
-  color: #aeaeac; }
-
-.post-author {
-  color: #aeaeac; }
-
-.post-body-bottom-spacer {
-  height: 100px; }
 
 #post-edit-image-upload i {
   color: #aeaeac;
