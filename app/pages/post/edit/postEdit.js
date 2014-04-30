@@ -143,6 +143,7 @@ angular.module("mnd.web")
 		$scope.post.subtitle = subtitle.innerHTML;
 		$scope.post.body = body.innerHTML;
 		$scope.post.user = $scope.user._id;
+		$scope.post.comments = [];
 		$scope.post.authors = [{
 			userId: $scope.user._id,
 			name: $scope.user.profile.name,
@@ -158,4 +159,5 @@ angular.module("mnd.web")
 	$scope.$on("$destroy", function () {
 		$interval.cancel(interval);
 	});
+
 });

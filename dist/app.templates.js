@@ -161,10 +161,51 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="post-body">\n' +
-    '	<div class="col-sm-8 col-sm-offset-2">\n' +
-    '		<p ng-bind-html="post.body"></p>\n' +
-    '		<div class="post-body-bottom-spacer"></div>\n' +
+    '	<div class="first-level-html-container" ng-repeat="child in bodyChildren">\n' +
+    '		<div class="col-sm-8" ng-class="{\'col-sm-offset-2\': !commentBarIsOpen, \'col-sm-offset-1\': commentBarIsOpen}">\n' +
+    '			<div class="simplebox" readonly-editor data-disable-editing></div>\n' +
+    '		</div>\n' +
+    '		<div class="col-sm-2" ng-class="{hidden: commentBarIsOpen}">\n' +
+    '			<i class="fa fa-comment comment-bubble" ng-if="!paragraphHasComments($index)" ng-click="openCommentBarAt($index)"></i>\n' +
+    '			<span class="badge comment-badge" ng-if="paragraphHasComments($index)" ng-click="openCommentBarAt($index)">{{paragraphCommentsLength($index)}}</span>\n' +
+    '		</div>\n' +
+    '		<div class="col-sm-3" ng-class="{hidden: !commentBarIsOpen}">\n' +
+    '			<div class="side-comment-container" ng-class="{hidden: !commentBarIsOpenAt($index)}">\n' +
+    '				<div class="col-sm-12">\n' +
+    '					<i class="fa fa-comment comment-bubble-always-visible" ng-click="closeCommentBar()"></i>\n' +
+    '				</div>\n' +
+    '\n' +
+    '				<div class="col-sm-2" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index">\n' +
+    '					<img class="img-circle" ng-src="{{comment.user.profile_image_url}}" width="32" />\n' +
+    '				</div>\n' +
+    '				<div class="col-sm-10" ng-repeat-end>\n' +
+    '                    <p>\n' +
+    '                        <b>{{comment.user.screenName}}</b>\n' +
+    '                        {{comment.text}}\n' +
+    '                    </p>\n' +
+    '                    <a class="mnd-clickable" ng-if="ownsComment(comment)" ng-click="deleteComment(comment)">Elimina</a>\n' +
+    '                    <a class="mnd-clickable" ng-if="isAuthor() && !comment.public" ng-click="publishComment(comment)">Rendi pubblico</a>\n' +
+    '					<hr />\n' +
+    '				</div>\n' +
+    '\n' +
+    '				<div class="col-sm-2">\n' +
+    '					<img class="img-circle" ng-src="{{user.services.twitter.profile_image_url}}" width="32" />\n' +
+    '				</div>\n' +
+    '				<div class="col-sm-10">\n' +
+    '					<p><b>{{user.services.twitter.screenName}}</b></p>\n' +
+    '					<textarea ng-model="comment.text" class="form-control" placeholder="Lascia un commento" rows="1"></textarea>\n' +
+    '					{{commentText}}\n' +
+    '                    <a class="mnd-clickable" ng-click="saveCommentAt($index)">Salva</a>\n' +
+    '					<hr />\n' +
+    '					<p>\n' +
+    '						Questo commento è solo visibile da te e dall\'autore,\n' +
+    '						a meno che l\'autore decida di renderlo pubblico\n' +
+    '					</p>\n' +
+    '				</div>\n' +
+    '			</div>\n' +
+    '		</div>\n' +
     '	</div>\n' +
+    '	<div class="post-body-bottom-spacer"></div>\n' +
     '</div>\n' +
     '');
 }]);

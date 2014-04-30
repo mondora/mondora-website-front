@@ -6,3 +6,31 @@
 	margin-left: -260px;
 	z-index: 1;
 }
+
+.first-level-html-container .comment-bubble {
+	color: #aeaeac;
+	opacity: 0;
+}
+
+.first-level-html-container:hover .comment-bubble {
+	opacity: 1;
+}
+
+.comment-bubble:hover {
+	cursor: pointer;
+	color: #5cb85c;
+}
+
+.comment-bubble-always-visible {
+	cursor: pointer;
+	color: #5cb85c;
+}
+
+.side-comment-container {
+	position: absolute;
+}
+
+.comment-badge:hover {
+	cursor: pointer;
+	background: #5cb85c;
+}
