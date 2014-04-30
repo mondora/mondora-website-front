@@ -1,4 +1,6 @@
 html, body {
+  min-width: 400px;
+  min-height: 450px;
   height: 100%;
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
@@ -47,6 +49,7 @@ span.mnd-width-10 {
   top: 0px;
   left: -300px;
   height: 100%;
+  min-height: 450px;
   width: 300px;
   overflow-y: hidden;
   z-index: 1;
@@ -85,6 +88,7 @@ span.mnd-width-10 {
   top: 0px;
   left: 0px;
   height: 100%;
+  min-height: 450px;
   width: 100px;
   z-index: 100;
   margin: 0px;
@@ -108,6 +112,7 @@ span.mnd-width-10 {
 @media (max-width: 767px) {
   #mnd-toggle-sidebar {
     height: 80px;
+    min-height: 0px;
     width: 100%;
     text-align: left;
     border-bottom: 2px solid #5e5f5f;
@@ -148,7 +153,8 @@ span.mnd-width-10 {
 
 @media (max-width: 767px) {
   #mnd-content {
-    padding-left: 0px; }
+    padding-left: 0px;
+    padding-top: 80px; }
   #mnd-content.sidebar-open {
     -webkit-transform: translateX(240px);
     -ms-transform: translateX(240px);
@@ -174,15 +180,28 @@ span.mnd-width-10 {
   -webkit-transition: color 1s ease, padding 0.5s ease;
   transition: color 1s ease, padding 0.5s ease; }
 
+@media (max-height: 580px) {
+  #mnd-sidebar-user {
+    padding: 15px 10px 10px 15px; } }
+
 #mnd-sidebar-footer {
   position: absolute;
   bottom: 0px;
   padding: 0 10px 10px 15px;
-  color: #5e5f5f;
-  font-size: 16px; }
+  color: #5e5f5f; }
 
 #mnd-sidebar-footer span {
-  font-size: 30px; }
+  font-size: 25px;
+  line-height: 2px; }
+
+.mnd-sidebar-footer-address {
+  font-size: 15px !important; }
+
+@media (max-height: 580px) {
+  #mnd-sidebar-footer span {
+    padding-bottom: 15px; }
+  .mnd-sidebar-footer-address {
+    display: none; } }
 
 .nav {
   margin-top: 50px;
@@ -216,6 +235,10 @@ span.mnd-width-10 {
   font-weight: 200;
   font-size: 20px; }
 
+@media (max-height: 580px) {
+  .nav {
+    margin-top: 30px; } }
+
 #mnd-show-sidebar {
   width: 60px;
   height: 60px;
@@ -229,7 +252,7 @@ span.mnd-width-10 {
 
 @media (max-width: 767px) {
   #mnd-show-sidebar {
-    margin: 10px 20px; } }
+    margin: 10px; } }
 
 #mnd-sidebar-logo {
   position: absolute;
@@ -254,6 +277,122 @@ span.mnd-width-10 {
     margin-left: -30px;
     margin-top: 10px; } }
 
+.sprinkle-result {
+  position: relative;
+  width: 100%;
+  color: #fff;
+  font-size: 50px;
+  font-family: 'Cutive Mono';
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-top: 3px solid #ffcc00;
+  z-index: 0; }
+
+.sprinkle-result span {
+  display: inline-block;
+  margin: 0px;
+  padding-top: 15px;
+  z-index: 10; }
+
+.sprinkle-center-line-top {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 50%;
+  height: 25%;
+  border-right: 2px solid #fff;
+  opacity: 0.4;
+  z-index: -11; }
+
+.sprinkle-center-line-center {
+  position: absolute;
+  top: 30%;
+  left: 0px;
+  width: 50%;
+  height: 50%; }
+
+.sprinkle-center-line-bottom {
+  position: absolute;
+  top: 75%;
+  left: 0px;
+  width: 50%;
+  height: 25%;
+  border-right: 2px solid #fff;
+  opacity: 0.4;
+  z-index: -11; }
+
+.sprinkle-left {
+  float: left;
+  text-align: right;
+  width: 50%; }
+
+.sprinkle-pivot {
+  position: relative;
+  float: left;
+  color: #ffcc00; }
+
+.sprinkle-right {
+  float: left; }
+
+.sprinkle-left, .sprinkle-pivot, .sprinkle-right {
+  min-height: 98px; }
+
+.sprinkle-control-bar {
+  background-color: #ffcc00;
+  height: 80px;
+  width: 100%;
+  padding: 10px 0; }
+
+.sprinkle-control-bar-left {
+  height: 60px;
+  width: 30%;
+  padding-left: 10px; }
+
+.sprinkle-control-bar-right {
+  height: 60px;
+  width: 69%;
+  text-align: right;
+  padding-right: 10px; }
+
+.sprinkle-control-bar-right, .sprinkle-control-bar-left {
+  display: inline-block; }
+
+.sprinkle-control-btn {
+  color: #5e5f5f;
+  padding-left: 5px;
+  display: inline-block;
+  font-size: 40px;
+  border: none;
+  text-align: center; }
+
+.sprinkle-control-wpm {
+  color: #5e5f5f;
+  padding: 0 15px;
+  display: inline-block;
+  font-size: 40px;
+  border: none;
+  text-align: center; }
+
+.sprinkle-control-btn:hover {
+  cursor: pointer; }
+
+.wpm-btn {
+  padding: 0 5px; }
+
+@media (max-width: 767px) {
+  .sprinkle-result {
+    font-size: 35px; }
+  .sprinkle-result span {
+    padding-top: 25px; }
+  .sprinkle-control-bar {
+    height: 60px; }
+  .sprinkle-control-bar-left {
+    padding-left: 5px; }
+  .sprinkle-control-bar-right {
+    padding-right: 5px; }
+  .sprinkle-control-btn, .sprinkle-control-wpm {
+    font-size: 30px; } }
+
 #mnd-video-background {
   position: absolute;
   top: 0px;
@@ -263,7 +402,8 @@ span.mnd-width-10 {
   padding: 0px;
   margin: 0px;
   overflow: hidden;
-  z-index: -1; }
+  z-index: -1;
+  background-image: url(''); }
 
 .mnd-video-overlay {
   background-color: #000;
@@ -279,6 +419,18 @@ span.mnd-width-10 {
   min-width: 100%;
   min-height: 100%;
   z-index: -10; }
+
+#mnd-video-background img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -20; }
+
+@media (max-width: 767px) {
+  #mnd-video-background video {
+    display: none; } }
 
 #mnd-home-container {
   position: absolute;
@@ -299,6 +451,10 @@ span.mnd-width-10 {
 #mnd-sign-in:hover {
   cursor: pointer; }
 
+@media (max-width: 767px) {
+  #mnd-sign-in {
+    display: none; } }
+
 #mnd-hidden-payoff {
   color: #fff;
   padding-top: 30px;
@@ -315,6 +471,10 @@ span.mnd-width-10 {
 #mnd-hidden-payoff:hover {
   opacity: 0.5; }
 
+@media (max-width: 767px) {
+  #mnd-hidden-payoff {
+    display: none; } }
+
 #mnd-sprinkle-container {
   position: absolute;
   width: 620px;
@@ -323,6 +483,12 @@ span.mnd-width-10 {
   margin-left: -260px;
   margin-top: -50px;
   z-index: 1; }
+
+@media (max-width: 767px) {
+  #mnd-sprinkle-container {
+    width: 98%;
+    top: 35%;
+    margin-left: -49%; } }
 
 #mnd-home-bottom {
   position: absolute;
@@ -341,6 +507,10 @@ span.mnd-width-10 {
 .mnd-mondora-logo img {
   width: 100%;
   height: 100%; }
+
+@media (max-width: 767px) {
+  #mnd-home-logo {
+    display: none; } }
 
 #mnd-home-banner {
   float: right;
@@ -376,6 +546,20 @@ span.mnd-width-10 {
   border-left: solid 20px transparent;
   border-right: solid 20px transparent;
   opacity: 0.5; }
+
+@media (max-width: 767px) {
+  #mnd-home-banner {
+    width: 100%;
+    height: 150px;
+    margin-right: 0px; }
+  #mnd-home-banner-content {
+    height: 150px;
+    width: 100%; }
+  #mnd-home-banner-content h1 {
+    text-transform: uppercase;
+    font-size: 25px; }
+  #mnd-home-banner-arrow {
+    display: none; } }
 
 .post-title-image {
   position: absolute;

@@ -10,6 +10,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	top: 0px;
 	left: -300px;
 	height: 100%;
+  	min-height: 450px;
 	width: 300px;
 	overflow-y: hidden;
 	z-index: 1;
@@ -40,6 +41,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	top: 0px;
 	left: 0px;
 	height: 100%;
+  	min-height: 450px;
 	width: 100px;
 	z-index: 100;
 	margin: 0px;
@@ -56,6 +58,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 @media (max-width: 767px) {
 	#mnd-toggle-sidebar {
 		height: 80px;
+		min-height: 0px;
 		width: 100%;
 		text-align: left;
 		border-bottom: 2px solid $mnd-grey;
@@ -92,6 +95,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 @media (max-width: 767px) {
 	#mnd-content {
 		padding-left: 0px;
+		padding-top: 80px;
 	}
 	#mnd-content.sidebar-open {
 		transform: translateX(240px);

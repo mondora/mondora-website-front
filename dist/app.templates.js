@@ -41,25 +41,7 @@ module.run(['$templateCache', function($templateCache) {
     '	<div class="mnd-video-overlay"></div>\n' +
     '	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}" ng-attr-poster="{{videoPoster}}"> \n' +
     '	</video>\n' +
-    '</div>\n' +
-    '');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('mnd.web');
-} catch (e) {
-  module = angular.module('mnd.web', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/post/list/postList.html',
-    '<div class="col-sm-8 col-sm-offset-4">\n' +
-    '	<div ng-repeat="post in posts">\n' +
-    '		<a ui-sref="postEdit({postId: post._id})">\n' +
-    '			<h4>Titolo: {{post.title}}</h4>\n' +
-    '		</a>\n' +
-    '	</div>\n' +
+    '	<img ng-src="{{videoPoster}}" />\n' +
     '</div>\n' +
     '');
 }]);
@@ -127,6 +109,25 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="post-end-spacer"></div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd.web');
+} catch (e) {
+  module = angular.module('mnd.web', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/post/list/postList.html',
+    '<div class="col-sm-8 col-sm-offset-4">\n' +
+    '	<div ng-repeat="post in posts">\n' +
+    '		<a ui-sref="postEdit({postId: post._id})">\n' +
+    '			<h4>Titolo: {{post.title}}</h4>\n' +
+    '		</a>\n' +
+    '	</div>\n' +
+    '</div>\n' +
     '');
 }]);
 })();
