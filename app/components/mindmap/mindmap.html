@@ -1,0 +1,8 @@
+<div class="mm-wrapper">
+	<div class="mm-children">
+		<div ng-repeat="child in map.children" ng-style="getWidth(map.children.length)" mnd-mind-map map="child"></div>
+	</div>
+	<div class="mm-parent">
+		<a href="{{map.href}}">{{map.text}}</a>
+	</div>
+</div>

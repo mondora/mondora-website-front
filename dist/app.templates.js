@@ -5,6 +5,26 @@ try {
   module = angular.module('mnd.web', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('components/mindmap/mindmap.html',
+    '<div class="mm-wrapper">\n' +
+    '	<div class="mm-children">\n' +
+    '		<div ng-repeat="child in map.children" ng-style="getWidth(map.children.length)" mnd-mind-map map="child"></div>\n' +
+    '	</div>\n' +
+    '	<div class="mm-parent">\n' +
+    '		<a href="{{map.href}}">{{map.text}}</a>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd.web');
+} catch (e) {
+  module = angular.module('mnd.web', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/home/home.html',
     '<div id="mnd-home-container">\n' +
     '	<div id="mnd-sign-in">\n' +
@@ -148,6 +168,10 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div id="mnd-post-sprinkle-container">\n' +
     '	<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinklePostText}}"></div>\n' +
+    '</div>\n' +
+    '\n' +
+    '<div class="mnd-post-mindmap-container">\n' +
+    '	<div mnd-mind-map map="map"></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-header">\n' +
