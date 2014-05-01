@@ -8,10 +8,14 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('components/mindmap/mindmap.html',
     '<div class="mm-wrapper">\n' +
     '	<div class="mm-children">\n' +
-    '		<div ng-repeat="child in map.children" ng-style="getWidth(map.children.length)" mnd-mind-map map="child"></div>\n' +
+    '		<div ng-repeat="child in map.children" ng-style="getWidth(map.children.length)" mnd-mind-map map="child" edit="edit" child="true"></div>\n' +
     '	</div>\n' +
     '	<div class="mm-parent">\n' +
     '		<a href="{{map.href}}">{{map.text}}</a>\n' +
+    '		<input ng-if="edit" type="text" ng-model="map.text" placeholder="Text" />\n' +
+    '		<input ng-if="edit" type="text" ng-model="map.href" placeholder="Url" />\n' +
+    '		<i ng-if="edit && child" class="fa fa-times mnd-clickable" ng-click="autodestroy()"></i>\n' +
+    '		<i ng-if="edit" class="fa fa-plus mnd-clickable" ng-click="addChild()"></i>\n' +
     '	</div>\n' +
     '</div>\n' +
     '');
@@ -96,6 +100,10 @@ module.run(['$templateCache', function($templateCache) {
     '	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">\n' +
     '		Rendi privato\n' +
     '	</button>\n' +
+    '</div>\n' +
+    '\n' +
+    '<div class="mnd-post-mindmap-container">\n' +
+    '	<div mnd-mind-map map="post.map" edit="true"></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-header">\n' +
