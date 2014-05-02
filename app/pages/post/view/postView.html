@@ -1,4 +1,7 @@
-<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+<div class="post-title-image">
+	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->
+</div>
 
 <div ng-if="isAuthor()" class="post-top-buttons">
 	<a ui-sref="postEdit({postId: post._id})" class="btn btn-default">Modifica</a>
