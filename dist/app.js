@@ -395,7 +395,7 @@ angular.module('mnd.web').controller('PostListController', [
     }, 500);
   }
 ]);
-angular.module('mnd.web').factory('FirstLevelHtmlParser', function () {
+angular.module('mnd.web').factory('firstLevelHtmlParser', function () {
   var parse = function (html) {
     var div = document.createElement('div');
     div.innerHTML = html;
@@ -404,7 +404,19 @@ angular.module('mnd.web').factory('FirstLevelHtmlParser', function () {
     });
   };
   return { parse: parse };
-}).directive('readonlyEditor', function () {
+}).factory('readTimeEstimatingService', [
+  'MndTagStrippingService',
+  function (MndTagStrippingService) {
+    var estimate = function (text) {
+      var strippedText = MndTagStrippingService.strip(text);
+      strippedText = strippedText.replace(/\s+/g, ' ');
+      var wordCount = strippedText.split(' ').length;
+      var averageReadingSpeedInWpm = 250;
+      return Math.round(wordCount / averageReadingSpeedInWpm);
+    };
+    return { estimate: estimate };
+  }
+]).directive('readonlyEditor', function () {
   var Tweet = function (screenName) {
     this.button = document.createElement('button');
     this.button.className = 'medium-editor-action';
@@ -449,16 +461,20 @@ angular.module('mnd.web').factory('FirstLevelHtmlParser', function () {
   '$scope',
   '$stateParams',
   'MndTagStrippingService',
-  'FirstLevelHtmlParser',
-  function ($scope, $stateParams, MndTagStrippingService, FirstLevelHtmlParser) {
+  'firstLevelHtmlParser',
+  'readTimeEstimatingService',
+  function ($scope, $stateParams, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
     ///////////////////////////
     // Retrieve post to edit //
     ///////////////////////////
     var id = $stateParams.postId;
     $scope.post = $scope.Posts.db.get(id);
-    $scope.bodyChildren = FirstLevelHtmlParser.parse($scope.post.body);
+    $scope.bodyChildren = firstLevelHtmlParser.parse($scope.post.body);
     $scope.titleImageIsDisplayed = $scope.post.titleImageSource !== undefined;
     $scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
+    $scope.estimateReadingTime = function () {
+      return readTimeEstimatingService.estimate($scope.post.body);
+    };
     $scope.isAuthor = function () {
       var isAuthor = false;
       if ($scope.user) {

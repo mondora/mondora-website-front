@@ -1,6 +1,6 @@
 angular.module("mnd.web")
 
-.factory("FirstLevelHtmlParser", function () {
+.factory("firstLevelHtmlParser", function () {
 	var parse = function (html) {
 		var div = document.createElement("div");
 		div.innerHTML = html;
@@ -10,6 +10,19 @@ angular.module("mnd.web")
 	};
 	return {
 		parse: parse
+	};
+})
+
+.factory("readTimeEstimatingService", function (MndTagStrippingService) {
+	var estimate = function (text) {
+		var strippedText = MndTagStrippingService.strip(text);
+		strippedText = strippedText.replace(/\s+/g, " ");
+		var wordCount = strippedText.split(" ").length;
+		var averageReadingSpeedInWpm = 250;
+		return Math.round(wordCount / averageReadingSpeedInWpm);
+	};
+	return {
+		estimate: estimate
 	};
 })
 
@@ -60,7 +73,7 @@ angular.module("mnd.web")
 	};
 })
 
-.controller("PostViewController", function ($scope, $stateParams, MndTagStrippingService, FirstLevelHtmlParser) {
+.controller("PostViewController", function ($scope, $stateParams, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -69,11 +82,15 @@ angular.module("mnd.web")
 	var id = $stateParams.postId;
 	$scope.post = $scope.Posts.db.get(id);
 
-	$scope.bodyChildren = FirstLevelHtmlParser.parse($scope.post.body);
+	$scope.bodyChildren = firstLevelHtmlParser.parse($scope.post.body);
 
 	$scope.titleImageIsDisplayed = ($scope.post.titleImageSource !== undefined);
 
 	$scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
+
+	$scope.estimateReadingTime = function () {
+		return readTimeEstimatingService.estimate($scope.post.body);
+	};
 
 	$scope.isAuthor = function () {
 		var isAuthor = false;

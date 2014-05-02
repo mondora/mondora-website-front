@@ -19,6 +19,7 @@
 		<div class="post-author" ng-repeat="author in post.authors">
 			<img class="img-circle" ng-src="{{author.imageUrl}}" />
 			&nbsp;&nbsp;by {{author.screenName}}
+			<span class="pull-right">{{estimateReadingTime()}} min</span>
 		</div>
 	</div>
 </div>
