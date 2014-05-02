@@ -5,7 +5,7 @@
 </div>
 
 <div id="mnd-post-sprinkle-container">
-	<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinklePostText}}"></div>
+	<div mnd-sprinkle text="{{sprinklePostText}}"></div>
 </div>
 
 <div class="mnd-post-mindmap-container">
@@ -25,7 +25,7 @@
 </div>
 
 <div class="post-body">
-	<div class="first-level-html-container" ng-repeat="child in bodyChildren">
+	<div class="first-level-html-container" ng-repeat="child in bodyChildren track by $index">
 		<div class="col-sm-8" ng-class="{'col-sm-offset-2': !commentBarIsOpen, 'col-sm-offset-1': commentBarIsOpen}">
 			<div class="simplebox" readonly-editor data-disable-editing></div>
 		</div>

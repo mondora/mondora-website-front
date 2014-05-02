@@ -178,7 +178,7 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div id="mnd-post-sprinkle-container">\n' +
-    '	<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinklePostText}}"></div>\n' +
+    '	<div mnd-sprinkle text="{{sprinklePostText}}"></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="mnd-post-mindmap-container">\n' +
@@ -198,7 +198,7 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="post-body">\n' +
-    '	<div class="first-level-html-container" ng-repeat="child in bodyChildren">\n' +
+    '	<div class="first-level-html-container" ng-repeat="child in bodyChildren track by $index">\n' +
     '		<div class="col-sm-8" ng-class="{\'col-sm-offset-2\': !commentBarIsOpen, \'col-sm-offset-1\': commentBarIsOpen}">\n' +
     '			<div class="simplebox" readonly-editor data-disable-editing></div>\n' +
     '		</div>\n' +

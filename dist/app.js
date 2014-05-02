@@ -399,9 +399,11 @@ angular.module('mnd.web').factory('firstLevelHtmlParser', function () {
   var parse = function (html) {
     var div = document.createElement('div');
     div.innerHTML = html;
-    return Array.prototype.map.call(div.children, function (node) {
-      return node.outerHTML;
-    });
+    var children = Array.prototype.map.call(div.children, function (node) {
+        return node.outerHTML;
+      });
+    console.log(children);
+    return children;
   };
   return { parse: parse };
 }).factory('readTimeEstimatingService', [
@@ -439,6 +441,7 @@ angular.module('mnd.web').factory('firstLevelHtmlParser', function () {
   return {
     link: function ($scope, $element) {
       var readonlyEditorOptions = {
+          placeholder: '',
           disableEditing: true,
           buttons: ['tweet'],
           extensions: { tweet: new Tweet() }

@@ -4,9 +4,11 @@ angular.module("mnd.web")
 	var parse = function (html) {
 		var div = document.createElement("div");
 		div.innerHTML = html;
-		return Array.prototype.map.call(div.children, function (node) {
+		var children = Array.prototype.map.call(div.children, function (node) {
 			return node.outerHTML;
 		});
+		console.log(children);
+		return children;
 	};
 	return {
 		parse: parse
@@ -49,6 +51,7 @@ angular.module("mnd.web")
 	return {
 		link: function ($scope, $element) {
 			var readonlyEditorOptions = {
+				placeholder: "",
 				disableEditing: true,
 				buttons: ["tweet"],
 				extensions: {
