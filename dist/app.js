@@ -542,55 +542,5 @@ angular.module('mnd.web').factory('FirstLevelHtmlParser', function () {
       });
       $scope.comment.text = '';
     };
-    $scope.map = {
-      href: '#',
-      text: 'Salute 2.0',
-      children: [
-        {
-          href: '#',
-          text: 'Next meeting',
-          children: [{
-              href: '#',
-              text: '20-24 sept'
-            }]
-        },
-        {
-          href: '#',
-          text: 'Actions',
-          children: [
-            {
-              href: '#',
-              text: 'Capire com\'\xe8 la privacy'
-            },
-            {
-              href: '#',
-              text: 'Identit\xe0'
-            }
-          ]
-        },
-        {
-          href: '#',
-          text: 'Milestones',
-          children: [{
-              href: '#',
-              text: '15 ottobre',
-              children: [
-                {
-                  href: '#',
-                  text: 'Value proposition'
-                },
-                {
-                  href: '#',
-                  text: 'Che cosa realizzare'
-                },
-                {
-                  href: '#',
-                  text: 'Coinvolgimento'
-                }
-              ]
-            }]
-        }
-      ]
-    };
   }
 ]);

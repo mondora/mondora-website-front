@@ -179,7 +179,7 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="mnd-post-mindmap-container">\n' +
-    '	<div mnd-mind-map map="map"></div>\n' +
+    '	<div mnd-mind-map map="post.map"></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-header">\n' +
