@@ -1,5 +1,5 @@
 (function () {
-  var currentVersion = 'v0.1.0';
+  var currentVersion = 'v0.1.0b';
   var config = {
       dev: {
         host: 'http://localhost:3000',
@@ -33,7 +33,8 @@ angular.module('mnd.web', [
   'mnd.dashboard',
   'asteroid',
   'angularFileUpload',
-  'ngSanitize'
+  'ngSanitize',
+  'RecursionHelper'
 ]).config([
   '$stateProvider',
   '$urlRouterProvider',
@@ -175,6 +176,43 @@ angular.module('mnd.web').controller('SidebarController', [
           ]
         }
       ]
+    };
+  }
+]);
+angular.module('mnd.web').directive('mndMindMap', [
+  'RecursionHelper',
+  function (RecursionHelper) {
+    return {
+      restrict: 'EA',
+      replace: true,
+      templateUrl: 'components/mindmap/mindmap.html',
+      scope: {
+        map: '=',
+        edit: '=',
+        child: '='
+      },
+      compile: function (element) {
+        return RecursionHelper.compile(element, function ($scope) {
+          $scope.getWidth = function (length) {
+            var width = 100 / length + '%';
+            return { width: width };
+          };
+          $scope.autodestroy = function () {
+            if ($scope.child) {
+              var parent = $scope.$parent.$parent.map.children;
+              var index = parent.indexOf($scope.map);
+              parent.splice(index, 1);
+            }
+          };
+          $scope.addChild = function () {
+            if (!$scope.map)
+              $scope.map = {};
+            if (!$scope.map.children)
+              $scope.map.children = [];
+            $scope.map.children.push({});
+          };
+        });
+      }
     };
   }
 ]);
@@ -503,6 +541,56 @@ angular.module('mnd.web').factory('FirstLevelHtmlParser', function () {
         $scope.$apply();
       });
       $scope.comment.text = '';
+    };
+    $scope.map = {
+      href: '#',
+      text: 'Salute 2.0',
+      children: [
+        {
+          href: '#',
+          text: 'Next meeting',
+          children: [{
+              href: '#',
+              text: '20-24 sept'
+            }]
+        },
+        {
+          href: '#',
+          text: 'Actions',
+          children: [
+            {
+              href: '#',
+              text: 'Capire com\'\xe8 la privacy'
+            },
+            {
+              href: '#',
+              text: 'Identit\xe0'
+            }
+          ]
+        },
+        {
+          href: '#',
+          text: 'Milestones',
+          children: [{
+              href: '#',
+              text: '15 ottobre',
+              children: [
+                {
+                  href: '#',
+                  text: 'Value proposition'
+                },
+                {
+                  href: '#',
+                  text: 'Che cosa realizzare'
+                },
+                {
+                  href: '#',
+                  text: 'Coinvolgimento'
+                }
+              ]
+            }]
+        }
+      ]
     };
   }
 ]);

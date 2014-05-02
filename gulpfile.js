@@ -64,6 +64,7 @@ gulp.task("vendorStyles", function () {
 
 gulp.task("vendorScripts", function () {
 	var sources = [
+		"bower_components/angular-recursion/angular-recursion.js",
 		"bower_components/angular-sanitize/angular-sanitize.js",
 		"bower_components/ng-file-upload/angular-file-upload.js",
 		"bower_components/ng-file-upload/angular-file-upload-shim.js",

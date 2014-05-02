@@ -1,5 +1,5 @@
 (function () {
-	var currentVersion = "v0.1.0";
+	var currentVersion = "v0.1.0b";
 	var config = {
 		dev: {
 			host: "http://localhost:3000",
@@ -35,7 +35,8 @@ angular.module("mnd.web", [
 	"mnd.dashboard",
 	"asteroid",
 	"angularFileUpload",
-	"ngSanitize"
+	"ngSanitize",
+	"RecursionHelper"
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
