@@ -1,4 +1,7 @@
-<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+<div class="post-title-image">
+	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->
+</div>
 
 <div class="post-top-buttons" ng-if="isOwner()">
 	<span ng-if="showDelete">
@@ -24,7 +27,7 @@
 <div class="post-header">
 	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">
 		<input type="file" ng-file-select="onFileSelect($files)" class="hidden" />
-		<i class="fa fa-picture-o" ng-click="clickFileInput()"></i>
+		<i ng-if="!titleImageIsDisplayed" class="fa fa-picture-o" ng-click="clickFileInput()"></i>
 	</div>
 	<div class="col-sm-5" id="post-edit-image-upload-progressbar">
 		<br />
