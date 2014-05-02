@@ -1,5 +1,5 @@
 (function () {
-	var currentVersion = "v0.1.0b";
+	var currentVersion = "v0.1.0";
 	var config = {
 		dev: {
 			host: "http://localhost:3000",

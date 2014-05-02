@@ -171,7 +171,10 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/view/postView.html',
-    '<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '<div class="post-title-image">\n' +
+    '	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->\n' +
+    '</div>\n' +
     '\n' +
     '<div ng-if="isAuthor()" class="post-top-buttons">\n' +
     '	<a ui-sref="postEdit({postId: post._id})" class="btn btn-default">Modifica</a>\n' +
