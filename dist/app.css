@@ -64,7 +64,6 @@ span.mnd-width-10 {
   -webkit-transition: -webkit-transform 0.4s ease 0s;
   transition: transform 0.4s ease 0s;
   -webkit-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 #mnd-sidebar.sidebar-open {
