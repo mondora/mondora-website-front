@@ -1,5 +1,4 @@
 (function () {
-  var currentVersion = 'v0.1.0b';
   var config = {
       dev: {
         host: 'http://localhost:3000',
@@ -10,7 +9,7 @@
         endpoint: 'ws://api.nocheros.info/websocket'
       }
     };
-  if (/b/.test(currentVersion)) {
+  if (/b/.test(APP_VERSION)) {
     currentConfig = config.dev;
   } else {
     currentConfig = config.prod;
@@ -135,7 +134,7 @@ angular.module('mnd.web').controller('SidebarController', [
       items: [
         {
           title: 'Home',
-          href: '/'
+          href: '/#/'
         },
         {
           title: 'Nuovo post',
@@ -227,9 +226,8 @@ angular.module('mnd.web').factory('MndTagStrippingService', function () {
 });
 angular.module('mnd.web').controller('HomeController', [
   '$scope',
-  '$collection',
   '$sce',
-  function ($scope, $collection, $sce) {
+  function ($scope, $sce) {
     var homeConfig = $scope.Configurations.findOne({ page: 'home' });
     $scope.sprinkleText = homeConfig.sprinkleText;
     $scope.banner = homeConfig.banner;
@@ -388,8 +386,7 @@ angular.module('mnd.web').controller('PostEditController', [
 angular.module('mnd.web').controller('PostListController', [
   '$timeout',
   '$scope',
-  '$collection',
-  function ($timeout, $scope, $collection) {
+  function ($timeout, $scope) {
     $timeout(function () {
       $scope.posts = $scope.Posts.db.itemsArray;
     }, 500);

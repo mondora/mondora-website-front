@@ -1,11 +1,15 @@
+//////////////////
+// Dependencies //
+//////////////////
+
 var gulp	= require("gulp");
 var plugins	= require("gulp-load-plugins")();
-var tinyLr	= require("tiny-lr");
 var static	= require("node-static");
 var http	= require("http");
-
-var lrServer = tinyLr();
-
+var JSZip	= require("jszip");
+var fs		= require("fs");
+var pp		= require('preprocess');
+var mkdirp	= require("mkdirp");
 
 
 
@@ -35,7 +39,7 @@ gulp.task("buildAppScripts", function () {
 });
 
 gulp.task("buildAppTemplates", function () {
-	gulp.src("app/**/*.html")
+	gulp.src(["app/**/*.html", "!app/main.html"])
 		.pipe(plugins.ngHtml2js({
 			moduleName: "mnd.web"
 		}))
@@ -95,11 +99,22 @@ gulp.task("buildVendorStyles", function () {
 });
 
 gulp.task("buildVendorFonts", function () {
-	var sources = [
+	// Copying fonts in the right place
+	var fontSources = [
 		"bower_components/fontawesome/fonts/*",
+		"google_fonts/fonts/*"
 	];
-	gulp.src(sources)
-		.pipe(gulp.dest("dist/fonts/"));
+	gulp.src(fontSources).pipe(gulp.dest("dist/fonts/"));
+	// Building fonts' css sources
+	var fontsCssSources = [
+		"google_fonts/css/*"
+	];
+	gulp.src(fontsCssSources)
+		.pipe(plugins.concat("google_fonts.css"))
+		.pipe(gulp.dest("dist/css/"))
+		.pipe(plugins.minifyCss())
+		.pipe(plugins.rename("google_fonts.min.css"))
+		.pipe(gulp.dest("dist/css/"));
 });
 
 // Does not include some dependencies that are retrieved via CDN
@@ -142,17 +157,143 @@ gulp.task("buildVendorScriptsCDN", function () {
 
 
 
+///////////////////////////
+// Build for node-webkit //
+///////////////////////////
+
+var buildNodeWebkitDeps = [
+	"buildAppScripts",
+	"buildAppStyles",
+	"buildAppTemplates",
+	"buildVendorScripts",
+	"buildVendorStyles",
+	"buildVendorFonts"
+];
+
+gulp.task("buildNodeWebkit", buildNodeWebkitDeps, function () {
+
+	var zip = new JSZip();
+
+	var html = fs.readFileSync("app/main.html", "utf8");
+	var nwHtml = pp.preprocess(html, {TARGET: "nw.prod"});
+	zip.file("index.html", nwHtml);
+
+	var sources = [
+		"package.json",
+		"dist/js/app.min.js",
+		"dist/js/app.templates.min.js",
+		"dist/js/vendor.min.js",
+		"dist/css/app.min.css",
+		"dist/css/vendor.min.css",
+		"dist/css/google_fonts.min.css"
+	];
+	sources.forEach(function (source) {
+		zip.file(source, fs.readFileSync(source));
+	});
+
+	var fonts = fs.readdirSync("dist/fonts/").map(function (font) {
+		return "dist/fonts/" + font;
+	});
+	fonts.forEach(function (source) {
+		zip.file(source, fs.readFileSync(source));
+	});
+
+	var buffer = zip.generate({type: "nodebuffer"});
+	try {
+		fs.unlinkSync("builds/mnd-website.nw");
+	} catch (e) {
+		// Do nothing
+	}
+	fs.writeFileSync("builds/mnd-website.nw", buffer);
+
+});
 
 
 
+///////////////////
+// Build for web //
+///////////////////
+
+var buildWebDeps = [
+	"buildAppScripts",
+	"buildAppStyles",
+	"buildAppTemplates",
+	"buildVendorScriptsCDN",
+	"buildVendorStylesCDN"
+];
+
+gulp.task("buildWeb", buildWebDeps, function () {
+
+	mkdirp.sync("builds/web/");
+	mkdirp.sync("builds/web/dist/");
+	mkdirp.sync("builds/web/dist/js");
+	mkdirp.sync("builds/web/dist/css");
+
+	var html = fs.readFileSync("app/main.html", "utf8");
+	var webHtml = pp.preprocess(html, {TARGET: "web.prod"});
+	fs.writeFileSync("builds/web/index.html", webHtml);
+
+	var sources = [
+		"dist/js/app.min.js",
+		"dist/js/app.templates.min.js",
+		"dist/js/cdn.vendor.min.js",
+		"dist/css/app.min.css",
+		"dist/css/cdn.vendor.min.css"
+	];
+	sources.forEach(function (source) {
+		fs.writeFileSync("builds/web/" + source, fs.readFileSync(source));
+	});
+
+});
 
 
 
+///////////////////////////
+// Start dev environment //
+///////////////////////////
+
+var lrServer = plugins.livereload();
+
+gulp.task("buildDevHtml", function () {
+
+	var html = fs.readFileSync("app/main.html", "utf8");
+	var devHtml = pp.preprocess(html, {TARGET: "dev"});
+	fs.writeFileSync("builds/dev/index.html", devHtml);	
+
+});
+
+gulp.task("reloadBrowser", function () {
+	lrServer.changed("index.html");
+});
+
+var devDeps = [
+	"buildAppScripts",
+	"buildAppStyles",
+	"buildAppTemplates",
+	"buildVendorScripts",
+	"buildVendorStyles",
+	"buildDevHtml"
+];
+
+gulp.task("dev", devDeps, function () {
+	var dvServer =http.createServer(function (req, res) {
+		var stServer = new static.Server("./builds/dev/", {cache: false});
+		req.on("end", function () {
+			stServer.serve(req, res);
+		});
+		req.resume();
+	}).listen(8080);
+	gulp.watch("app/**/*.scss", ["buildVendorStyles", "reloadBrowser"]);
+	gulp.watch("app/**/*.js", ["buildVendorScripts", "reloadBrowser"]);
+	gulp.watch(["app/**/*.html", "!app/main.html"], ["buildVendorTemplates", "reloadBrowser"]);
+	gulp.watch("app/main.html", ["buildDevHtml", "reloadBrowser"]);
+});
 
 
 
-
-
+////////////////////////////
+// Start test environment //
+////////////////////////////
 
 gulp.task("tdd", function () {
 	lrServer.listen(35729);
@@ -167,35 +308,6 @@ gulp.task("tdd", function () {
 	gulp.watch("app/**/*.js", ["scripts"]);
 	gulp.watch("app/**/*.html", ["templates"]);
 	gulp.watch("test/**/*.unit.js", ["unit_tests"]);
-});
-
-
-gulp.task("default", function () {
-	lrServer.listen(35729);
-	var dvServer =http.createServer(function (req, res) {
-		var stServer = new static.Server("./", {cache: false});
-		req.on("end", function () {
-			stServer.serve(req, res);
-		});
-		req.resume();
-	}).listen(8080);
-	gulp.watch("app/**/*.scss", ["styles"]);
-	gulp.watch("app/**/*.js", ["scripts"]);
-	gulp.watch("app/**/*.html", ["templates"]);
-});
-
-
-
-///////////////////////////
-// Build for node webkit //
-///////////////////////////
-
-
-
-gulp.task("buildWebkit", ["webkitVendorStyles", "webkitVendorScripts"], function () {
-    return gulp.src(["nw/*", "dist/app.js", "dist/app.templates.js", "dist/app.css"])
-        .pipe(plugins.zip("mnd.nw"))
-        .pipe(gulp.dest("dist/"));
 });
 
 gulp.task("unit_tests", function () {

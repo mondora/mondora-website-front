@@ -10,7 +10,7 @@ angular.module("mnd.web")
         items: [
             {
                 title: "Home",
-                href: "/"
+                href: "/#/"
             },
             {
                 title: "Nuovo post",

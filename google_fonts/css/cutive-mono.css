@@ -1,0 +1,6 @@
+@font-face {
+  font-family: "Cutive Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/cutive+mono-.woff") format("woff"), url("../fonts/cutive+mono-.ttf") format("truetype");
+}

@@ -1,5 +1,4 @@
 (function () {
-	var currentVersion = "v0.1.0b";
 	var config = {
 		dev: {
 			host: "http://localhost:3000",
@@ -10,7 +9,7 @@
 			endpoint: "ws://api.nocheros.info/websocket"
 		}
 	};
-	if (/b/.test(currentVersion)) {
+	if (/b/.test(APP_VERSION)) {
 		currentConfig = config.dev;
 	} else {
 		currentConfig = config.prod;
