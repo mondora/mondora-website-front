@@ -6,10 +6,11 @@ var gulp	= require("gulp");
 var plugins	= require("gulp-load-plugins")();
 var static	= require("node-static");
 var http	= require("http");
-var JSZip	= require("jszip");
 var fs		= require("fs");
 var pp		= require('preprocess');
 var mkdirp	= require("mkdirp");
+var spawn	= require("child_process").spawn;
+var Q		= require("q");
 
 
 
@@ -157,59 +158,6 @@ gulp.task("buildVendorScriptsCDN", function () {
 
 
 
-///////////////////////////
-// Build for node-webkit //
-///////////////////////////
-
-var buildNodeWebkitDeps = [
-	"buildAppScripts",
-	"buildAppStyles",
-	"buildAppTemplates",
-	"buildVendorScripts",
-	"buildVendorStyles",
-	"buildVendorFonts"
-];
-
-gulp.task("buildNodeWebkit", buildNodeWebkitDeps, function () {
-
-	var zip = new JSZip();
-
-	var html = fs.readFileSync("app/main.html", "utf8");
-	var nwHtml = pp.preprocess(html, {TARGET: "nw.prod"});
-	zip.file("index.html", nwHtml);
-
-	var sources = [
-		"package.json",
-		"dist/js/app.min.js",
-		"dist/js/app.templates.min.js",
-		"dist/js/vendor.min.js",
-		"dist/css/app.min.css",
-		"dist/css/vendor.min.css",
-		"dist/css/google_fonts.min.css"
-	];
-	sources.forEach(function (source) {
-		zip.file(source, fs.readFileSync(source));
-	});
-
-	var fonts = fs.readdirSync("dist/fonts/").map(function (font) {
-		return "dist/fonts/" + font;
-	});
-	fonts.forEach(function (source) {
-		zip.file(source, fs.readFileSync(source));
-	});
-
-	var buffer = zip.generate({type: "nodebuffer"});
-	try {
-		fs.unlinkSync("builds/mnd-website.nw");
-	} catch (e) {
-		// Do nothing
-	}
-	fs.writeFileSync("builds/mnd-website.nw", buffer);
-
-});
-
-
-
 ///////////////////
 // Build for web //
 ///////////////////
@@ -248,11 +196,67 @@ gulp.task("buildWeb", buildWebDeps, function () {
 
 
 
+///////////////////
+// Build for mac //
+///////////////////
+
+var buildMacDeps = [
+	"buildAppScripts",
+	"buildAppStyles",
+	"buildAppTemplates",
+	"buildVendorScripts",
+	"buildVendorStyles",
+	"buildVendorFonts"
+];
+
+gulp.task("buildMac", buildMacDeps, function (cb) {
+
+	mkdirp.sync("builds/mac/");
+	mkdirp.sync("builds/mac/dist/");
+	mkdirp.sync("builds/mac/dist/js");
+	mkdirp.sync("builds/mac/dist/css");
+	mkdirp.sync("builds/mac/dist/fonts");
+
+	var html = fs.readFileSync("app/main.html", "utf8");
+	var macHtml = pp.preprocess(html, {TARGET: "mac.prod"});
+	fs.writeFileSync("builds/mac/index.html", macHtml);
+
+	var sources = [
+		"dist/js/app.min.js",
+		"dist/js/app.templates.min.js",
+		"dist/js/vendor.min.js",
+		"dist/css/app.min.css",
+		"dist/css/vendor.min.css",
+		"dist/css/google_fonts.min.css"
+	];
+	sources.forEach(function (source) {
+		fs.writeFileSync("builds/mac/" + source, fs.readFileSync(source));
+	});
+
+	var fonts = fs.readdirSync("dist/fonts/").map(function (font) {
+		return "dist/fonts/" + font;
+	});
+	fonts.forEach(function (font) {
+		fs.writeFileSync("builds/mac/" + font, fs.readFileSync(font));
+	});
+
+	var deferred = Q.defer();
+	var mg = spawn("macgap", ["build", "-n", "mnd", "-o", "builds/", "builds/mac/"]);
+	mg.on("close", function (code) {
+		if (code !== 0) deferred.reject(code);
+		else deferred.resolve();
+	});
+	return deferred.promise;
+
+});
+
+
+
 ///////////////////////////
 // Start dev environment //
 ///////////////////////////
 
-var lrServer = plugins.livereload();
+var lrServer;
 
 gulp.task("buildDevHtml", function () {
 
@@ -276,7 +280,8 @@ var devDeps = [
 ];
 
 gulp.task("dev", devDeps, function () {
-	var dvServer =http.createServer(function (req, res) {
+	lrServer = plugins.livereload();
+	var dvServer = http.createServer(function (req, res) {
 		var stServer = new static.Server("./builds/dev/", {cache: false});
 		req.on("end", function () {
 			stServer.serve(req, res);
@@ -296,23 +301,22 @@ gulp.task("dev", devDeps, function () {
 ////////////////////////////
 
 gulp.task("tdd", function () {
-	lrServer.listen(35729);
-	var dvServer =http.createServer(function (req, res) {
-		var stServer = new static.Server("./test/", {cache: false});
-		req.on("end", function () {
-			stServer.serve(req, res);
-		});
-		req.resume();
-	}).listen(8081);
-	gulp.watch("app/**/*.scss", ["styles"]);
-	gulp.watch("app/**/*.js", ["scripts"]);
-	gulp.watch("app/**/*.html", ["templates"]);
-	gulp.watch("test/**/*.unit.js", ["unit_tests"]);
+	//var dvServer = http.createServer(function (req, res) {
+		//var stServer = new static.Server("./test/", {cache: false});
+		//req.on("end", function () {
+			//stServer.serve(req, res);
+		//});
+		//req.resume();
+	//}).listen(8081);
+	//gulp.watch("app/**/*.scss", ["styles"]);
+	//gulp.watch("app/**/*.js", ["scripts"]);
+	//gulp.watch("app/**/*.html", ["templates"]);
+	//gulp.watch("test/**/*.unit.js", ["unit_tests"]);
 });
 
 gulp.task("unit_tests", function () {
-	gulp.src("test/unit/**/*.unit.js")
-		.pipe(plugins.concat("app.unit.js"))
-		.pipe(gulp.dest("test/"))
-		.pipe(plugins.livereload(lrServer));
+	//gulp.src("test/unit/**/*.unit.js")
+		//.pipe(plugins.concat("app.unit.js"))
+		//.pipe(gulp.dest("test/"))
+		//.pipe(plugins.livereload(lrServer));
 });

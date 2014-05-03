@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="mnd.web">
+
+	<head>
+
+		<title>Mondora m:</title>
+		<meta name="viewport" content="width=400, user-scalable=no">
+		<meta charset="utf-8">
+
+
+
+			<!-- CSS from Bower Components and Google Fonts -->
+			<link href="dist/css/vendor.min.css" type="text/css" rel="stylesheet" />
+			<link href="dist/css/google_fonts.min.css" type="text/css" rel="stylesheet" />
+			<!-- Main App CSS -->
+			<link href="dist/css/app.min.css" type="text/css" rel="stylesheet" />
+
+			<!-- JS from Bower Components -->
+			<script src="dist/js/vendor.min.js"></script>
+			<!-- Main App JS -->
+			<script>
+				window.APP_VERSION = "v0.1.0";
+			</script>
+			<script src="dist/js/app.min.js"></script>
+			<script src="dist/js/app.templates.min.js"></script>
+
+	</head>
+
+	<body ng-controller="MainController">
+
+		<div mnd-sidebar ng-controller="SidebarController">
+			<div name="before">
+				<div id="mnd-sidebar-user">
+					<div ng-if="user">
+						<img class="img-circle" ng-src="{{user.services.twitter.profile_image_url}}" />
+						<span>{{user.profile.name}}</span>
+						<span ng-click="logout()" class="logout"><i class="fa fa-times-circle"></i></span>
+					</div>
+					<div ng-if="!user" ng-click="login()" class="login">
+						<i class="fa fa-twitter"></i> Sign in with twitter
+					</div>
+				</div>	
+			</div>
+			<div name="after">
+				<div id="mnd-sidebar-footer">
+					<span>
+						MONDORA Srl
+					</span>
+					<br />
+					<span class="mnd-sidebar-footer-address">
+						Milano, Morbegno, Novara, St. Moritz (CH)<br />
+						Via Cornalia 7 - 20154, Milano <br />
+					</span>
+				</div>	
+			</div>	
+		</div>
+		<div mnd-toggle-sidebar>
+			<div name="center">
+				<div id="mnd-sidebar-logo">
+					<div class="mnd-mondora-logo">
+						<img src="http://mnd-website.s3.amazonaws.com/img/mondora-logo.png" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div mnd-content>
+			<div ui-view class="mnd-content"></div>
+		</div>
+
+	</body>
+
+</html>
