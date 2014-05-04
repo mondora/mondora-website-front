@@ -396,7 +396,7 @@ angular.module('mnd-web.pages.post.list', []).controller('PostListController', [
     $scope.posts = $scope.Posts.db.itemsArray;
   }
 ]);
-angular.module('mnd.web').factory('firstLevelHtmlParser', function () {
+angular.module('mnd-web.pages.post.view', []).factory('firstLevelHtmlParser', function () {
   var parse = function (html) {
     var div = document.createElement('div');
     div.innerHTML = html;

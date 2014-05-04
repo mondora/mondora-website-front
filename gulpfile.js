@@ -302,3 +302,20 @@ gulp.task("dev", devDeps, function () {
 
 gulp.task("tdd", function () {
 });
+
+
+
+///////////////////////////////////////
+// Default task: prints help message //
+///////////////////////////////////////
+
+gulp.task("default", function () {
+	console.log("");
+	console.log("Usage: gulp [TASK]");
+	console.log("");
+	console.log("Available tasks:");
+	console.log("  buildWeb         builds the application to be served via web");
+	console.log("  buildMac         builds the application to be served via the Mac App Store");
+	console.log("  dev              set up dev environment with auto-recompiling");
+	console.log("");
+});
