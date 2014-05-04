@@ -396,16 +396,30 @@ angular.module('mnd-web.pages.post.list', []).controller('PostListController', [
     $scope.posts = $scope.Posts.db.itemsArray;
   }
 ]);
-angular.module('mnd-web.pages.post.view', []).factory('FirstLevelHtmlParser', function () {
+angular.module('mnd.web').factory('firstLevelHtmlParser', function () {
   var parse = function (html) {
     var div = document.createElement('div');
     div.innerHTML = html;
-    return Array.prototype.map.call(div.children, function (node) {
-      return node.outerHTML;
-    });
+    var children = Array.prototype.map.call(div.children, function (node) {
+        return node.outerHTML;
+      });
+    console.log(children);
+    return children;
   };
   return { parse: parse };
-}).directive('readonlyEditor', function () {
+}).factory('readTimeEstimatingService', [
+  'MndTagStrippingService',
+  function (MndTagStrippingService) {
+    var estimate = function (text) {
+      var strippedText = MndTagStrippingService.strip(text);
+      strippedText = strippedText.replace(/\s+/g, ' ');
+      var wordCount = strippedText.split(' ').length;
+      var averageReadingSpeedInWpm = 250;
+      return Math.round(wordCount / averageReadingSpeedInWpm);
+    };
+    return { estimate: estimate };
+  }
+]).directive('readonlyEditor', function () {
   var Tweet = function (screenName) {
     this.button = document.createElement('button');
     this.button.className = 'medium-editor-action';
@@ -428,6 +442,7 @@ angular.module('mnd-web.pages.post.view', []).factory('FirstLevelHtmlParser', fu
   return {
     link: function ($scope, $element) {
       var readonlyEditorOptions = {
+          placeholder: '',
           disableEditing: true,
           buttons: ['tweet'],
           extensions: { tweet: new Tweet() }
@@ -450,16 +465,20 @@ angular.module('mnd-web.pages.post.view', []).factory('FirstLevelHtmlParser', fu
   '$scope',
   '$stateParams',
   'MndTagStrippingService',
-  'FirstLevelHtmlParser',
-  function ($scope, $stateParams, MndTagStrippingService, FirstLevelHtmlParser) {
+  'firstLevelHtmlParser',
+  'readTimeEstimatingService',
+  function ($scope, $stateParams, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
     ///////////////////////////
     // Retrieve post to edit //
     ///////////////////////////
     var id = $stateParams.postId;
     $scope.post = $scope.Posts.db.get(id);
-    $scope.bodyChildren = FirstLevelHtmlParser.parse($scope.post.body);
+    $scope.bodyChildren = firstLevelHtmlParser.parse($scope.post.body);
     $scope.titleImageIsDisplayed = $scope.post.titleImageSource !== undefined;
     $scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
+    $scope.estimateReadingTime = function () {
+      return readTimeEstimatingService.estimate($scope.post.body);
+    };
     $scope.isAuthor = function () {
       var isAuthor = false;
       if ($scope.user) {
@@ -542,56 +561,6 @@ angular.module('mnd-web.pages.post.view', []).factory('FirstLevelHtmlParser', fu
         $scope.$apply();
       });
       $scope.comment.text = '';
-    };
-    $scope.map = {
-      href: '#',
-      text: 'Salute 2.0',
-      children: [
-        {
-          href: '#',
-          text: 'Next meeting',
-          children: [{
-              href: '#',
-              text: '20-24 sept'
-            }]
-        },
-        {
-          href: '#',
-          text: 'Actions',
-          children: [
-            {
-              href: '#',
-              text: 'Capire com\'\xe8 la privacy'
-            },
-            {
-              href: '#',
-              text: 'Identit\xe0'
-            }
-          ]
-        },
-        {
-          href: '#',
-          text: 'Milestones',
-          children: [{
-              href: '#',
-              text: '15 ottobre',
-              children: [
-                {
-                  href: '#',
-                  text: 'Value proposition'
-                },
-                {
-                  href: '#',
-                  text: 'Che cosa realizzare'
-                },
-                {
-                  href: '#',
-                  text: 'Coinvolgimento'
-                }
-              ]
-            }]
-        }
-      ]
     };
   }
 ]);

@@ -1,15 +1,18 @@
-<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+<div class="post-title-image">
+	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->
+</div>
 
 <div ng-if="isAuthor()" class="post-top-buttons">
 	<a ui-sref="postEdit({postId: post._id})" class="btn btn-default">Modifica</a>
 </div>
 
 <div id="mnd-post-sprinkle-container">
-	<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinklePostText}}"></div>
+	<div mnd-sprinkle text="{{sprinklePostText}}"></div>
 </div>
 
 <div class="mnd-post-mindmap-container">
-	<div mnd-mind-map map="map"></div>
+	<div mnd-mind-map map="post.map"></div>
 </div>
 
 <div class="post-header">
@@ -19,12 +22,13 @@
 		<div class="post-author" ng-repeat="author in post.authors">
 			<img class="img-circle" ng-src="{{author.imageUrl}}" />
 			&nbsp;&nbsp;by {{author.screenName}}
+			<span class="pull-right">{{estimateReadingTime()}} min</span>
 		</div>
 	</div>
 </div>
 
 <div class="post-body">
-	<div class="first-level-html-container" ng-repeat="child in bodyChildren">
+	<div class="first-level-html-container" ng-repeat="child in bodyChildren track by $index">
 		<div class="col-sm-8" ng-class="{'col-sm-offset-2': !commentBarIsOpen, 'col-sm-offset-1': commentBarIsOpen}">
 			<div class="simplebox" readonly-editor data-disable-editing></div>
 		</div>

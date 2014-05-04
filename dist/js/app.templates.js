@@ -79,7 +79,10 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
-    '<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '<div class="post-title-image">\n' +
+    '	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->\n' +
+    '</div>\n' +
     '\n' +
     '<div class="post-top-buttons" ng-if="isOwner()">\n' +
     '	<span ng-if="showDelete">\n' +
@@ -109,7 +112,7 @@ module.run(['$templateCache', function($templateCache) {
     '<div class="post-header">\n' +
     '	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">\n' +
     '		<input type="file" ng-file-select="onFileSelect($files)" class="hidden" />\n' +
-    '		<i class="fa fa-picture-o" ng-click="clickFileInput()"></i>\n' +
+    '		<i ng-if="!titleImageIsDisplayed" class="fa fa-picture-o" ng-click="clickFileInput()"></i>\n' +
     '	</div>\n' +
     '	<div class="col-sm-5" id="post-edit-image-upload-progressbar">\n' +
     '		<br />\n' +
@@ -168,18 +171,21 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/view/postView.html',
-    '<img class="post-title-image" ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '<div class="post-title-image">\n' +
+    '	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->\n' +
+    '</div>\n' +
     '\n' +
     '<div ng-if="isAuthor()" class="post-top-buttons">\n' +
     '	<a ui-sref="postEdit({postId: post._id})" class="btn btn-default">Modifica</a>\n' +
     '</div>\n' +
     '\n' +
     '<div id="mnd-post-sprinkle-container">\n' +
-    '	<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinklePostText}}"></div>\n' +
+    '	<div mnd-sprinkle text="{{sprinklePostText}}"></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="mnd-post-mindmap-container">\n' +
-    '	<div mnd-mind-map map="map"></div>\n' +
+    '	<div mnd-mind-map map="post.map"></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-header">\n' +
@@ -189,12 +195,13 @@ module.run(['$templateCache', function($templateCache) {
     '		<div class="post-author" ng-repeat="author in post.authors">\n' +
     '			<img class="img-circle" ng-src="{{author.imageUrl}}" />\n' +
     '			&nbsp;&nbsp;by {{author.screenName}}\n' +
+    '			<span class="pull-right">{{estimateReadingTime()}} min</span>\n' +
     '		</div>\n' +
     '	</div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-body">\n' +
-    '	<div class="first-level-html-container" ng-repeat="child in bodyChildren">\n' +
+    '	<div class="first-level-html-container" ng-repeat="child in bodyChildren track by $index">\n' +
     '		<div class="col-sm-8" ng-class="{\'col-sm-offset-2\': !commentBarIsOpen, \'col-sm-offset-1\': commentBarIsOpen}">\n' +
     '			<div class="simplebox" readonly-editor data-disable-editing></div>\n' +
     '		</div>\n' +

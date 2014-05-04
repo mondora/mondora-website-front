@@ -1,15 +1,30 @@
 angular.module("mnd-web.pages.post.view", [])
 
-.factory("FirstLevelHtmlParser", function () {
+.factory("firstLevelHtmlParser", function () {
 	var parse = function (html) {
 		var div = document.createElement("div");
 		div.innerHTML = html;
-		return Array.prototype.map.call(div.children, function (node) {
+		var children = Array.prototype.map.call(div.children, function (node) {
 			return node.outerHTML;
 		});
+		console.log(children);
+		return children;
 	};
 	return {
 		parse: parse
+	};
+})
+
+.factory("readTimeEstimatingService", function (MndTagStrippingService) {
+	var estimate = function (text) {
+		var strippedText = MndTagStrippingService.strip(text);
+		strippedText = strippedText.replace(/\s+/g, " ");
+		var wordCount = strippedText.split(" ").length;
+		var averageReadingSpeedInWpm = 250;
+		return Math.round(wordCount / averageReadingSpeedInWpm);
+	};
+	return {
+		estimate: estimate
 	};
 })
 
@@ -36,6 +51,7 @@ angular.module("mnd-web.pages.post.view", [])
 	return {
 		link: function ($scope, $element) {
 			var readonlyEditorOptions = {
+				placeholder: "",
 				disableEditing: true,
 				buttons: ["tweet"],
 				extensions: {
@@ -60,7 +76,7 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.controller("PostViewController", function ($scope, $stateParams, MndTagStrippingService, FirstLevelHtmlParser) {
+.controller("PostViewController", function ($scope, $stateParams, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -69,11 +85,15 @@ angular.module("mnd-web.pages.post.view", [])
 	var id = $stateParams.postId;
 	$scope.post = $scope.Posts.db.get(id);
 
-	$scope.bodyChildren = FirstLevelHtmlParser.parse($scope.post.body);
+	$scope.bodyChildren = firstLevelHtmlParser.parse($scope.post.body);
 
 	$scope.titleImageIsDisplayed = ($scope.post.titleImageSource !== undefined);
 
 	$scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
+
+	$scope.estimateReadingTime = function () {
+		return readTimeEstimatingService.estimate($scope.post.body);
+	};
 
 	$scope.isAuthor = function () {
 		var isAuthor = false;
@@ -168,61 +188,6 @@ angular.module("mnd-web.pages.post.view", [])
 			$scope.$apply();
 		});
 		$scope.comment.text = "";
-	};
-
-	$scope.map = {
-		href: "#",
-		text: "Salute 2.0",
-		children: [
-			{
-				href: "#",
-				text: "Next meeting",
-				children: [
-					{
-						href: "#",
-						text: "20-24 sept"
-					}
-				]
-			},
-			{
-				href: "#",
-				text: "Actions",
-				children: [
-					{
-						href: "#",
-						text: "Capire com'è la privacy"
-					},
-					{
-						href: "#",
-						text: "Identità"
-					}
-				]
-			},
-			{
-				href: "#",
-				text: "Milestones",
-				children: [
-					{
-						href: "#",
-						text: "15 ottobre",
-						children: [
-							{
-								href: "#",
-								text: "Value proposition"
-							},
-							{
-								href: "#",
-								text: "Che cosa realizzare"
-							},
-							{
-								href: "#",
-								text: "Coinvolgimento"
-							}
-						]
-					}
-				]
-			}
-		]
 	};
 
 });
