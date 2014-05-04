@@ -1,4 +1,4 @@
-angular.module("mnd.web")
+angular.module("mnd-web.components.tag-strip", [])
 
 .factory("MndTagStrippingService", function () {
 	return {

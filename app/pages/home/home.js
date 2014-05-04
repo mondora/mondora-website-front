@@ -1,4 +1,6 @@
-angular.module("mnd.web").controller("HomeController", function ($scope, $sce) {
+angular.module("mnd-web.pages.home", [])
+
+.controller("HomeController", function ($scope, $sce) {
 
 	var homeConfig = $scope.Configurations.findOne({page: "home"});
 	$scope.sprinkleText = homeConfig.sprinkleText;

@@ -1,5 +1,5 @@
-angular.module("mnd.web").controller("PostListController", function ($timeout, $scope) {
-	$timeout(function () {
-		$scope.posts = $scope.Posts.db.itemsArray;
-	}, 500);
+angular.module("mnd-web.pages.post.list", [])
+
+.controller("PostListController", function ($scope) {
+	$scope.posts = $scope.Posts.db.itemsArray;
 });

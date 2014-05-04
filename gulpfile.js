@@ -42,7 +42,7 @@ gulp.task("buildAppScripts", function () {
 gulp.task("buildAppTemplates", function () {
 	gulp.src(["app/**/*.html", "!app/main.html"])
 		.pipe(plugins.ngHtml2js({
-			moduleName: "mnd.web"
+			moduleName: "mnd-web.templates"
 		}))
 		.pipe(plugins.concat("app.templates.js"))
 		.pipe(gulp.dest("dist/js/"))
@@ -301,22 +301,4 @@ gulp.task("dev", devDeps, function () {
 ////////////////////////////
 
 gulp.task("tdd", function () {
-	//var dvServer = http.createServer(function (req, res) {
-		//var stServer = new static.Server("./test/", {cache: false});
-		//req.on("end", function () {
-			//stServer.serve(req, res);
-		//});
-		//req.resume();
-	//}).listen(8081);
-	//gulp.watch("app/**/*.scss", ["styles"]);
-	//gulp.watch("app/**/*.js", ["scripts"]);
-	//gulp.watch("app/**/*.html", ["templates"]);
-	//gulp.watch("test/**/*.unit.js", ["unit_tests"]);
-});
-
-gulp.task("unit_tests", function () {
-	//gulp.src("test/unit/**/*.unit.js")
-		//.pipe(plugins.concat("app.unit.js"))
-		//.pipe(gulp.dest("test/"))
-		//.pipe(plugins.livereload(lrServer));
 });

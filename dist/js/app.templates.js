@@ -1,8 +1,8 @@
 (function(module) {
 try {
-  module = angular.module('mnd.web');
+  module = angular.module('mnd-web.templates');
 } catch (e) {
-  module = angular.module('mnd.web', []);
+  module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('components/mindmap/mindmap.html',
@@ -24,9 +24,9 @@ module.run(['$templateCache', function($templateCache) {
 
 (function(module) {
 try {
-  module = angular.module('mnd.web');
+  module = angular.module('mnd-web.templates');
 } catch (e) {
-  module = angular.module('mnd.web', []);
+  module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/home/home.html',
@@ -73,9 +73,9 @@ module.run(['$templateCache', function($templateCache) {
 
 (function(module) {
 try {
-  module = angular.module('mnd.web');
+  module = angular.module('mnd-web.templates');
 } catch (e) {
-  module = angular.module('mnd.web', []);
+  module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
@@ -143,9 +143,9 @@ module.run(['$templateCache', function($templateCache) {
 
 (function(module) {
 try {
-  module = angular.module('mnd.web');
+  module = angular.module('mnd-web.templates');
 } catch (e) {
-  module = angular.module('mnd.web', []);
+  module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/list/postList.html',
@@ -162,9 +162,9 @@ module.run(['$templateCache', function($templateCache) {
 
 (function(module) {
 try {
-  module = angular.module('mnd.web');
+  module = angular.module('mnd-web.templates');
 } catch (e) {
-  module = angular.module('mnd.web', []);
+  module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/view/postView.html',

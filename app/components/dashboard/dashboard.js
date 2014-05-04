@@ -1,4 +1,4 @@
-angular.module("mnd.web")
+angular.module("mnd-web.components.dashboard", [])
 
 .controller("SidebarController", function ($scope, $state) {
 	$scope.addPost = function () {

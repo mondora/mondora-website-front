@@ -1,4 +1,4 @@
-angular.module("mnd.web")
+angular.module("mnd-web.components.mindmap", [])
 
 .directive("mndMindMap", function (RecursionHelper) {
 	return {

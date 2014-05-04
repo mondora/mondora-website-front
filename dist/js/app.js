@@ -25,7 +25,7 @@
   //TODO Use ng-asteroid, fool!
   window.Ceres = new Asteroid(options);
 }());
-angular.module('mnd.web', [
+angular.module('mnd-web', [
   'ui.bootstrap',
   'ui.router',
   'mnd.sprinkle',
@@ -33,7 +33,15 @@ angular.module('mnd.web', [
   'asteroid',
   'angularFileUpload',
   'ngSanitize',
-  'RecursionHelper'
+  'RecursionHelper',
+  'mnd-web.templates',
+  'mnd-web.components.dashboard',
+  'mnd-web.components.mindmap',
+  'mnd-web.components.tag-strip',
+  'mnd-web.pages.home',
+  'mnd-web.pages.post.edit',
+  'mnd-web.pages.post.view',
+  'mnd-web.pages.post.list'
 ]).config([
   '$stateProvider',
   '$urlRouterProvider',
@@ -121,7 +129,7 @@ angular.module('mnd.web', [
     };
   }
 ]);
-angular.module('mnd.web').controller('SidebarController', [
+angular.module('mnd-web.components.dashboard', []).controller('SidebarController', [
   '$scope',
   '$state',
   function ($scope, $state) {
@@ -178,7 +186,7 @@ angular.module('mnd.web').controller('SidebarController', [
     };
   }
 ]);
-angular.module('mnd.web').directive('mndMindMap', [
+angular.module('mnd-web.components.mindmap', []).directive('mndMindMap', [
   'RecursionHelper',
   function (RecursionHelper) {
     return {
@@ -215,7 +223,7 @@ angular.module('mnd.web').directive('mndMindMap', [
     };
   }
 ]);
-angular.module('mnd.web').factory('MndTagStrippingService', function () {
+angular.module('mnd-web.components.tag-strip', []).factory('MndTagStrippingService', function () {
   return {
     strip: function (html) {
       var div = document.createElement('div');
@@ -224,7 +232,7 @@ angular.module('mnd.web').factory('MndTagStrippingService', function () {
     }
   };
 });
-angular.module('mnd.web').controller('HomeController', [
+angular.module('mnd-web.pages.home', []).controller('HomeController', [
   '$scope',
   '$sce',
   function ($scope, $sce) {
@@ -242,7 +250,7 @@ angular.module('mnd.web').controller('HomeController', [
     $scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
   }
 ]);
-angular.module('mnd.web').controller('PostEditController', [
+angular.module('mnd-web.pages.post.edit', []).controller('PostEditController', [
   '$scope',
   '$interval',
   '$state',
@@ -254,7 +262,6 @@ angular.module('mnd.web').controller('PostEditController', [
     ///////////////////////////
     var id = $stateParams.postId;
     $scope.post = $scope.Posts.db.get(id);
-    window.Posts = $scope.Posts;
     /////////////////////////
     // Init medium editors //
     /////////////////////////
@@ -383,16 +390,13 @@ angular.module('mnd.web').controller('PostEditController', [
     });
   }
 ]);
-angular.module('mnd.web').controller('PostListController', [
-  '$timeout',
+angular.module('mnd-web.pages.post.list', []).controller('PostListController', [
   '$scope',
-  function ($timeout, $scope) {
-    $timeout(function () {
-      $scope.posts = $scope.Posts.db.itemsArray;
-    }, 500);
+  function ($scope) {
+    $scope.posts = $scope.Posts.db.itemsArray;
   }
 ]);
-angular.module('mnd.web').factory('FirstLevelHtmlParser', function () {
+angular.module('mnd-web.pages.post.view', []).factory('FirstLevelHtmlParser', function () {
   var parse = function (html) {
     var div = document.createElement('div');
     div.innerHTML = html;

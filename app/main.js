@@ -27,7 +27,9 @@
 	window.Ceres = new Asteroid(options);
 })();
 
-angular.module("mnd.web", [
+angular.module("mnd-web", [
+
+	// Third party modules
 	"ui.bootstrap",
 	"ui.router",
 	"mnd.sprinkle",
@@ -35,7 +37,18 @@ angular.module("mnd.web", [
 	"asteroid",
 	"angularFileUpload",
 	"ngSanitize",
-	"RecursionHelper"
+	"RecursionHelper",
+
+	// App modules
+	"mnd-web.templates",
+	"mnd-web.components.dashboard",
+	"mnd-web.components.mindmap",
+	"mnd-web.components.tag-strip",
+	"mnd-web.pages.home",
+	"mnd-web.pages.post.edit",
+	"mnd-web.pages.post.view",
+	"mnd-web.pages.post.list"
+
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {

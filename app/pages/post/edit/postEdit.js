@@ -1,4 +1,4 @@
-angular.module("mnd.web")
+angular.module("mnd-web.pages.post.edit", [])
 
 .controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload) {
 
@@ -8,7 +8,6 @@ angular.module("mnd.web")
 
 	var id = $stateParams.postId;
 	$scope.post = $scope.Posts.db.get(id);
-	window.Posts = $scope.Posts;
 
 
 

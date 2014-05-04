@@ -1,4 +1,4 @@
-angular.module("mnd.web")
+angular.module("mnd-web.pages.post.view", [])
 
 .factory("FirstLevelHtmlParser", function () {
 	var parse = function (html) {
