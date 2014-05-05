@@ -11,7 +11,7 @@ module.run(['$templateCache', function($templateCache) {
     '		<div ng-repeat="child in map.children" ng-style="getWidth(map.children.length)" mnd-mind-map map="child" edit="edit" child="true"></div>\n' +
     '	</div>\n' +
     '	<div class="mm-parent">\n' +
-    '		<a href="{{map.href}}">{{map.text}}</a>\n' +
+    '		<a ng-if="!edit" href="{{map.href}}">{{map.text}}</a>\n' +
     '		<input ng-if="edit" type="text" ng-model="map.text" placeholder="Text" />\n' +
     '		<input ng-if="edit" type="text" ng-model="map.href" placeholder="Url" />\n' +
     '		<i ng-if="edit && child" class="fa fa-times mnd-clickable" ng-click="autodestroy()"></i>\n' +

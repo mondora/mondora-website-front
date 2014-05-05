@@ -7,8 +7,8 @@ angular.module("mnd-web.components.mindmap", [])
 		templateUrl: "components/mindmap/mindmap.html",
 		scope: {
 			map: "=",
-			edit: "=",
-			child: "="
+			edit: "=?",
+			child: "=?"
 		},
 		compile: function (element) {
 			return RecursionHelper.compile(element, function ($scope) {
@@ -26,7 +26,6 @@ angular.module("mnd-web.components.mindmap", [])
 					}
 				};
 				$scope.addChild = function () {
-					if (!$scope.map) $scope.map = {};
 					if (!$scope.map.children) $scope.map.children = [];
 					$scope.map.children.push({});
 				};

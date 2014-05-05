@@ -16,10 +16,12 @@ module.exports = function(config) {
 		// list of files / patterns to load in the browser
 
 		files: [
+			"node_modules/lodash/dist/lodash.js",
 			"node_modules/sinon/pkg/sinon-1.9.1.js",
 			"node_modules/should/should.js",
 			"dist/js/vendor.js",
 			"bower_components/angular-mocks/angular-mocks.js",
+			"dist/js/app.templates.js",
 			"app/**/*.js",
 			"test/unit/**/*.js"
 		],

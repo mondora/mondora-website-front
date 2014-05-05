@@ -195,20 +195,20 @@
     </style>
 </head>
 <body>
-<div class="header low">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">components/mindmap/mindmap.js</span></h1>
     <h2>
         
-        Statements: <span class="metric">5.88% <small>(1 / 17)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(15 / 15)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">0% <small>(0 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">75% <small>(3 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Functions: <span class="metric">0% <small>(0 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(6 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">6.67% <small>(1 / 15)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(14 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
@@ -251,13 +251,10 @@
 33
 34
 35
-36
-37</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+36</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -265,24 +262,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-yes">110</span>
+<span class="cline-any cline-yes">110</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -290,35 +288,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module("mnd-web.components.mindmap", [])
 &nbsp;
-.directive("mndMindMap", <span class="fstat-no" title="function not covered" >function (RecursionHelper) {</span>
-<span class="cstat-no" title="statement not covered" >	return {</span>
+.directive("mndMindMap", function (RecursionHelper) {
+	return {
 		restrict: "EA",
 		replace: true,
 		templateUrl: "components/mindmap/mindmap.html",
 		scope: {
 			map: "=",
-			edit: "=",
-			child: "="
+			edit: "=?",
+			child: "=?"
 		},
-		compile: <span class="fstat-no" title="function not covered" >function (element) {</span>
-<span class="cstat-no" title="statement not covered" >			return RecursionHelper.compile(element, <span class="fstat-no" title="function not covered" >function ($scope) {</span></span>
-<span class="cstat-no" title="statement not covered" >				$scope.getWidth = <span class="fstat-no" title="function not covered" >function (length) {</span></span>
-<span class="cstat-no" title="statement not covered" >					var width = (100 / length) + "%";</span>
-<span class="cstat-no" title="statement not covered" >					return {</span>
+		compile: function (element) {
+			return RecursionHelper.compile(element, function ($scope) {
+				$scope.getWidth = function (length) {
+					var width = (100 / length) + "%";
+					return {
 						width: width
 					};
 				};
-<span class="cstat-no" title="statement not covered" >				$scope.autodestroy = <span class="fstat-no" title="function not covered" >function () {</span></span>
-<span class="cstat-no" title="statement not covered" >					if ($scope.child) {</span>
-<span class="cstat-no" title="statement not covered" >						var parent = $scope.$parent.$parent.map.children;</span>
-<span class="cstat-no" title="statement not covered" >						var index = parent.indexOf($scope.map);</span>
-<span class="cstat-no" title="statement not covered" >						parent.splice(index, 1);</span>
+				$scope.autodestroy = function () {
+					<span class="missing-if-branch" title="else path not taken" >E</span>if ($scope.child) {
+						var parent = $scope.$parent.$parent.map.children;
+						var index = parent.indexOf($scope.map);
+						parent.splice(index, 1);
 					}
 				};
-<span class="cstat-no" title="statement not covered" >				$scope.addChild = <span class="fstat-no" title="function not covered" >function () {</span></span>
-<span class="cstat-no" title="statement not covered" >					if (!$scope.map) <span class="cstat-no" title="statement not covered" >$scope.map = {};</span></span>
-<span class="cstat-no" title="statement not covered" >					if (!$scope.map.children) <span class="cstat-no" title="statement not covered" >$scope.map.children = [];</span></span>
-<span class="cstat-no" title="statement not covered" >					$scope.map.children.push({});</span>
+				$scope.addChild = function () {
+					if (!$scope.map.children) $scope.map.children = [];
+					$scope.map.children.push({});
 				};
 			});
 		}
@@ -329,7 +326,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun May 04 2014 22:34:29 GMT+0200 (CEST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon May 05 2014 12:34:43 GMT+0200 (CEST)</div>
 </div>
 
 <script src="../../prettify.js"></script>
