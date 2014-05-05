@@ -67,17 +67,26 @@ describe("The minmap component", function() {
 			css.width.should.equal("50%");
 		});
 
-		it("has in its scope an autodestroy method which autodestroys the element if the element is not the top-most", function () {
-			var firstChild;
-			var text;
-			firstChild = angular.element(element[0].querySelector(".mm-wrapper .mm-wrapper"));
-			text = firstChild.isolateScope().map.text;
-			text.should.equal("0.0");
-			firstChild.isolateScope().autodestroy();
-			rootScope.$digest();
-			firstChild = angular.element(element[0].querySelector(".mm-wrapper .mm-wrapper"));
-			text = firstChild.isolateScope().map.text;
-			text.should.equal("0.1");
+		describe("has in its scope an autodestroy method which", function () {
+			it("does nothing if the element is the top-most", function () {
+				var mapBefore = JSON.stringify(element.isolateScope().map);
+				element.isolateScope().autodestroy();
+				rootScope.$digest();
+				var mapAfter = JSON.stringify(element.isolateScope().map);
+				mapBefore.should.equal(mapAfter);
+			});
+			it("autodestroys the element if the element is not the top-most", function () {
+				var firstChild;
+				var text;
+				firstChild = angular.element(element[0].querySelector(".mm-wrapper .mm-wrapper"));
+				text = firstChild.isolateScope().map.text;
+				text.should.equal("0.0");
+				firstChild.isolateScope().autodestroy();
+				rootScope.$digest();
+				firstChild = angular.element(element[0].querySelector(".mm-wrapper .mm-wrapper"));
+				text = firstChild.isolateScope().map.text;
+				text.should.equal("0.1");
+			});
 		});
 
 		describe("has in its scope an addChild method which", function () {
@@ -117,13 +126,13 @@ describe("The minmap component", function() {
 	});
 
 	describe("if edit is set to true, the mm-parent div", function() {
-		it("should have four children", function () {
+		it("should have three children", function () {
 			rootScope.map = map;
 			var html = "<mnd-mind-map map=\"map\" edit=\"true\"></mnd-mind-map>";
 			element = compile(html)(rootScope);
 			rootScope.$digest();
 			var parent = element.children()[1];
-			angular.element(parent).children().length.should.equal(4);
+			angular.element(parent).children().length.should.equal(3);
 		});
 	});
 

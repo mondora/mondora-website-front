@@ -56,6 +56,10 @@ angular.module('mnd-web', [
         }
       }
     });
+    $stateProvider.state('notFound', {
+      url: '/notFound',
+      templateUrl: 'pages/notFound/notFound.html'
+    });
     $stateProvider.state('postView', {
       url: '/post/:postId',
       templateUrl: 'pages/post/view/postView.html',
@@ -260,6 +264,10 @@ angular.module('mnd-web.pages.post.edit', []).controller('PostEditController', [
     ///////////////////////////
     var id = $stateParams.postId;
     $scope.post = $scope.Posts.db.get(id);
+    if (!$scope.post) {
+      $state.go('notFound');
+      return;
+    }
     /////////////////////////
     // Init medium editors //
     /////////////////////////

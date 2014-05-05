@@ -78,6 +78,22 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/notFound/notFound.html',
+    '<div>\n' +
+    '	La pagina che cerchi non è disponibile.\n' +
+    '	<a ui-sref="home()">Torna alla home</a>\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
     '<div class="post-title-image">\n' +
     '	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +

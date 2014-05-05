@@ -9,6 +9,10 @@ angular.module("mnd-web.pages.post.edit", [])
 	var id = $stateParams.postId;
 	$scope.post = $scope.Posts.db.get(id);
 
+	if (!$scope.post) {
+		$state.go("notFound");
+		return;
+	}
 
 
 	/////////////////////////
@@ -125,8 +129,6 @@ angular.module("mnd-web.pages.post.edit", [])
 				$scope.post.titleImageSource = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
 				$scope.titleImageIsDisplayed = true;
 				$scope.save();
-			})
-			.error(function (err) {
 			});
 	};
 

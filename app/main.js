@@ -65,6 +65,11 @@ angular.module("mnd-web", [
 		}
     });
 
+    $stateProvider.state("notFound", {
+        url: "/notFound",
+        templateUrl: "pages/notFound/notFound.html"
+    });
+
     $stateProvider.state("postView", {
         url: "/post/:postId",
         templateUrl: "pages/post/view/postView.html",

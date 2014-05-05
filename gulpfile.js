@@ -288,9 +288,9 @@ gulp.task("dev", devDeps, function () {
 		});
 		req.resume();
 	}).listen(8080);
-	gulp.watch("app/**/*.scss", ["buildVendorStyles", "reloadBrowser"]);
-	gulp.watch("app/**/*.js", ["buildVendorScripts", "reloadBrowser"]);
-	gulp.watch(["app/**/*.html", "!app/main.html"], ["buildVendorTemplates", "reloadBrowser"]);
+	gulp.watch("app/**/*.scss", ["buildAppStyles", "reloadBrowser"]);
+	gulp.watch("app/**/*.js", ["buildAppScripts", "reloadBrowser"]);
+	gulp.watch(["app/**/*.html", "!app/main.html"], ["buildAppTemplates", "reloadBrowser"]);
 	gulp.watch("app/main.html", ["buildDevHtml", "reloadBrowser"]);
 });
 
