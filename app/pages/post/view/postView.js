@@ -7,7 +7,6 @@ angular.module("mnd-web.pages.post.view", [])
 		var children = Array.prototype.map.call(div.children, function (node) {
 			return node.outerHTML;
 		});
-		console.log(children);
 		return children;
 	};
 	return {
@@ -76,7 +75,7 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.controller("PostViewController", function ($scope, $stateParams, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
+.controller("PostViewController", function ($scope, $stateParams, $state, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -85,15 +84,36 @@ angular.module("mnd-web.pages.post.view", [])
 	var id = $stateParams.postId;
 	$scope.post = $scope.Posts.db.get(id);
 
+	if (!$scope.post) {
+		$state.go("notFound");
+		return;
+	}
+
+	////////////////////////////////////////////////////
+	// Parse post.body into first generation children //
+	////////////////////////////////////////////////////
+
 	$scope.bodyChildren = firstLevelHtmlParser.parse($scope.post.body);
 
-	$scope.titleImageIsDisplayed = ($scope.post.titleImageSource !== undefined);
+	/////////////////////////////////////////////////////
+	// Strip the post text to fit it into the sprinkle //
+	/////////////////////////////////////////////////////
 
 	$scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
+
+	////////////////////////////
+	// Calculate reading time //
+	////////////////////////////
 
 	$scope.estimateReadingTime = function () {
 		return readTimeEstimatingService.estimate($scope.post.body);
 	};
+
+	////////////////////////////////////////////////
+	// Set various properties that shape the html //
+	////////////////////////////////////////////////
+
+	$scope.titleImageIsDisplayed = ($scope.post.titleImageSource !== undefined);
 
 	$scope.isAuthor = function () {
 		var isAuthor = false;
@@ -123,29 +143,11 @@ angular.module("mnd-web.pages.post.view", [])
 		return $scope.commentBarStatus[index];
 	};
 
-	$scope.deleteComment = function (comment) {
-		var promises = $scope.Ceres.call("deleteCommentFromPost", id, comment._id);
-		promises.updated.then(function () {
-			$scope.post = $scope.Posts.db.get(id);
-			$scope.$apply();
-		});
-	};
-
-	$scope.publishComment = function (comment) {
-		var promises = $scope.Ceres.call("publishCommentOfPost", id, comment._id);
-		promises.updated.then(function () {
-			$scope.post = $scope.Posts.db.get(id);
-			$scope.$apply();
-		});
-	};
-
 	$scope.ownsComment = function (comment) {
 		if ($scope.user) {
 			return comment.user._id === $scope.user._id;
 		}
 	};
-
-	$scope.comment = {};
 
 	$scope.paragraphHasComments = function (index) {
 		var filteredComments = [];
@@ -165,6 +167,28 @@ angular.module("mnd-web.pages.post.view", [])
 			}
 		});
 		return filteredComments.length;
+	};
+
+	/////////////////////////////////////
+	// Comment model related functions //
+	/////////////////////////////////////
+
+	$scope.comment = {};
+
+	$scope.deleteComment = function (comment) {
+		var promises = $scope.Ceres.call("deleteCommentFromPost", id, comment._id);
+		promises.updated.then(function () {
+			$scope.post = $scope.Posts.db.get(id);
+			$scope.$apply();
+		});
+	};
+
+	$scope.publishComment = function (comment) {
+		var promises = $scope.Ceres.call("publishCommentOfPost", id, comment._id);
+		promises.updated.then(function () {
+			$scope.post = $scope.Posts.db.get(id);
+			$scope.$apply();
+		});
 	};
 
 	$scope.saveCommentAt = function (index) {

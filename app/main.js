@@ -53,14 +53,13 @@ angular.module("mnd-web", [
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
-
     $stateProvider.state("home", {
         url: "/",
         templateUrl: "pages/home/home.html",
 		controller: "HomeController",
 		resolve: {
-			homeConfig: function () {
-				return Ceres.subscribe("configurations");
+			homeConfig: function (TimeoutPromiseService) {
+				return TimeoutPromiseService.timeoutPromise(Ceres.subscribe("configurations"), 5000);
 			}
 		}
     });
@@ -70,13 +69,18 @@ angular.module("mnd-web", [
         templateUrl: "pages/notFound/notFound.html"
     });
 
+    $stateProvider.state("serverProblems", {
+        url: "/serverProoblems",
+        templateUrl: "pages/serverProblems/serverProblems.html"
+    });
+
     $stateProvider.state("postView", {
         url: "/post/:postId",
         templateUrl: "pages/post/view/postView.html",
 		controller: "PostViewController",
 		resolve: {
-			postSub: function () {
-				return Ceres.subscribe("posts");
+			postSub: function (TimeoutPromiseService) {
+				return TimeoutPromiseService.timeoutPromise(Ceres.subscribe("posts"), 5000);
 			}
 		}
     });
@@ -86,8 +90,8 @@ angular.module("mnd-web", [
         templateUrl: "pages/post/edit/postEdit.html",
 		controller: "PostEditController",
 		resolve: {
-			postSub: function () {
-				return Ceres.subscribe("posts");
+			postSub: function (TimeoutPromiseService) {
+				return TimeoutPromiseService.timeoutPromise(Ceres.subscribe("posts"), 5000);
 			}
 		}
     });
@@ -97,8 +101,8 @@ angular.module("mnd-web", [
         templateUrl: "pages/post/list/postList.html",
 		controller: "PostListController",
 		resolve: {
-			postSub: function () {
-				return Ceres.subscribe("posts");
+			postSub: function (TimeoutPromiseService) {
+				return TimeoutPromiseService.timeoutPromise(Ceres.subscribe("posts"), 5000);
 			}
 		}
     });
@@ -125,6 +129,7 @@ angular.module("mnd-web", [
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");
+
 	Ceres.on("login", function () {
 		$rootScope.safeApply(function () {
 			$rootScope.signedIn = true;
@@ -137,6 +142,28 @@ angular.module("mnd-web", [
 		});
 	});
 
+})
+
+.factory("TimeoutPromiseService", function ($q, $timeout, $state) {
+	var timeoutPromise = function (promise, t) {
+		var deferred = $q.defer();
+		var timer = $timeout(function () {
+			deferred.reject("timeout");
+			$state.go("serverProblems");
+		}, t);
+		promise.then(function (res) {
+			$timeout.cancel(timer);
+			deferred.resolve(res);
+		}, function (err) {
+			$timeout.cancel(timer);
+			deferred.reject(err);
+			$state.go("serverProblems");
+		});
+		return deferred.promise;
+	};
+	return {
+		timeoutPromise: timeoutPromise
+	};
 })
 
 .controller("MainController", function ($scope) {
