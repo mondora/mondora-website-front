@@ -29912,10 +29912,6 @@ module.run(['$templateCache', function($templateCache) {
     '			<div class="sprinkle-control-btn" ng-click="increaseSpeed()"><i class="fa fa-plus"></i></div>\n' +
     '		</div>\n' +
     '	</div>\n' +
-    '<br />\n' +
-    '<br />\n' +
-    '<br />\n' +
-    '\n' +
     '</div>\n' +
     '');
 }]);
@@ -32092,23 +32088,25 @@ function clone (obj) {
 }
 
 var EventEmitter = function () {};
+
 EventEmitter.prototype = {
 
 	constructor: EventEmitter,
 
-	_events: {},
-
 	on: function (name, handler) {
+		if (!this._events) this._events = {};
 		this._events[name] = this._events[name] || [];
 		this._events[name].push(handler);
 	},
 
 	off: function (name, handler) {
+		if (!this._events) this._events = {};
 		if (!this._events[name]) return;
 		this._events[name].splice(this._events[name].indexOf(handler), 1);
 	},
 
 	_emit: function (name /* , arguments */) {
+		if (!this._events) this._events = {};
 		if (!this._events[name]) return;
 		var args = arguments;
 		var self = this;
@@ -32142,24 +32140,72 @@ function isEqual (obj1, obj2) {
 	return str1 === str2;
 }
 
-var Asteroid = function (options) {
-	this._host = options.host;
-	this._ddpOptions = options.ddpOptions;
-	this._ddpOptions.do_not_autoconnect = true;
-	this._do_not_autocreate_collections = options._do_not_autocreate_collections;
+var must = {};
+
+must._toString = function (thing) {
+	return Object.prototype.toString.call(thing).slice(8, -1);
+};
+
+must.beString = function (s) {
+	var type = this._toString(s);
+	if (type !== "String") {
+		throw new Error("Assertion failed: expected String, instead got " + type);
+	}
+};
+
+must.beObject = function (o) {
+	var type = this._toString(o);
+	if (type !== "Object") {
+		throw new Error("Assertion failed: expected Object, instead got " + type);
+	}
+};
+
+//////////////////////////
+// Asteroid constructor //
+//////////////////////////
+
+var Asteroid = function (host, ssl, debug) {
+	// Assert arguments type
+	must.beString(host);
+	// Configure the instance
+	this._host = (ssl ? "https://" : "http://") + host;
+	// If SockJS is available, use it, otherwise, use WebSocket
+	// Note: SockJS is required for IE9 support
+	this._ddpOptions = {
+		endpoint: (ssl ? "wss://" : "ws://") + host + (window.SockJS ? "/sockjs" : "/websocket"),
+		SocketConstructor: window.SockJS || window.WebSocket,
+		debug: debug
+	};
+	// Reference containers
 	this.collections = {};
 	this.subscriptions = {};
+	// Init the instance
 	this._init();
 };
-Asteroid.prototype = new EventEmitter();
+// Asteroid instances are EventEmitter-s
+Asteroid.prototype = Object.create(EventEmitter.prototype);
 Asteroid.prototype.constructor = Asteroid;
+
+
+
+////////////////////////////////
+// Establishes the connection //
+////////////////////////////////
 
 Asteroid.prototype._init = function () {
 	var self = this;
+	// Creates the DDP instance, that will automatically
+	// connect to the DDP server.
 	self.ddp = new DDP(this._ddpOptions);
+	// Register handlers
 	self.ddp.on("connected", function () {
+		// Upon connection, try resuming the login
 		self._tryResumeLogin();
+		// Subscribe to the meteor.loginServiceConfiguration
+		// collection, which holds the configuration options
+		// to login via third party services (oauth).
 		self.ddp.sub("meteor.loginServiceConfiguration");
+		// Emit the connected event
 		self._emit("connected");
 	});
 	self.ddp.on("added", function (data) {
@@ -32171,104 +32217,183 @@ Asteroid.prototype._init = function () {
 	self.ddp.on("removed", function (data) {
 		self._onRemoved(data);
 	});
-	self.ddp.connect();
 };
 
+
+
+///////////////////////////////////////
+// Handler for the ddp "added" event //
+///////////////////////////////////////
+
 Asteroid.prototype._onAdded = function (data) {
-	var alwaysAutocreate = [
-		"meteor_accounts_loginServiceConfiguration",
-		"users"
-	];
+	// Get the name of the collection
 	var cName = data.collection;
+	// If the collection does not exist yet, create it
 	if (!this.collections[cName]) {
-		if (this._do_not_autocreate_collections) {
-			if (alwaysAutocreate.indexOf(cName) === -1) {
-				return;
-			}
-		}
-		this.createCollection(cName);
+		this.collections[cName] = new Asteroid._Collection(cName, this);
 	}
+	// data.fields can be undefined if the item added has only
+	// the _id field . To avoid errors down the line, ensure item
+	// is an object.
 	var item = data.fields || {};
 	item._id = data.id;
+	// Perform the remote insert
 	this.collections[cName]._remoteToLocalInsert(item);
 };
 
-Asteroid.prototype._onRemoved = function (data) {
-	if (this.collections[data.collection]) {
-		this.collections[data.collection]._remoteToLocalRemove(data.id);
-	}
-};
 
-Asteroid.prototype._onChanged = function (data) {
+
+/////////////////////////////////////////
+// Handler for the ddp "removed" event //
+/////////////////////////////////////////
+
+Asteroid.prototype._onRemoved = function (data) {
+	// Check the collection exists to avoid exceptions
 	if (!this.collections[data.collection]) {
 		return;
 	}
+	// Perform the reomte remove
+	this.collections[data.collection]._remoteToLocalRemove(data.id);
+};
+
+
+
+/////////////////////////////////////////
+// Handler for the ddp "changes" event //
+/////////////////////////////////////////
+
+Asteroid.prototype._onChanged = function (data) {
+	// Check the collection exists to avoid exceptions
+	if (!this.collections[data.collection]) {
+		return;
+	}
+	// data.fields can be undefined if the update only
+	// removed some properties in the item. Make sure
+	// it's an object
 	if (!data.fields) {
 		data.fields = {};
 	}
+	// If there were cleared fields, explicitly set them
+	// to undefined in the data.fields object. This will
+	// cause those fields to be present in the for ... in
+	// loop the remote update method of the collection
+	// performs, causing then the fields to be actually
+	// cleared from the item
 	if (data.cleared) {
 		data.cleared.forEach(function (key) {
 			data.fields[key] = undefined;
 		});
 	}
+	// Perform the remote update
 	this.collections[data.collection]._remoteToLocalUpdate(data.id, data.fields);
 };
 
+
+
+///////////////////////////////////////
+// Subscribe and unsubscribe methods //
+///////////////////////////////////////
+
 Asteroid.prototype.subscribe = function (name /* , param1, param2, ... */) {
+	// Assert name must be a string
+	must.beString(name);
+	// If we're already subscribed, return the subscription
 	if (this.subscriptions[name]) {
 		return this.subscriptions[name];
 	}
+	// Init the promise that will be returned
 	var deferred = Q.defer();
+	// Keep a reference to the subscription
 	this.subscriptions[name] = deferred.promise;
+	// Get the paramteres for the subscription
 	var params = Array.prototype.slice.call(arguments, 1);
+	// Subscribe via DDP
 	this.ddp.sub(name, params, function (err, id) {
+		// This is the onReady/onNoSub callback
 		if (err) {
+			// Reject the promise if the server answered nosub
 			deferred.reject(err, id);
 		} else {
+			// Resolve the promise if the server answered ready
 			deferred.resolve(id);
 		}
 	});
+	// Return the promise
 	return this.subscriptions[name];
 };
 
 Asteroid.prototype.unsubscribe = function (id) {
+	// Just send a ddp unsub message. We don't care about
+	// the response because the server doesn't give any
+	// meaningful response
 	this.ddp.unsub(id);
 };
 
+
+
+////////////////////////////
+// Call and apply methods //
+////////////////////////////
+
 Asteroid.prototype.call = function (method /* , param1, param2, ... */) {
+	// Assert name must be a string
+	must.beString(method);
+	// Get the parameters for apply
 	var params = Array.prototype.slice.call(arguments, 1);
+	// Call apply
 	return this.apply(method, params);
 };
 
 Asteroid.prototype.apply = function (method, params) {
+	// Assert method must be a string
+	must.beString(method);
+	// Create the result and updated promises
 	var resultDeferred = Q.defer();
 	var updatedDeferred = Q.defer();
 	var onResult = function (err, res) {
+		// The onResult handler takes care of errors
 		if (err) {
+			// If errors ccur, reject both promises
 			resultDeferred.reject(err);
 			updatedDeferred.reject();
 		} else {
+			// Otherwise resolve the result one
 			resultDeferred.resolve(res);
 		}
 	};
 	var onUpdated = function () {
+		// Just resolve the updated promise
 		updatedDeferred.resolve();
 	};
+	// Perform the method call
 	this.ddp.method(method, params, onResult, onUpdated);
+	// Return an object containing both promises
 	return {
 		result: resultDeferred.promise,
 		updated: updatedDeferred.promise
 	};
 };
 
+
+
+/////////////////////
+// Syntactic sugar //
+/////////////////////
+
 Asteroid.prototype.createCollection = function (name) {
+	// Assert on arguments type
+	must.beString(name);
+	// Only create the collection if it doesn't exist
 	if (!this.collections[name]) {
-		this.collections[name] = new Collection(name, this, DumbDb);
+		this.collections[name] = new Asteroid._Collection(name, this);
 	}
 	return this.collections[name];
 };
 
-// Removal and update suffix for backups
+///////////////////////////////////////////
+// Removal and update suffix for backups //
+///////////////////////////////////////////
+
 var mf_removal_suffix = "__del__";
 var mf_update_suffix = "__upd__";
 var is_backup = function (id) {
@@ -32279,175 +32404,281 @@ var is_backup = function (id) {
 	return s1 === mf_removal_suffix || s2 === mf_update_suffix;
 };
 
-// Collection class constructor definition
-var Collection = function (name, asteroidRef, DbConstructor) {
+
+
+/////////////////////////////////////////////
+// Collection class constructor definition //
+/////////////////////////////////////////////
+
+var Collection = function (name, asteroidRef) {
 	this.name = name;
 	this.asteroid = asteroidRef;
-	this.db = new DbConstructor();
+	this._set = new Set();
 };
-Collection.prototype = new EventEmitter();
 Collection.prototype.constructor = Collection;
 
 
 
-// Insert-related private and public methods
+///////////////////////////////////////////////
+// Insert-related private and public methods //
+///////////////////////////////////////////////
+
 Collection.prototype._localToLocalInsert = function (item) {
-	var existing = this.db.get(item._id);
-	if (existing) {
-		throw new Error("Item exists");
+	// If an item by that id already exists, raise an exception
+	if (this._set.contains(item._id)) {
+		throw new Error("Item " + item._id + " already exists");
 	}
-	this.db.set(item._id, item);
-	this._emit("insert", item._id);
+	this._set.put(item._id, item);
+	// Return a promise, just for api consistency
+	return Q(item._id);
 };
 Collection.prototype._remoteToLocalInsert = function (item) {
-	var existing = this.db.get(item._id);
-	if (isEqual(existing, item)) {
-		return;
-	}
-	this.db.set(item._id, item);
-	this._emit("insert", item._id);
-};
-Collection.prototype._restoreInserted = function (id) {
-	this.db.del(id);
-	this._emit("restore", id);
+	// The server is the SSOT, add directly
+	this._set.put(item._id, item);
 };
 Collection.prototype._localToRemoteInsert = function (item) {
 	var self = this;
 	var deferred = Q.defer();
+	// Construct the name of the method we need to call
 	var methodName = "/" + self.name + "/insert";
-	this.asteroid.ddp.method(methodName, [item], function (err, res) {
+	self.asteroid.ddp.method(methodName, [item], function (err, res) {
 		if (err) {
-			self._restoreInserted(item._id);
+			// On error restore the database and reject the promise
+			self._set.del(item._id);
 			deferred.reject(err);
 		} else {
-			deferred.resolve(res);
+			// Else resolve the promise
+			deferred.resolve(item._id);
 		}
 	});
 	return deferred.promise;
 };
 Collection.prototype.insert = function (item) {
+	// If the time has no id, generate one for it
 	if (!item._id) {
 		item._id = guid();
 	}
-	this._localToLocalInsert(item, false);
-	return this._localToRemoteInsert(item);
+	return {
+		// Perform the local insert
+		local: this._localToLocalInsert(item),
+		// Send the insert request
+		remote: this._localToRemoteInsert(item)
+	};
 };
 
 
 
-// Remove-related private and public methods
+///////////////////////////////////////////////
+// Remove-related private and public methods //
+///////////////////////////////////////////////
+
 Collection.prototype._localToLocalRemove = function (id) {
-	var existing = this.db.get(id);
-	if (!existing) {
-		console.warn("Item not present.");
-		return;
+	// Check if the item exists in the database
+	var existing = this._set.get(id);
+	if (existing) {
+		// Create a backup of the object to delete
+		this._set.put(id + mf_removal_suffix, existing);
+		// Delete the object
+		this._set.del(id);
 	}
-	this.db.set(id + mf_removal_suffix, existing);
-	this.db.del(id);
-	this._emit("remove", id);
+	// Return a promise, just for api consistency
+	return Q(id);
 };
 Collection.prototype._remoteToLocalRemove = function (id) {
-	var existing = this.db.get(id);
-	if (!existing) {
-		existing = this.db.get(id + mf_removal_suffix);
-		if (!existing) {
-			console.warn("Item not present.");
-		} else {
-			this.db.del(id + mf_removal_suffix);
-		}
-	}
-	this.db.del(id);
-	this.db.del(id + mf_removal_suffix);
-	this._emit("remove", id);
-};
-Collection.prototype._restoreRemoved = function (id) {
-	var backup = this.db.get(id + mf_removal_suffix);
-	this.db.set(id, backup);
-	this.db.del(id + mf_removal_suffix);
-	this._emit("restore", id);
+	// The server is the SSOT, remove directly (item and backup)
+	this._set.del(id);
 };
 Collection.prototype._localToRemoteRemove = function (id) {
 	var self = this;
 	var deferred = Q.defer();
+	// Construct the name of the method we need to call
 	var methodName = "/" + self.name + "/remove";
-	this.asteroid.ddp.method(methodName, [{_id: id}], function (err, res) {
+	self.asteroid.ddp.method(methodName, [{_id: id}], function (err, res) {
 		if (err) {
-			self._restoreRemoved(id);
+			// On error restore the database and reject the promise
+			var backup = self._set.get(id + mf_removal_suffix);
+			// Ensure there is a backup
+			if (backup) {
+				self._set.put(id, backup);
+				self._set.del(id + mf_removal_suffix);
+			}
 			deferred.reject(err);
 		} else {
-			deferred.resolve(res);
+			// Else, delete the (possible) backup and resolve the promise
+			self._set.del(id + mf_removal_suffix);
+			deferred.resolve(id);
 		}
 	});
 	return deferred.promise;
 };
 Collection.prototype.remove = function (id) {
-	this._localToLocalRemove(id);
-	return this._localToRemoteRemove(id);
+	return {
+		// Perform the local remove
+		local: this._localToLocalRemove(id),
+		// Send the remove request
+		remote: this._localToRemoteRemove(id)
+	};
 };
 
 
 
-// Update-related private and public methods
-Collection.prototype._localToLocalUpdate = function (id, item) {
-	var existing = this.db.get(id);
+///////////////////////////////////////////////
+// Update-related private and public methods //
+///////////////////////////////////////////////
+
+Collection.prototype._localToLocalUpdate = function (id, fields) {
+	// Ensure the item actually exists
+	var existing = this._set.get(id);
 	if (!existing) {
-		throw new Error("Item not present");
+		throw new Error("Item " + id + " doesn't exist");
 	}
-	this.db.set(id + mf_update_suffix, existing);
-	this.db.set(id, item);
-	this._emit("update", id);
-};
-Collection.prototype._remoteToLocalUpdate = function (id, fields) {
-	var existing = this.db.get(id);
-	if (!existing) {
-		console.warn("Item not present");
-		return;
+	// Ensure the _id property won't get modified
+	if (fields._id && fields._id !== id) {
+		throw new Error("Modifying the _id of a document is not allowed");
 	}
+	// Create a backup
+	this._set.put(id + mf_update_suffix, existing);
+	// Perform the update
 	for (var field in fields) {
 		existing[field] = fields[field];
 	}
-	this.db.set(id, existing);
-	this.db.del(id + mf_update_suffix);
-	this._emit("update", id);
+	this._set.put(id, existing);
+	// Return a promise, just for api consistency
+	return Q(id);
 };
-Collection.prototype._restoreUpdated = function (id) {
-	var backup = this.db.get(id + mf_update_suffix);
-	this.db.set(id, backup);
-	this.db.del(id + mf_update_suffix);
-	this._emit("restore", id);
+Collection.prototype._remoteToLocalUpdate = function (id, fields) {
+	// Ensure the item exixts in the database
+	var existing = this._set.get(id);
+	if (!existing) {
+		console.warn("Server misbehaviour: item " + id + " doesn't exist");
+		return;
+	}
+	for (var field in fields) {
+		// Ensure the server is not trying to moify the item _id
+		if (field === "_id" && fields._id !== id) {
+			console.warn("Server misbehaviour: modifying the _id of a document is not allowed");
+			return;
+		}
+		existing[field] = fields[field];
+	}
+	// Perform the update
+	this._set.put(id, existing);
 };
-Collection.prototype._localToRemoteUpdate = function (id, item) {
+Collection.prototype._localToRemoteUpdate = function (id, fields) {
 	var self = this;
 	var deferred = Q.defer();
+	// Construct the name of the method we need to call
 	var methodName = "/" + self.name + "/update";
+	// Construct the selector
 	var sel = {
 		_id: id
 	};
+	// Construct the modifier
 	var mod = {
-		$set: item
+		$set: fields
 	};
-	this.asteroid.ddp.method(methodName, [sel, mod], function (err, res) {
+	self.asteroid.ddp.method(methodName, [sel, mod], function (err, res) {
 		if (err) {
-			self._restoreUpdated(id);
+			// On error restore the database and reject the promise
+			var backup = self._set.get(id + mf_update_suffix);
+			self._set.put(id, backup);
+			self._set.del(id + mf_update_suffix);
 			deferred.reject(err);
 		} else {
-			deferred.resolve(res);
+			// Else, delete the (possible) backup and resolve the promise
+			self._set.del(id + mf_update_suffix);
+			deferred.resolve(id);
 		}
 	});
 	return deferred.promise;
 };
-Collection.prototype.update = function (id, item) {
-	this._localToLocalUpdate(id, item);
-	return this._localToRemoteUpdate(id, item);
+Collection.prototype.update = function (id, fields) {
+	return {
+		// Perform the local update
+		local: this._localToLocalUpdate(id, fields),
+		// Send the update request
+		remote: this._localToRemoteUpdate(id, fields)
+	};
 };
 
-Collection.prototype.find = function (selector) {
-	return this.db.find(selector);
+
+
+//////////////////////////////
+// Reactive queries methods //
+//////////////////////////////
+
+var ReactiveQuery = function (set) {
+	var self = this;
+	self.result = [];
+
+	self._set = set;
+	self._getResult();
+
+	self._set.on("put", function (id) {
+		self._getResult();
+		self._emit("change", id);
+	});
+	self._set.on("del", function (id) {
+		self._getResult();
+		self._emit("change", id);
+	});
+
+};
+ReactiveQuery.prototype = Object.create(EventEmitter.prototype);
+ReactiveQuery.constructor = ReactiveQuery;
+
+ReactiveQuery.prototype._getResult = function () {
+	this.result = this._set.toArray();
 };
 
-Collection.prototype.findOne = function (selector) {
-	return this.db.findOne(selector);
+var getFilterFromSelector = function (selector) {
+	// Return the filter function
+	return function (id, item) {
+
+		// Filter out backups
+		if (is_backup(id)) {
+			return false;
+		}
+
+		// Get the value of the object from a compund key
+		// (e.g. "profile.name.first")
+		var getItemVal = function (item, key) {
+			return key.split(".").reduce(function (prev, curr) {
+				if (!prev) return prev;
+				prev = prev[curr];
+				return prev;
+			}, item);
+		};
+
+		// Iterate all the keys in the selector. The first that
+		// doesn't match causes the item to be filtered out.
+		for (var key in selector) {
+			var itemVal = getItemVal(item, key);
+			if (itemVal !== selector[key]) {
+				return false;
+			}
+		}
+
+		// At this point the item matches the selector
+		return true;
+
+	};
 };
+
+Collection.prototype.reactiveQuery = function (selectorOrFilter) {
+	var filter;
+	if (typeof selectorOrFilter === "function") {
+		filter = selectorOrFilter;
+	} else {
+		filter = getFilterFromSelector(selectorOrFilter);
+	}
+	var subset = this._set.filter(filter);
+	return new ReactiveQuery(subset);
+};
+
+
+
+Asteroid._Collection = Collection;
 
 var DumbDb = function () {
 	this.itemsHash = {};
@@ -32513,17 +32744,9 @@ Asteroid.DumbDb = DumbDb;
 
 Asteroid.prototype._getOauthClientId = function (serviceName) {
 	var loginConfigCollectionName = "meteor_accounts_loginServiceConfiguration";
-	var services = this.collections[loginConfigCollectionName].db.itemsArray;
-	var clientId = "";
-	services.forEach(function (service) {
-		if (service.service === serviceName) {
-			if (serviceName === "facebook") clientId = service.appId;
-			if (serviceName === "google") clientId = service.clientId;
-			if (serviceName === "github") clientId = service.clientId;
-			if (serviceName === "twitter") clientId = service.consumerKey;
-		}
-	});
-	return clientId;
+	var loginConfigCollection = this.collections[loginConfigCollectionName];
+	var service = loginConfigCollection.reactiveQuery({service: serviceName}).result[0];
+	return service.clientId;
 };
 
 Asteroid.prototype._initOauthLogin = function (service, credentialToken, loginUrl) {
@@ -32664,29 +32887,116 @@ Asteroid.prototype.logout = function () {
 	return deferred.promise;
 };
 
+var Set = function (readonly) {
+	// Allow readonly sets
+	if (readonly) {
+		// Make the put and del methods private
+		this._put = this.put;
+		this._del = this.del;
+		// Replace them with a throwy function
+		this.put = this.del = function () {
+			throw new Error("Attempt to modify readonly set");
+		};
+	}
+	this._items = {};
+};
+// Inherit from EventEmitter
+Set.prototype = Object.create(EventEmitter.prototype);
+Set.constructor = Set;
+
+Set.prototype.put = function (id, item) {
+	// Assert arguments type
+	must.beString(id);
+	must.beObject(item);
+	// Save a clone to avoid collateral damage
+	this._items[id] = clone(item);
+	this._emit("put", id);
+	// Return the set instance to allow method chainging
+	return this;
+};
+
+Set.prototype.del = function (id) {
+	// Assert arguments type
+	must.beString(id);
+	delete this._items[id];
+	this._emit("del", id);
+	// Return the set instance to allow method chainging
+	return this;
+};
+
+Set.prototype.get = function (id) {
+	// Assert arguments type
+	must.beString(id);
+	// Return a clone to avoid collateral damage
+	return clone(this._items[id]);
+};
+
+Set.prototype.contains = function (id) {
+	// Assert arguments type
+	must.beString(id);
+	return !!this._items[id];
+};
+
+Set.prototype.filter = function (belongFn) {
+
+	// Creates the subset
+	var sub = new Set(true);
+
+	// Keep a reference to the _items hash
+	var items = this._items;
+
+	// Performs the initial puts
+	var ids = Object.keys(items);
+	ids.forEach(function (id) {
+		// Clone the element to avoid
+		// collateral damage
+		var itemClone = clone(items[id]);
+		var belongs = belongFn(id, itemClone);
+		if (belongs) {
+			sub._items[id] = items[id];
+		}
+	});
+
+	// Listens to the put and del events
+	// to automatically update the subset
+	this.on("put", function (id) {
+		// Clone the element to avoid
+		// collateral damage
+		var itemClone = clone(items[id]);
+		var belongs = belongFn(id, itemClone);
+		if (belongs) {
+			sub._put(id, items[id]);
+		}
+	});
+	this.on("del", function (id) {
+		sub._del(id);
+	});
+
+	// Returns the subset
+	return sub;
+};
+
+Set.prototype.toArray = function () {
+	var array = [];
+	var items = this._items;
+	var ids = Object.keys(this._items);
+	ids.forEach(function (id) {
+		array.push(items[id]);
+	});
+	// Return a clone to avoid collateral damage
+	return clone(array);
+};
+
+Set.prototype.toHash = function () {
+	// Return a clone to avoid collateral damage
+	return clone(this._items);
+};
+
+Asteroid.Set = Set;
+
 return Asteroid;
 
 }));
-
-angular.module("asteroid", [])
-
-.factory("$collection", function ($timeout) {
-	return function (asteroidCollection, type) {
-		var angularCollection = {};
-		var clone = function (obj) {
-			return JSON.parse(JSON.stringify(obj));
-		};
-		var updateAngularCollection = function () {
-			angularCollection.array = clone(asteroidCollection.db.itemsArray);
-			angularCollection.hash = clone(asteroidCollection.db.itemsHash);
-		};
-		asteroidCollection.on("change", function () {
-			$timeout(updateAngularCollection, 0);
-		});
-		updateAngularCollection();
-		return angularCollection;
-	};
-});
 
 function MediumEditor(elements, options) {
     'use strict';
@@ -32796,6 +33106,7 @@ if (typeof module === 'object') {
             disableDoubleReturn: false,
             disableToolbar: false,
             disableEditing: false,
+            elementsContainer: false,
             firstHeader: 'h3',
             forcePlainText: true,
             placeholder: 'Type your text',
@@ -32847,6 +33158,9 @@ if (typeof module === 'object') {
             }
             // Init toolbar
             if (addToolbar) {
+                if (!this.options.elementsContainer) {
+                    this.options.elementsContainer = document.body;
+                }
                 this.initToolbar()
                     .bindButtons()
                     .bindAnchorForm()
@@ -32908,6 +33222,17 @@ if (typeof module === 'object') {
 
         bindParagraphCreation: function (index) {
             var self = this;
+            this.elements[index].addEventListener('keypress', function (e) {
+                var node = getSelectionStart(),
+                    tagName;
+                if (e.which === 32) {
+                    tagName = node.tagName.toLowerCase();
+                    if (tagName === 'a') {
+                        document.execCommand('unlink', false, null);
+                    }
+                }
+            });
+
             this.elements[index].addEventListener('keyup', function (e) {
                 var node = getSelectionStart(),
                     tagName;
@@ -33072,7 +33397,7 @@ if (typeof module === 'object') {
             toolbar.className = 'medium-editor-toolbar';
             toolbar.appendChild(this.toolbarButtons());
             toolbar.appendChild(this.toolbarFormAnchor());
-            document.body.appendChild(toolbar);
+            this.options.elementsContainer.appendChild(toolbar);
             return toolbar;
         },
 
@@ -33282,10 +33607,7 @@ if (typeof module === 'object') {
 
         checkActiveButtons: function () {
             var elements = Array.prototype.slice.call(this.elements),
-                parentNode = this.selection.anchorNode;
-            if (!parentNode.tagName) {
-                parentNode = this.selection.anchorNode.parentNode;
-            }
+                parentNode = this.getSelectedParentElement();
             while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
                 this.activateButton(parentNode.tagName.toLowerCase());
                 this.callExtensions('checkState', parentNode);
@@ -33354,8 +33676,31 @@ if (typeof module === 'object') {
             }
         },
 
+        // http://stackoverflow.com/questions/15867542/range-object-get-selection-parent-node-chrome-vs-firefox
+        rangeSelectsSingleNode: function (range) {
+            var startNode = range.startContainer;
+            return startNode === range.endContainer &&
+                startNode.hasChildNodes() &&
+                range.endOffset === range.startOffset + 1;
+        },
+
+        getSelectedParentElement: function () {
+            var selectedParentElement = null,
+                range = this.selectionRange;
+            if (this.rangeSelectsSingleNode(range)) {
+                selectedParentElement = range.startContainer.childNodes[range.startOffset];
+            } else if (range.startContainer.nodeType === 3) {
+                selectedParentElement = range.startContainer.parentNode;
+            } else {
+                selectedParentElement = range.startContainer;
+            }
+            return selectedParentElement;
+        },
+
         triggerAnchorAction: function () {
-            if (this.selection.anchorNode.parentNode.tagName.toLowerCase() === 'a') {
+            var selectedParentElement = this.getSelectedParentElement();
+            if (selectedParentElement.tagName &&
+                    selectedParentElement.tagName.toLowerCase() === 'a') {
                 document.execCommand('unlink', false, null);
             } else {
                 if (this.anchorForm.style.display === 'block') {
@@ -33571,7 +33916,7 @@ if (typeof module === 'object') {
             anchorPreview.id = 'medium-editor-anchor-preview-' + this.id;
             anchorPreview.className = 'medium-editor-anchor-preview';
             anchorPreview.innerHTML = this.anchorPreviewTemplate();
-            document.body.appendChild(anchorPreview);
+            this.options.elementsContainer.appendChild(anchorPreview);
 
             anchorPreview.addEventListener('click', function () {
                 self.anchorPreviewClickHandler();
@@ -33686,6 +34031,7 @@ if (typeof module === 'object') {
             if (this.options.targetBlank) {
                 this.setTargetBlank();
             }
+            this.checkSelection();
             this.showToolbarActions();
             input.value = '';
         },
@@ -33722,8 +34068,8 @@ if (typeof module === 'object') {
             this.isActive = false;
 
             if (this.toolbar !== undefined) {
-                document.body.removeChild(this.anchorPreview);
-                document.body.removeChild(this.toolbar);
+                this.options.elementsContainer.removeChild(this.anchorPreview);
+                this.options.elementsContainer.removeChild(this.toolbar);
                 delete this.toolbar;
                 delete this.anchorPreview;
             }
@@ -33766,7 +34112,7 @@ if (typeof module === 'object') {
                     if (self.options.cleanPastedHTML && e.clipboardData.getData('text/html')) {
                         return self.cleanPaste(e.clipboardData.getData('text/html'));
                     }
-                    if (!(self.options.disableReturn || e.target.getAttribute('data-disable-return'))) {
+                    if (!(self.options.disableReturn || this.getAttribute('data-disable-return'))) {
                         paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
                         for (p = 0; p < paragraphs.length; p += 1) {
                             if (paragraphs[p] !== '') {
@@ -33792,7 +34138,8 @@ if (typeof module === 'object') {
         setPlaceholders: function () {
             var i,
                 activatePlaceholder = function (el) {
-                    if (el.textContent.replace(/^\s+|\s+$/g, '') === '') {
+                    if (!(el.querySelector('img')) &&
+                            el.textContent.replace(/^\s+|\s+$/g, '') === '') {
                         el.classList.add('medium-editor-placeholder');
                     }
                 },

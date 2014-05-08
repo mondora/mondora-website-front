@@ -1,30 +1,22 @@
 (function () {
 	var config = {
 		dev: {
-			host: "http://localhost:3000",
-			endpoint: "ws://localhost:3000/websocket"
+			host: "localhost:3000"
 		},
 		prod: {
-			host: "http://api.nocheros.info",
-			endpoint: "ws://api.nocheros.info/websocket"
+			host: "api.nocheros.info",
+			// Uncomment this when we get SSL working
+			//ssl: true
 		}
 	};
+	var cfg;
 	if (/b/.test(APP_VERSION)) {
-		currentConfig = config.dev;
+		cfg = config.dev;
 	} else {
-		currentConfig = config.prod;
+		cfg = config.prod;
 	}
-	var options = {
-		host: currentConfig.host,
-		do_not_autocreate_collections: true
-	};
-	options.ddpOptions = {
-		endpoint: currentConfig.endpoint,
-		SocketConstructor: WebSocket,
-		//debug: true
-	};
 	//TODO Use ng-asteroid, fool!
-	window.Ceres = new Asteroid(options);
+	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 })();
 
 angular.module("mnd-web", [
@@ -34,7 +26,6 @@ angular.module("mnd-web", [
 	"ui.router",
 	"mnd.sprinkle",
 	"mnd.dashboard",
-	"asteroid",
 	"angularFileUpload",
 	"ngSanitize",
 	"RecursionHelper",
@@ -51,7 +42,31 @@ angular.module("mnd-web", [
 
 ])
 
+.factory("TimeoutPromiseService", function ($q, $timeout, $state) {
+	var timeoutPromise = function (promise, t) {
+		var deferred = $q.defer();
+		var timer = $timeout(function () {
+			deferred.reject("timeout");
+			$state.go("serverProblems");
+		}, t);
+		promise.then(function (res) {
+			$timeout.cancel(timer);
+			deferred.resolve(res);
+		}, function (err) {
+			$timeout.cancel(timer);
+			deferred.reject(err);
+			$state.go("serverProblems");
+		});
+		return deferred.promise;
+	};
+	return {
+		timeoutPromise: timeoutPromise
+	};
+})
+
 .config(function ($stateProvider, $urlRouterProvider) {
+
+	// Here we should configure ng-asteroid before the router
 
     $stateProvider.state("home", {
         url: "/",
@@ -129,11 +144,16 @@ angular.module("mnd-web", [
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");
+	var userQuery = $rootScope.Users.reactiveQuery({});
+	userQuery.on("change", function () {
+		$rootScope.safeApply(function () {
+			$rootScope.user = userQuery.result[0];
+		});
+	});
 
 	Ceres.on("login", function () {
 		$rootScope.safeApply(function () {
 			$rootScope.signedIn = true;
-			$rootScope.user = $rootScope.Users.findOne({});
 		});
 	});
 	Ceres.on("logout", function () {
@@ -142,28 +162,6 @@ angular.module("mnd-web", [
 		});
 	});
 
-})
-
-.factory("TimeoutPromiseService", function ($q, $timeout, $state) {
-	var timeoutPromise = function (promise, t) {
-		var deferred = $q.defer();
-		var timer = $timeout(function () {
-			deferred.reject("timeout");
-			$state.go("serverProblems");
-		}, t);
-		promise.then(function (res) {
-			$timeout.cancel(timer);
-			deferred.resolve(res);
-		}, function (err) {
-			$timeout.cancel(timer);
-			deferred.reject(err);
-			$state.go("serverProblems");
-		});
-		return deferred.promise;
-	};
-	return {
-		timeoutPromise: timeoutPromise
-	};
 })
 
 .controller("MainController", function ($scope) {

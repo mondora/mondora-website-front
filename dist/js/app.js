@@ -1,36 +1,22 @@
 (function () {
   var config = {
-      dev: {
-        host: 'http://localhost:3000',
-        endpoint: 'ws://localhost:3000/websocket'
-      },
-      prod: {
-        host: 'http://api.nocheros.info',
-        endpoint: 'ws://api.nocheros.info/websocket'
-      }
+      dev: { host: 'localhost:3000' },
+      prod: { host: 'api.nocheros.info' }
     };
+  var cfg;
   if (/b/.test(APP_VERSION)) {
-    currentConfig = config.dev;
+    cfg = config.dev;
   } else {
-    currentConfig = config.prod;
+    cfg = config.prod;
   }
-  var options = {
-      host: currentConfig.host,
-      do_not_autocreate_collections: true
-    };
-  options.ddpOptions = {
-    endpoint: currentConfig.endpoint,
-    SocketConstructor: WebSocket
-  };
   //TODO Use ng-asteroid, fool!
-  window.Ceres = new Asteroid(options);
+  window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 }());
 angular.module('mnd-web', [
   'ui.bootstrap',
   'ui.router',
   'mnd.sprinkle',
   'mnd.dashboard',
-  'asteroid',
   'angularFileUpload',
   'ngSanitize',
   'RecursionHelper',
@@ -42,10 +28,34 @@ angular.module('mnd-web', [
   'mnd-web.pages.post.edit',
   'mnd-web.pages.post.view',
   'mnd-web.pages.post.list'
+]).factory('TimeoutPromiseService', [
+  '$q',
+  '$timeout',
+  '$state',
+  function ($q, $timeout, $state) {
+    var timeoutPromise = function (promise, t) {
+      var deferred = $q.defer();
+      var timer = $timeout(function () {
+          deferred.reject('timeout');
+          $state.go('serverProblems');
+        }, t);
+      promise.then(function (res) {
+        $timeout.cancel(timer);
+        deferred.resolve(res);
+      }, function (err) {
+        $timeout.cancel(timer);
+        deferred.reject(err);
+        $state.go('serverProblems');
+      });
+      return deferred.promise;
+    };
+    return { timeoutPromise: timeoutPromise };
+  }
 ]).config([
   '$stateProvider',
   '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
+    // Here we should configure ng-asteroid before the router
     $stateProvider.state('home', {
       url: '/',
       templateUrl: 'pages/home/home.html',
@@ -114,10 +124,15 @@ angular.module('mnd-web', [
     $rootScope.Configurations = Ceres.createCollection('configurations');
     $rootScope.Posts = Ceres.createCollection('posts');
     $rootScope.Users = Ceres.createCollection('users');
+    var userQuery = $rootScope.Users.reactiveQuery({});
+    userQuery.on('change', function () {
+      $rootScope.safeApply(function () {
+        $rootScope.user = userQuery.result[0];
+      });
+    });
     Ceres.on('login', function () {
       $rootScope.safeApply(function () {
         $rootScope.signedIn = true;
-        $rootScope.user = $rootScope.Users.findOne({});
       });
     });
     Ceres.on('logout', function () {
@@ -125,29 +140,6 @@ angular.module('mnd-web', [
         $rootScope.signedIn = false;
       });
     });
-  }
-]).factory('TimeoutPromiseService', [
-  '$q',
-  '$timeout',
-  '$state',
-  function ($q, $timeout, $state) {
-    var timeoutPromise = function (promise, t) {
-      var deferred = $q.defer();
-      var timer = $timeout(function () {
-          deferred.reject('timeout');
-          $state.go('serverProblems');
-        }, t);
-      promise.then(function (res) {
-        $timeout.cancel(timer);
-        deferred.resolve(res);
-      }, function (err) {
-        $timeout.cancel(timer);
-        deferred.reject(err);
-        $state.go('serverProblems');
-      });
-      return deferred.promise;
-    };
-    return { timeoutPromise: timeoutPromise };
   }
 ]).controller('MainController', [
   '$scope',
@@ -265,7 +257,7 @@ angular.module('mnd-web.pages.home', []).controller('HomeController', [
   '$scope',
   '$sce',
   function ($scope, $sce) {
-    var homeConfig = $scope.Configurations.findOne({ page: 'home' });
+    var homeConfig = $scope.Configurations.reactiveQuery({ page: 'home' }).result[0];
     $scope.sprinkleText = homeConfig.sprinkleText;
     $scope.banner = homeConfig.banner;
     $scope.login = function () {
@@ -290,7 +282,7 @@ angular.module('mnd-web.pages.post.edit', []).controller('PostEditController', [
     // Retrieve post to edit //
     ///////////////////////////
     var id = $stateParams.postId;
-    $scope.post = $scope.Posts.db.get(id);
+    $scope.post = $scope.Posts.reactiveQuery({ _id: id }).result[0];
     if (!$scope.post) {
       $state.go('notFound');
       return;
@@ -504,7 +496,7 @@ angular.module('mnd-web.pages.post.view', []).factory('firstLevelHtmlParser', fu
     // Retrieve post to edit //
     ///////////////////////////
     var id = $stateParams.postId;
-    $scope.post = $scope.Posts.db.get(id);
+    $scope.post = $scope.Posts.reactiveQuery({ _id: id }).result[0];
     if (!$scope.post) {
       $state.go('notFound');
       return;

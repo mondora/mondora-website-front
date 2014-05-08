@@ -7,7 +7,7 @@ angular.module("mnd-web.pages.post.edit", [])
 	///////////////////////////
 
 	var id = $stateParams.postId;
-	$scope.post = $scope.Posts.db.get(id);
+	$scope.post = $scope.Posts.reactiveQuery({_id: id}).result[0];
 
 	if (!$scope.post) {
 		$state.go("notFound");

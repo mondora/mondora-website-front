@@ -2,7 +2,7 @@ angular.module("mnd-web.pages.home", [])
 
 .controller("HomeController", function ($scope, $sce) {
 
-	var homeConfig = $scope.Configurations.findOne({page: "home"});
+	var homeConfig = $scope.Configurations.reactiveQuery({page: "home"}).result[0];
 	$scope.sprinkleText = homeConfig.sprinkleText;
 	$scope.banner = homeConfig.banner;
 
@@ -15,7 +15,7 @@ angular.module("mnd-web.pages.home", [])
 	$scope.videoSource = $sce.trustAsResourceUrl(videoSource);
 
 	//video poster
-	var videoPoster = "http://s3.amazonaws.com/mnd-website/vd-back.jpg"
+	var videoPoster = "http://s3.amazonaws.com/mnd-website/vd-back.jpg";
 	$scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
 
 });
