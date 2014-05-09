@@ -145,7 +145,7 @@ gulp.task("buildVendorScriptsCDN", function () {
 		"bower_components/q/q.js",
 		"bower_components/ddp.js/ddp.js",
 		"bower_components/asteroid/dist/asteroid.js",
-		"bower_components/ng-asteroid/src/ng-asteroid.js",
+		//"bower_components/ng-asteroid/src/ng-asteroid.js",
 		"bower_components/medium-editor/dist/js/medium-editor.js"
 	];
 	gulp.src(sources)
