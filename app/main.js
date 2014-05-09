@@ -38,6 +38,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.dashboard",
 	"mnd-web.components.mindmap",
 	"mnd-web.components.tag-strip",
+	"mnd-web.components.center",
 	"mnd-web.pages.home",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",

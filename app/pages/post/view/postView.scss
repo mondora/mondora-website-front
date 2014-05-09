@@ -2,9 +2,15 @@
 	position: absolute;
 	width: 620px;
 	left: 50%;
-	top: 20%;
+	top: 40%;
 	margin-left: -260px;
 	z-index: 1;
+}
+@media (max-width: 767px) {
+ 	#mnd-post-sprinkle-container {
+	    width: 98%;
+	    top: 35%;
+	    margin-left: -49%; }
 }
 
 .mnd-post-mindmap-container {
@@ -42,4 +48,14 @@
 .comment-badge:hover {
 	cursor: pointer;
 	background: #5cb85c;
+}
+
+.read-time {
+	font-size: 30px;
+	font-weight: bold;
+	color: #fff;
+	padding-right: 10px;
+}
+@media (max-width: 767px) {
+
 }

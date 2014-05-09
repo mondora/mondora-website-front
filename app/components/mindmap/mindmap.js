@@ -1,23 +1,17 @@
 angular.module("mnd-web.components.mindmap", [])
 
-.directive("mndMindMap", function (RecursionHelper) {
+.directive("mndMindMapRecursive", function (RecursionHelper) {
 	return {
 		restrict: "EA",
 		replace: true,
-		templateUrl: "components/mindmap/mindmap.html",
+		templateUrl: "components/mindmap/mindmaprecursive.html",
 		scope: {
 			map: "=",
 			edit: "=?",
 			child: "=?"
 		},
 		compile: function (element) {
-			return RecursionHelper.compile(element, function ($scope) {
-				$scope.getWidth = function (length) {
-					var width = (100 / length) + "%";
-					return {
-						width: width
-					};
-				};
+			return RecursionHelper.compile(element, function ($scope, $element) {
 				$scope.autodestroy = function () {
 					if ($scope.child) {
 						var parent = $scope.$parent.$parent.map.children;
@@ -26,10 +20,24 @@ angular.module("mnd-web.components.mindmap", [])
 					}
 				};
 				$scope.addChild = function () {
+					if (!$scope.map) $scope.map = {};
 					if (!$scope.map.children) $scope.map.children = [];
 					$scope.map.children.push({});
 				};
 			});
 		}
 	};
-});
+})
+
+.directive("mndMindMap", function () {
+	return {
+		restrict: "EA",
+		replace: true,
+		templateUrl: "components/mindmap/mindmap.html",
+		scope: {
+			map: "=",
+			edit: "=?",
+			child: "=?"
+		}
+	}
+})

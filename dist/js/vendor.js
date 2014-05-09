@@ -29912,6 +29912,7 @@ module.run(['$templateCache', function($templateCache) {
     '			<div class="sprinkle-control-btn" ng-click="increaseSpeed()"><i class="fa fa-plus"></i></div>\n' +
     '		</div>\n' +
     '	</div>\n' +
+    '\n' +
     '</div>\n' +
     '');
 }]);
@@ -34078,7 +34079,6 @@ if (typeof module === 'object') {
             var i,
                 activatePlaceholder = function (el) {
                     if (!(el.querySelector('img')) &&
-                            !(el.querySelector('blockquote')) &&
                             el.textContent.replace(/^\s+|\s+$/g, '') === '') {
                         el.classList.add('medium-editor-placeholder');
                     }

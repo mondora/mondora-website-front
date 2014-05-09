@@ -1,12 +1,5 @@
-<div class="mm-wrapper">
-	<div class="mm-children">
-		<div ng-repeat="child in map.children" ng-style="getWidth(map.children.length)" mnd-mind-map map="child" edit="edit" child="true"></div>
-	</div>
-	<div class="mm-parent">
-		<a ng-if="!edit" href="{{map.href}}">{{map.text}}</a>
-		<input ng-if="edit" type="text" ng-model="map.text" placeholder="Text" />
-		<input ng-if="edit" type="text" ng-model="map.href" placeholder="Url" />
-		<i ng-if="edit && child" class="fa fa-times mnd-clickable" ng-click="autodestroy()"></i>
-		<i ng-if="edit" class="fa fa-plus mnd-clickable" ng-click="addChild()"></i>
-	</div>
+<div class="tree">
+	<ul>
+		<div mnd-mind-map-recursive map="map" edit="edit" child="true"></div>
+	</ul>
 </div>

@@ -69,6 +69,7 @@ span.mnd-width-10 {
   -webkit-transition: -webkit-transform 0.4s ease 0s;
   transition: transform 0.4s ease 0s;
   -webkit-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 #mnd-sidebar.sidebar-open {
@@ -158,7 +159,7 @@ span.mnd-width-10 {
 @media (max-width: 767px) {
   #mnd-content {
     padding-left: 0px;
-    padding-top: 80px; }
+    padding-top: 70px; }
   #mnd-content.sidebar-open {
     -webkit-transform: translateX(240px);
     -ms-transform: translateX(240px);
@@ -281,18 +282,131 @@ span.mnd-width-10 {
     margin-left: -30px;
     margin-top: 10px; } }
 
-.mm-wrapper {
-  width: 100%;
-  display: inline-block; }
-
-.mm-parent {
-  background: #ffcc00;
-  border: 1px solid #ffffff;
+.mnd-mindmap {
+  position: absolute;
+  height: 50%;
+  overflow: hidden;
   width: 100%; }
 
-.mm-children {
-  margin: 2px;
-  width: 100%; }
+@media (min-width: 768px) {
+  /*Now the CSS*/
+  /*We will use ::before and ::after to draw the connectors*/
+  /*We need to remove left-right connectors from elements without 
+	any siblings*/
+  /*Remove space from the top of single children*/
+  /*Remove left connector from first child and 
+	right connector from last child*/
+  /*Adding back the vertical connector to the last nodes*/
+  /*Time to add downward connectors from parents*/
+  /*Time for some hover effects*/
+  /*We will apply the hover effect the the lineage of the element also*/
+  /*Connector styles on hover*/
+  .tree {
+    position: absolute; }
+  .tree * {
+    margin: 0;
+    padding: 0; }
+  .tree ul {
+    padding-top: 20px;
+    position: relative;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s; }
+  .tree li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 5px 0 5px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s; }
+  .tree input {
+    display: block;
+    margin: auto; }
+  .tree li::before, .tree li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-top: 2px solid #fff;
+    width: 50%;
+    height: 20px; }
+  .tree li::after {
+    right: auto;
+    left: 50%;
+    border-left: 2px solid #fff; }
+  .tree li:only-child::after, .tree li:only-child::before {
+    display: none; }
+  .tree li:only-child {
+    padding-top: 0; }
+  .tree li:first-child::before, .tree li:last-child::after {
+    border: 0 none; }
+  .tree li:last-child::before {
+    border-right: 2px solid #fff;
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0; }
+  .tree li:first-child::after {
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0; }
+  .tree ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 2px solid #fff;
+    width: 0;
+    height: 20px; }
+  .tree li a {
+    border: 2px solid #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    background-color: #fff;
+    color: #666;
+    font-family: arial, verdana, tahoma;
+    font-size: 15px;
+    display: inline-block;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s; }
+  .tree li a:hover, .tree li a:hover + ul li a {
+    background: #c8e4f8;
+    color: #000;
+    border: 2px solid #94a0b4; }
+  .tree li a:hover + ul li::after, .tree li a:hover + ul li::before, .tree li a:hover + ul::before, .tree li a:hover + ul ul::before {
+    border-color: #fff; } }
+
+@media (max-width: 767px) {
+  .tree {
+    margin-left: 0px !important; }
+  .tree ul, .tree ul ul, .tree ul li, .tree li, .tree ul li a {
+    padding-left: 0px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    float: left;
+    list-style-type: none;
+    vertical-align: center; }
+  .tree ul li a {
+    width: 80px;
+    height: 40px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-top: 13px;
+    padding-right: 5px;
+    display: inline-block;
+    color: #000;
+    font-size: 10px;
+    text-align: right;
+    word-break: break-all;
+    background-image: url(http://s3.amazonaws.com/mnd-website/img/tag.png);
+    background-size: cover; } }
 
 .sprinkle-result {
   position: relative;
@@ -593,7 +707,7 @@ span.mnd-width-10 {
   min-width: 100%;
   min-height: 100%; }
 
-.blur {
+.post-overlay {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: absolute;
@@ -601,20 +715,29 @@ span.mnd-width-10 {
   left: 0px;
   min-width: 100%;
   min-height: 100%;
-  opacity: 0; }
+  background-color: #000;
+  opacity: 0.2; }
+
+.mnd-mind-container {
+  position: absolute;
+  height: 40%;
+  overflow: hidden;
+  width: 100%;
+  padding-left: 5px; }
 
 .post-top-buttons {
   position: absolute;
   right: 20px;
-  top: 20px; }
+  top: 20px;
+  z-index: 200; }
 
 .post-header {
   position: relative;
-  top: 65%; }
+  top: 70%; }
 
 .post-body {
   position: relative;
-  top: 85%;
+  top: 100%;
   font-size: 18px; }
 
 .post-title {
@@ -663,9 +786,15 @@ span.mnd-width-10 {
   position: absolute;
   width: 620px;
   left: 50%;
-  top: 20%;
+  top: 40%;
   margin-left: -260px;
   z-index: 1; }
+
+@media (max-width: 767px) {
+  #mnd-post-sprinkle-container {
+    width: 98%;
+    top: 35%;
+    margin-left: -49%; } }
 
 .mnd-post-mindmap-container {
   position: absolute;
@@ -696,3 +825,11 @@ span.mnd-width-10 {
 .comment-badge:hover {
   cursor: pointer;
   background: #5cb85c; }
+
+.read-time {
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+  padding-right: 10px; }
+
+@media (max-width: 767px) { }

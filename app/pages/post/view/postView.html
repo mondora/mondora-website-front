@@ -1,6 +1,6 @@
 <div class="post-title-image">
 	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
-	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->
+	<div class="post-overlay" ng-if="titleImageIsDisplayed"/></div>
 </div>
 
 <div ng-if="isAuthor()" class="post-top-buttons">
@@ -9,10 +9,11 @@
 
 <div id="mnd-post-sprinkle-container">
 	<div mnd-sprinkle text="{{sprinklePostText}}"></div>
+	<div class="pull-right read-time">Read Time {{estimateReadingTime()}} min</div>
 </div>
 
-<div class="mnd-post-mindmap-container">
-	<div mnd-mind-map map="post.map"></div>
+<div class="mnd-mind-container">
+	<div mnd-mind-map map="post.map" mnd-center></div>
 </div>
 
 <div class="post-header">
@@ -21,8 +22,7 @@
 		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed}"></h2>
 		<div class="post-author" ng-repeat="author in post.authors">
 			<img class="img-circle" ng-src="{{author.imageUrl}}" />
-			&nbsp;&nbsp;by {{author.screenName}}
-			<span class="pull-right">{{estimateReadingTime()}} min</span>
+			&nbsp;&nbsp;Author {{author.screenName}}
 		</div>
 	</div>
 </div>

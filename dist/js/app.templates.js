@@ -5,45 +5,20 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('root.html',
-    '<div mnd-sidebar ng-controller="SidebarController">\n' +
-    '	<div name="before">\n' +
-    '		<div id="mnd-sidebar-user">\n' +
-    '			<div ng-if="user">\n' +
-    '				<img class="img-circle" ng-src="{{user.twitterProfile.pictureUrl}}" />\n' +
-    '				<span>{{user.twitterProfile.name}}</span>\n' +
-    '				<span ng-click="logout()" class="logout"><i class="fa fa-times-circle"></i></span>\n' +
-    '			</div>\n' +
-    '			<div ng-if="!user" ng-click="login()" class="login">\n' +
-    '				<i class="fa fa-twitter"></i> Sign in with twitter\n' +
-    '			</div>\n' +
-    '		</div>	\n' +
+  $templateCache.put('components/mindmap/mindmap-orig.html',
+    '\n' +
+    '<!--<div class="mm-wrapper">\n' +
+    '	<div class="mm-children">\n' +
+    '		<div ng-repeat="child in map.children" ng-style="getStyle(map)" mnd-mind-map map="child" edit="edit" child="true" level="level + 1"></div>\n' +
     '	</div>\n' +
-    '	<div name="after">\n' +
-    '		<div id="mnd-sidebar-footer">\n' +
-    '			<span>\n' +
-    '				MONDORA Srl\n' +
-    '			</span>\n' +
-    '			<br />\n' +
-    '			<span class="mnd-sidebar-footer-address">\n' +
-    '				Milano, Morbegno, Novara, St. Moritz (CH)<br />\n' +
-    '				Via Cornalia 7 - 20154, Milano <br />\n' +
-    '			</span>\n' +
-    '		</div>	\n' +
-    '	</div>	\n' +
-    '</div>\n' +
-    '<div mnd-toggle-sidebar>\n' +
-    '	<div name="center">\n' +
-    '		<div id="mnd-sidebar-logo">\n' +
-    '			<div class="mnd-mondora-logo">\n' +
-    '				<img src="http://mnd-website.s3.amazonaws.com/img/mondora-logo.png" />\n' +
-    '			</div>\n' +
-    '		</div>\n' +
+    '	<div class="mm-parent">\n' +
+    '		<a href="{{map.href}}">{{map.text}}</a>\n' +
+    '		<input ng-if="edit" type="text" ng-model="map.text" placeholder="Text" />\n' +
+    '		<input ng-if="edit" type="text" ng-model="map.href" placeholder="Url" />\n' +
+    '		<i ng-if="edit && child" class="fa fa-times mnd-clickable" ng-click="autodestroy()"></i>\n' +
+    '		<i ng-if="edit" class="fa fa-plus mnd-clickable" ng-click="addChild()"></i>\n' +
     '	</div>\n' +
-    '</div>\n' +
-    '<div mnd-content>\n' +
-    '	<div ui-view class="mnd-content"></div>\n' +
-    '</div>\n' +
+    '</div>-->\n' +
     '');
 }]);
 })();
@@ -56,18 +31,33 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('components/mindmap/mindmap.html',
-    '<div class="mm-wrapper">\n' +
-    '	<div class="mm-children">\n' +
-    '		<div ng-repeat="child in map.children" ng-style="getWidth(map.children.length)" mnd-mind-map map="child" edit="edit" child="true"></div>\n' +
-    '	</div>\n' +
-    '	<div class="mm-parent">\n' +
-    '		<a ng-if="!edit" href="{{map.href}}">{{map.text}}</a>\n' +
-    '		<input ng-if="edit" type="text" ng-model="map.text" placeholder="Text" />\n' +
-    '		<input ng-if="edit" type="text" ng-model="map.href" placeholder="Url" />\n' +
-    '		<i ng-if="edit && child" class="fa fa-times mnd-clickable" ng-click="autodestroy()"></i>\n' +
-    '		<i ng-if="edit" class="fa fa-plus mnd-clickable" ng-click="addChild()"></i>\n' +
-    '	</div>\n' +
+    '<div class="tree">\n' +
+    '	<ul>\n' +
+    '		<div mnd-mind-map-recursive map="map" edit="edit" child="true"></div>\n' +
+    '	</ul>\n' +
     '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('components/mindmap/mindmaprecursive.html',
+    '<li>\n' +
+    '	<a ng-if="!edit" href="{{map.href}}">{{map.text}}</a>\n' +
+    '	<input ng-if="edit" type="text" ng-model="map.text" placeholder="Text" />\n' +
+    '	<input ng-if="edit" type="text" ng-model="map.href" placeholder="Url" />\n' +
+    '	<i ng-if="edit && child" class="fa fa-times mnd-clickable" ng-click="autodestroy()"></i>\n' +
+    '	<i ng-if="edit" class="fa fa-plus mnd-clickable" ng-click="addChild()"></i>\n' +
+    '	<ul ng-show="map.children.length">\n' +
+    '		<div ng-repeat="child in map.children" mnd-mind-map-recursive map="child" edit="edit" child="true"></div>\n' +
+    '	</ul>\n' +
+    '</li>\n' +
     '');
 }]);
 })();
@@ -186,8 +176,8 @@ module.run(['$templateCache', function($templateCache) {
     '	</button>\n' +
     '</div>\n' +
     '\n' +
-    '<div class="mnd-post-mindmap-container">\n' +
-    '	<div mnd-mind-map map="post.map" edit="true"></div>\n' +
+    '<div class="mnd-mind-container">\n' +
+    '		<div mnd-mind-map map="post.map" edit="true"></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-header">\n' +
@@ -254,7 +244,7 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/view/postView.html',
     '<div class="post-title-image">\n' +
     '	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
-    '	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->\n' +
+    '	<div class="post-overlay" ng-if="titleImageIsDisplayed"/></div>\n' +
     '</div>\n' +
     '\n' +
     '<div ng-if="isAuthor()" class="post-top-buttons">\n' +
@@ -263,10 +253,11 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div id="mnd-post-sprinkle-container">\n' +
     '	<div mnd-sprinkle text="{{sprinklePostText}}"></div>\n' +
+    '	<div class="pull-right read-time">Read Time {{estimateReadingTime()}} min</div>\n' +
     '</div>\n' +
     '\n' +
-    '<div class="mnd-post-mindmap-container">\n' +
-    '	<div mnd-mind-map map="post.map"></div>\n' +
+    '<div class="mnd-mind-container">\n' +
+    '	<div mnd-mind-map map="post.map" mnd-center></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-header">\n' +
@@ -275,8 +266,7 @@ module.run(['$templateCache', function($templateCache) {
     '		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h2>\n' +
     '		<div class="post-author" ng-repeat="author in post.authors">\n' +
     '			<img class="img-circle" ng-src="{{author.imageUrl}}" />\n' +
-    '			&nbsp;&nbsp;by {{author.screenName}}\n' +
-    '			<span class="pull-right">{{estimateReadingTime()}} min</span>\n' +
+    '			&nbsp;&nbsp;Author {{author.screenName}}\n' +
     '		</div>\n' +
     '	</div>\n' +
     '</div>\n' +
