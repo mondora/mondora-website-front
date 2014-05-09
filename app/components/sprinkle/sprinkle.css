@@ -1,0 +1,117 @@
+.sprinkle-result {
+  position: relative;
+  width: 100%;
+  color: #fff;
+  font-size: 50px;
+  font-family: 'Cutive Mono';
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-top: 3px solid #ffcc00;
+  z-index: 0; }
+
+.sprinkle-result span {
+  display: inline-block;
+  margin: 0px;
+  padding-top: 15px;
+  z-index: 10; }
+
+.sprinkle-center-line-top {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 50%;
+  height: 25%;
+  border-right: 2px solid #fff;
+  opacity: 0.4;
+  z-index: -11; }
+
+.sprinkle-center-line-center {
+  position: absolute;
+  top: 30%;
+  left: 0px;
+  width: 50%;
+  height: 50%; }
+
+.sprinkle-center-line-bottom {
+  position: absolute;
+  top: 75%;
+  left: 0px;
+  width: 50%;
+  height: 25%;
+  border-right: 2px solid #fff;
+  opacity: 0.4;
+  z-index: -11; }
+
+.sprinkle-left {
+  float: left;
+  text-align: right;
+  width: 50%; }
+
+.sprinkle-pivot {
+  position: relative;
+  float: left;
+  color: #ffcc00; }
+
+.sprinkle-right {
+  float: left; }
+
+.sprinkle-left, .sprinkle-pivot, .sprinkle-right {
+  min-height: 98px; }
+
+.sprinkle-control-bar {
+  background-color: #ffcc00;
+  height: 80px;
+  width: 100%;
+  padding: 10px 0; }
+
+.sprinkle-control-bar-left {
+  height: 60px;
+  width: 30%;
+  padding-left: 10px; }
+
+.sprinkle-control-bar-right {
+  height: 60px;
+  width: 69%;
+  text-align: right;
+  padding-right: 10px; }
+
+.sprinkle-control-bar-right, .sprinkle-control-bar-left {
+  display: inline-block; }
+
+.sprinkle-control-btn {
+  color: #5e5f5f;
+  padding-left: 5px;
+  display: inline-block;
+  font-size: 40px;
+  border: none;
+  text-align: center; }
+
+.sprinkle-control-wpm {
+  color: #5e5f5f;
+  padding: 0 15px;
+  display: inline-block;
+  font-size: 40px;
+  border: none;
+  text-align: center; }
+
+.sprinkle-control-btn:hover {
+  cursor: pointer; }
+
+.wpm-btn {
+  padding: 0 5px; }
+
+@media (max-width: 767px) {
+  .sprinkle-result {
+    font-size: 35px; }
+  .sprinkle-result span {
+    padding-top: 25px; }
+  .sprinkle-control-bar {
+    height: 60px; }
+  .sprinkle-control-bar-left {
+    padding-left: 5px; }
+  .sprinkle-control-bar-right {
+    padding-right: 5px; }
+  .sprinkle-control-btn, .sprinkle-control-wpm {
+    font-size: 30px; } }
+
+/*# sourceMappingURL=sprinkle.css.map */

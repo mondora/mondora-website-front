@@ -29912,9 +29912,6 @@ module.run(['$templateCache', function($templateCache) {
     '			<div class="sprinkle-control-btn" ng-click="increaseSpeed()"><i class="fa fa-plus"></i></div>\n' +
     '		</div>\n' +
     '	</div>\n' +
-    '<br />\n' +
-    '<br />\n' +
-    '<br />\n' +
     '\n' +
     '</div>\n' +
     '');
@@ -32796,6 +32793,7 @@ if (typeof module === 'object') {
             disableDoubleReturn: false,
             disableToolbar: false,
             disableEditing: false,
+            elementsContainer: false,
             firstHeader: 'h3',
             forcePlainText: true,
             placeholder: 'Type your text',
@@ -32847,6 +32845,9 @@ if (typeof module === 'object') {
             }
             // Init toolbar
             if (addToolbar) {
+                if (!this.options.elementsContainer) {
+                    this.options.elementsContainer = document.body;
+                }
                 this.initToolbar()
                     .bindButtons()
                     .bindAnchorForm()
@@ -32908,6 +32909,17 @@ if (typeof module === 'object') {
 
         bindParagraphCreation: function (index) {
             var self = this;
+            this.elements[index].addEventListener('keypress', function (e) {
+                var node = getSelectionStart(),
+                    tagName;
+                if (e.which === 32) {
+                    tagName = node.tagName.toLowerCase();
+                    if (tagName === 'a') {
+                        document.execCommand('unlink', false, null);
+                    }
+                }
+            });
+
             this.elements[index].addEventListener('keyup', function (e) {
                 var node = getSelectionStart(),
                     tagName;
@@ -33072,7 +33084,7 @@ if (typeof module === 'object') {
             toolbar.className = 'medium-editor-toolbar';
             toolbar.appendChild(this.toolbarButtons());
             toolbar.appendChild(this.toolbarFormAnchor());
-            document.body.appendChild(toolbar);
+            this.options.elementsContainer.appendChild(toolbar);
             return toolbar;
         },
 
@@ -33282,10 +33294,7 @@ if (typeof module === 'object') {
 
         checkActiveButtons: function () {
             var elements = Array.prototype.slice.call(this.elements),
-                parentNode = this.selection.anchorNode;
-            if (!parentNode.tagName) {
-                parentNode = this.selection.anchorNode.parentNode;
-            }
+                parentNode = this.getSelectedParentElement();
             while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
                 this.activateButton(parentNode.tagName.toLowerCase());
                 this.callExtensions('checkState', parentNode);
@@ -33354,8 +33363,31 @@ if (typeof module === 'object') {
             }
         },
 
+        // http://stackoverflow.com/questions/15867542/range-object-get-selection-parent-node-chrome-vs-firefox
+        rangeSelectsSingleNode: function (range) {
+            var startNode = range.startContainer;
+            return startNode === range.endContainer &&
+                startNode.hasChildNodes() &&
+                range.endOffset === range.startOffset + 1;
+        },
+
+        getSelectedParentElement: function () {
+            var selectedParentElement = null,
+                range = this.selectionRange;
+            if (this.rangeSelectsSingleNode(range)) {
+                selectedParentElement = range.startContainer.childNodes[range.startOffset];
+            } else if (range.startContainer.nodeType === 3) {
+                selectedParentElement = range.startContainer.parentNode;
+            } else {
+                selectedParentElement = range.startContainer;
+            }
+            return selectedParentElement;
+        },
+
         triggerAnchorAction: function () {
-            if (this.selection.anchorNode.parentNode.tagName.toLowerCase() === 'a') {
+            var selectedParentElement = this.getSelectedParentElement();
+            if (selectedParentElement.tagName &&
+                    selectedParentElement.tagName.toLowerCase() === 'a') {
                 document.execCommand('unlink', false, null);
             } else {
                 if (this.anchorForm.style.display === 'block') {
@@ -33571,7 +33603,7 @@ if (typeof module === 'object') {
             anchorPreview.id = 'medium-editor-anchor-preview-' + this.id;
             anchorPreview.className = 'medium-editor-anchor-preview';
             anchorPreview.innerHTML = this.anchorPreviewTemplate();
-            document.body.appendChild(anchorPreview);
+            this.options.elementsContainer.appendChild(anchorPreview);
 
             anchorPreview.addEventListener('click', function () {
                 self.anchorPreviewClickHandler();
@@ -33686,6 +33718,7 @@ if (typeof module === 'object') {
             if (this.options.targetBlank) {
                 this.setTargetBlank();
             }
+            this.checkSelection();
             this.showToolbarActions();
             input.value = '';
         },
@@ -33722,8 +33755,8 @@ if (typeof module === 'object') {
             this.isActive = false;
 
             if (this.toolbar !== undefined) {
-                document.body.removeChild(this.anchorPreview);
-                document.body.removeChild(this.toolbar);
+                this.options.elementsContainer.removeChild(this.anchorPreview);
+                this.options.elementsContainer.removeChild(this.toolbar);
                 delete this.toolbar;
                 delete this.anchorPreview;
             }
@@ -33766,7 +33799,7 @@ if (typeof module === 'object') {
                     if (self.options.cleanPastedHTML && e.clipboardData.getData('text/html')) {
                         return self.cleanPaste(e.clipboardData.getData('text/html'));
                     }
-                    if (!(self.options.disableReturn || e.target.getAttribute('data-disable-return'))) {
+                    if (!(self.options.disableReturn || this.getAttribute('data-disable-return'))) {
                         paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
                         for (p = 0; p < paragraphs.length; p += 1) {
                             if (paragraphs[p] !== '') {
@@ -33792,7 +33825,8 @@ if (typeof module === 'object') {
         setPlaceholders: function () {
             var i,
                 activatePlaceholder = function (el) {
-                    if (el.textContent.replace(/^\s+|\s+$/g, '') === '') {
+                    if (!(el.querySelector('img')) &&
+                            el.textContent.replace(/^\s+|\s+$/g, '') === '') {
                         el.classList.add('medium-editor-placeholder');
                     }
                 },

@@ -38,6 +38,7 @@ angular.module('mnd-web', [
   'mnd-web.components.dashboard',
   'mnd-web.components.mindmap',
   'mnd-web.components.tag-strip',
+  'mnd-web.components.center',
   'mnd-web.pages.home',
   'mnd-web.pages.post.edit',
   'mnd-web.pages.post.view',
@@ -133,6 +134,29 @@ angular.module('mnd-web', [
     };
   }
 ]);
+angular.module('mnd-web.components.center', []).directive('mndCenter', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'A',
+      priority: 1000,
+      compile: function () {
+        return {
+          post: function ($scope, $element) {
+            $timeout(function () {
+              var el = $element[0];
+              var par = el.parentElement;
+              var elWidth = parseInt(window.getComputedStyle(el).width, 10);
+              var parWidth = par.offsetWidth;
+              var margin = (parWidth - elWidth) / 2 - 50;
+              el.style.marginLeft = margin + 'px';
+            }, 0);
+          }
+        };
+      }
+    };
+  }
+]);
 angular.module('mnd-web.components.dashboard', []).controller('SidebarController', [
   '$scope',
   '$state',
@@ -190,24 +214,20 @@ angular.module('mnd-web.components.dashboard', []).controller('SidebarController
     };
   }
 ]);
-angular.module('mnd-web.components.mindmap', []).directive('mndMindMap', [
+angular.module('mnd-web.components.mindmap', []).directive('mndMindMapRecursive', [
   'RecursionHelper',
   function (RecursionHelper) {
     return {
       restrict: 'EA',
       replace: true,
-      templateUrl: 'components/mindmap/mindmap.html',
+      templateUrl: 'components/mindmap/mindmaprecursive.html',
       scope: {
         map: '=',
         edit: '=?',
         child: '=?'
       },
       compile: function (element) {
-        return RecursionHelper.compile(element, function ($scope) {
-          $scope.getWidth = function (length) {
-            var width = 100 / length + '%';
-            return { width: width };
-          };
+        return RecursionHelper.compile(element, function ($scope, $element) {
           $scope.autodestroy = function () {
             if ($scope.child) {
               var parent = $scope.$parent.$parent.map.children;
@@ -216,6 +236,8 @@ angular.module('mnd-web.components.mindmap', []).directive('mndMindMap', [
             }
           };
           $scope.addChild = function () {
+            if (!$scope.map)
+              $scope.map = {};
             if (!$scope.map.children)
               $scope.map.children = [];
             $scope.map.children.push({});
@@ -224,7 +246,18 @@ angular.module('mnd-web.components.mindmap', []).directive('mndMindMap', [
       }
     };
   }
-]);
+]).directive('mndMindMap', function () {
+  return {
+    restrict: 'EA',
+    replace: true,
+    templateUrl: 'components/mindmap/mindmap.html',
+    scope: {
+      map: '=',
+      edit: '=?',
+      child: '=?'
+    }
+  };
+});
 angular.module('mnd-web.components.tag-strip', []).factory('MndTagStrippingService', function () {
   return {
     strip: function (html) {
@@ -366,7 +399,6 @@ angular.module('mnd-web.pages.post.edit', []).controller('PostEditController', [
         $scope.post.titleImageSource = 'https://s3-eu-west-1.amazonaws.com/ngtest/' + fileName;
         $scope.titleImageIsDisplayed = true;
         $scope.save();
-      }).error(function (err) {
       });
     };
     ///////////////////

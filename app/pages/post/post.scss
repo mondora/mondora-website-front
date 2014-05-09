@@ -12,32 +12,42 @@
 	top: 0px;
 	left: 0px;
 	min-width: 100%;
-	min-height: 100%;
+	min-height: 100%; 
 }
-.blur{
+.post-overlay{
 	box-sizing: border-box;
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	min-width: 100%;
 	min-height: 100%;
-	opacity: 0;
+	background-color: #000;
+	opacity: 0.2;
+}
+
+.mnd-mind-container {
+	position: absolute;
+	height: 40%;
+	overflow: hidden;
+	width: 100%;
+	padding-left: 5px;
 }
 
 .post-top-buttons {
 	position: absolute;
 	right: 20px;
 	top: 20px;
+	z-index: 200;
 }
 
 .post-header {
 	position: relative;
-	top: 65%;
+	top: 70%;
 }
 
 .post-body {
 	position: relative;
-	top: 85%;
+	top: 100%;
 	font-size: 18px;
 }
 
