@@ -31,9 +31,9 @@ gulp.task("buildAppStyles", function () {
 
 gulp.task("buildAppScripts", function () {
 	gulp.src("app/**/*.js")
-		.pipe(plugins.ngmin())
 		.pipe(plugins.concat("app.js"))
 		.pipe(gulp.dest("dist/js/"))
+		.pipe(plugins.ngmin())
 		.pipe(plugins.uglify())
 		.pipe(plugins.rename("app.min.js"))
 		.pipe(gulp.dest("dist/js/"));
@@ -183,6 +183,7 @@ gulp.task("buildWeb", buildWebDeps, function () {
 
 	var sources = [
 		"dist/js/app.min.js",
+		"dist/js/app.js",
 		"dist/js/app.templates.min.js",
 		"dist/js/cdn.vendor.min.js",
 		"dist/css/app.min.css",

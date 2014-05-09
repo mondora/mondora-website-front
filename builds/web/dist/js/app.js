@@ -208,6 +208,29 @@ angular.module("mnd-web", [
 	};
 });
 
+angular.module("mnd-web.components.center", [])
+
+.directive("mndCenter", function ($timeout) {
+	return {
+		restrict: "A",
+		priority: 1000,
+		compile: function () {
+			return {
+				post: function ($scope, $element) {
+					$timeout(function () {
+						var el = $element[0];
+						var par = el.parentElement;
+						var elWidth = parseInt(window.getComputedStyle(el).width, 10);
+						var parWidth = par.offsetWidth;
+						var margin = (parWidth - elWidth) / 2 - 50;
+						el.style.marginLeft = margin + "px";
+					}, 0)
+				} 
+			}
+		}
+
+	}
+});
 angular.module("mnd-web.components.dashboard", [])
 
 .controller("SidebarController", function ($scope, $state, MndSidebarService) {
@@ -298,29 +321,6 @@ angular.module("mnd-web.components.dashboard", [])
 
 });
 
-angular.module("mnd-web.components.center", [])
-
-.directive("mndCenter", function ($timeout) {
-	return {
-		restrict: "A",
-		priority: 1000,
-		compile: function () {
-			return {
-				post: function ($scope, $element) {
-					$timeout(function () {
-						var el = $element[0];
-						var par = el.parentElement;
-						var elWidth = parseInt(window.getComputedStyle(el).width, 10);
-						var parWidth = par.offsetWidth;
-						var margin = (parWidth - elWidth) / 2 - 50;
-						el.style.marginLeft = margin + "px";
-					}, 0)
-				} 
-			}
-		}
-
-	}
-});
 angular.module("mnd-web.components.mindmap", [])
 
 .directive("mndMindMapRecursive", function (RecursionHelper) {
