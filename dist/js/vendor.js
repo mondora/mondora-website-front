@@ -32200,7 +32200,8 @@ Asteroid.prototype._init = function () {
 	// Register handlers
 	self.ddp.on("connected", function () {
 		// Upon connection, try resuming the login
-		self._tryResumeLogin();
+		// Save the pormise it returns
+		self.resumeLoginPromise = self._tryResumeLogin();
 		// Subscribe to the meteor.loginServiceConfiguration
 		// collection, which holds the configuration options
 		// to login via third party services (oauth).
@@ -32297,9 +32298,11 @@ Asteroid.prototype._onChanged = function (data) {
 Asteroid.prototype.subscribe = function (name /* , param1, param2, ... */) {
 	// Assert name must be a string
 	must.beString(name);
-	// If we're already subscribed, return the subscription
-	if (this.subscriptions[name]) {
-		return this.subscriptions[name];
+	// If we're already subscribed, unsubscribe before re-subscribing
+	var subPromise = this.subscriptions[name];
+	if (subPromise && subPromise.isFulfilled()) {
+		var subId = subPromise.inspect().value;
+		this.unsubscribe(subId);
 	}
 	// Init the promise that will be returned
 	var deferred = Q.defer();
@@ -32312,7 +32315,7 @@ Asteroid.prototype.subscribe = function (name /* , param1, param2, ... */) {
 		// This is the onReady/onNoSub callback
 		if (err) {
 			// Reject the promise if the server answered nosub
-			deferred.reject(err, id);
+			deferred.reject(err);
 		} else {
 			// Resolve the promise if the server answered ready
 			deferred.resolve(id);
@@ -32680,68 +32683,6 @@ Collection.prototype.reactiveQuery = function (selectorOrFilter) {
 
 Asteroid._Collection = Collection;
 
-var DumbDb = function () {
-	this.itemsHash = {};
-	this.itemsArray = [];
-};
-DumbDb.prototype.constructor = DumbDb;
-
-DumbDb.prototype.set = function (id, item) {
-	item = clone(item);
-	if (!this.itemsHash[id]) {
-		this.itemsArray.push(item);
-	} else {
-		var index = this.itemsArray.indexOf(this.itemsHash[id]);
-		this.itemsArray[index] = item;
-	}
-	this.itemsHash[id] = item;
-};
-
-DumbDb.prototype.get = function (id) {
-	return clone(this.itemsHash[id]);
-};
-
-DumbDb.prototype.find = function (selector) {
-	var getItemVal = function (item, key) {
-		return key.split(".").reduce(function (prev, curr) {
-			prev = prev[curr];
-			return prev;
-		}, item);
-	};
-	var keys = Object.keys(selector);
-	var matches = [];
-	this.itemsArray.forEach(function (item) {
-		for (var i=0; i<keys.length; i++) {
-			var itemVal = getItemVal(item, keys[i]);
-			if (itemVal !== selector[keys[i]]) {
-				return;
-			}
-		}
-		if (!is_backup(item._id)) {
-			matches.push(clone(item));
-		}
-	});
-	return matches;
-};
-
-DumbDb.prototype.findOne = function (selector) {
-	return this.find(selector)[0];
-};
-
-DumbDb.prototype.del = function (id) {
-	if (this.itemsHash[id]) {
-		var index = this.itemsArray.indexOf(this.itemsHash[id]);
-		this.itemsArray.splice(index, 1);
-		delete this.itemsHash[id];
-	}
-};
-
-DumbDb.prototype.ls = function () {
-	return clone(this.itemsArray);
-};
-
-Asteroid.DumbDb = DumbDb;
-
 Asteroid.prototype._getOauthClientId = function (serviceName) {
 	var loginConfigCollectionName = "meteor_accounts_loginServiceConfiguration";
 	var loginConfigCollection = this.collections[loginConfigCollectionName];
@@ -32782,7 +32723,7 @@ Asteroid.prototype._initOauthLogin = function (service, credentialToken, loginUr
 					self.userId = res.id;
 					self.loggedIn = true;
 					localStorage[self._host + "__login_token__"] = res.token;
-					self._emit("login", res);
+					self._emit("login", res.id);
 					deferred.resolve(res.id);
 				}
 			});
@@ -32792,33 +32733,31 @@ Asteroid.prototype._initOauthLogin = function (service, credentialToken, loginUr
 
 Asteroid.prototype._tryResumeLogin = function () {
 	var self = this;
+	var deferred = Q.defer();
 	var token = localStorage[self._host + "__login_token__"];
 	if (!token) {
-		return;
+		deferred.reject("No login token");
+		return deferred.promise;
 	}
-	return Q()
-		.then(function () {
-			var deferred = Q.defer();
-			var loginParameters = {
-				resume: token
-			};
-			self.ddp.method("login", [loginParameters], function (err, res) {
-				if (err) {
-					delete self.userId;
-					delete self.loggedIn;
-					delete localStorage[self._host + "__login_token__"];
-					self._emit("loginError", err);
-					deferred.reject(err);
-				} else {
-					self.userId = res.id;
-					self.loggedIn = true;
-					localStorage[self._host + "__login_token__"] = res.token;
-					self._emit("login", res);
-					deferred.resolve(res.id);
-				}
-			});
-			return deferred.promise;
-		});
+	var loginParameters = {
+		resume: token
+	};
+	self.ddp.method("login", [loginParameters], function (err, res) {
+		if (err) {
+			delete self.userId;
+			delete self.loggedIn;
+			delete localStorage[self._host + "__login_token__"];
+			self._emit("loginError", err);
+			deferred.reject(err);
+		} else {
+			self.userId = res.id;
+			self.loggedIn = true;
+			localStorage[self._host + "__login_token__"] = res.token;
+			self._emit("login", res.id);
+			deferred.resolve(res.id);
+		}
+	});
+	return deferred.promise;
 };
 
 Asteroid.prototype.loginWithFacebook = function (scope) {
@@ -32880,8 +32819,8 @@ Asteroid.prototype.logout = function () {
 			delete self.userId;
 			delete self.loggedIn;
 			delete localStorage[self._host + "__login_token__"];
-			self._emit("logout", res);
-			deferred.resolve(res);
+			self._emit("logout");
+			deferred.resolve();
 		}
 	});
 	return deferred.promise;
@@ -34139,6 +34078,7 @@ if (typeof module === 'object') {
             var i,
                 activatePlaceholder = function (el) {
                     if (!(el.querySelector('img')) &&
+                            !(el.querySelector('blockquote')) &&
                             el.textContent.replace(/^\s+|\s+$/g, '') === '') {
                         el.classList.add('medium-editor-placeholder');
                     }

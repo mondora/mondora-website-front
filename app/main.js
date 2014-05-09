@@ -16,7 +16,10 @@
 		cfg = config.prod;
 	}
 	//TODO Use ng-asteroid, fool!
+	var deferred = Q.defer();
 	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
+	Ceres.on("connected", deferred.resolve);
+	window.CERES_CONNECTED = deferred.promise;
 })();
 
 angular.module("mnd-web", [
@@ -68,56 +71,87 @@ angular.module("mnd-web", [
 
 	// Here we should configure ng-asteroid before the router
 
+	$stateProvider.state("root", {
+		abstract: true,
+        templateUrl: "root.html",
+		resolve: {
+			resumingLogin: function (TimeoutPromiseService) {
+				return CERES_CONNECTED.then(function () {
+					var resProm = Ceres.resumeLoginPromise;
+					if (resProm.isPending()) {
+						return TimeoutPromiseService.timeoutPromise(resProm, 5000)
+							.finally(function () {
+								return true;
+							});
+					}
+					return true;
+				}, function () {
+
+				});
+			}
+		}
+    });
+
     $stateProvider.state("home", {
         url: "/",
+		parent: "root",
         templateUrl: "pages/home/home.html",
 		controller: "HomeController",
 		resolve: {
 			homeConfig: function (TimeoutPromiseService) {
-				return TimeoutPromiseService.timeoutPromise(Ceres.subscribe("configurations"), 5000);
+				var sub = Ceres.subscribe("configurations");
+				return TimeoutPromiseService.timeoutPromise(sub, 5000);
 			}
 		}
     });
 
     $stateProvider.state("notFound", {
         url: "/notFound",
+		parent: "root",
         templateUrl: "pages/notFound/notFound.html"
     });
 
     $stateProvider.state("serverProblems", {
-        url: "/serverProoblems",
+        url: "/serverProblems",
+		parent: "root",
         templateUrl: "pages/serverProblems/serverProblems.html"
     });
 
     $stateProvider.state("postView", {
         url: "/post/:postId",
+		parent: "root",
         templateUrl: "pages/post/view/postView.html",
 		controller: "PostViewController",
 		resolve: {
-			postSub: function (TimeoutPromiseService) {
-				return TimeoutPromiseService.timeoutPromise(Ceres.subscribe("posts"), 5000);
+			postSub: function ($stateParams, TimeoutPromiseService) {
+				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
+				return TimeoutPromiseService.timeoutPromise(sub, 5000);
 			}
 		}
     });
 
     $stateProvider.state("postEdit", {
         url: "/post/:postId/edit",
+		parent: "root",
         templateUrl: "pages/post/edit/postEdit.html",
 		controller: "PostEditController",
 		resolve: {
-			postSub: function (TimeoutPromiseService) {
-				return TimeoutPromiseService.timeoutPromise(Ceres.subscribe("posts"), 5000);
+			postSub: function ($stateParams, TimeoutPromiseService) {
+				var subProm = Ceres.subscribe("singlePost", $stateParams.postId);
+				return TimeoutPromiseService.timeoutPromise(subProm, 5000);
 			}
 		}
     });
 
     $stateProvider.state("postList", {
         url: "/posts",
+		parent: "root",
         templateUrl: "pages/post/list/postList.html",
 		controller: "PostListController",
 		resolve: {
 			postSub: function (TimeoutPromiseService) {
-				return TimeoutPromiseService.timeoutPromise(Ceres.subscribe("posts"), 5000);
+				var sub = Ceres.subscribe("latestPosts");
+				return TimeoutPromiseService.timeoutPromise(sub, 5000);
 			}
 		}
     });
@@ -140,7 +174,7 @@ angular.module("mnd-web", [
     };
 
 	$rootScope.Ceres = Ceres;
-	$rootScope.Ceres.subscribe("userProfileImage");
+	Ceres.subscribe("userTwitterProfile");
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");

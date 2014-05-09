@@ -5,6 +5,56 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('root.html',
+    '<div mnd-sidebar ng-controller="SidebarController">\n' +
+    '	<div name="before">\n' +
+    '		<div id="mnd-sidebar-user">\n' +
+    '			<div ng-if="user">\n' +
+    '				<img class="img-circle" ng-src="{{user.twitterProfile.pictureUrl}}" />\n' +
+    '				<span>{{user.twitterProfile.name}}</span>\n' +
+    '				<span ng-click="logout()" class="logout"><i class="fa fa-times-circle"></i></span>\n' +
+    '			</div>\n' +
+    '			<div ng-if="!user" ng-click="login()" class="login">\n' +
+    '				<i class="fa fa-twitter"></i> Sign in with twitter\n' +
+    '			</div>\n' +
+    '		</div>	\n' +
+    '	</div>\n' +
+    '	<div name="after">\n' +
+    '		<div id="mnd-sidebar-footer">\n' +
+    '			<span>\n' +
+    '				MONDORA Srl\n' +
+    '			</span>\n' +
+    '			<br />\n' +
+    '			<span class="mnd-sidebar-footer-address">\n' +
+    '				Milano, Morbegno, Novara, St. Moritz (CH)<br />\n' +
+    '				Via Cornalia 7 - 20154, Milano <br />\n' +
+    '			</span>\n' +
+    '		</div>	\n' +
+    '	</div>	\n' +
+    '</div>\n' +
+    '<div mnd-toggle-sidebar>\n' +
+    '	<div name="center">\n' +
+    '		<div id="mnd-sidebar-logo">\n' +
+    '			<div class="mnd-mondora-logo">\n' +
+    '				<img src="http://mnd-website.s3.amazonaws.com/img/mondora-logo.png" />\n' +
+    '			</div>\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '<div mnd-content>\n' +
+    '	<div ui-view class="mnd-content"></div>\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('components/mindmap/mindmap.html',
     '<div class="mm-wrapper">\n' +
     '	<div class="mm-children">\n' +

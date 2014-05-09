@@ -10,7 +10,10 @@
     cfg = config.prod;
   }
   //TODO Use ng-asteroid, fool!
+  var deferred = Q.defer();
   window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
+  Ceres.on('connected', deferred.resolve);
+  window.CERES_CONNECTED = deferred.promise;
 }());
 angular.module('mnd-web', [
   'ui.bootstrap',
@@ -56,51 +59,79 @@ angular.module('mnd-web', [
   '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
     // Here we should configure ng-asteroid before the router
+    $stateProvider.state('root', {
+      abstract: true,
+      templateUrl: 'root.html',
+      resolve: {
+        resumingLogin: function (TimeoutPromiseService) {
+          return CERES_CONNECTED.then(function () {
+            var resProm = Ceres.resumeLoginPromise;
+            if (resProm.isPending()) {
+              return TimeoutPromiseService.timeoutPromise(resProm, 5000).finally(function () {
+                return true;
+              });
+            }
+            return true;
+          }, function () {
+          });
+        }
+      }
+    });
     $stateProvider.state('home', {
       url: '/',
+      parent: 'root',
       templateUrl: 'pages/home/home.html',
       controller: 'HomeController',
       resolve: {
         homeConfig: function (TimeoutPromiseService) {
-          return TimeoutPromiseService.timeoutPromise(Ceres.subscribe('configurations'), 5000);
+          var sub = Ceres.subscribe('configurations');
+          return TimeoutPromiseService.timeoutPromise(sub, 5000);
         }
       }
     });
     $stateProvider.state('notFound', {
       url: '/notFound',
+      parent: 'root',
       templateUrl: 'pages/notFound/notFound.html'
     });
     $stateProvider.state('serverProblems', {
-      url: '/serverProoblems',
+      url: '/serverProblems',
+      parent: 'root',
       templateUrl: 'pages/serverProblems/serverProblems.html'
     });
     $stateProvider.state('postView', {
       url: '/post/:postId',
+      parent: 'root',
       templateUrl: 'pages/post/view/postView.html',
       controller: 'PostViewController',
       resolve: {
-        postSub: function (TimeoutPromiseService) {
-          return TimeoutPromiseService.timeoutPromise(Ceres.subscribe('posts'), 5000);
+        postSub: function ($stateParams, TimeoutPromiseService) {
+          var sub = Ceres.subscribe('singlePost', $stateParams.postId);
+          return TimeoutPromiseService.timeoutPromise(sub, 5000);
         }
       }
     });
     $stateProvider.state('postEdit', {
       url: '/post/:postId/edit',
+      parent: 'root',
       templateUrl: 'pages/post/edit/postEdit.html',
       controller: 'PostEditController',
       resolve: {
-        postSub: function (TimeoutPromiseService) {
-          return TimeoutPromiseService.timeoutPromise(Ceres.subscribe('posts'), 5000);
+        postSub: function ($stateParams, TimeoutPromiseService) {
+          var subProm = Ceres.subscribe('singlePost', $stateParams.postId);
+          return TimeoutPromiseService.timeoutPromise(subProm, 5000);
         }
       }
     });
     $stateProvider.state('postList', {
       url: '/posts',
+      parent: 'root',
       templateUrl: 'pages/post/list/postList.html',
       controller: 'PostListController',
       resolve: {
         postSub: function (TimeoutPromiseService) {
-          return TimeoutPromiseService.timeoutPromise(Ceres.subscribe('posts'), 5000);
+          var sub = Ceres.subscribe('latestPosts');
+          return TimeoutPromiseService.timeoutPromise(sub, 5000);
         }
       }
     });
@@ -120,7 +151,7 @@ angular.module('mnd-web', [
       }
     };
     $rootScope.Ceres = Ceres;
-    $rootScope.Ceres.subscribe('userProfileImage');
+    Ceres.subscribe('userTwitterProfile');
     $rootScope.Configurations = Ceres.createCollection('configurations');
     $rootScope.Posts = Ceres.createCollection('posts');
     $rootScope.Users = Ceres.createCollection('users');
@@ -155,21 +186,38 @@ angular.module('mnd-web', [
 angular.module('mnd-web.components.dashboard', []).controller('SidebarController', [
   '$scope',
   '$state',
-  function ($scope, $state) {
+  'MndSidebarService',
+  function ($scope, $state, MndSidebarService) {
     $scope.addPost = function () {
-      var post = {};
-      $scope.Posts.insert(post);
-      $state.go('postEdit', { postId: post._id });
+      var post = {
+          userId: $scope.user._id,
+          authors: [{
+              userId: $scope.user._id,
+              screenName: $scope.user.twitterProfile.screenName,
+              name: $scope.user.twitterProfile.name,
+              imageUrl: $scope.user.twitterProfile.pictureUrl
+            }],
+          comments: [],
+          published: false
+        };
+      $scope.Posts.insert(post).remote.then(function (id) {
+        MndSidebarService.toggleSidebarStatus();
+        $scope.$root.$broadcast('sidebarStatusChanged');
+        $state.go('postEdit', { postId: id });
+      }, function (err) {
+        console.log(err);
+      });
+    };
+    $scope.closeSidebar = function () {
+      MndSidebarService.toggleSidebarStatus();
+      $scope.$root.$broadcast('sidebarStatusChanged');
     };
     $scope.menu = {
       items: [
         {
           title: 'Home',
-          href: '/#/'
-        },
-        {
-          title: 'Nuovo post',
-          ngClick: 'addPost'
+          href: '/#/',
+          ngClick: 'closeSidebar'
         },
         {
           title: 'Cloud',
@@ -207,6 +255,20 @@ angular.module('mnd-web.components.dashboard', []).controller('SidebarController
         }
       ]
     };
+    $scope.$watch('user', function () {
+      if ($scope.user) {
+        if ($scope.menu.items[1].ngClick !== 'addPost') {
+          $scope.menu.items.splice(1, 0, {
+            title: 'Nuovo post',
+            ngClick: 'addPost'
+          });
+        }
+      } else {
+        if ($scope.menu.items[1].ngClick === 'addPost') {
+          $scope.menu.items.splice(1, 1);
+        }
+      }
+    });
   }
 ]);
 angular.module('mnd-web.components.mindmap', []).directive('mndMindMap', [
@@ -330,8 +392,11 @@ angular.module('mnd-web.pages.post.edit', []).controller('PostEditController', [
       $scope.showDelete = !$scope.showDelete;
     };
     $scope.deletePost = function () {
-      $scope.Posts.remove(id);
-      $state.go('home');
+      $scope.Posts.remove(id).remote.then(function () {
+        $state.go('home');
+      }, function () {
+        alert('An error occurred.');
+      });
     };
     $scope.publishPost = function () {
       $scope.post.published = true;
@@ -342,7 +407,7 @@ angular.module('mnd-web.pages.post.edit', []).controller('PostEditController', [
       $scope.save();
     };
     $scope.isOwner = function () {
-      return $scope.user && $scope.post.user === $scope.user._id;
+      return $scope.user && $scope.post.userId === $scope.user._id;
     };
     //////////////////
     // Image upload //
@@ -395,18 +460,12 @@ angular.module('mnd-web.pages.post.edit', []).controller('PostEditController', [
       $scope.post.title = title.innerHTML;
       $scope.post.subtitle = subtitle.innerHTML;
       $scope.post.body = body.innerHTML;
-      $scope.post.user = $scope.user._id;
-      $scope.post.comments = [];
-      $scope.post.authors = [{
-          userId: $scope.user._id,
-          name: $scope.user.profile.name,
-          screenName: $scope.user.services.twitter.screenName,
-          imageUrl: $scope.user.services.twitter.profile_image_url
-        }];
       // Strip the _id property (which can't be set twice)
       var post = angular.copy($scope.post);
       delete post._id;
-      $scope.Posts.update(id, post);
+      $scope.Posts.update(id, post).remote.fail(function (err) {
+        console.log(err);
+      });
     };
     var interval = $interval($scope.save, 5000);
     $scope.$on('$destroy', function () {

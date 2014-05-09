@@ -65,8 +65,11 @@ angular.module("mnd-web.pages.post.edit", [])
 		$scope.showDelete = !$scope.showDelete;
 	};
 	$scope.deletePost = function () {
-		$scope.Posts.remove(id);
-		$state.go("home");
+		$scope.Posts.remove(id).remote.then(function () {
+			$state.go("home");
+		}, function () {
+			alert("An error occurred.");
+		});
 	};
 	$scope.publishPost = function () {
 		$scope.post.published = true;
@@ -77,7 +80,7 @@ angular.module("mnd-web.pages.post.edit", [])
 		$scope.save();
 	};
 	$scope.isOwner = function () {
-		return $scope.user && $scope.post.user === $scope.user._id;
+		return $scope.user && $scope.post.userId === $scope.user._id;
 	};
 
 
@@ -143,18 +146,13 @@ angular.module("mnd-web.pages.post.edit", [])
 		$scope.post.title = title.innerHTML;
 		$scope.post.subtitle = subtitle.innerHTML;
 		$scope.post.body = body.innerHTML;
-		$scope.post.user = $scope.user._id;
-		$scope.post.comments = [];
-		$scope.post.authors = [{
-			userId: $scope.user._id,
-			name: $scope.user.profile.name,
-			screenName: $scope.user.services.twitter.screenName,
-			imageUrl: $scope.user.services.twitter.profile_image_url
-		}];
+
 		// Strip the _id property (which can't be set twice)
 		var post = angular.copy($scope.post);
 		delete post._id;
-		$scope.Posts.update(id, post);
+		$scope.Posts.update(id, post).remote.fail(function (err) {
+			console.log(err);
+		});
 	};
 	var interval = $interval($scope.save, 5000);
 	$scope.$on("$destroy", function () {

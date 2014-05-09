@@ -9,6 +9,11 @@ html, body {
 .mnd-clickable {
   cursor: pointer; }
 
+.mnd-fullsize {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
 .mnd-vsp-4 {
   width: 100%;
   height: 4px; }
