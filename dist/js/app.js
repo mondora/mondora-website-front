@@ -39,6 +39,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.mindmap",
 	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
+	"mnd-web.components.check-mobile",
 	"mnd-web.pages.home",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
@@ -208,6 +209,41 @@ angular.module("mnd-web", [
 	};
 });
 
+angular.module("mnd-web.components.center", [])
+
+.directive("mndCenter", function ($timeout) {
+	return {
+		restrict: "A",
+		priority: 1000,
+		compile: function () {
+			return {
+				post: function ($scope, $element) {
+					$timeout(function () {
+						var el = $element[0];
+						var par = el.parentElement;
+						var elWidth = parseInt(window.getComputedStyle(el).width, 10);
+						var parWidth = par.offsetWidth;
+						var margin = (parWidth - elWidth) / 2 - 50;
+						el.style.marginLeft = margin + "px";
+					}, 0)
+				} 
+			}
+		}
+
+	}
+});
+angular.module("mnd-web.components.check-mobile", [])
+
+.factory("CheckMobileService", function () {
+	return {
+		isMobile: function () {
+			var bodyEl = document.getElementsByTagName("body")[0];
+			var bodyElWidth = parseInt(window.getComputedStyle(bodyEl).width, 10);
+			var mobileTrue = bodyElWidth < 767;
+			return mobileTrue;
+		}
+	}
+});
 angular.module("mnd-web.components.dashboard", [])
 
 .controller("SidebarController", function ($scope, $state, MndSidebarService) {
@@ -298,29 +334,6 @@ angular.module("mnd-web.components.dashboard", [])
 
 });
 
-angular.module("mnd-web.components.center", [])
-
-.directive("mndCenter", function ($timeout) {
-	return {
-		restrict: "A",
-		priority: 1000,
-		compile: function () {
-			return {
-				post: function ($scope, $element) {
-					$timeout(function () {
-						var el = $element[0];
-						var par = el.parentElement;
-						var elWidth = parseInt(window.getComputedStyle(el).width, 10);
-						var parWidth = par.offsetWidth;
-						var margin = (parWidth - elWidth) / 2 - 50;
-						el.style.marginLeft = margin + "px";
-					}, 0)
-				} 
-			}
-		}
-
-	}
-});
 angular.module("mnd-web.components.mindmap", [])
 
 .directive("mndMindMapRecursive", function (RecursionHelper) {
@@ -414,6 +427,7 @@ angular.module("mnd-web.pages.post.edit", [])
 		$state.go("notFound");
 		return;
 	}
+
 
 
 	/////////////////////////

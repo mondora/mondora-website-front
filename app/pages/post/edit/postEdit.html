@@ -21,10 +21,10 @@
 	</button>
 	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">
 		Rendi privato
-	</button>
+	</button> 
 </div>
 
-<div class="mnd-mind-container">
+<div class="mnd-mind-container" ng-class="{'black-connections': !titleImageIsDisplayed}">
 		<div mnd-mind-map map="post.map" edit="true"></div>
 </div>
 

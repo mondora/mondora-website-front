@@ -15,6 +15,7 @@ angular.module("mnd-web.pages.post.edit", [])
 	}
 
 
+
 	/////////////////////////
 	// Init medium editors //
 	/////////////////////////

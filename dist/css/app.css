@@ -300,6 +300,8 @@ span.mnd-width-10 {
   /*Time for some hover effects*/
   /*We will apply the hover effect the the lineage of the element also*/
   /*Connector styles on hover*/
+  .black-connections .tree ul ul::before, .black-connections .tree li a, .black-connections .tree li:last-child::before, .black-connections .tree li:last-child::before, .black-connections .tree li::before, .tree li::after, .black-connections .tree li::after {
+    border-color: #000; }
   .tree {
     position: absolute; }
   .tree * {
@@ -719,7 +721,7 @@ span.mnd-width-10 {
 
 .mnd-mind-container {
   position: absolute;
-  height: 40%;
+  min-height: 40%;
   overflow: hidden;
   width: 100%;
   padding-left: 5px; }

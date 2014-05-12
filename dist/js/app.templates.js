@@ -223,10 +223,10 @@ module.run(['$templateCache', function($templateCache) {
     '	</button>\n' +
     '	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">\n' +
     '		Rendi privato\n' +
-    '	</button>\n' +
+    '	</button> \n' +
     '</div>\n' +
     '\n' +
-    '<div class="mnd-mind-container">\n' +
+    '<div class="mnd-mind-container" ng-class="{\'black-connections\': !titleImageIsDisplayed}">\n' +
     '		<div mnd-mind-map map="post.map" edit="true"></div>\n' +
     '</div>\n' +
     '\n' +

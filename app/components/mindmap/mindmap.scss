@@ -6,6 +6,12 @@
 	}
 @media (min-width: 768px) {
 	/*Now the CSS*/
+	.black-connections .tree ul ul::before,.black-connections .tree li a, .black-connections .tree li:last-child::before, .black-connections .tree li:last-child::before, .black-connections .tree li::before, .tree li::after, .black-connections .tree li::after
+		{
+			
+			border-color:#000;
+		}
+	
 
 	.tree {
 		position: absolute;
