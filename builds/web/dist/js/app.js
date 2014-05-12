@@ -269,7 +269,7 @@ angular.module("mnd-web.components.dashboard", [])
 		MndSidebarService.toggleSidebarStatus();
 		$scope.$root.$broadcast("sidebarStatusChanged");
 	};
-	$scope.menu = {
+	var menu = {
 		items: [
 			{
 				title: "Home",
@@ -312,28 +312,22 @@ angular.module("mnd-web.components.dashboard", [])
 			}
 		]
 	};
+	var loggedInMenu = angular.copy(menu);
+	loggedInMenu.items.splice(1, 0, {
+		title: "New post",
+		ngClick: "addPost"
+	});	
+	loggedInMenu.items.splice(2, 0, {
+		title: "Profile",
+		ngClick: "closeSidebar"
+	});
+	$scope.menu = menu;
 
 	$scope.$watch("user", function () {
 		if ($scope.user) {
-			if ($scope.menu.items[1].ngClick !== "addPost") {
-				$scope.menu.items.splice(1, 0, {
-					title: "New post",
-					ngClick: "addPost"
-				});	
-			}
-			if ($scope.menu.items[2].href !== "/#/profile") {
-				$scope.menu.items.splice(2, 0, {
-					title: "Profile",
-					ngClick: "closeSidebar"
-				});	
-			}
+			$scope.menu = loggedInMenu;
 		} else {
-			if ($scope.menu.items[1].ngClick === "addPost") {
-				$scope.menu.items.splice(1, 1);		
-			}
-			if ($scope.menu.items[1].href === "/#/profile") {
-				$scope.menu.items.splice(2, 1);		
-			}
+			$scope.menu = menu;
 		}
 	});
 
