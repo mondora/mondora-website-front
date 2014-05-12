@@ -1,7 +1,8 @@
 (function () {
 	var config = {
 		dev: {
-			host: "localhost:3000"
+			host: "localhost:3000",
+			//debug: true
 		},
 		prod: {
 			host: "api.nocheros.info",
@@ -190,6 +191,8 @@ angular.module("mnd-web", [
 	var userQuery = $rootScope.Users.reactiveQuery({});
 	userQuery.on("change", function () {
 		$rootScope.safeApply(function () {
+			console.log("Changed user");
+			console.log(userQuery.result[0]);
 			$rootScope.user = userQuery.result[0];
 		});
 	});

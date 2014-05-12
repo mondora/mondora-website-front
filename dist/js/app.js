@@ -1,7 +1,8 @@
 (function () {
 	var config = {
 		dev: {
-			host: "localhost:3000"
+			host: "localhost:3000",
+			//debug: true
 		},
 		prod: {
 			host: "api.nocheros.info",
@@ -190,6 +191,8 @@ angular.module("mnd-web", [
 	var userQuery = $rootScope.Users.reactiveQuery({});
 	userQuery.on("change", function () {
 		$rootScope.safeApply(function () {
+			console.log("Changed user");
+			console.log(userQuery.result[0]);
 			$rootScope.user = userQuery.result[0];
 		});
 	});
@@ -710,6 +713,7 @@ angular.module("mnd-web.pages.post.view", [])
 
 	$scope.sprinklePostText = function () {
 		if (!$scope.post) return;
+		if (!$scope.post.body) return "";
 		return MndTagStrippingService.strip($scope.post.body);
 	};
 
@@ -719,6 +723,7 @@ angular.module("mnd-web.pages.post.view", [])
 
 	$scope.estimateReadingTime = function () {
 		if (!$scope.post) return;
+		if (!$scope.post.body) return 0;
 		return readTimeEstimatingService.estimate($scope.post.body);
 	};
 
