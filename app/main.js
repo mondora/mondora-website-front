@@ -20,6 +20,9 @@
 	var deferred = Q.defer();
 	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 	Ceres.on("connected", deferred.resolve);
+	Ceres.ddp.on("socket_error", function () {
+		console.log("Error");
+	});
 	window.CERES_CONNECTED = deferred.promise;
 })();
 
