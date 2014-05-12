@@ -2,10 +2,11 @@
 	var config = {
 		dev: {
 			host: "localhost:3000",
-			//debug: true
+			debug: true
 		},
 		prod: {
 			host: "api.nocheros.info",
+			debug: true
 			// Uncomment this when we get SSL working
 			//ssl: true
 		}
@@ -20,8 +21,8 @@
 	var deferred = Q.defer();
 	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 	Ceres.on("connected", deferred.resolve);
-	Ceres.ddp.on("socket_error", function () {
-		console.log("Error");
+	Ceres.ddp.on("socket_close", function () {
+		console.log("Closed");
 	});
 	window.CERES_CONNECTED = deferred.promise;
 })();
@@ -194,8 +195,6 @@ angular.module("mnd-web", [
 	var userQuery = $rootScope.Users.reactiveQuery({});
 	userQuery.on("change", function () {
 		$rootScope.safeApply(function () {
-			console.log("Changed user");
-			console.log(userQuery.result[0]);
 			$rootScope.user = userQuery.result[0];
 		});
 	});
@@ -245,6 +244,60 @@ angular.module("mnd-web.components.center", [])
 
 	}
 });
+angular.module("mnd-web.components.mindmap", [])
+
+.directive("mndMindMapRecursive", function (RecursionHelper) {
+	return {
+		restrict: "EA",
+		replace: true,
+		templateUrl: "components/mindmap/mindmaprecursive.html",
+		scope: {
+			map: "=",
+			edit: "=?",
+			child: "=?"
+		},
+		compile: function (element) {
+			return RecursionHelper.compile(element, function ($scope, $element) {
+				$scope.autodestroy = function () {
+					if ($scope.child) {
+						var parent = $scope.$parent.$parent.map.children;
+						var index = parent.indexOf($scope.map);
+						parent.splice(index, 1);
+					}
+				};
+				$scope.addChild = function () {
+					if (!$scope.map) $scope.map = {};
+					if (!$scope.map.children) $scope.map.children = [];
+					$scope.map.children.push({});
+				};
+			});
+		}
+	};
+})
+
+.directive("mndMindMap", function () {
+	return {
+		restrict: "EA",
+		replace: true,
+		templateUrl: "components/mindmap/mindmap.html",
+		scope: {
+			map: "=",
+			edit: "=?",
+			child: "=?"
+		}
+	}
+})
+
+angular.module("mnd-web.components.tag-strip", [])
+
+.factory("MndTagStrippingService", function () {
+	return {
+		strip: function (html) {
+			return html.replace(/(<([^>]+)>)/ig," ");
+		}
+	};
+});
+
 angular.module("mnd-web.components.dashboard", [])
 
 .controller("SidebarController", function ($scope, $state, MndSidebarService) {
@@ -338,60 +391,6 @@ angular.module("mnd-web.components.dashboard", [])
 		}
 	});
 
-});
-
-angular.module("mnd-web.components.mindmap", [])
-
-.directive("mndMindMapRecursive", function (RecursionHelper) {
-	return {
-		restrict: "EA",
-		replace: true,
-		templateUrl: "components/mindmap/mindmaprecursive.html",
-		scope: {
-			map: "=",
-			edit: "=?",
-			child: "=?"
-		},
-		compile: function (element) {
-			return RecursionHelper.compile(element, function ($scope, $element) {
-				$scope.autodestroy = function () {
-					if ($scope.child) {
-						var parent = $scope.$parent.$parent.map.children;
-						var index = parent.indexOf($scope.map);
-						parent.splice(index, 1);
-					}
-				};
-				$scope.addChild = function () {
-					if (!$scope.map) $scope.map = {};
-					if (!$scope.map.children) $scope.map.children = [];
-					$scope.map.children.push({});
-				};
-			});
-		}
-	};
-})
-
-.directive("mndMindMap", function () {
-	return {
-		restrict: "EA",
-		replace: true,
-		templateUrl: "components/mindmap/mindmap.html",
-		scope: {
-			map: "=",
-			edit: "=?",
-			child: "=?"
-		}
-	}
-})
-
-angular.module("mnd-web.components.tag-strip", [])
-
-.factory("MndTagStrippingService", function () {
-	return {
-		strip: function (html) {
-			return html.replace(/(<([^>]+)>)/ig," ");
-		}
-	};
 });
 
 angular.module("mnd-web.pages.home", [])

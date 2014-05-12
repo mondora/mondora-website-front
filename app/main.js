@@ -2,10 +2,11 @@
 	var config = {
 		dev: {
 			host: "localhost:3000",
-			//debug: true
+			debug: true
 		},
 		prod: {
 			host: "api.nocheros.info",
+			debug: true
 			// Uncomment this when we get SSL working
 			//ssl: true
 		}
@@ -20,8 +21,8 @@
 	var deferred = Q.defer();
 	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 	Ceres.on("connected", deferred.resolve);
-	Ceres.ddp.on("socket_error", function () {
-		console.log("Error");
+	Ceres.ddp.on("socket_close", function () {
+		console.log("Closed");
 	});
 	window.CERES_CONNECTED = deferred.promise;
 })();
@@ -194,8 +195,6 @@ angular.module("mnd-web", [
 	var userQuery = $rootScope.Users.reactiveQuery({});
 	userQuery.on("change", function () {
 		$rootScope.safeApply(function () {
-			console.log("Changed user");
-			console.log(userQuery.result[0]);
 			$rootScope.user = userQuery.result[0];
 		});
 	});
