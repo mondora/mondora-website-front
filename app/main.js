@@ -40,6 +40,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
 	"mnd-web.pages.home",
+	"mnd-web.pages.profile",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
 	"mnd-web.pages.post.list"
@@ -116,6 +117,13 @@ angular.module("mnd-web", [
         url: "/serverProblems",
 		parent: "root",
         templateUrl: "pages/serverProblems/serverProblems.html"
+    });
+
+    $stateProvider.state("profile", {
+        url: "/profile",
+		parent: "root",
+        templateUrl: "pages/profile/profile.html",
+		controller: "ProfileController"
     });
 
     $stateProvider.state("postView", {

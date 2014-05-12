@@ -184,6 +184,24 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/profile/profile.html',
+    '<div class="col-sm-8 col-sm-offset-2">\n' +
+    '\n' +
+    '	<img ng-src="{{user.twitterProfile.pictureUrl}}" class="img-circle" />\n' +
+    '\n' +
+    '\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/serverProblems/serverProblems.html',
     '<div>\n' +
     '	Il server ha problemi\n' +

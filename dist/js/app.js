@@ -40,6 +40,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
 	"mnd-web.pages.home",
+	"mnd-web.pages.profile",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
 	"mnd-web.pages.post.list"
@@ -116,6 +117,13 @@ angular.module("mnd-web", [
         url: "/serverProblems",
 		parent: "root",
         templateUrl: "pages/serverProblems/serverProblems.html"
+    });
+
+    $stateProvider.state("profile", {
+        url: "/profile",
+		parent: "root",
+        templateUrl: "pages/profile/profile.html",
+		controller: "ProfileController"
     });
 
     $stateProvider.state("postView", {
@@ -309,13 +317,22 @@ angular.module("mnd-web.components.dashboard", [])
 		if ($scope.user) {
 			if ($scope.menu.items[1].ngClick !== "addPost") {
 				$scope.menu.items.splice(1, 0, {
-					title: "Nuovo post",
+					title: "New post",
 					ngClick: "addPost"
+				});	
+			}
+			if ($scope.menu.items[2].href !== "/#/profile") {
+				$scope.menu.items.splice(2, 0, {
+					title: "Profile",
+					ngClick: "closeSidebar"
 				});	
 			}
 		} else {
 			if ($scope.menu.items[1].ngClick === "addPost") {
 				$scope.menu.items.splice(1, 1);		
+			}
+			if ($scope.menu.items[1].href === "/#/profile") {
+				$scope.menu.items.splice(2, 1);		
 			}
 		}
 	});
@@ -396,6 +413,12 @@ angular.module("mnd-web.pages.home", [])
 	var videoPoster = "http://s3.amazonaws.com/mnd-website/vd-back.jpg";
 	$scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
 
+});
+
+angular.module("mnd-web.pages.profile", [])
+
+.controller("ProfileController", function ($scope) {
+	$scope.a = "Hello again!";
 });
 
 angular.module("mnd-web.pages.post.edit", [])

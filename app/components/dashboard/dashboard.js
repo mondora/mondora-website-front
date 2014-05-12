@@ -76,13 +76,22 @@ angular.module("mnd-web.components.dashboard", [])
 		if ($scope.user) {
 			if ($scope.menu.items[1].ngClick !== "addPost") {
 				$scope.menu.items.splice(1, 0, {
-					title: "Nuovo post",
+					title: "New post",
 					ngClick: "addPost"
+				});	
+			}
+			if ($scope.menu.items[2].href !== "/#/profile") {
+				$scope.menu.items.splice(2, 0, {
+					title: "Profile",
+					ngClick: "closeSidebar"
 				});	
 			}
 		} else {
 			if ($scope.menu.items[1].ngClick === "addPost") {
 				$scope.menu.items.splice(1, 1);		
+			}
+			if ($scope.menu.items[1].href === "/#/profile") {
+				$scope.menu.items.splice(2, 1);		
 			}
 		}
 	});
