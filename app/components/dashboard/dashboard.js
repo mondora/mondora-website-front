@@ -78,6 +78,7 @@ angular.module("mnd-web.components.dashboard", [])
 	});	
 	loggedInMenu.items.splice(2, 0, {
 		title: "Profile",
+		href: "/#/profile",
 		ngClick: "closeSidebar"
 	});
 	$scope.menu = menu;
