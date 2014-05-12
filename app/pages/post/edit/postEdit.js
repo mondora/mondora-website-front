@@ -94,7 +94,7 @@ angular.module("mnd-web.pages.post.edit", [])
 		document.querySelector("#post-edit-image-upload input").click();
 	};
 
-	$scope.titleImageIsDisplayed = ($scope.post.titleImageSource !== undefined);
+	$scope.titleImageIsDisplayed = ($scope.post.titleImageUrl !== undefined);
 
 	$scope.abortUpload = function () {
 		$scope.uploadProgress = 0;
@@ -129,7 +129,7 @@ angular.module("mnd-web.pages.post.edit", [])
 			.success(function (response) {
 				$scope.uploadProgress = 100;
 				$scope.isUploading = false;
-				$scope.post.titleImageSource = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
+				$scope.post.titleImageUrl = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
 				$scope.titleImageIsDisplayed = true;
 				$scope.save();
 			});
@@ -147,9 +147,10 @@ angular.module("mnd-web.pages.post.edit", [])
 		$scope.post.subtitle = subtitle.innerHTML;
 		$scope.post.body = body.innerHTML;
 
-		// Strip the _id property (which can't be set twice)
+		// Strip the _id and userId properties, which can't be updated
 		var post = angular.copy($scope.post);
 		delete post._id;
+		delete post.userId;
 		$scope.Posts.update(id, post).remote.fail(function (err) {
 			console.log(err);
 		});

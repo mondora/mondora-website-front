@@ -288,7 +288,7 @@ gulp.task("dev", devDeps, function () {
 			stServer.serve(req, res);
 		});
 		req.resume();
-	}).listen(8080);
+	}).listen(8080, "0.0.0.0");
 	gulp.watch("app/**/*.scss", ["buildAppStyles", "reloadBrowser"]);
 	gulp.watch("app/**/*.js", ["buildAppScripts", "reloadBrowser"]);
 	gulp.watch(["app/**/*.html", "!app/main.html"], ["buildAppTemplates", "reloadBrowser"]);

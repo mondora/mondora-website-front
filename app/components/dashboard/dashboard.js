@@ -4,6 +4,7 @@ angular.module("mnd-web.components.dashboard", [])
 	$scope.addPost = function () {
 		var post = {
 			userId: $scope.user._id,
+			map: {},
 			authors: [
 				{
 					userId: $scope.user._id,

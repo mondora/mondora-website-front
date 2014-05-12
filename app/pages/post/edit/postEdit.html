@@ -1,5 +1,5 @@
 <div class="post-title-image">
-	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
+	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
 	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->
 </div>
 
@@ -22,10 +22,13 @@
 	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">
 		Rendi privato
 	</button>
+	<a ui-sref="postView({postId: post._id})" class="btn btn-default">
+		Anteprima
+	</a>
 </div>
 
 <div class="mnd-mind-container">
-		<div mnd-mind-map map="post.map" edit="true"></div>
+	<div mnd-mind-map map="post.map" edit="true"></div>
 </div>
 
 <div class="post-header">

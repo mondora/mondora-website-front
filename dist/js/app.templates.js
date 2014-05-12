@@ -201,7 +201,7 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
     '<div class="post-title-image">\n' +
-    '	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
+    '	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
     '	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->\n' +
     '</div>\n' +
     '\n' +
@@ -224,10 +224,13 @@ module.run(['$templateCache', function($templateCache) {
     '	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">\n' +
     '		Rendi privato\n' +
     '	</button>\n' +
+    '	<a ui-sref="postView({postId: post._id})" class="btn btn-default">\n' +
+    '		Anteprima\n' +
+    '	</a>\n' +
     '</div>\n' +
     '\n' +
     '<div class="mnd-mind-container">\n' +
-    '		<div mnd-mind-map map="post.map" edit="true"></div>\n' +
+    '	<div mnd-mind-map map="post.map" edit="true"></div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="post-header">\n' +
@@ -293,8 +296,8 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/view/postView.html',
     '<div class="post-title-image">\n' +
-    '	<img ng-src="{{post.titleImageSource}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
-    '	<div class="post-overlay" ng-if="titleImageIsDisplayed"/></div>\n' +
+    '	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />\n' +
+    '	<div class="post-overlay" ng-if="titleImageIsDisplayed()"/></div>\n' +
     '</div>\n' +
     '\n' +
     '<div ng-if="isAuthor()" class="post-top-buttons">\n' +
@@ -302,8 +305,8 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div id="mnd-post-sprinkle-container">\n' +
-    '	<div mnd-sprinkle text="{{sprinklePostText}}"></div>\n' +
-    '	<div class="pull-right read-time">Read Time {{estimateReadingTime()}} min</div>\n' +
+    '	<div mnd-sprinkle text="{{sprinklePostText()}}"></div>\n' +
+    '	<div class="pull-right read-time">Reading time {{estimateReadingTime()}} min</div>\n' +
     '</div>\n' +
     '\n' +
     '<div class="mnd-mind-container">\n' +
@@ -312,8 +315,8 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div class="post-header">\n' +
     '	<div class="col-sm-8 col-sm-offset-2">\n' +
-    '		<h1 ng-bind-html="post.title" class="post-title" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h1>\n' +
-    '		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{\'color-me-white\': titleImageIsDisplayed}"></h2>\n' +
+    '		<h1 ng-bind-html="post.title" class="post-title" ng-class="{\'color-me-white\': titleImageIsDisplayed()}"></h1>\n' +
+    '		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{\'color-me-white\': titleImageIsDisplayed()}"></h2>\n' +
     '		<div class="post-author" ng-repeat="author in post.authors">\n' +
     '			<img class="img-circle" ng-src="{{author.imageUrl}}" />\n' +
     '			&nbsp;&nbsp;Author {{author.screenName}}\n' +
@@ -322,7 +325,7 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="post-body">\n' +
-    '	<div class="first-level-html-container" ng-repeat="child in bodyChildren track by $index">\n' +
+    '	<div class="first-level-html-container" ng-repeat="child in bodyChildren() track by $index">\n' +
     '		<div class="col-sm-8" ng-class="{\'col-sm-offset-2\': !commentBarIsOpen, \'col-sm-offset-1\': commentBarIsOpen}">\n' +
     '			<div class="simplebox" readonly-editor data-disable-editing></div>\n' +
     '		</div>\n' +
@@ -336,26 +339,37 @@ module.run(['$templateCache', function($templateCache) {
     '					<i class="fa fa-comment comment-bubble-always-visible" ng-click="closeCommentBar()"></i>\n' +
     '				</div>\n' +
     '\n' +
-    '				<div class="col-sm-2" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index">\n' +
-    '					<img class="img-circle" ng-src="{{comment.user.profile_image_url}}" width="32" />\n' +
+    '				<div class="col-sm-2" ng-if="isAuthor()" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index">\n' +
+    '					<img class="img-circle" ng-src="{{comment.userPictureUrl}}" width="32" />\n' +
     '				</div>\n' +
-    '				<div class="col-sm-10" ng-repeat-end>\n' +
+    '				<div class="col-sm-10" ng-if="isAuthor()" ng-repeat-end>\n' +
     '                    <p>\n' +
-    '                        <b>{{comment.user.screenName}}</b>\n' +
+    '                        <b>{{comment.userScreenName}}</b>\n' +
     '                        {{comment.text}}\n' +
     '                    </p>\n' +
     '                    <a class="mnd-clickable" ng-if="ownsComment(comment)" ng-click="deleteComment(comment)">Elimina</a>\n' +
-    '                    <a class="mnd-clickable" ng-if="isAuthor() && !comment.public" ng-click="publishComment(comment)">Rendi pubblico</a>\n' +
+    '                    <a class="mnd-clickable" ng-if="!comment.approved" ng-click="publishComment(comment)">Rendi pubblico</a>\n' +
+    '					<hr />\n' +
+    '				</div>\n' +
+    '\n' +
+    '				<div class="col-sm-2" ng-if="!isAuthor()" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index | filterCommentsByApprovalStatus:user._id">\n' +
+    '					<img class="img-circle" ng-src="{{comment.userPictureUrl}}" width="32" />\n' +
+    '				</div>\n' +
+    '				<div class="col-sm-10" ng-if="!isAuthor()" ng-repeat-end>\n' +
+    '                    <p>\n' +
+    '                        <b>{{comment.userScreenName}}</b>\n' +
+    '                        {{comment.text}}\n' +
+    '                    </p>\n' +
+    '                    <a class="mnd-clickable" ng-if="ownsComment(comment)" ng-click="deleteComment(comment)">Elimina</a>\n' +
     '					<hr />\n' +
     '				</div>\n' +
     '\n' +
     '				<div class="col-sm-2">\n' +
-    '					<img class="img-circle" ng-src="{{user.services.twitter.profile_image_url}}" width="32" />\n' +
+    '					<img class="img-circle" ng-src="{{user.twitterProfile.pictureUrl}}" width="32" />\n' +
     '				</div>\n' +
     '				<div class="col-sm-10">\n' +
-    '					<p><b>{{user.services.twitter.screenName}}</b></p>\n' +
+    '					<p><b>{{user.twitterProfile.screenName}}</b></p>\n' +
     '					<textarea ng-model="comment.text" class="form-control" placeholder="Lascia un commento" rows="1"></textarea>\n' +
-    '					{{commentText}}\n' +
     '                    <a class="mnd-clickable" ng-click="saveCommentAt($index)">Salva</a>\n' +
     '					<hr />\n' +
     '					<p>\n' +

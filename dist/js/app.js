@@ -208,12 +208,36 @@ angular.module("mnd-web", [
 	};
 });
 
+angular.module("mnd-web.components.center", [])
+
+.directive("mndCenter", function ($timeout) {
+	return {
+		restrict: "A",
+		priority: 1000,
+		compile: function () {
+			return {
+				post: function ($scope, $element) {
+					$timeout(function () {
+						var el = $element[0];
+						var par = el.parentElement;
+						var elWidth = parseInt(window.getComputedStyle(el).width, 10);
+						var parWidth = par.offsetWidth;
+						var margin = (parWidth - elWidth) / 2 - 50;
+						el.style.marginLeft = margin + "px";
+					}, 0)
+				} 
+			}
+		}
+
+	}
+});
 angular.module("mnd-web.components.dashboard", [])
 
 .controller("SidebarController", function ($scope, $state, MndSidebarService) {
 	$scope.addPost = function () {
 		var post = {
 			userId: $scope.user._id,
+			map: {},
 			authors: [
 				{
 					userId: $scope.user._id,
@@ -298,29 +322,6 @@ angular.module("mnd-web.components.dashboard", [])
 
 });
 
-angular.module("mnd-web.components.center", [])
-
-.directive("mndCenter", function ($timeout) {
-	return {
-		restrict: "A",
-		priority: 1000,
-		compile: function () {
-			return {
-				post: function ($scope, $element) {
-					$timeout(function () {
-						var el = $element[0];
-						var par = el.parentElement;
-						var elWidth = parseInt(window.getComputedStyle(el).width, 10);
-						var parWidth = par.offsetWidth;
-						var margin = (parWidth - elWidth) / 2 - 50;
-						el.style.marginLeft = margin + "px";
-					}, 0)
-				} 
-			}
-		}
-
-	}
-});
 angular.module("mnd-web.components.mindmap", [])
 
 .directive("mndMindMapRecursive", function (RecursionHelper) {
@@ -370,9 +371,7 @@ angular.module("mnd-web.components.tag-strip", [])
 .factory("MndTagStrippingService", function () {
 	return {
 		strip: function (html) {
-			var div = document.createElement("div");
-			div.innerHTML = html;
-			return div.textContent;
+			return html.replace(/(<([^>]+)>)/ig," ");
 		}
 	};
 });
@@ -495,7 +494,7 @@ angular.module("mnd-web.pages.post.edit", [])
 		document.querySelector("#post-edit-image-upload input").click();
 	};
 
-	$scope.titleImageIsDisplayed = ($scope.post.titleImageSource !== undefined);
+	$scope.titleImageIsDisplayed = ($scope.post.titleImageUrl !== undefined);
 
 	$scope.abortUpload = function () {
 		$scope.uploadProgress = 0;
@@ -530,7 +529,7 @@ angular.module("mnd-web.pages.post.edit", [])
 			.success(function (response) {
 				$scope.uploadProgress = 100;
 				$scope.isUploading = false;
-				$scope.post.titleImageSource = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
+				$scope.post.titleImageUrl = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
 				$scope.titleImageIsDisplayed = true;
 				$scope.save();
 			});
@@ -548,9 +547,10 @@ angular.module("mnd-web.pages.post.edit", [])
 		$scope.post.subtitle = subtitle.innerHTML;
 		$scope.post.body = body.innerHTML;
 
-		// Strip the _id property (which can't be set twice)
+		// Strip the _id and userId properties, which can't be updated
 		var post = angular.copy($scope.post);
 		delete post._id;
+		delete post.userId;
 		$scope.Posts.update(id, post).remote.fail(function (err) {
 			console.log(err);
 		});
@@ -645,14 +645,32 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.controller("PostViewController", function ($scope, $stateParams, $state, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
+.filter("filterCommentsByApprovalStatus", function () {
+	return function (comments, userId) {
+		var filteredComments = [];
+		comments.forEach(function (comment) {
+			if (comment.approved || comment.userId === userId) {
+				filteredComments.push(comment);
+			}
+		});
+		return filteredComments;
+	};
+})
+
+.controller("PostViewController", function ($scope, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
 	///////////////////////////
 
 	var id = $stateParams.postId;
-	$scope.post = $scope.Posts.reactiveQuery({_id: id}).result[0];
+	var postQuery = $scope.Posts.reactiveQuery({_id: id});
+	postQuery.on("change", function () {
+		$scope.safeApply(function () {
+			$scope.post = postQuery.result[0];
+		});
+	});
+	$scope.post = postQuery.result[0];
 
 	if (!$scope.post) {
 		$state.go("notFound");
@@ -663,19 +681,26 @@ angular.module("mnd-web.pages.post.view", [])
 	// Parse post.body into first generation children //
 	////////////////////////////////////////////////////
 
-	$scope.bodyChildren = firstLevelHtmlParser.parse($scope.post.body);
+	$scope.bodyChildren = function () {
+		if (!$scope.post) return;
+		return firstLevelHtmlParser.parse($scope.post.body);
+	};
 
 	/////////////////////////////////////////////////////
 	// Strip the post text to fit it into the sprinkle //
 	/////////////////////////////////////////////////////
 
-	$scope.sprinklePostText = MndTagStrippingService.strip($scope.post.body);
+	$scope.sprinklePostText = function () {
+		if (!$scope.post) return;
+		return MndTagStrippingService.strip($scope.post.body);
+	};
 
 	////////////////////////////
 	// Calculate reading time //
 	////////////////////////////
 
 	$scope.estimateReadingTime = function () {
+		if (!$scope.post) return;
 		return readTimeEstimatingService.estimate($scope.post.body);
 	};
 
@@ -683,9 +708,13 @@ angular.module("mnd-web.pages.post.view", [])
 	// Set various properties that shape the html //
 	////////////////////////////////////////////////
 
-	$scope.titleImageIsDisplayed = ($scope.post.titleImageSource !== undefined);
+	$scope.titleImageIsDisplayed = function () {
+		if (!$scope.post) return;
+		return $scope.post.titleImageUrl !== undefined;
+	};
 
 	$scope.isAuthor = function () {
+		if (!$scope.post) return;
 		var isAuthor = false;
 		if ($scope.user) {
 			$scope.post.authors.forEach(function (author) {
@@ -715,28 +744,28 @@ angular.module("mnd-web.pages.post.view", [])
 
 	$scope.ownsComment = function (comment) {
 		if ($scope.user) {
-			return comment.user._id === $scope.user._id;
+			return comment.userId === $scope.user._id;
 		}
 	};
 
 	$scope.paragraphHasComments = function (index) {
-		var filteredComments = [];
-		$scope.post.comments.forEach(function (comment) {
-			if (comment.paragraph === index) {
-				filteredComments.push(comment);
-			}
-		});
-		return filteredComments.length > 0;
+		if (!$scope.post) return;
+		var paragraphComments = $filter("filterCommentsByParagraph")($scope.post.comments, index);
+		if ($scope.isAuthor()) {
+			return paragraphComments.length > 0;
+		}
+		var approvedComments = $filter("filterCommentsByApprovalStatus")(paragraphComments, $scope.user._id);
+		return approvedComments.length > 0;
 	};
 
 	$scope.paragraphCommentsLength = function (index) {
-		var filteredComments = [];
-		$scope.post.comments.forEach(function (comment) {
-			if (comment.paragraph === index) {
-				filteredComments.push(comment);
-			}
-		});
-		return filteredComments.length;
+		if (!$scope.post) return;
+		var paragraphComments = $filter("filterCommentsByParagraph")($scope.post.comments, index);
+		if ($scope.isAuthor()) {
+			return paragraphComments.length;
+		}
+		var approvedComments = $filter("filterCommentsByApprovalStatus")(paragraphComments, $scope.user._id);
+		return approvedComments.length;
 	};
 
 	/////////////////////////////////////
@@ -754,33 +783,12 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 
 	$scope.publishComment = function (comment) {
-		var promises = $scope.Ceres.call("publishCommentOfPost", id, comment._id);
-		promises.updated.then(function () {
-			$scope.post = $scope.Posts.db.get(id);
-			$scope.$apply();
-		});
+		$scope.Ceres.call("publishCommentOfPost", id, comment._id);
 	};
 
 	$scope.saveCommentAt = function (index) {
-		var guid = function () {
-			var ret = "";
-			for (var i=0; i<8; i++) {
-				ret += Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-			}
-			return ret;
-		};
-		$scope.comment._id = guid();
-		$scope.comment.user = {
-			_id: $scope.user._id,
-			screenName: $scope.user.services.twitter.screenName,
-			profile_image_url: $scope.user.services.twitter.profile_image_url
-		};
 		$scope.comment.paragraph = index;
-		var promises = $scope.Ceres.call("addCommentToPost", id, $scope.comment);
-		promises.updated.then(function () {
-			$scope.post = $scope.Posts.db.get(id);
-			$scope.$apply();
-		});
+		$scope.Ceres.call("addCommentToPost", id, $scope.comment);
 		$scope.comment.text = "";
 	};
 
