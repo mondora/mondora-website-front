@@ -4,6 +4,7 @@ angular.module("mnd-web.components.dashboard", [])
 	$scope.addPost = function () {
 		var post = {
 			userId: $scope.user._id,
+			map: {},
 			authors: [
 				{
 					userId: $scope.user._id,
@@ -27,7 +28,7 @@ angular.module("mnd-web.components.dashboard", [])
 		MndSidebarService.toggleSidebarStatus();
 		$scope.$root.$broadcast("sidebarStatusChanged");
 	};
-	$scope.menu = {
+	var menu = {
 		items: [
 			{
 				title: "Home",
@@ -70,19 +71,23 @@ angular.module("mnd-web.components.dashboard", [])
 			}
 		]
 	};
+	var loggedInMenu = angular.copy(menu);
+	loggedInMenu.items.splice(1, 0, {
+		title: "New post",
+		ngClick: "addPost"
+	});	
+	loggedInMenu.items.splice(2, 0, {
+		title: "Profile",
+		href: "/#/profile",
+		ngClick: "closeSidebar"
+	});
+	$scope.menu = menu;
 
 	$scope.$watch("user", function () {
 		if ($scope.user) {
-			if ($scope.menu.items[1].ngClick !== "addPost") {
-				$scope.menu.items.splice(1, 0, {
-					title: "Nuovo post",
-					ngClick: "addPost"
-				});	
-			}
+			$scope.menu = loggedInMenu;
 		} else {
-			if ($scope.menu.items[1].ngClick === "addPost") {
-				$scope.menu.items.splice(1, 1);		
-			}
+			$scope.menu = menu;
 		}
 	});
 
