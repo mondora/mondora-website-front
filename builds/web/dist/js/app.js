@@ -6,6 +6,7 @@
 		},
 		prod: {
 			host: "api.nocheros.info",
+			debug: true
 			// Uncomment this when we get SSL working
 			//ssl: true
 		}
@@ -20,8 +21,8 @@
 	var deferred = Q.defer();
 	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 	Ceres.on("connected", deferred.resolve);
-	Ceres.ddp.on("socket_error", function () {
-		console.log("Error");
+	Ceres.ddp.on("socket_close", function () {
+		console.log("Closed");
 	});
 	window.CERES_CONNECTED = deferred.promise;
 })();
@@ -45,6 +46,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.center",
 	"mnd-web.pages.home",
 	"mnd-web.pages.profile",
+	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
 	"mnd-web.pages.post.list"
@@ -130,6 +132,19 @@ angular.module("mnd-web", [
 		controller: "ProfileController"
     });
 
+    $stateProvider.state("user", {
+        url: "/user/:userId",
+		parent: "root",
+        templateUrl: "pages/user/user.html",
+		controller: "UserController",
+		resolve: {
+			userSub: function ($stateParams, TimeoutPromiseService) {
+				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
+				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+			}
+		}
+    });
+
     $stateProvider.state("postView", {
         url: "/post/:postId",
 		parent: "root",
@@ -191,22 +206,22 @@ angular.module("mnd-web", [
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");
-	var userQuery = $rootScope.Users.reactiveQuery({});
-	userQuery.on("change", function () {
-		$rootScope.safeApply(function () {
-			console.log("Changed user");
-			console.log(userQuery.result[0]);
-			$rootScope.user = userQuery.result[0];
-		});
-	});
 
-	Ceres.on("login", function () {
+	Ceres.on("login", function (userId) {
+		$rootScope.loggedInUserQuery = $rootScope.Users.reactiveQuery({_id: userId});
 		$rootScope.safeApply(function () {
+			$rootScope.user = $rootScope.loggedInUserQuery.result[0];
 			$rootScope.signedIn = true;
+		});
+		$rootScope.loggedInUserQuery.on("change", function () {
+			$rootScope.safeApply(function () {
+				$rootScope.user = $rootScope.loggedInUserQuery.result[0];
+			});
 		});
 	});
 	Ceres.on("logout", function () {
 		$rootScope.safeApply(function () {
+			delete $rootScope.user;
 			$rootScope.signedIn = false;
 		});
 	});
@@ -418,8 +433,120 @@ angular.module("mnd-web.pages.home", [])
 
 angular.module("mnd-web.pages.profile", [])
 
-.controller("ProfileController", function ($scope) {
-	$scope.a = "Hello again!";
+.controller("ProfileController", function ($scope, $interval, $upload) {
+
+	////////////////////
+	// Profile object //
+	////////////////////
+
+	$scope.profile = $scope.user.profile || {};
+
+
+
+	/////////////////////////////
+	// Short bio medium editor //
+	/////////////////////////////
+
+	var bio = document.getElementById("profileBioEditor");
+	bio.innerHTML = $scope.user.profile.bio || "";
+	var bioEditorOptions = {
+		placeholder: "Short bio",
+		buttonLabels: "fontawesome",
+		buttons: [
+			"bold",
+			"italic",
+			"anchor",
+			"header1",
+			"header2",
+			"quote"
+		]
+	};
+	new MediumEditor(bio, bioEditorOptions);
+
+
+
+	//////////////////
+	// Image upload //
+	//////////////////
+
+	// Bind click on the image icon to the click on the (hidden) input element
+	$scope.clickFileInput = function () {
+		document.querySelector("#profilePictureFileInput").click();
+	};
+
+	$scope.abortUpload = function () {
+		$scope.uploadProgress = 0;
+		$scope.isUploading = false;
+		$scope.imageUpload.abort();
+		delete $scope.imageUpload;
+	};
+
+	$scope.onFileSelect = function (files) {
+		var file = files[0];
+		if (!/image/g.test(file.type)) {
+			alert("Devi caricare un'immagine.");
+			return;
+		}
+		var randomPrefix = Math.round(Math.random() * 1E16);
+		var fileName = randomPrefix + "__" + file.name;
+		var uploadOptions = {
+			url: "https://ngtest.s3.amazonaws.com/",
+			method: "POST",
+			data: {
+				"key": fileName,
+				"acl": "public-read",
+				"Content-Type": file.type
+			},
+			file: file
+		};
+		$scope.isUploading = true;
+		$scope.imageUpload = $upload.upload(uploadOptions)
+			.progress(function (evt) {
+				$scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
+			})
+			.success(function (response) {
+				$scope.uploadProgress = 100;
+				$scope.isUploading = false;
+				$scope.profile.pictureUrl = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
+				$scope.save();
+			});
+	};
+
+
+
+	///////////////////
+	// Save function //
+	///////////////////
+
+	$scope.save = function () {
+		// Update innerHTML-s
+		$scope.profile.bio = bio.innerHTML;
+		console.log($scope.profile);
+
+		$scope.Users.update($scope.user._id, {profile: $scope.profile}).remote.fail(function (err) {
+			console.log(err);
+		});
+	};
+	var interval = $interval($scope.save, 5000);
+	$scope.$on("$destroy", function () {
+		$interval.cancel(interval);
+	});
+
+
+
+});
+
+angular.module("mnd-web.pages.user", [])
+
+.controller("UserController", function ($scope, $stateParams) {
+
+	////////////////////
+	// User object //
+	////////////////////
+
+	$scope.user = $scope.Users.reactiveQuery({_id: $stateParams.userId}).result[0];
+
+
 });
 
 angular.module("mnd-web.pages.post.edit", [])

@@ -6,6 +6,7 @@
 		},
 		prod: {
 			host: "api.nocheros.info",
+			debug: true
 			// Uncomment this when we get SSL working
 			//ssl: true
 		}
@@ -20,8 +21,8 @@
 	var deferred = Q.defer();
 	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 	Ceres.on("connected", deferred.resolve);
-	Ceres.ddp.on("socket_error", function () {
-		console.log("Error");
+	Ceres.ddp.on("socket_close", function () {
+		console.log("Closed");
 	});
 	window.CERES_CONNECTED = deferred.promise;
 })();
@@ -46,6 +47,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.check-mobile",
 	"mnd-web.pages.home",
 	"mnd-web.pages.profile",
+	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
 	"mnd-web.pages.post.list"
@@ -131,6 +133,19 @@ angular.module("mnd-web", [
 		controller: "ProfileController"
     });
 
+    $stateProvider.state("user", {
+        url: "/user/:userId",
+		parent: "root",
+        templateUrl: "pages/user/user.html",
+		controller: "UserController",
+		resolve: {
+			userSub: function ($stateParams, TimeoutPromiseService) {
+				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
+				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+			}
+		}
+    });
+
     $stateProvider.state("postView", {
         url: "/post/:postId",
 		parent: "root",
@@ -192,22 +207,22 @@ angular.module("mnd-web", [
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");
-	var userQuery = $rootScope.Users.reactiveQuery({});
-	userQuery.on("change", function () {
-		$rootScope.safeApply(function () {
-			console.log("Changed user");
-			console.log(userQuery.result[0]);
-			$rootScope.user = userQuery.result[0];
-		});
-	});
 
-	Ceres.on("login", function () {
+	Ceres.on("login", function (userId) {
+		$rootScope.loggedInUserQuery = $rootScope.Users.reactiveQuery({_id: userId});
 		$rootScope.safeApply(function () {
+			$rootScope.user = $rootScope.loggedInUserQuery.result[0];
 			$rootScope.signedIn = true;
+		});
+		$rootScope.loggedInUserQuery.on("change", function () {
+			$rootScope.safeApply(function () {
+				$rootScope.user = $rootScope.loggedInUserQuery.result[0];
+			});
 		});
 	});
 	Ceres.on("logout", function () {
 		$rootScope.safeApply(function () {
+			delete $rootScope.user;
 			$rootScope.signedIn = false;
 		});
 	});
