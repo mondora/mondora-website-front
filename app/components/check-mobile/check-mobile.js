@@ -5,8 +5,9 @@ angular.module("mnd-web.components.check-mobile", [])
 		isMobile: function () {
 			var bodyEl = document.getElementsByTagName("body")[0];
 			var bodyElWidth = parseInt(window.getComputedStyle(bodyEl).width, 10);
-			var mobileTrue = bodyElWidth < 767;
-			return mobileTrue;
+			var mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+			var mobileWidth = bodyElWidth < 767;
+			return mobileUserAgent || mobileWidth;
 		}
 	}
 });

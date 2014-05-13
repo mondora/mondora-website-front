@@ -708,7 +708,6 @@ span.mnd-width-10 {
   #mnd-home-banner-arrow {
     display: none; } }
 
-
 .post-title-image {
   position: absolute;
   top: 0px;
@@ -809,6 +808,7 @@ span.mnd-width-10 {
     font-weight: lighter; }
   .post-author {
     display: none; } }
+
 
 
 #post-edit-image-upload i {

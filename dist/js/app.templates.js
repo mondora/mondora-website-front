@@ -119,22 +119,6 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/notFound/notFound.html',
-    '<div>\n' +
-    '	La pagina che cerchi non è disponibile.\n' +
-    '	<a ui-sref="home()">Torna alla home</a>\n' +
-    '</div>\n' +
-    '');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('mnd-web.templates');
-} catch (e) {
-  module = angular.module('mnd-web.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/home/home.html',
     '<div id="mnd-home-container">\n' +
     '	<div id="mnd-sign-in">\n' +
@@ -184,12 +168,10 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/profile/profile.html',
-    '<div class="col-sm-8 col-sm-offset-2">\n' +
-    '\n' +
-    '	<img ng-src="{{user.twitterProfile.pictureUrl}}" class="img-circle" />\n' +
-    '\n' +
-    '\n' +
+  $templateCache.put('pages/notFound/notFound.html',
+    '<div>\n' +
+    '	La pagina che cerchi non è disponibile.\n' +
+    '	<a ui-sref="home()">Torna alla home</a>\n' +
     '</div>\n' +
     '');
 }]);
@@ -275,13 +257,9 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/post/list/postList.html',
-    '<div class="col-sm-8 col-sm-offset-4">\n' +
-    '	<div ng-repeat="post in posts">\n' +
-    '		<a ui-sref="postEdit({postId: post._id})">\n' +
-    '			<h4>Titolo: {{post.title}}</h4>\n' +
-    '		</a>\n' +
-    '	</div>\n' +
+  $templateCache.put('pages/serverProblems/serverProblems.html',
+    '<div>\n' +
+    '	Il server ha problemi\n' +
     '</div>\n' +
     '');
 }]);
@@ -407,6 +385,25 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="post-end-spacer" ng-show="!isMobile"></div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/post/list/postList.html',
+    '<div class="col-sm-8 col-sm-offset-4">\n' +
+    '	<div ng-repeat="post in posts">\n' +
+    '		<a ui-sref="postEdit({postId: post._id})">\n' +
+    '			<h4>Titolo: {{post.title}}</h4>\n' +
+    '		</a>\n' +
+    '	</div>\n' +
+    '</div>\n' +
     '');
 }]);
 })();
