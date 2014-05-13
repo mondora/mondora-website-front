@@ -2,7 +2,7 @@
 	var config = {
 		dev: {
 			host: "localhost:3000",
-			debug: true
+			//debug: true
 		},
 		prod: {
 			host: "api.nocheros.info",
@@ -46,6 +46,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.center",
 	"mnd-web.pages.home",
 	"mnd-web.pages.profile",
+	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
 	"mnd-web.pages.post.list"
@@ -131,6 +132,19 @@ angular.module("mnd-web", [
 		controller: "ProfileController"
     });
 
+    $stateProvider.state("user", {
+        url: "/user/:userId",
+		parent: "root",
+        templateUrl: "pages/user/user.html",
+		controller: "UserController",
+		resolve: {
+			userSub: function ($stateParams, TimeoutPromiseService) {
+				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
+				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+			}
+		}
+    });
+
     $stateProvider.state("postView", {
         url: "/post/:postId",
 		parent: "root",
@@ -192,20 +206,22 @@ angular.module("mnd-web", [
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");
-	var userQuery = $rootScope.Users.reactiveQuery({});
-	userQuery.on("change", function () {
-		$rootScope.safeApply(function () {
-			$rootScope.user = userQuery.result[0];
-		});
-	});
 
-	Ceres.on("login", function () {
+	Ceres.on("login", function (userId) {
+		$rootScope.loggedInUserQuery = $rootScope.Users.reactiveQuery({_id: userId});
 		$rootScope.safeApply(function () {
+			$rootScope.user = $rootScope.loggedInUserQuery.result[0];
 			$rootScope.signedIn = true;
+		});
+		$rootScope.loggedInUserQuery.on("change", function () {
+			$rootScope.safeApply(function () {
+				$rootScope.user = $rootScope.loggedInUserQuery.result[0];
+			});
 		});
 	});
 	Ceres.on("logout", function () {
 		$rootScope.safeApply(function () {
+			delete $rootScope.user;
 			$rootScope.signedIn = false;
 		});
 	});

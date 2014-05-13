@@ -272,13 +272,41 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/post/list/postList.html',
-    '<div class="col-sm-8 col-sm-offset-4">\n' +
-    '	<div ng-repeat="post in posts">\n' +
-    '		<a ui-sref="postEdit({postId: post._id})">\n' +
-    '			<h4>Titolo: {{post.title}}</h4>\n' +
-    '		</a>\n' +
+  $templateCache.put('pages/user/user.html',
+    '<div class="col-sm-8 col-sm-offset-2">\n' +
+    '\n' +
+    '	<br />\n' +
+    '	<br />\n' +
+    '	<div class="row">\n' +
+    '		<div class="col-sm-4">\n' +
+    '			<img ng-src="{{user.profile.pictureUrl || user.twitterProfile.pictureUrl}}" class="img-circle mnd-clickable" width="200" height="200" />\n' +
+    '		</div>\n' +
+    '		<div class="col-sm-8">\n' +
+    '			<h2>{{user.twitterProfile.name}}</h2>\n' +
+    '			<h3><i>@{{user.twitterProfile.screenName}}</i></h3>\n' +
+    '\n' +
+    '			<a href="mailto:{{user.profile.email}}">{{user.profile.email}}</a>\n' +
+    '		</div>\n' +
     '	</div>\n' +
+    '\n' +
+    '	<br />\n' +
+    '	<br />\n' +
+    '	<div class="row">\n' +
+    '		<h3>\n' +
+    '			<a ng-if="user.profile.facebookUrl" ng-href="{{user.profile.facebookUrl}}"><i class="fa fa-facebook"></i></a>\n' +
+    '			<a ng-if="user.profile.twitterUrl" ng-href="{{user.profile.twitterUrl}}"><i class="fa fa-twitter"></i></a>\n' +
+    '			<a ng-if="user.profile.githubUrl" ng-href="{{user.profile.githubUrl}}"><i class="fa fa-github"></i></a>\n' +
+    '			<a ng-if="user.profile.linkedInUrl" ng-href="{{user.profile.linkedInUrl}}"><i class="fa fa-linkedin"></i></a>\n' +
+    '		</h3>\n' +
+    '	</div>\n' +
+    '\n' +
+    '	<br />\n' +
+    '	<br />\n' +
+    '	<div class="row">\n' +
+    '		<h3>Short bio</h3>\n' +
+    '		<div ng-bind-html="user.profile.bio"></div>\n' +
+    '	</div>\n' +
+    '\n' +
     '</div>\n' +
     '');
 }]);
@@ -356,6 +384,25 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="post-end-spacer"></div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/post/list/postList.html',
+    '<div class="col-sm-8 col-sm-offset-4">\n' +
+    '	<div ng-repeat="post in posts">\n' +
+    '		<a ui-sref="postEdit({postId: post._id})">\n' +
+    '			<h4>Titolo: {{post.title}}</h4>\n' +
+    '		</a>\n' +
+    '	</div>\n' +
+    '</div>\n' +
     '');
 }]);
 })();
