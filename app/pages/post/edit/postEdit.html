@@ -1,3 +1,22 @@
+<!--modale eliminiazione post-->
+<div class="modal-background" ng-if="showDelete">
+	<div id="delete-post-modal" class="modal-dialog" ng-if="showDelete">
+		<div class="modal-content">
+	    	<div class="modal-header">
+				Sei sicuro di voler eliminare il post?
+			</div>
+			<div class="modal-body">
+				<button type="button" class="btn btn-default yes" ng-click="deletePost()">
+					Sì
+				</button>
+				<button type="button" class="btn btn-default no" ng-click="toggleDelete()">
+					No
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="post-cant-edit" ng-show="isMobile"> Contenuto non accessibile da dispositivi mobile.</div> 
 <div class="post-title-image" ng-show="!isMobile">
 	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
@@ -5,15 +24,6 @@
 </div>
 
 <div class="post-top-buttons" ng-if="isOwner()" ng-show="!isMobile">
-	<span ng-if="showDelete">
-		Sei sicuro di voler eliminare il post?
-		<button type="button" class="btn btn-default" ng-click="deletePost()">
-			Sì
-		</button>
-		<button type="button" class="btn btn-default" ng-click="toggleDelete()">
-			No
-		</button>
-	</span>
 	<button type="button" class="btn btn-default" ng-click="toggleDelete()" ng-if="!showDelete">
 		Elimina
 	</button>

@@ -320,6 +320,25 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
+    '<!--modale eliminiazione post-->\n' +
+    '<div class="modal-background" ng-if="showDelete">\n' +
+    '	<div id="delete-post-modal" class="modal-dialog" ng-if="showDelete">\n' +
+    '		<div class="modal-content">\n' +
+    '	    	<div class="modal-header">\n' +
+    '				Sei sicuro di voler eliminare il post?\n' +
+    '			</div>\n' +
+    '			<div class="modal-body">\n' +
+    '				<button type="button" class="btn btn-default yes" ng-click="deletePost()">\n' +
+    '					Sì\n' +
+    '				</button>\n' +
+    '				<button type="button" class="btn btn-default no" ng-click="toggleDelete()">\n' +
+    '					No\n' +
+    '				</button>\n' +
+    '			</div>\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '\n' +
     '<div class="post-cant-edit" ng-show="isMobile"> Contenuto non accessibile da dispositivi mobile.</div> \n' +
     '<div class="post-title-image" ng-show="!isMobile">\n' +
     '	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
@@ -327,15 +346,6 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="post-top-buttons" ng-if="isOwner()" ng-show="!isMobile">\n' +
-    '	<span ng-if="showDelete">\n' +
-    '		Sei sicuro di voler eliminare il post?\n' +
-    '		<button type="button" class="btn btn-default" ng-click="deletePost()">\n' +
-    '			Sì\n' +
-    '		</button>\n' +
-    '		<button type="button" class="btn btn-default" ng-click="toggleDelete()">\n' +
-    '			No\n' +
-    '		</button>\n' +
-    '	</span>\n' +
     '	<button type="button" class="btn btn-default" ng-click="toggleDelete()" ng-if="!showDelete">\n' +
     '		Elimina\n' +
     '	</button>\n' +
@@ -449,25 +459,25 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '<div class="post-body">\n' +
     '	<div class="first-level-html-container" ng-repeat="child in bodyChildren() track by $index">\n' +
-    '		<div class="col-sm-8" ng-class="{\'col-sm-offset-2\': !commentBarIsOpen, \'col-sm-offset-1\': commentBarIsOpen}">\n' +
+    '		<div class="col-sm-8" ng-class="{\'col-sm-offset-2\': !commentBarIsOpen, \'col-sm-offset-1\': commentBarIsOpen, \'p-mobile\' : isMobile}">\n' +
     '			<div class="simplebox" readonly-editor data-disable-editing></div>\n' +
     '		</div>\n' +
-    '		<div class="col-sm-2" ng-class="{hidden: commentBarIsOpen}">\n' +
-    '			<i class="fa fa-comment comment-bubble" ng-if="!paragraphHasComments($index)" ng-click="openCommentBarAt($index)"></i>\n' +
-    '			<span class="badge comment-badge" ng-if="paragraphHasComments($index)" ng-click="openCommentBarAt($index)">{{paragraphCommentsLength($index)}}</span>\n' +
+    '		<div class="col-sm-2" ng-class="{\'comment-pop\': isMobile}">\n' +
+    '			<i class="fa fa-comment comment-bubble" ng-if="!paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index)"></i>\n' +
+    '			<span class="badge comment-badge" ng-if="paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index)">{{paragraphCommentsLength($index)}}</span>\n' +
     '		</div>\n' +
-    '		<div class="col-sm-3" ng-class="{hidden: !commentBarIsOpen}">\n' +
-    '			<div class="side-comment-container" ng-class="{hidden: !commentBarIsOpenAt($index)}">\n' +
-    '				<div class="col-sm-12">\n' +
-    '					<i class="fa fa-comment comment-bubble-always-visible" ng-click="closeCommentBar()"></i>\n' +
+    '		<div ng-class="{\'hidden\': !commentBarIsOpen, \'col-sm-3\': !isMobile, \'modal-dialog\': isMobile} ">\n' +
+    '			<div ng-class="{hidden: !commentBarIsOpenAt($index), \'side-comment-container\': !isMobile, \'modal-content\': isMobile}">\n' +
+    '				<div class="col-sm-12 close-comment-bar">\n' +
+    '					<i class="fa fa-times-circle" ng-click="closeCommentBar()"></i>\n' +
     '				</div>\n' +
     '\n' +
     '				<div class="col-sm-2" ng-if="isAuthor()" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index">\n' +
-    '					<img class="img-circle" ng-src="{{comment.userPictureUrl}}" width="32" />\n' +
+    '					<img class="img-circle avatar" ng-src="{{comment.userPictureUrl}}" width="32" />\n' +
     '				</div>\n' +
     '				<div class="col-sm-10" ng-if="isAuthor()" ng-repeat-end>\n' +
     '                    <p>\n' +
-    '                        <b>{{comment.userScreenName}}</b>\n' +
+    '                        <span class="comment-author">{{comment.userScreenName}}</span>\n' +
     '                        {{comment.text}}\n' +
     '                    </p>\n' +
     '                    <a class="mnd-clickable" ng-if="ownsComment(comment)" ng-click="deleteComment(comment)">Elimina</a>\n' +
@@ -476,11 +486,11 @@ module.run(['$templateCache', function($templateCache) {
     '				</div>\n' +
     '\n' +
     '				<div class="col-sm-2" ng-if="!isAuthor()" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index | filterCommentsByApprovalStatus:user._id">\n' +
-    '					<img class="img-circle" ng-src="{{comment.userPictureUrl}}" width="32" />\n' +
+    '					<img class="img-circle avatar" ng-src="{{comment.userPictureUrl}}" width="32" />\n' +
     '				</div>\n' +
     '				<div class="col-sm-10" ng-if="!isAuthor()" ng-repeat-end>\n' +
     '                    <p>\n' +
-    '                        <b>{{comment.userScreenName}}</b>\n' +
+    '                        <span class="comment-author">{{comment.userScreenName}}</span>\n' +
     '                        {{comment.text}}\n' +
     '                    </p>\n' +
     '                    <a class="mnd-clickable" ng-if="ownsComment(comment)" ng-click="deleteComment(comment)">Elimina</a>\n' +
@@ -488,14 +498,14 @@ module.run(['$templateCache', function($templateCache) {
     '				</div>\n' +
     '\n' +
     '				<div class="col-sm-2">\n' +
-    '					<img class="img-circle" ng-src="{{user.twitterProfile.pictureUrl}}" width="32" />\n' +
+    '					<img class="img-circle avatar" ng-src="{{user.twitterProfile.pictureUrl}}" width="32" />\n' +
     '				</div>\n' +
     '				<div class="col-sm-10">\n' +
     '					<p><b>{{user.twitterProfile.screenName}}</b></p>\n' +
-    '					<textarea ng-model="comment.text" class="form-control" placeholder="Lascia un commento" rows="1"></textarea>\n' +
+    '					<textarea ng-model="comment.text" class="form-control" placeholder="Lascia un commento" rows="3"></textarea>\n' +
     '                    <a class="mnd-clickable" ng-click="saveCommentAt($index)">Salva</a>\n' +
-    '					<hr />\n' +
-    '					<p>\n' +
+    '					<hr class="hr-comment"/>\n' +
+    '					<p class="comment-warning">\n' +
     '						Questo commento è solo visibile da te e dall\'autore,\n' +
     '						a meno che l\'autore decida di renderlo pubblico\n' +
     '					</p>\n' +

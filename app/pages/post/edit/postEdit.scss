@@ -33,3 +33,33 @@
 	border: 5px solid grey;
 	background-color: rgba(255, 255, 255, 0.4);
 }
+.modal-background {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.6);
+	z-index:1000;
+}
+#delete-post-modal {
+	width: 400px;
+	text-align: center;
+}
+#delete-post-modal .modal-header {
+	font-size: 25px;
+}
+#delete-post-modal button {
+	width: 50px;
+	font-size: 120%;
+}
+.btn.btn-default.yes {
+	background-color: #FA5858;
+}
+.btn.btn-default.yes:hover {
+	background-color: #FE2E2E;
+}
+.btn.btn-default.no {
+	background-color: #81F781;
+}
+.btn.btn-default.no:hover {
+	background-color: #01DF01;
+}

@@ -68,6 +68,8 @@ angular.module("mnd-web.pages.post.edit", [])
 
 	$scope.toggleDelete = function () {
 		$scope.showDelete = !$scope.showDelete;
+		var body = document.querySelector("body");
+		angular.element(body).toggleClass("modal-open");
 	};
 	$scope.deletePost = function () {
 		$scope.Posts.remove(id).remote.then(function () {

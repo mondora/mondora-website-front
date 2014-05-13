@@ -31,25 +31,25 @@
 
 <div class="post-body">
 	<div class="first-level-html-container" ng-repeat="child in bodyChildren() track by $index">
-		<div class="col-sm-8" ng-class="{'col-sm-offset-2': !commentBarIsOpen, 'col-sm-offset-1': commentBarIsOpen}">
+		<div class="col-sm-8" ng-class="{'col-sm-offset-2': !commentBarIsOpen, 'col-sm-offset-1': commentBarIsOpen, 'p-mobile' : isMobile}">
 			<div class="simplebox" readonly-editor data-disable-editing></div>
 		</div>
-		<div class="col-sm-2" ng-class="{hidden: commentBarIsOpen}">
-			<i class="fa fa-comment comment-bubble" ng-if="!paragraphHasComments($index)" ng-click="openCommentBarAt($index)"></i>
-			<span class="badge comment-badge" ng-if="paragraphHasComments($index)" ng-click="openCommentBarAt($index)">{{paragraphCommentsLength($index)}}</span>
+		<div class="col-sm-2" ng-class="{'comment-pop': isMobile}">
+			<i class="fa fa-comment comment-bubble" ng-if="!paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index)"></i>
+			<span class="badge comment-badge" ng-if="paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index)">{{paragraphCommentsLength($index)}}</span>
 		</div>
-		<div class="col-sm-3" ng-class="{hidden: !commentBarIsOpen}">
-			<div class="side-comment-container" ng-class="{hidden: !commentBarIsOpenAt($index)}">
-				<div class="col-sm-12">
-					<i class="fa fa-comment comment-bubble-always-visible" ng-click="closeCommentBar()"></i>
+		<div ng-class="{'hidden': !commentBarIsOpen, 'col-sm-3': !isMobile, 'modal-dialog': isMobile} ">
+			<div ng-class="{hidden: !commentBarIsOpenAt($index), 'side-comment-container': !isMobile, 'modal-content': isMobile}">
+				<div class="col-sm-12 close-comment-bar">
+					<i class="fa fa-times-circle" ng-click="closeCommentBar()"></i>
 				</div>
 
 				<div class="col-sm-2" ng-if="isAuthor()" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index">
-					<img class="img-circle" ng-src="{{comment.userPictureUrl}}" width="32" />
+					<img class="img-circle avatar" ng-src="{{comment.userPictureUrl}}" width="32" />
 				</div>
 				<div class="col-sm-10" ng-if="isAuthor()" ng-repeat-end>
                     <p>
-                        <b>{{comment.userScreenName}}</b>
+                        <span class="comment-author">{{comment.userScreenName}}</span>
                         {{comment.text}}
                     </p>
                     <a class="mnd-clickable" ng-if="ownsComment(comment)" ng-click="deleteComment(comment)">Elimina</a>
@@ -58,11 +58,11 @@
 				</div>
 
 				<div class="col-sm-2" ng-if="!isAuthor()" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index | filterCommentsByApprovalStatus:user._id">
-					<img class="img-circle" ng-src="{{comment.userPictureUrl}}" width="32" />
+					<img class="img-circle avatar" ng-src="{{comment.userPictureUrl}}" width="32" />
 				</div>
 				<div class="col-sm-10" ng-if="!isAuthor()" ng-repeat-end>
                     <p>
-                        <b>{{comment.userScreenName}}</b>
+                        <span class="comment-author">{{comment.userScreenName}}</span>
                         {{comment.text}}
                     </p>
                     <a class="mnd-clickable" ng-if="ownsComment(comment)" ng-click="deleteComment(comment)">Elimina</a>
@@ -70,14 +70,14 @@
 				</div>
 
 				<div class="col-sm-2">
-					<img class="img-circle" ng-src="{{user.twitterProfile.pictureUrl}}" width="32" />
+					<img class="img-circle avatar" ng-src="{{user.twitterProfile.pictureUrl}}" width="32" />
 				</div>
 				<div class="col-sm-10">
 					<p><b>{{user.twitterProfile.screenName}}</b></p>
-					<textarea ng-model="comment.text" class="form-control" placeholder="Lascia un commento" rows="1"></textarea>
+					<textarea ng-model="comment.text" class="form-control" placeholder="Lascia un commento" rows="3"></textarea>
                     <a class="mnd-clickable" ng-click="saveCommentAt($index)">Salva</a>
-					<hr />
-					<p>
+					<hr class="hr-comment"/>
+					<p class="comment-warning">
 						Questo commento è solo visibile da te e dall'autore,
 						a meno che l'autore decida di renderlo pubblico
 					</p>

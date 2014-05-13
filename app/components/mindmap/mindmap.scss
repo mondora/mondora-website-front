@@ -31,7 +31,7 @@
 		float: left; text-align: center;
 		list-style-type: none;
 		position: relative;
-		padding: 20px 5px 0 5px;
+		padding: 7px 0px 0 3px;
 		
 		transition: all 0.5s;
 		-webkit-transition: all 0.5s;
@@ -40,6 +40,7 @@
 	.tree input {
 		display: block;
 		margin: auto;
+		width: 100px;
 	}
 
 	/*We will use ::before and ::after to draw the connectors*/
