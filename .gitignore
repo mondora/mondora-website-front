@@ -4,3 +4,4 @@ bower_components/
 *.swp
 .idea/
 builds/*.app
+dist/

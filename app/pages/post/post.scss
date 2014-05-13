@@ -27,10 +27,11 @@
 
 .mnd-mind-container {
 	position: absolute;
-	height: 40%;
 	overflow: hidden;
 	width: 100%;
 	padding-left: 5px;
+	height: 40%;
+	overflow: scroll;
 }
 
 .post-top-buttons {
@@ -75,10 +76,42 @@
 .post-body-bottom-spacer {
 	height: 100px;
 }
+.post-scroll-to-content {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	padding-top: 30px;
+	color: #ffcc00;	
+	font-size: 60px;
+	text-align: center;
+}
 
 //media queries
 @media (max-width: 767px) {
 	.post-title, .post-subtitle, .post-header {
 		text-align: center !important;
+	}
+	.mnd-mind-container {
+		top: 39%;
+		height: 20%;
+		overflow-x: scroll;
+		-webkit-overflow-scrolling: touch;
+	}
+	.post-header {
+		top: 0%;
+		height: 27%;
+		overflow: hidden;
+		background-color: rgba(0,0,0,0.3);
+	}
+	.post-title {
+		font-size: 30px;
+		font-weight: normal;
+	}
+	.post-subtitle {
+		font-size: 20px;
+		font-weight: lighter;
+	}
+	.post-author {
+		display: none;
 	}
 }

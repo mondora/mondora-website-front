@@ -2,10 +2,16 @@
 		position: absolute;
 		height: 50%;
 		overflow: hidden;
-		width: 100%;
+		min-width: 100%;
 	}
 @media (min-width: 768px) {
 	/*Now the CSS*/
+	.black-connections .tree ul ul::before,.black-connections .tree li a, .black-connections .tree li:last-child::before, .black-connections .tree li:last-child::before, .black-connections .tree li::before, .tree li::after, .black-connections .tree li::after
+		{
+			
+			border-color:#000;
+		}
+	
 
 	.tree {
 		position: absolute;
@@ -118,32 +124,37 @@
 }
 @media (max-width: 767px) {
 	.tree{
+		height: 100%;
 		margin-left: 0px!important;
+		padding-top: 3%;
+		text-align: right;
+		display: table;
 	}
-	.mnd-mind-container{
-		/*max-height: 50px;*/
-	}
-	.tree ul, .tree ul ul, .tree ul li, .tree li, .tree ul li a {
-		padding-left: 0px;
+	.tree ul, .tree ul ul {
 		display: flex;
+		padding-left: 0px;
 		float: left;
 		list-style-type: none;
-		vertical-align: center;
+		vertical-align: middle;
+	}
+	.tree ul, .tree ul ul, .tree ul li, .tree ul li ul{
+		display: flex;
+		flex-shrink: 3;
 	}
 	.tree ul li a {
-		width: 80px;
-		height: 40px;
+		width: 130px;
+		height: 60px;
 		margin-right: 10px;
 		margin-bottom: 10px;
-		padding-top: 13px;
-		padding-right: 5px;
-		display: inline-block;
-		color: #000;
-		font-size: 10px;
+		padding-top: 18px;
+		padding-right: 6px;
+		padding-left: 35px;
+		float: left;
+		color: #fff;
+		font-size: 13px;
 		text-align: right;
 		word-break: break-all;
 		background-image: url(http://s3.amazonaws.com/mnd-website/img/tag.png);
 		background-size: cover;
 	}
-	.read-time {}
 }

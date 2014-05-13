@@ -285,7 +285,7 @@ span.mnd-width-10 {
   position: absolute;
   height: 50%;
   overflow: hidden;
-  width: 100%; }
+  min-width: 100%; }
 
 @media (min-width: 768px) {
   /*Now the CSS*/
@@ -300,6 +300,8 @@ span.mnd-width-10 {
   /*Time for some hover effects*/
   /*We will apply the hover effect the the lineage of the element also*/
   /*Connector styles on hover*/
+  .black-connections .tree ul ul::before, .black-connections .tree li a, .black-connections .tree li:last-child::before, .black-connections .tree li:last-child::before, .black-connections .tree li::before, .tree li::after, .black-connections .tree li::after {
+    border-color: #000; }
   .tree {
     position: absolute; }
   .tree * {
@@ -382,26 +384,39 @@ span.mnd-width-10 {
 
 @media (max-width: 767px) {
   .tree {
-    margin-left: 0px !important; }
-  .tree ul, .tree ul ul, .tree ul li, .tree li, .tree ul li a {
-    padding-left: 0px;
+    height: 100%;
+    margin-left: 0px !important;
+    padding-top: 3%;
+    text-align: right;
+    display: table; }
+  .tree ul, .tree ul ul {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    padding-left: 0px;
     float: left;
     list-style-type: none;
-    vertical-align: center; }
+    vertical-align: middle; }
+  .tree ul, .tree ul ul, .tree ul li, .tree ul li ul {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-shrink: 3;
+    -ms-flex-negative: 3;
+    flex-shrink: 3; }
   .tree ul li a {
-    width: 80px;
-    height: 40px;
+    width: 130px;
+    height: 60px;
     margin-right: 10px;
     margin-bottom: 10px;
-    padding-top: 13px;
-    padding-right: 5px;
-    display: inline-block;
-    color: #000;
-    font-size: 10px;
+    padding-top: 18px;
+    padding-right: 6px;
+    padding-left: 35px;
+    float: left;
+    color: #fff;
+    font-size: 13px;
     text-align: right;
     word-break: break-all;
     background-image: url(http://s3.amazonaws.com/mnd-website/img/tag.png);
@@ -511,11 +526,13 @@ span.mnd-width-10 {
 
 @media (max-width: 767px) {
   .sprinkle-result {
-    font-size: 35px; }
+    font-size: 35px;
+    border-bottom: 3px solid #ffcc00; }
   .sprinkle-result span {
     padding-top: 25px; }
   .sprinkle-control-bar {
-    height: 60px; }
+    /*height: 60px;*/
+    display: none; }
   .sprinkle-control-bar-left {
     padding-left: 5px; }
   .sprinkle-control-bar-right {
@@ -719,10 +736,11 @@ span.mnd-width-10 {
 
 .mnd-mind-container {
   position: absolute;
-  height: 40%;
   overflow: hidden;
   width: 100%;
-  padding-left: 5px; }
+  padding-left: 5px;
+  height: 40%;
+  overflow: scroll; }
 
 .post-top-buttons {
   position: absolute;
@@ -760,9 +778,36 @@ span.mnd-width-10 {
 .post-body-bottom-spacer {
   height: 100px; }
 
+.post-scroll-to-content {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  padding-top: 30px;
+  color: #ffcc00;
+  font-size: 60px;
+  text-align: center; }
+
 @media (max-width: 767px) {
   .post-title, .post-subtitle, .post-header {
-    text-align: center !important; } }
+    text-align: center !important; }
+  .mnd-mind-container {
+    top: 39%;
+    height: 20%;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch; }
+  .post-header {
+    top: 0%;
+    height: 27%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.3); }
+  .post-title {
+    font-size: 30px;
+    font-weight: normal; }
+  .post-subtitle {
+    font-size: 20px;
+    font-weight: lighter; }
+  .post-author {
+    display: none; } }
 
 
 #mnd-static-hidden-payoff {
@@ -822,25 +867,25 @@ span.mnd-width-10 {
   color: #aeaeac;
   cursor: pointer; }
 
+.post-cant-edit {
+  position: relative;
+  top: 20%;
+  width: 100%;
+  height: 50%;
+  padding: 20px;
+  font-size: 40px;
+  text-align: center; }
+
+.grey-border {
+  height: 50% !important;
+  border: 5px solid grey;
+  background-color: rgba(255, 255, 255, 0.4); }
+
 #mnd-post-sprinkle-container {
   position: absolute;
   width: 620px;
   left: 50%;
-  top: 40%;
-  margin-left: -260px;
-  z-index: 1; }
-
-@media (max-width: 767px) {
-  #mnd-post-sprinkle-container {
-    width: 98%;
-    top: 35%;
-    margin-left: -49%; } }
-
-.mnd-post-mindmap-container {
-  position: absolute;
-  width: 620px;
-  left: 50%;
-  top: 0%;
+  top: 45%;
   margin-left: -260px;
   z-index: 1; }
 
@@ -872,4 +917,11 @@ span.mnd-width-10 {
   color: #fff;
   padding-right: 10px; }
 
-@media (max-width: 767px) { }
+@media (max-width: 767px) {
+  .read-time {
+    font-size: 15px;
+    font-weight: normal; }
+  #mnd-post-sprinkle-container {
+    width: 98%;
+    top: 60%;
+    margin-left: -49%; } }

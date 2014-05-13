@@ -390,12 +390,13 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/post/edit/postEdit.html',
-    '<div class="post-title-image">\n' +
+    '<div class="post-cant-edit" ng-show="isMobile"> Contenuto non accessibile da dispositivi mobile.</div> \n' +
+    '<div class="post-title-image" ng-show="!isMobile">\n' +
     '	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />\n' +
     '	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->\n' +
     '</div>\n' +
     '\n' +
-    '<div class="post-top-buttons" ng-if="isOwner()">\n' +
+    '<div class="post-top-buttons" ng-if="isOwner()" ng-show="!isMobile">\n' +
     '	<span ng-if="showDelete">\n' +
     '		Sei sicuro di voler eliminare il post?\n' +
     '		<button type="button" class="btn btn-default" ng-click="deletePost()">\n' +
@@ -419,11 +420,11 @@ module.run(['$templateCache', function($templateCache) {
     '	</a>\n' +
     '</div>\n' +
     '\n' +
-    '<div class="mnd-mind-container">\n' +
-    '	<div mnd-mind-map map="post.map" edit="true"></div>\n' +
+    '<div class="mnd-mind-container grey-border" ng-class="{\'black-connections\': !titleImageIsDisplayed}" ng-show="!isMobile">\n' +
+    '		<div mnd-mind-map map="post.map" edit="true"></div>\n' +
     '</div>\n' +
     '\n' +
-    '<div class="post-header">\n' +
+    '<div class="post-header" ng-show="!isMobile">\n' +
     '	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">\n' +
     '		<input type="file" ng-file-select="onFileSelect($files)" class="hidden" />\n' +
     '		<i ng-if="!titleImageIsDisplayed" class="fa fa-picture-o" ng-click="clickFileInput()"></i>\n' +
@@ -446,14 +447,14 @@ module.run(['$templateCache', function($templateCache) {
     '	</div>\n' +
     '</div>\n' +
     '\n' +
-    '<div class="post-body">\n' +
+    '<div class="post-body" ng-show="!isMobile">\n' +
     '	<div class="col-sm-8 col-sm-offset-2">\n' +
     '		<div class="simplebox" id="postBodyEditor"></div>\n' +
     '		<div class="post-body-bottom-spacer"></div>\n' +
     '	</div>\n' +
     '</div>\n' +
     '\n' +
-    '<div class="post-end-spacer"></div>\n' +
+    '<div class="post-end-spacer" ng-show="!isMobile"></div>\n' +
     '');
 }]);
 })();
@@ -513,6 +514,8 @@ module.run(['$templateCache', function($templateCache) {
     '		</div>\n' +
     '	</div>\n' +
     '</div>\n' +
+    '\n' +
+    '<div class="post-scroll-to-content" ng-show="isMobile"><i class="fa fa-chevron-down"></i></div>\n' +
     '\n' +
     '<div class="post-body">\n' +
     '	<div class="first-level-html-container" ng-repeat="child in bodyChildren() track by $index">\n' +

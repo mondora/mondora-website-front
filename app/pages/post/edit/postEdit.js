@@ -1,6 +1,6 @@
 angular.module("mnd-web.pages.post.edit", [])
 
-.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload) {
+.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload, CheckMobileService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -14,6 +14,11 @@ angular.module("mnd-web.pages.post.edit", [])
 		return;
 	}
 
+	/////////////////////////
+	///// check mobile //////
+	/////////////////////////
+
+	$scope.isMobile = CheckMobileService.isMobile();
 
 	/////////////////////////
 	// Init medium editors //

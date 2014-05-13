@@ -44,6 +44,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.mindmap",
 	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
+	"mnd-web.components.check-mobile",
 	"mnd-web.pages.home",
 	"mnd-web.pages.staticHome",
 	"mnd-web.pages.profile",
@@ -281,6 +282,19 @@ angular.module("mnd-web.components.center", [])
 			}
 		}
 
+	}
+});
+angular.module("mnd-web.components.check-mobile", [])
+
+.factory("CheckMobileService", function () {
+	return {
+		isMobile: function () {
+			var bodyEl = document.getElementsByTagName("body")[0];
+			var bodyElWidth = parseInt(window.getComputedStyle(bodyEl).width, 10);
+			var mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+			var mobileWidth = bodyElWidth < 767;
+			return mobileUserAgent || mobileWidth;
+		}
 	}
 });
 angular.module("mnd-web.components.dashboard", [])
@@ -603,7 +617,7 @@ angular.module("mnd-web.pages.user", [])
 
 angular.module("mnd-web.pages.post.edit", [])
 
-.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload) {
+.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload, CheckMobileService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -617,6 +631,11 @@ angular.module("mnd-web.pages.post.edit", [])
 		return;
 	}
 
+	/////////////////////////
+	///// check mobile //////
+	/////////////////////////
+
+	$scope.isMobile = CheckMobileService.isMobile();
 
 	/////////////////////////
 	// Init medium editors //
@@ -860,7 +879,7 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.controller("PostViewController", function ($scope, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
+.controller("PostViewController", function ($scope, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService, CheckMobileService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -879,6 +898,12 @@ angular.module("mnd-web.pages.post.view", [])
 		$state.go("notFound");
 		return;
 	}
+
+	/////////////////////////
+	///// check mobile //////
+	/////////////////////////
+
+	$scope.isMobile = CheckMobileService.isMobile();
 
 	////////////////////////////////////////////////////
 	// Parse post.body into first generation children //
