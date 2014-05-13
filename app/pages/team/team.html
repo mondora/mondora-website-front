@@ -1,0 +1,21 @@
+<div class="col-sm-8 col-sm-offset-2">
+
+	<a ng-repeat="member in team" ui-sref="user({userId: member._id})">
+		<img ng-src="{{member.profile.pictureUrl || member.twitterProfile.pictureUrl}}" class="img-circle" width="200" height="200" />
+	</a>
+</div>
+
+<div id="workWithUsBanner" ng-if="!user || !user.mondoraTeamMember">
+	<img ng-if="user" ng-src="{{user.profile.pictureUrl || user.twitterProfile.pictureUrl}}" class="img-circle" width="200" height="200" />
+	<i ng-if="!user" class="fa fa-question-circle" style="font-size: 20em;"></i>
+	<p>Want to join us?</p>
+	<a ng-click="showLinkedInPopover = !showLinkedInPopover">Send us a link to your LinkedIn profile!</a>
+	<div ng-if="showLinkedInPopover">
+		<div class="input-group">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="sendLinkedInProfile(LinkedInProfileUrl)">Send</button>
+			</span>
+			<input type="text" class="form-control" ng-model="LinkedInProfileUrl">
+		</div>
+	</div>
+</div>

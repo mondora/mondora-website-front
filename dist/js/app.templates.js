@@ -272,6 +272,76 @@ try {
   module = angular.module('mnd-web.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/staticHome/staticHome.html',
+    '<div id="mnd-home-container">\n' +
+    '\n' +
+    '	<div id="mnd-static-hidden-payoff">\n' +
+    '		ONE STEP AHEAD<br />THE FUTURE\n' +
+    '	</div>\n' +
+    '\n' +
+    '	<div id="mnd-static-sprinkle-container">\n' +
+    '		<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinkleText}}"></div>\n' +
+    '	</div>\n' +
+    '\n' +
+    '	<div id="mnd-home-bottom">\n' +
+    '		<div id="mnd-home-logo">\n' +
+    '			<div class="mnd-mondora-logo">\n' +
+    '				<img src="http://mnd-website.s3.amazonaws.com/img/mondora-logo.png" alt="logo" />\n' +
+    '			</div>\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '\n' +
+    '<div id="mnd-video-background">\n' +
+    '	<div class="mnd-video-overlay"></div>\n' +
+    '	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}" ng-attr-poster="{{videoPoster}}"> \n' +
+    '	</video>\n' +
+    '	<img ng-src="{{videoPoster}}" />\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/team/team.html',
+    '<div class="col-sm-8 col-sm-offset-2">\n' +
+    '\n' +
+    '	<a ng-repeat="member in team" ui-sref="user({userId: member._id})">\n' +
+    '		<img ng-src="{{member.profile.pictureUrl || member.twitterProfile.pictureUrl}}" class="img-circle" width="200" height="200" />\n' +
+    '	</a>\n' +
+    '</div>\n' +
+    '\n' +
+    '<div id="workWithUsBanner" ng-if="!user || !user.mondoraTeamMember">\n' +
+    '	<img ng-if="user" ng-src="{{user.profile.pictureUrl || user.twitterProfile.pictureUrl}}" class="img-circle" width="200" height="200" />\n' +
+    '	<i ng-if="!user" class="fa fa-question-circle" style="font-size: 20em;"></i>\n' +
+    '	<p>Want to join us?</p>\n' +
+    '	<a ng-click="showLinkedInPopover = !showLinkedInPopover">Send us a link to your LinkedIn profile!</a>\n' +
+    '	<div ng-if="showLinkedInPopover">\n' +
+    '		<div class="input-group">\n' +
+    '			<span class="input-group-btn">\n' +
+    '				<button class="btn btn-default" type="button" ng-click="sendLinkedInProfile(LinkedInProfileUrl)">Send</button>\n' +
+    '			</span>\n' +
+    '			<input type="text" class="form-control" ng-model="LinkedInProfileUrl">\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/user/user.html',
     '<div class="col-sm-8 col-sm-offset-2">\n' +
     '\n' +

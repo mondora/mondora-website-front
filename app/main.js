@@ -24,7 +24,7 @@
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
-	window.CERES_CONNECTED = deferred.promise;
+	window.CERES_CONNECTED = deferred.promise.timeout(5000);
 })();
 
 angular.module("mnd-web", [
@@ -45,7 +45,9 @@ angular.module("mnd-web", [
 	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
 	"mnd-web.pages.home",
+	"mnd-web.pages.staticHome",
 	"mnd-web.pages.profile",
+	"mnd-web.pages.team",
 	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
@@ -83,19 +85,21 @@ angular.module("mnd-web", [
 		abstract: true,
         templateUrl: "root.html",
 		resolve: {
-			resumingLogin: function (TimeoutPromiseService) {
-				return CERES_CONNECTED.then(function () {
-					var resProm = Ceres.resumeLoginPromise;
-					if (resProm.isPending()) {
-						return TimeoutPromiseService.timeoutPromise(resProm, 5000)
-							.finally(function () {
-								return true;
-							});
-					}
-					return true;
-				}, function () {
-
-				});
+			resumingLogin: function (TimeoutPromiseService, $state) {
+				return CERES_CONNECTED
+					.then(function () {
+						var resProm = Ceres.resumeLoginPromise;
+						if (resProm.isPending()) {
+							return TimeoutPromiseService.timeoutPromise(resProm, 5000)
+								.finally(function () {
+									return true;
+								});
+						}
+						return true;
+					})
+					.fail(function () {
+						$state.go("staticHome");
+					});
 			}
 		}
     });
@@ -111,6 +115,12 @@ angular.module("mnd-web", [
 				return TimeoutPromiseService.timeoutPromise(sub, 5000);
 			}
 		}
+    });
+
+    $stateProvider.state("staticHome", {
+        url: "/staticHome",
+        templateUrl: "pages/staticHome/staticHome.html",
+		controller: "StaticHomeController"
     });
 
     $stateProvider.state("notFound", {
@@ -140,6 +150,19 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
+				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+			}
+		}
+    });
+
+    $stateProvider.state("team", {
+        url: "/team",
+		parent: "root",
+        templateUrl: "pages/team/team.html",
+		controller: "TeamController",
+		resolve: {
+			userSub: function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("teamUsers");
 				return TimeoutPromiseService.timeoutPromise(sub, 5000);
 			}
 		}
@@ -202,7 +225,7 @@ angular.module("mnd-web", [
     };
 
 	$rootScope.Ceres = Ceres;
-	Ceres.subscribe("userTwitterProfile");
+	Ceres.subscribe("userAdditionalInfo");
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");

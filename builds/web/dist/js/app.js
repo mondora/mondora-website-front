@@ -24,7 +24,7 @@
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
-	window.CERES_CONNECTED = deferred.promise;
+	window.CERES_CONNECTED = deferred.promise.timeout(5000);
 })();
 
 angular.module("mnd-web", [
@@ -45,7 +45,9 @@ angular.module("mnd-web", [
 	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
 	"mnd-web.pages.home",
+	"mnd-web.pages.staticHome",
 	"mnd-web.pages.profile",
+	"mnd-web.pages.team",
 	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
@@ -83,19 +85,21 @@ angular.module("mnd-web", [
 		abstract: true,
         templateUrl: "root.html",
 		resolve: {
-			resumingLogin: function (TimeoutPromiseService) {
-				return CERES_CONNECTED.then(function () {
-					var resProm = Ceres.resumeLoginPromise;
-					if (resProm.isPending()) {
-						return TimeoutPromiseService.timeoutPromise(resProm, 5000)
-							.finally(function () {
-								return true;
-							});
-					}
-					return true;
-				}, function () {
-
-				});
+			resumingLogin: function (TimeoutPromiseService, $state) {
+				return CERES_CONNECTED
+					.then(function () {
+						var resProm = Ceres.resumeLoginPromise;
+						if (resProm.isPending()) {
+							return TimeoutPromiseService.timeoutPromise(resProm, 5000)
+								.finally(function () {
+									return true;
+								});
+						}
+						return true;
+					})
+					.fail(function () {
+						$state.go("staticHome");
+					});
 			}
 		}
     });
@@ -111,6 +115,12 @@ angular.module("mnd-web", [
 				return TimeoutPromiseService.timeoutPromise(sub, 5000);
 			}
 		}
+    });
+
+    $stateProvider.state("staticHome", {
+        url: "/staticHome",
+        templateUrl: "pages/staticHome/staticHome.html",
+		controller: "StaticHomeController"
     });
 
     $stateProvider.state("notFound", {
@@ -140,6 +150,19 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
+				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+			}
+		}
+    });
+
+    $stateProvider.state("team", {
+        url: "/team",
+		parent: "root",
+        templateUrl: "pages/team/team.html",
+		controller: "TeamController",
+		resolve: {
+			userSub: function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("teamUsers");
 				return TimeoutPromiseService.timeoutPromise(sub, 5000);
 			}
 		}
@@ -202,7 +225,7 @@ angular.module("mnd-web", [
     };
 
 	$rootScope.Ceres = Ceres;
-	Ceres.subscribe("userTwitterProfile");
+	Ceres.subscribe("userAdditionalInfo");
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");
@@ -237,29 +260,6 @@ angular.module("mnd-web", [
 	};
 });
 
-angular.module("mnd-web.components.center", [])
-
-.directive("mndCenter", function ($timeout) {
-	return {
-		restrict: "A",
-		priority: 1000,
-		compile: function () {
-			return {
-				post: function ($scope, $element) {
-					$timeout(function () {
-						var el = $element[0];
-						var par = el.parentElement;
-						var elWidth = parseInt(window.getComputedStyle(el).width, 10);
-						var parWidth = par.offsetWidth;
-						var margin = (parWidth - elWidth) / 2 - 50;
-						el.style.marginLeft = margin + "px";
-					}, 0)
-				} 
-			}
-		}
-
-	}
-});
 angular.module("mnd-web.components.dashboard", [])
 
 .controller("SidebarController", function ($scope, $state, MndSidebarService) {
@@ -298,8 +298,9 @@ angular.module("mnd-web.components.dashboard", [])
 				ngClick: "closeSidebar"
 			},
 			{
-				title: "Cloud",
-				href: "http://www.mondora.com"
+				title: "Meet the team",
+				href: "/#/team",
+				ngClick: "closeSidebar"
 			},
 			{
 				title: "Governance",
@@ -355,6 +356,29 @@ angular.module("mnd-web.components.dashboard", [])
 
 });
 
+angular.module("mnd-web.components.center", [])
+
+.directive("mndCenter", function ($timeout) {
+	return {
+		restrict: "A",
+		priority: 1000,
+		compile: function () {
+			return {
+				post: function ($scope, $element) {
+					$timeout(function () {
+						var el = $element[0];
+						var par = el.parentElement;
+						var elWidth = parseInt(window.getComputedStyle(el).width, 10);
+						var parWidth = par.offsetWidth;
+						var margin = (parWidth - elWidth) / 2 - 50;
+						el.style.marginLeft = margin + "px";
+					}, 0)
+				} 
+			}
+		}
+
+	}
+});
 angular.module("mnd-web.components.mindmap", [])
 
 .directive("mndMindMapRecursive", function (RecursionHelper) {
@@ -533,6 +557,34 @@ angular.module("mnd-web.pages.profile", [])
 	});
 
 
+
+});
+
+angular.module("mnd-web.pages.staticHome", [])
+
+.controller("StaticHomeController", function ($scope, $sce) {
+
+	$scope.sprinkleText = "Essere al passo con i tempi, concreti e con una stretta e profonda visione tecnologica: questo è il modo con il quale ci caratterizziamo";
+
+	// Video
+	var videoSource = "http://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4";
+	$scope.videoSource = $sce.trustAsResourceUrl(videoSource);
+
+	// Video poster
+	var videoPoster = "http://s3.amazonaws.com/mnd-website/vd-back.jpg";
+	$scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
+
+});
+
+angular.module("mnd-web.pages.team", [])
+
+.controller("TeamController", function ($scope) {
+
+	var teamQuery = $scope.Users.reactiveQuery({mondoraTeamMember: true});
+	teamQuery.on("change", $scope.safeApply(function () {
+		$scope.team = teamQuery.result;
+	}));
+	$scope.team = teamQuery.result;
 
 });
 
