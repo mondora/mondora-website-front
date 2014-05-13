@@ -108,12 +108,14 @@ $mnd-grey: #5e5f5f;
 @media (max-width: 767px){
   .sprinkle-result {
     font-size: 35px;
+    border-bottom: 3px solid #ffcc00;
   }
   .sprinkle-result span {
     padding-top: 25px;
   }
   .sprinkle-control-bar {
-    height: 60px;
+    /*height: 60px;*/
+    display: none;
   }
   .sprinkle-control-bar-left {
     padding-left: 5px;

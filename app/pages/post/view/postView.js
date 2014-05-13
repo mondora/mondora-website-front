@@ -87,7 +87,7 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.controller("PostViewController", function ($scope, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
+.controller("PostViewController", function ($scope, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService, CheckMobileService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -106,6 +106,12 @@ angular.module("mnd-web.pages.post.view", [])
 		$state.go("notFound");
 		return;
 	}
+
+	/////////////////////////
+	///// check mobile //////
+	/////////////////////////
+
+	$scope.isMobile = CheckMobileService.isMobile();
 
 	////////////////////////////////////////////////////
 	// Parse post.body into first generation children //

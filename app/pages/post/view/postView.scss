@@ -2,22 +2,7 @@
 	position: absolute;
 	width: 620px;
 	left: 50%;
-	top: 40%;
-	margin-left: -260px;
-	z-index: 1;
-}
-@media (max-width: 767px) {
- 	#mnd-post-sprinkle-container {
-	    width: 98%;
-	    top: 35%;
-	    margin-left: -49%; }
-}
-
-.mnd-post-mindmap-container {
-	position: absolute;
-	width: 620px;
-	left: 50%;
-	top: 0%;
+	top: 45%;
 	margin-left: -260px;
 	z-index: 1;
 }
@@ -56,6 +41,16 @@
 	color: #fff;
 	padding-right: 10px;
 }
-@media (max-width: 767px) {
 
+//media queries
+@media (max-width: 767px) {
+	.read-time {
+		font-size: 15px;
+		font-weight: normal;
+	}
+	#mnd-post-sprinkle-container {
+	    width: 98%;
+	    top: 60%;
+	    margin-left: -49%; 
+	}
 }

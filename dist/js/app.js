@@ -246,6 +246,18 @@ angular.module("mnd-web.components.center", [])
 
 	}
 });
+angular.module("mnd-web.components.check-mobile", [])
+
+.factory("CheckMobileService", function () {
+	return {
+		isMobile: function () {
+			var bodyEl = document.getElementsByTagName("body")[0];
+			var bodyElWidth = parseInt(window.getComputedStyle(bodyEl).width, 10);
+			var mobileTrue = bodyElWidth < 767;
+			return mobileTrue;
+		}
+	}
+});
 angular.module("mnd-web.components.dashboard", [])
 
 .controller("SidebarController", function ($scope, $state, MndSidebarService) {
@@ -341,6 +353,16 @@ angular.module("mnd-web.components.dashboard", [])
 
 });
 
+angular.module("mnd-web.components.tag-strip", [])
+
+.factory("MndTagStrippingService", function () {
+	return {
+		strip: function (html) {
+			return html.replace(/(<([^>]+)>)/ig," ");
+		}
+	};
+});
+
 angular.module("mnd-web.components.mindmap", [])
 
 .directive("mndMindMapRecursive", function (RecursionHelper) {
@@ -385,16 +407,6 @@ angular.module("mnd-web.components.mindmap", [])
 	}
 })
 
-angular.module("mnd-web.components.tag-strip", [])
-
-.factory("MndTagStrippingService", function () {
-	return {
-		strip: function (html) {
-			return html.replace(/(<([^>]+)>)/ig," ");
-		}
-	};
-});
-
 angular.module("mnd-web.pages.home", [])
 
 .controller("HomeController", function ($scope, $sce) {
@@ -425,7 +437,7 @@ angular.module("mnd-web.pages.profile", [])
 
 angular.module("mnd-web.pages.post.edit", [])
 
-.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload) {
+.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload, CheckMobileService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -439,7 +451,11 @@ angular.module("mnd-web.pages.post.edit", [])
 		return;
 	}
 
+	/////////////////////////
+	///// check mobile //////
+	/////////////////////////
 
+	$scope.isMobile = CheckMobileService.isMobile();
 
 	/////////////////////////
 	// Init medium editors //
@@ -683,7 +699,7 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.controller("PostViewController", function ($scope, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService) {
+.controller("PostViewController", function ($scope, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService, CheckMobileService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -702,6 +718,12 @@ angular.module("mnd-web.pages.post.view", [])
 		$state.go("notFound");
 		return;
 	}
+
+	/////////////////////////
+	///// check mobile //////
+	/////////////////////////
+
+	$scope.isMobile = CheckMobileService.isMobile();
 
 	////////////////////////////////////////////////////
 	// Parse post.body into first generation children //
