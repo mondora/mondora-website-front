@@ -8,4 +8,8 @@ angular.module("mnd-web.pages.team", [])
 	}));
 	$scope.team = teamQuery.result;
 
+	$scope.sendLinkedInProfile = function (url) {
+		$scope.Ceres.call("sendLinkedInProfileUrl", url);
+	};
+
 });
