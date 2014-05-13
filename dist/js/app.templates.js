@@ -187,8 +187,63 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/profile/profile.html',
     '<div class="col-sm-8 col-sm-offset-2">\n' +
     '\n' +
-    '	<img ng-src="{{user.twitterProfile.pictureUrl}}" class="img-circle" />\n' +
+    '	<br />\n' +
+    '	<br />\n' +
+    '	<div class="row">\n' +
+    '		<div class="col-sm-4">\n' +
+    '			<img ng-src="{{user.profile.pictureUrl || user.twitterProfile.pictureUrl}}" class="img-circle mnd-clickable" width="200" height="200" ng-click="clickFileInput()" />\n' +
+    '			<input id="profilePictureFileInput" type="file" ng-file-select="onFileSelect($files)" class="hidden" />\n' +
+    '			<span ng-show="isUploading">\n' +
+    '				<progressbar value="uploadProgress"></progressbar>\n' +
+    '			</span>\n' +
+    '		</div>\n' +
+    '		<div class="col-sm-8">\n' +
+    '			<h2>{{user.twitterProfile.name}}</h2>\n' +
+    '			<h3><i>@{{user.twitterProfile.screenName}}</i></h3>\n' +
     '\n' +
+    '			<input type="email" class="form-control" ng-model="profile.email" placeholder="Email address" />\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '\n' +
+    '	<br />\n' +
+    '	<br />\n' +
+    '	<div class="row">\n' +
+    '		<div class="col-sm-6 form-horizontal">\n' +
+    '			<div class="form-group">\n' +
+    '				<label class="col-sm-2 control-label">Facebook</label>\n' +
+    '				<div class="col-sm-10">\n' +
+    '					<input type="text" class="form-control" ng-model="profile.facebookUrl" placeholder="Facebook url">\n' +
+    '				</div>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label class="col-sm-2 control-label">Twitter</label>\n' +
+    '				<div class="col-sm-10">\n' +
+    '					<input type="text" class="form-control" ng-model="profile.twitterUrl" placeholder="Twitter url">\n' +
+    '				</div>\n' +
+    '			</div>\n' +
+    '		</div>\n' +
+    '		<div class="col-sm-6 form-horizontal">\n' +
+    '			<div class="form-group">\n' +
+    '				<label class="col-sm-2 control-label">LinkedIn</label>\n' +
+    '				<div class="col-sm-10">\n' +
+    '					<input type="text" class="form-control" ng-model="profile.linkedInUrl" placeholder="LinkedIn url">\n' +
+    '				</div>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label class="col-sm-2 control-label">Github</label>\n' +
+    '				<div class="col-sm-10">\n' +
+    '					<input type="text" class="form-control" ng-model="profile.githubUrl" placeholder="Github url">\n' +
+    '				</div>\n' +
+    '			</div>\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '\n' +
+    '	<br />\n' +
+    '	<br />\n' +
+    '	<div class="row">\n' +
+    '		<h3>Short bio</h3>\n' +
+    '		<div class="simplebox" id="profileBioEditor"></div>\n' +
+    '	</div>\n' +
     '\n' +
     '</div>\n' +
     '');
@@ -205,6 +260,25 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('pages/serverProblems/serverProblems.html',
     '<div>\n' +
     '	Il server ha problemi\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('mnd-web.templates');
+} catch (e) {
+  module = angular.module('mnd-web.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('pages/post/list/postList.html',
+    '<div class="col-sm-8 col-sm-offset-4">\n' +
+    '	<div ng-repeat="post in posts">\n' +
+    '		<a ui-sref="postEdit({postId: post._id})">\n' +
+    '			<h4>Titolo: {{post.title}}</h4>\n' +
+    '		</a>\n' +
+    '	</div>\n' +
     '</div>\n' +
     '');
 }]);
@@ -282,25 +356,6 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '\n' +
     '<div class="post-end-spacer"></div>\n' +
-    '');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('mnd-web.templates');
-} catch (e) {
-  module = angular.module('mnd-web.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('pages/post/list/postList.html',
-    '<div class="col-sm-8 col-sm-offset-4">\n' +
-    '	<div ng-repeat="post in posts">\n' +
-    '		<a ui-sref="postEdit({postId: post._id})">\n' +
-    '			<h4>Titolo: {{post.title}}</h4>\n' +
-    '		</a>\n' +
-    '	</div>\n' +
-    '</div>\n' +
     '');
 }]);
 })();
