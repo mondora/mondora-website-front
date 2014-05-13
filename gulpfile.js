@@ -317,6 +317,14 @@ gulp.task("tdd", function () {
 
 
 
+////////////////////
+// Build all task //
+////////////////////
+
+gulp.task("buildAll", ["buildMac", "buildWeb"]);
+
+
+
 ///////////////////////////////////////
 // Default task: prints help message //
 ///////////////////////////////////////
@@ -326,6 +334,7 @@ gulp.task("default", function () {
 	console.log("Usage: gulp [TASK]");
 	console.log("");
 	console.log("Available tasks:");
+	console.log("  buildAll         builds mac and web");
 	console.log("  buildWeb         builds the application to be served via web");
 	console.log("  buildMac         builds the application to be served via the Mac App Store");
 	console.log("  dev              set up dev environment with auto-recompiling");
