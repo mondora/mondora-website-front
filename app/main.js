@@ -55,7 +55,8 @@ angular.module("mnd-web", [
 	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
-	"mnd-web.pages.post.list"
+	"mnd-web.pages.post.list",
+	"mnd-web.pages.topic"
 
 ])
 
@@ -214,6 +215,19 @@ angular.module("mnd-web", [
 			postSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("latestPosts");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+			}
+		}
+    });
+
+    $stateProvider.state("topic", {
+        url: "/topic/:name",
+		parent: "root",
+        templateUrl: "pages/topic/topic.html",
+		controller: "TopicController",
+		resolve: {
+			topic: function (TimeoutPromiseService, $stateParams) {
+				var meth = Ceres.call("getTopic", $stateParams.name);
+				return TimeoutPromiseService.timeoutPromise(meth.result, 5000);
 			}
 		}
     });
