@@ -1,13 +1,15 @@
 angular.module("mnd-web.pages.home", [])
 
-.controller("HomeController", function ($scope, $sce) {
+.controller("HomeController", function ($scope, $sce, $state) {
 
 	var homeConfig = $scope.Configurations.reactiveQuery({page: "home"}).result[0];
 	$scope.sprinkleText = homeConfig.sprinkleText;
 	$scope.banner = homeConfig.banner;
 
 	$scope.login = function () {
-		$scope.Ceres.loginWithTwitter();
+		$scope.Ceres.loginWithTwitter().then(function () {
+			$state.go("personalHome");
+		});
 	};
 
 	//$scope.videoSource = "http://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4";

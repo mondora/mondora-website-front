@@ -20,7 +20,9 @@
 	//TODO Use ng-asteroid, fool!
 	var deferred = Q.defer();
 	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
-	Ceres.on("connected", deferred.resolve);
+	Ceres.on("connected", function () {
+		deferred.resolve();
+	});
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
@@ -47,6 +49,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.check-mobile",
 	"mnd-web.pages.home",
 	"mnd-web.pages.staticHome",
+	"mnd-web.pages.personalHome",
 	"mnd-web.pages.profile",
 	"mnd-web.pages.team",
 	"mnd-web.pages.user",
@@ -113,7 +116,7 @@ angular.module("mnd-web", [
 		resolve: {
 			homeConfig: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("configurations");
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -122,6 +125,13 @@ angular.module("mnd-web", [
         url: "/staticHome",
         templateUrl: "pages/staticHome/staticHome.html",
 		controller: "StaticHomeController"
+    });
+
+    $stateProvider.state("personalHome", {
+        url: "/home",
+		parent: "root",
+        templateUrl: "pages/personalHome/personalHome.html",
+		controller: "PersonalHomeController"
     });
 
     $stateProvider.state("notFound", {
@@ -151,7 +161,7 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -164,7 +174,7 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("teamUsers");
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -177,7 +187,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -189,8 +199,8 @@ angular.module("mnd-web", [
 		controller: "PostEditController",
 		resolve: {
 			postSub: function ($stateParams, TimeoutPromiseService) {
-				var subProm = Ceres.subscribe("singlePost", $stateParams.postId);
-				return TimeoutPromiseService.timeoutPromise(subProm, 5000);
+				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -203,7 +213,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("latestPosts");
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -212,7 +222,7 @@ angular.module("mnd-web", [
 
 })
 
-.run(function ($rootScope) {
+.run(function ($rootScope, $state) {
 
     $rootScope.safeApply = function (fn) {
         var phase = $rootScope.$$phase;
@@ -248,6 +258,15 @@ angular.module("mnd-web", [
 			delete $rootScope.user;
 			$rootScope.signedIn = false;
 		});
+	});
+
+
+
+	$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) { 
+		if (toState.name === "home" && $rootScope.user) {
+			event.preventDefault(); 
+			$state.go("personalHome");
+		}
 	});
 
 })
