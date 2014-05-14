@@ -45,10 +45,6 @@ angular.module("mnd-web.components.dashboard", [])
 				href: "http://www.mondora.com"
 			},
 			{
-				title: "Team",
-				href: "http://www.mondora.com"
-			},
-			{
 				title: "Formazione",
 				href: "http://www.mondora.com"
 			},

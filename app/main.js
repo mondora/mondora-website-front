@@ -49,6 +49,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.check-mobile",
 	"mnd-web.pages.home",
 	"mnd-web.pages.staticHome",
+	"mnd-web.pages.personalHome",
 	"mnd-web.pages.profile",
 	"mnd-web.pages.team",
 	"mnd-web.pages.user",
@@ -124,6 +125,13 @@ angular.module("mnd-web", [
         url: "/staticHome",
         templateUrl: "pages/staticHome/staticHome.html",
 		controller: "StaticHomeController"
+    });
+
+    $stateProvider.state("personalHome", {
+        url: "/home",
+		parent: "root",
+        templateUrl: "pages/personalHome/personalHome.html",
+		controller: "PersonalHomeController"
     });
 
     $stateProvider.state("notFound", {
@@ -214,7 +222,7 @@ angular.module("mnd-web", [
 
 })
 
-.run(function ($rootScope) {
+.run(function ($rootScope, $state) {
 
     $rootScope.safeApply = function (fn) {
         var phase = $rootScope.$$phase;
@@ -250,6 +258,15 @@ angular.module("mnd-web", [
 			delete $rootScope.user;
 			$rootScope.signedIn = false;
 		});
+	});
+
+
+
+	$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) { 
+		if (toState.name === "home" && $rootScope.user) {
+			event.preventDefault(); 
+			$state.go("personalHome");
+		}
 	});
 
 })
