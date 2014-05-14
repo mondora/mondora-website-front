@@ -87,7 +87,7 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.controller("PostViewController", function ($scope, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService, CheckMobileService) {
+.controller("PostViewController", function ($scope, $timeout, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService, CheckMobileService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -171,9 +171,15 @@ angular.module("mnd-web.pages.post.view", [])
 		$scope.commentBarStatus = [];
 	};
 
-	$scope.openCommentBarAt = function (index) {
+	$scope.openCommentBarAt = function (index, event) {
 		$scope.commentBarIsOpen = true;
 		$scope.commentBarStatus[index] = true;
+		//var currentComment = event.target.parentElement.parentElement.querySelector(".modal-dialog");
+		//var currentParagraph = event.target.parentElement.parentElement.querySelector("p");
+		//window.scrollBy(0, currentParagraph.scrollHeight);
+		//$timeout(function () {
+		//	currentComment.scrollIntoView();
+		//}, 0);
 	};
 
 	$scope.commentBarIsOpenAt = function (index) {

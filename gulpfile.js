@@ -34,7 +34,7 @@ var buildAppScripts = function (dest) {
 	return gulp.src("app/**/*.js")
 		.pipe(plugins.concat("app.js"))
 		.pipe(gulp.dest(dest))
-		.pipe(plugins.ngmin())
+//		.pipe(plugins.ngmin())
 		.pipe(plugins.uglify())
 		.pipe(plugins.rename("app.min.js"))
 		.pipe(gulp.dest(dest));
