@@ -88,8 +88,6 @@ angular.module("mnd-web.pages.profile", [])
 	$scope.save = function () {
 		// Update innerHTML-s
 		$scope.profile.bio = bio.innerHTML;
-		console.log($scope.profile);
-
 		$scope.Users.update($scope.user._id, {profile: $scope.profile}).remote.fail(function (err) {
 			console.log(err);
 		});
