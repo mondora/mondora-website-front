@@ -20,7 +20,9 @@
 	//TODO Use ng-asteroid, fool!
 	var deferred = Q.defer();
 	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
-	Ceres.on("connected", deferred.resolve);
+	Ceres.on("connected", function () {
+		deferred.resolve();
+	});
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
@@ -113,7 +115,7 @@ angular.module("mnd-web", [
 		resolve: {
 			homeConfig: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("configurations");
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -151,7 +153,7 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -164,7 +166,7 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("teamUsers");
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -177,7 +179,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -189,8 +191,8 @@ angular.module("mnd-web", [
 		controller: "PostEditController",
 		resolve: {
 			postSub: function ($stateParams, TimeoutPromiseService) {
-				var subProm = Ceres.subscribe("singlePost", $stateParams.postId);
-				return TimeoutPromiseService.timeoutPromise(subProm, 5000);
+				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
@@ -203,7 +205,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("latestPosts");
-				return TimeoutPromiseService.timeoutPromise(sub, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
 		}
     });
