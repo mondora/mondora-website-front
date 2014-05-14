@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/mondora/mnd-web",
   "devDependencies": {
-    "google-fonts-downloader": "git+ssh://git@github.com/mondora/google-fonts-downloader.git",
+    "google-fonts-downloader": "git+https://github.com/mondora/google-fonts-downloader.git",
     "gulp": "^3.6.0",
     "gulp-autoprefixer": "0.0.7",
     "gulp-concat": "^2.2.0",

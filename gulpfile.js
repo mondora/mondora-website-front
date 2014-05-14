@@ -11,53 +11,54 @@ var pp		= require('preprocess');
 var mkdirp	= require("mkdirp");
 var spawn	= require("child_process").spawn;
 var Q		= require("q");
+var util	= require("util");
 
 
 
-//////////////////////////////
-// App files building tasks //
-//////////////////////////////
+//////////////////////////////////
+// App files building functions //
+//////////////////////////////////
 
-gulp.task("buildAppStyles", function () {
-	gulp.src("app/**/*.scss")
+var buildAppStyles = function (dest) {
+	return gulp.src("app/**/*.scss")
 		.pipe(plugins.sass())
 		.pipe(plugins.concat("app.css"))
 		.pipe(plugins.autoprefixer("last 3 version"))
-		.pipe(gulp.dest("dist/css/"))
+		.pipe(gulp.dest(dest))
 		.pipe(plugins.minifyCss())
 		.pipe(plugins.rename("app.min.css"))
-		.pipe(gulp.dest("dist/css/"));
-});
+		.pipe(gulp.dest(dest));
+};
 
-gulp.task("buildAppScripts", function () {
-	gulp.src("app/**/*.js")
+var buildAppScripts = function (dest) {
+	return gulp.src("app/**/*.js")
 		.pipe(plugins.concat("app.js"))
-		.pipe(gulp.dest("dist/js/"))
+		.pipe(gulp.dest(dest))
 		.pipe(plugins.ngmin())
 		.pipe(plugins.uglify())
 		.pipe(plugins.rename("app.min.js"))
-		.pipe(gulp.dest("dist/js/"));
-});
+		.pipe(gulp.dest(dest));
+};
 
-gulp.task("buildAppTemplates", function () {
-	gulp.src(["app/**/*.html", "!app/main.html"])
+var buildAppTemplates = function (dest) {
+	return gulp.src(["app/**/*.html", "!app/main.html"])
 		.pipe(plugins.ngHtml2js({
 			moduleName: "mnd-web.templates"
 		}))
 		.pipe(plugins.concat("app.templates.js"))
-		.pipe(gulp.dest("dist/js/"))
+		.pipe(gulp.dest(dest))
 		.pipe(plugins.uglify())
 		.pipe(plugins.rename("app.templates.min.js"))
-		.pipe(gulp.dest("dist/js/"));
-});
+		.pipe(gulp.dest(dest));
+};
 
 
 
-/////////////////////////////////
-// Vendor files building tasks //
-/////////////////////////////////
+/////////////////////////////////////
+// Vendor files building functions //
+/////////////////////////////////////
 
-gulp.task("buildVendorScripts", function () {
+var buildVendorScripts = function (dest) {
 	var sources = [
 		"bower_components/angular/angular.js",
 		"bower_components/angular-ui-router/release/angular-ui-router.js",
@@ -76,64 +77,68 @@ gulp.task("buildVendorScripts", function () {
 		"bower_components/medium-editor/dist/js/medium-editor.js",
 		"bower_components/angular-medium-editor/dist/angular-medium-editor.js"
 	];
-	gulp.src(sources)
+	return gulp.src(sources)
 		.pipe(plugins.concat("vendor.js"))
-		.pipe(gulp.dest("dist/js/"))
+		.pipe(gulp.dest(dest))
 		.pipe(plugins.uglify())
 		.pipe(plugins.rename("vendor.min.js"))
-		.pipe(gulp.dest("dist/js/"));
-});
+		.pipe(gulp.dest(dest));
+};
 
-gulp.task("buildVendorStyles", function () {
+var buildVendorStyles = function (dest) {
 	var sources = [
 		"bower_components/fontawesome/css/font-awesome.css",
 		"bower_components/bootstrap/dist/css/bootstrap.css",
 		"bower_components/medium-editor/dist/css/medium-editor.css",
 		"bower_components/medium-editor/dist/css/themes/default.css"
 	];
-	gulp.src(sources)
+	return gulp.src(sources)
 		.pipe(plugins.concat("vendor.css"))
-		.pipe(gulp.dest("dist/css/"))
+		.pipe(gulp.dest(dest))
 		.pipe(plugins.minifyCss())
 		.pipe(plugins.rename("vendor.min.css"))
-		.pipe(gulp.dest("dist/css/"));
-});
+		.pipe(gulp.dest(dest));
+};
 
-gulp.task("buildVendorFonts", function () {
+var buildVendorFontsCss = function (dest) {
+	// Building fonts' css sources
+	var fontsCssSources = [
+		"google_fonts/css/*"
+	];
+	return gulp.src(fontsCssSources)
+		.pipe(plugins.concat("google_fonts.css"))
+		.pipe(gulp.dest(dest))
+		.pipe(plugins.minifyCss())
+		.pipe(plugins.rename("google_fonts.min.css"))
+		.pipe(gulp.dest(dest));
+};
+
+var buildVendorFontsGlyphs = function (dest) {
 	// Copying fonts in the right place
 	var fontSources = [
 		"bower_components/fontawesome/fonts/*",
 		"google_fonts/fonts/*"
 	];
-	gulp.src(fontSources).pipe(gulp.dest("dist/fonts/"));
-	// Building fonts' css sources
-	var fontsCssSources = [
-		"google_fonts/css/*"
-	];
-	gulp.src(fontsCssSources)
-		.pipe(plugins.concat("google_fonts.css"))
-		.pipe(gulp.dest("dist/css/"))
-		.pipe(plugins.minifyCss())
-		.pipe(plugins.rename("google_fonts.min.css"))
-		.pipe(gulp.dest("dist/css/"));
-});
+	return gulp.src(fontSources)
+		.pipe(gulp.dest(dest));
+};
 
 // Does not include some dependencies that are retrieved via CDN
-gulp.task("buildVendorStylesCDN", function () {
+var buildVendorStylesCDN = function (dest) {
 	var sources = [
 		"bower_components/medium-editor/dist/css/medium-editor.css",
 		"bower_components/medium-editor/dist/css/themes/default.css"
 	];
-	gulp.src(sources)
+	return gulp.src(sources)
 		.pipe(plugins.concat("cdn.vendor.css"))
-		.pipe(gulp.dest("dist/css/"))
+		.pipe(gulp.dest(dest))
 		.pipe(plugins.minifyCss())
 		.pipe(plugins.rename("cdn.vendor.min.css"))
-		.pipe(gulp.dest("dist/css/"));
-});
+		.pipe(gulp.dest(dest));
+};
 
 // Does not include some dependencies that are retrieved via CDN
-gulp.task("buildVendorScriptsCDN", function () {
+var buildVendorScriptsCDN = function (dest) {
 	var sources = [
 		"bower_components/angular-recursion/angular-recursion.js",
 		"bower_components/angular-sanitize/angular-sanitize.js",
@@ -148,13 +153,13 @@ gulp.task("buildVendorScriptsCDN", function () {
 		//"bower_components/ng-asteroid/src/ng-asteroid.js",
 		"bower_components/medium-editor/dist/js/medium-editor.js"
 	];
-	gulp.src(sources)
+	return gulp.src(sources)
 		.pipe(plugins.concat("cdn.vendor.js"))
-		.pipe(gulp.dest("dist/js/"))
+		.pipe(gulp.dest(dest))
 		.pipe(plugins.uglify())
 		.pipe(plugins.rename("cdn.vendor.min.js"))
-		.pipe(gulp.dest("dist/js/"));
-});
+		.pipe(gulp.dest(dest));
+};
 
 
 
@@ -162,36 +167,24 @@ gulp.task("buildVendorScriptsCDN", function () {
 // Build for web //
 ///////////////////
 
-var buildWebDeps = [
-	"buildAppScripts",
-	"buildAppStyles",
-	"buildAppTemplates",
-	"buildVendorScriptsCDN",
-	"buildVendorStylesCDN"
-];
+gulp.task("buildWeb", function () {
 
-gulp.task("buildWeb", buildWebDeps, function () {
-
-	mkdirp.sync("builds/web/");
-	mkdirp.sync("builds/web/dist/");
 	mkdirp.sync("builds/web/dist/js");
 	mkdirp.sync("builds/web/dist/css");
 
+	// index.html
 	var html = fs.readFileSync("app/main.html", "utf8");
 	var webHtml = pp.preprocess(html, {TARGET: "web.prod"});
 	fs.writeFileSync("builds/web/index.html", webHtml);
 
-	var sources = [
-		"dist/js/app.min.js",
-		"dist/js/app.js",
-		"dist/js/app.templates.min.js",
-		"dist/js/cdn.vendor.min.js",
-		"dist/css/app.min.css",
-		"dist/css/cdn.vendor.min.css"
-	];
-	sources.forEach(function (source) {
-		fs.writeFileSync("builds/web/" + source, fs.readFileSync(source));
-	});
+	// Scripts
+	buildAppScripts("builds/web/dist/js");
+	buildAppTemplates("builds/web/dist/js");
+	buildVendorScriptsCDN("builds/web/dist/js");
+
+	//Styles
+	buildAppStyles("builds/web/dist/css");
+	buildVendorStylesCDN("builds/web/dist/css");
 
 });
 
@@ -201,45 +194,29 @@ gulp.task("buildWeb", buildWebDeps, function () {
 // Build for mac //
 ///////////////////
 
-var buildMacDeps = [
-	"buildAppScripts",
-	"buildAppStyles",
-	"buildAppTemplates",
-	"buildVendorScripts",
-	"buildVendorStyles",
-	"buildVendorFonts"
-];
+gulp.task("buildMac", function (cb) {
 
-gulp.task("buildMac", buildMacDeps, function (cb) {
-
-	mkdirp.sync("builds/mac/");
-	mkdirp.sync("builds/mac/dist/");
 	mkdirp.sync("builds/mac/dist/js");
 	mkdirp.sync("builds/mac/dist/css");
 	mkdirp.sync("builds/mac/dist/fonts");
 
+	// index.html
 	var html = fs.readFileSync("app/main.html", "utf8");
 	var macHtml = pp.preprocess(html, {TARGET: "mac.prod"});
 	fs.writeFileSync("builds/mac/index.html", macHtml);
 
-	var sources = [
-		"dist/js/app.min.js",
-		"dist/js/app.templates.min.js",
-		"dist/js/vendor.min.js",
-		"dist/css/app.min.css",
-		"dist/css/vendor.min.css",
-		"dist/css/google_fonts.min.css"
-	];
-	sources.forEach(function (source) {
-		fs.writeFileSync("builds/mac/" + source, fs.readFileSync(source));
-	});
+	// Scripts
+	buildAppScripts("builds/mac/dist/js");
+	buildAppTemplates("builds/mac/dist/js");
+	buildVendorScripts("builds/mac/dist/js");
 
-	var fonts = fs.readdirSync("dist/fonts/").map(function (font) {
-		return "dist/fonts/" + font;
-	});
-	fonts.forEach(function (font) {
-		fs.writeFileSync("builds/mac/" + font, fs.readFileSync(font));
-	});
+	// Styles
+	buildAppStyles("builds/mac/dist/css");
+	buildVendorStyles("builds/mac/dist/css");
+	buildVendorFontsCss("builds/mac/dist/css");
+
+	// Fonts
+	buildVendorFontsGlyphs("builds/mac/dist/fonts");
 
 	var deferred = Q.defer();
 	var mg = spawn("macgap", ["build", "-n", "mnd", "-o", "builds/", "builds/mac/"]);
@@ -257,31 +234,57 @@ gulp.task("buildMac", buildMacDeps, function (cb) {
 // Start dev environment //
 ///////////////////////////
 
-var lrServer;
+var buildDevCss = function (lrServer) {
+	util.print("Building css... ");
+	mkdirp.sync("builds/dev/dist/css");
+	buildAppStyles("builds/dev/dist/css");
+	buildVendorStyles("builds/dev/dist/css");
+	buildVendorFontsCss("builds/dev/dist/css");
+	if (lrServer) {
+		lrServer.changed("index.html");
+	}
+	util.print("done\n");
+};
 
-gulp.task("buildDevHtml", function () {
+var buildDevJs = function (lrServer) {
+	util.print("Building js... ");
+	mkdirp.sync("builds/dev/dist/js");
+	buildAppScripts("builds/dev/dist/js");
+	buildAppTemplates("builds/dev/dist/js");
+	buildVendorScripts("builds/dev/dist/js");
+	if (lrServer) {
+		lrServer.changed("index.html");
+	}
+	util.print("done\n");
+};
 
+var buildDevFonts = function (lrServer) {
+	util.print("Building fonts... ");
+	mkdirp.sync("builds/dev/dist/fonts");
+	buildVendorFontsGlyphs("builds/dev/dist/fonts");
+	if (lrServer) {
+		lrServer.changed("index.html");
+	}
+	util.print("done\n");
+};
+
+var buildDevHtml = function (lrServer) {
+	util.print("Building html... ");
 	var html = fs.readFileSync("app/main.html", "utf8");
 	var devHtml = pp.preprocess(html, {TARGET: "dev"});
-	fs.writeFileSync("builds/dev/index.html", devHtml);	
+	fs.writeFileSync("builds/dev/index.html", devHtml);
+	if (lrServer) {
+		lrServer.changed("index.html");
+	}
+	util.print("done\n");
+};
 
-});
-
-gulp.task("reloadBrowser", function () {
-	lrServer.changed("index.html");
-});
-
-var devDeps = [
-	"buildAppScripts",
-	"buildAppStyles",
-	"buildAppTemplates",
-	"buildVendorScripts",
-	"buildVendorStyles",
-	"buildDevHtml"
-];
-
-gulp.task("dev", devDeps, function () {
-	lrServer = plugins.livereload();
+gulp.task("dev", function () {
+	buildDevJs();
+	buildDevCss();
+	buildDevHtml();
+	buildDevFonts();
+	var lrServer = plugins.livereload();
 	var dvServer = http.createServer(function (req, res) {
 		var stServer = new static.Server("./builds/dev/", {cache: false});
 		req.on("end", function () {
@@ -289,10 +292,18 @@ gulp.task("dev", devDeps, function () {
 		});
 		req.resume();
 	}).listen(8080, "0.0.0.0");
-	gulp.watch("app/**/*.scss", ["buildAppStyles", "reloadBrowser"]);
-	gulp.watch("app/**/*.js", ["buildAppScripts", "reloadBrowser"]);
-	gulp.watch(["app/**/*.html", "!app/main.html"], ["buildAppTemplates", "reloadBrowser"]);
-	gulp.watch("app/main.html", ["buildDevHtml", "reloadBrowser"]);
+	var scssWatcher = gulp.watch("app/**/*.scss");
+	scssWatcher.on("change", function () {
+		buildDevCss(lrServer);
+	});
+	var jsWatcher = gulp.watch(["app/**/*.html", "!app/main.html", "app/**/*.js"]);
+	jsWatcher.on("change", function () {
+		buildDevJs(lrServer);
+	});
+	var htmlWatcher = gulp.watch("app/main.html");
+	htmlWatcher.on("change", function () {
+		buildDevHtml(lrServer);
+	});
 });
 
 
@@ -306,6 +317,14 @@ gulp.task("tdd", function () {
 
 
 
+////////////////////
+// Build all task //
+////////////////////
+
+gulp.task("buildAll", ["buildMac", "buildWeb"]);
+
+
+
 ///////////////////////////////////////
 // Default task: prints help message //
 ///////////////////////////////////////
@@ -315,6 +334,7 @@ gulp.task("default", function () {
 	console.log("Usage: gulp [TASK]");
 	console.log("");
 	console.log("Available tasks:");
+	console.log("  buildAll         builds mac and web");
 	console.log("  buildWeb         builds the application to be served via web");
 	console.log("  buildMac         builds the application to be served via the Mac App Store");
 	console.log("  dev              set up dev environment with auto-recompiling");

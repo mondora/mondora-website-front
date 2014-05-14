@@ -36,8 +36,9 @@ angular.module("mnd-web.components.dashboard", [])
 				ngClick: "closeSidebar"
 			},
 			{
-				title: "Cloud",
-				href: "http://www.mondora.com"
+				title: "Meet the team",
+				href: "/#/team",
+				ngClick: "closeSidebar"
 			},
 			{
 				title: "Governance",

@@ -1,0 +1,25 @@
+<div id="mnd-home-container">
+
+	<div id="mnd-static-hidden-payoff">
+		ONE STEP AHEAD<br />THE FUTURE
+	</div>
+
+	<div id="mnd-static-sprinkle-container">
+		<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinkleText}}"></div>
+	</div>
+
+	<div id="mnd-home-bottom">
+		<div id="mnd-home-logo">
+			<div class="mnd-mondora-logo">
+				<img src="http://mnd-website.s3.amazonaws.com/img/mondora-logo.png" alt="logo" />
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="mnd-video-background">
+	<div class="mnd-video-overlay"></div>
+	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}" ng-attr-poster="{{videoPoster}}"> 
+	</video>
+	<img ng-src="{{videoPoster}}" />
+</div>
