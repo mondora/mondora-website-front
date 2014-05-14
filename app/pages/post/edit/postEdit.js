@@ -148,11 +148,24 @@ angular.module("mnd-web.pages.post.edit", [])
 	// Save function //
 	///////////////////
 
+	var processMap = function (map, isChild) {
+		if (isChild) {
+			if (!map.href) {
+				map.href = "/#/topic/" + map.text;
+			}
+		}
+		if (!map.children) return;
+		map.children.map(function (child) {
+			processMap(child, true);
+		});
+	};
+
 	$scope.save = function () {
 		// Update innerHTML-s
 		$scope.post.title = title.innerHTML;
 		$scope.post.subtitle = subtitle.innerHTML;
 		$scope.post.body = body.innerHTML;
+		processMap($scope.post.map);
 
 		// Strip the _id and userId properties, which can't be updated
 		var post = angular.copy($scope.post);

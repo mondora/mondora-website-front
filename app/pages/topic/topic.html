@@ -1,0 +1,29 @@
+<div class="topic-image">
+	<img ng-src="{{topic.imageUrl}}" />
+	<div class="topic-overlay"></div>
+</div>
+
+<div class="mnd-mind-container">
+	<div mnd-mind-map map="topic.map" mnd-center></div>
+</div>
+
+<div class="topic-header">
+	<div class="col-sm-8 col-sm-offset-2">
+		<h1 class="color-me-white">{{topic.name}}</h1>
+	</div>
+</div>
+
+<div class="post-scroll-to-content" ng-show="isMobile"><i class="fa fa-chevron-down"></i></div>
+
+<div class="topic-body">
+	<div ng-repeat="post in topic.posts" class="post-summary">
+		<h2>{{post.title}}</h2>
+		<h4>{{post.subtitle}}</h4>
+		<a ui-sref="user({userId: post.author._id})">
+			<img class="img-circle" width="30" height="30" ng-src="{{post.author.pictureUrl}}" />
+			{{post.author.name}}
+		</a>
+		<span>{{post.readingLength}} min</span>
+	</div>
+	<div class="post-body-bottom-spacer"></div>
+</div>

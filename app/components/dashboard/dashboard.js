@@ -10,7 +10,7 @@ angular.module("mnd-web.components.dashboard", [])
 					userId: $scope.user._id,
 					screenName: $scope.user.twitterProfile.screenName,
 					name: $scope.user.twitterProfile.name,
-					imageUrl: $scope.user.twitterProfile.pictureUrl
+					pictureUrl: $scope.user.twitterProfile.pictureUrl
 				}
 			],
 			comments: [],
