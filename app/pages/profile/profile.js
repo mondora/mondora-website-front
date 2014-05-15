@@ -10,14 +10,94 @@ angular.module("mnd-web.pages.profile", [])
 
 
 
-	/////////////////////////////
-	// Short bio medium editor //
-	/////////////////////////////
+	////////////////////
+	// Medium editors //
+	////////////////////
+
+	var name = document.getElementById("profileNameEditor");
+	name.innerHTML = $scope.profile.name || "";
+	var nameEditorOptions = {
+		placeholder: "Name",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
+	new MediumEditor(name, nameEditorOptions);
+
+	var screenName = document.getElementById("profileScreenNameEditor");
+	screenName.innerHTML = $scope.profile.screenName || "";
+	var screenNameEditorOptions = {
+		placeholder: "Screen Name",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
+	new MediumEditor(screenName, screenNameEditorOptions);
+
+	var email = document.getElementById("profileEmailEditor");
+	email.innerHTML = $scope.profile.email || "";
+	var emailEditorOptions = {
+		placeholder: "Email",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
+	new MediumEditor(email, emailEditorOptions);
+
+	var facebook = document.getElementById("profileFacebookEditor");
+	facebook.innerHTML = $scope.profile.facebookUrl || "";
+	var facebookEditorOptions = {
+		placeholder: "Facebook profile url",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
+	new MediumEditor(facebook, facebookEditorOptions);
+
+	var twitter = document.getElementById("profileTwitterEditor");
+	twitter.innerHTML = $scope.profile.twitterUrl || "";
+	var twitterEditorOptions = {
+		placeholder: "Twitter profile url",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
+	new MediumEditor(twitter, twitterEditorOptions);
+
+	var linkedIn = document.getElementById("profileLinkedInEditor");
+	linkedIn.innerHTML = $scope.profile.linkedInUrl || "";
+	var linkedInEditorOptions = {
+		placeholder: "LinkedIn profile url",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
+	new MediumEditor(linkedIn, linkedInEditorOptions);
+
+	var github = document.getElementById("profileGithubEditor");
+	github.innerHTML = $scope.profile.githubUrl || "";
+	var githubEditorOptions = {
+		placeholder: "Github profile url",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
+	new MediumEditor(github, githubEditorOptions);
+
+	var motto = document.getElementById("profileMottoEditor");
+	motto.innerHTML = $scope.profile.motto || "";
+	var mottoEditorOptions = {
+		placeholder: "Click to edit",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
+	new MediumEditor(motto, mottoEditorOptions);
 
 	var bio = document.getElementById("profileBioEditor");
 	bio.innerHTML = $scope.user.profile.bio || "";
 	var bioEditorOptions = {
-		placeholder: "Short bio",
+		placeholder: "Click to edit",
 		buttonLabels: "fontawesome",
 		buttons: [
 			"bold",
@@ -88,6 +168,15 @@ angular.module("mnd-web.pages.profile", [])
 	$scope.save = function () {
 		// Update innerHTML-s
 		$scope.profile.bio = bio.innerHTML;
+		$scope.profile.name = name.innerHTML;
+		$scope.profile.screenName = screenName.innerHTML;
+		$scope.profile.email = email.innerHTML;
+		$scope.profile.motto = motto.innerHTML;
+		$scope.profile.facebookUrl = facebook.innerHTML;
+		$scope.profile.twitterUrl = twitter.innerHTML;
+		$scope.profile.linkedInUrl = linkedIn.innerHTML;
+		$scope.profile.githubUrl = github.innerHTML;
+
 		$scope.Users.update($scope.user._id, {profile: $scope.profile}).remote.fail(function (err) {
 			console.log(err);
 		});

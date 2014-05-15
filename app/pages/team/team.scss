@@ -1,6 +1,83 @@
-#workWithUsBanner {
+.teamMember {
+	width: 120px;
+	height: 120px;
+	position: relative;
+	display: inline-block;
+	margin: 20px;
+	text-align: center;
+}
+.teamMember:hover {
+	text-decoration: none;
+}
+
+.teamMember img {
+	width: 85%;
+	height: 85%;
 	position: absolute;
-	bottom: 50px;
-	right: 50px;
-	width: 200px;
+	top: 7.5%;
+	left: 7.5%;
+	opacity: 0.7;
+	transition: opacity 0.5s;
+}
+.teamMember:hover img {
+	opacity: 1;
+}
+
+.teamMemberOverlay {
+	width: 95%;
+	height: 95%;
+	position: absolute;
+	top: 2.5%;
+	left: 2.5%;
+	border-radius: 100%;
+	background: #5e5f5f;
+}
+
+.teamMemberText {
+	width: 100%;
+	position: absolute;
+	top: 110%;
+	color: #333333;
+}
+
+#workWithUsBannerStripe {
+	width: 100%;
+	height: 150px;
+	position: fixed;
+	bottom: 0px;
+	background: inherit;
+}
+
+#joinUsUserPicture {
+	position: absolute;
+	left: 20px;
+	width: 110px;
+	height: 110px;
+}
+
+#joinUsUserPicture img {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	width: 90%;
+	height: 90%;
+}
+
+#joinUsUserPicture div {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	background: #5e5f5f;
+	text-align: center;
+}
+
+#joinUsUserPicture i {
+	font-size: 120px;
+	color: #5e5f5f;
+}
+
+#joinUsText {
+	position: absolute;
+	left: 10%;
 }

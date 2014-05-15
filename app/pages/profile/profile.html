@@ -4,58 +4,42 @@
 	<br />
 	<div class="row">
 		<div class="col-sm-4">
-			<img ng-src="{{user.profile.pictureUrl || user.twitterProfile.pictureUrl}}" class="img-circle mnd-clickable" width="200" height="200" ng-click="clickFileInput()" />
+			<img ng-src="{{user.profile.pictureUrl}}" class="img-circle mnd-clickable" ng-class="{dullProfilePicture: isUploading}" width="200" height="200" ng-click="clickFileInput()" />
 			<input id="profilePictureFileInput" type="file" ng-file-select="onFileSelect($files)" class="hidden" />
-			<span ng-show="isUploading">
+			<div id="profilePictureProgressbar" ng-show="isUploading">
 				<progressbar value="uploadProgress"></progressbar>
-			</span>
+			</div>
 		</div>
 		<div class="col-sm-8">
-			<h2>{{user.twitterProfile.name}}</h2>
-			<h3><i>@{{user.twitterProfile.screenName}}</i></h3>
-
-			<input type="email" class="form-control" ng-model="profile.email" placeholder="Email address" />
+			<h2 class="simplebox" id="profileNameEditor"></h2>
+			<i><h3 class="simplebox" id="profileScreenNameEditor"></h3></i>
+			<h4 class="simplebox" id="profileEmailEditor"></h4>
 		</div>
 	</div>
-
 	<br />
-	<br />
-	<div class="row">
-		<div class="col-sm-6 form-horizontal">
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Facebook</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" ng-model="profile.facebookUrl" placeholder="Facebook url">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Twitter</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" ng-model="profile.twitterUrl" placeholder="Twitter url">
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-6 form-horizontal">
-			<div class="form-group">
-				<label class="col-sm-2 control-label">LinkedIn</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" ng-model="profile.linkedInUrl" placeholder="LinkedIn url">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Github</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" ng-model="profile.githubUrl" placeholder="Github url">
-				</div>
-			</div>
-		</div>
+	<h3>Social links</h3>
+	<div class="profileSocialRow">
+		<span class="icon"><i class="fa fa-facebook"></i></span>
+		<span class="simplebox" id="profileFacebookEditor"></span>
 	</div>
-
-	<br />
-	<br />
-	<div class="row">
-		<h3>Short bio</h3>
-		<div class="simplebox" id="profileBioEditor"></div>
+	<div class="profileSocialRow">
+		<span class="icon"><i class="fa fa-twitter"></i></span>
+		<span class="simplebox" id="profileTwitterEditor"></span>
 	</div>
+	<div class="profileSocialRow">
+		<span class="icon"><i class="fa fa-linkedin"></i></span>
+		<span class="simplebox" id="profileLinkedInEditor"></span>
+	</div>
+	<div class="profileSocialRow">
+		<span class="icon"><i class="fa fa-github"></i></span>
+		<span class="simplebox" id="profileGithubEditor"></span>
+	</div>
+	<br />
+	<h3>Motto</h3>
+	<div class="simplebox" id="profileMottoEditor"></div>
+	<br />
+	<h3>Short bio</h3>
+	<div class="simplebox" id="profileBioEditor"></div>
+
 
 </div>

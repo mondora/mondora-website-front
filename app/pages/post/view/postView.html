@@ -21,7 +21,7 @@
 		<h1 ng-bind-html="post.title" class="post-title" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h1>
 		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h2>
 		<div class="post-author" ng-repeat="author in post.authors">
-			<img class="img-circle" ng-src="{{author.pictureUrl}}" />
+			<img class="img-circle" ng-src="{{author.pictureUrl}}" height="50" />
 			&nbsp;&nbsp;Author {{author.screenName}}
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 		<div class="col-sm-8" ng-class="{'col-sm-offset-2': !commentBarIsOpen, 'col-sm-offset-1': commentBarIsOpen, 'p-mobile' : isMobile}">
 			<div class="simplebox" readonly-editor data-disable-editing></div>
 		</div>
-		<div class="col-sm-2" ng-class="{'comment-pop': isMobile}">
+		<div class="col-sm-1" ng-class="{'comment-pop': isMobile}">
 			<i class="fa fa-comment comment-bubble" ng-if="!paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index)"></i>
 			<span class="badge comment-badge" ng-if="paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index)">{{paragraphCommentsLength($index)}}</span>
 		</div>
@@ -47,7 +47,7 @@
 				<div class="col-sm-2" ng-if="isAuthor()" ng-repeat-start="comment in post.comments | filterCommentsByParagraph:$index">
 					<img class="img-circle avatar" ng-src="{{comment.userPictureUrl}}" width="32" />
 				</div>
-				<div class="col-sm-10" ng-if="isAuthor()" ng-repeat-end>
+				<div class="col-sm-10" ng-if="isAuthor()" ng-mouseenter="setHighlight(comment)" ng-mouseleave="clearHighlight(comment)" ng-repeat-end>
                     <p>
                         <span class="comment-author">{{comment.userScreenName}}</span>
                         {{comment.text}}
@@ -70,10 +70,10 @@
 				</div>
 
 				<div class="col-sm-2">
-					<img class="img-circle avatar" ng-src="{{user.twitterProfile.pictureUrl}}" width="32" />
+					<img class="img-circle avatar" ng-src="{{user.profile.pictureUrl}}" width="32" />
 				</div>
 				<div class="col-sm-10">
-					<p><b>{{user.twitterProfile.screenName}}</b></p>
+					<p><b>{{user.profile.screenName}}</b></p>
 					<textarea ng-model="comment.text" class="form-control" placeholder="Lascia un commento" rows="3"></textarea>
                     <a class="mnd-clickable" ng-click="saveCommentAt($index)">Salva</a>
 					<hr class="hr-comment"/>

@@ -1,21 +1,50 @@
 <div class="col-sm-8 col-sm-offset-2">
-
-	<a ng-repeat="member in team" ui-sref="user({userId: member._id})">
-		<img ng-src="{{member.profile.pictureUrl || member.twitterProfile.pictureUrl}}" class="img-circle" width="200" height="200" />
+	<br />
+	<a ng-repeat="member in team" ui-sref="user({userId: member._id})" class="teamMember img-circle">
+		<div class="teamMemberOverlay"></div>
+		<img ng-src="{{member.profile.pictureUrl}}" class="img-circle" />
+		<p class="teamMemberText">
+			<b>{{member.profile.name}}</b>
+			<br />
+			<i>{{member.profile.motto}}</i>
+		</p>
 	</a>
 </div>
 
-<div id="workWithUsBanner" ng-if="!user || !user.mondoraTeamMember">
-	<img ng-if="user" ng-src="{{user.profile.pictureUrl || user.twitterProfile.pictureUrl}}" class="img-circle" width="200" height="200" />
-	<i ng-if="!user" class="fa fa-question-circle" style="font-size: 20em;"></i>
-	<p>Want to join us?</p>
-	<a ng-click="showLinkedInPopover = !showLinkedInPopover">Send us a link to your LinkedIn profile!</a>
-	<div ng-if="showLinkedInPopover">
-		<div class="input-group">
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="button" ng-click="sendLinkedInProfile(LinkedInProfileUrl)">Send</button>
-			</span>
-			<input type="text" class="form-control" ng-model="LinkedInProfileUrl">
+<div id="workWithUsBannerStripe" ng-if="!user || !user.mondoraTeamMember">
+	<div class="col-sm-1 col-sm-offset-2">
+		<div id="joinUsUserPicture">
+			<div ng-if="user">
+			</div>
+			<img ng-if="user" ng-src="{{user.profile.pictureUrl" class="img-circle" />
+			<i ng-if="!user" class="fa fa-question-circle"></i>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div id="joinUsText">
+			<div ng-if="user">
+				<div ng-if="!linkSent">
+					<h4>Want to join us?</h4>
+					<p>Send us a link to your LinkedIn profile!</p>
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="LinkedInProfileUrl">
+						<span class="input-group-btn">
+							<button class="btn btn-default" ng-class="{disabled: !checkLink(LinkedInProfileUrl)}" type="button" ng-click="sendLinkedInProfile(LinkedInProfileUrl)">Send</button>
+						</span>
+					</div>
+				</div>
+				<div ng-if="linkSent">
+					<h4>Thank you!</h4>
+					<p>We'll let you know soon!</p>
+				</div>
+			</div>
+			<div ng-if="!user" ng-click="login()" class="mnd-clickable">
+				<br />
+				<h4>The next could be you!</h4>
+				<a class="mnd-undecorated-a">
+					<i class="fa fa-twitter"></i>&nbsp;&nbsp;Sign in to submit your resume
+				</a>
+			</div>
 		</div>
 	</div>
 </div>

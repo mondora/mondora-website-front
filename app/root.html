@@ -2,8 +2,8 @@
 	<div name="before">
 		<div id="mnd-sidebar-user">
 			<div ng-if="user">
-				<img class="img-circle" ng-src="{{user.twitterProfile.pictureUrl}}" />
-				<span>{{user.twitterProfile.name}}</span>
+				<img class="img-circle" ng-src="{{user.profile.pictureUrl}}" height="70" />
+				<span>{{user.profile.name}}</span>
 				<span ng-click="logout()" class="logout"><i class="fa fa-times-circle"></i></span>
 			</div>
 			<div ng-if="!user" ng-click="login()" class="login">

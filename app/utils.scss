@@ -2,6 +2,13 @@
 .mnd-clickable {
 	cursor: pointer;
 }
+.mnd-undecorated-a {
+	color: inherit;
+}
+.mnd-undecorated-a:hover {
+	text-decoration: none;
+	color: inherit;
+}
 .mnd-fullsize {
 	position: relative;
 	width: 100%;

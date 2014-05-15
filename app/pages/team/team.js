@@ -12,6 +12,11 @@ angular.module("mnd-web.pages.team", [])
 
 	$scope.sendLinkedInProfile = function (url) {
 		$scope.Ceres.call("sendLinkedInProfileUrl", url);
+		$scope.linkSent = true;
+	};
+
+	$scope.checkLink = function (url) {
+		return /linkedin\.com/.test(url);
 	};
 
 });

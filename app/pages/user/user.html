@@ -4,30 +4,26 @@
 	<br />
 	<div class="row">
 		<div class="col-sm-4">
-			<img ng-src="{{user.profile.pictureUrl || user.twitterProfile.pictureUrl}}" class="img-circle mnd-clickable" width="200" height="200" />
+			<img ng-src="{{user.profile.pictureUrl}}" class="img-circle" width="200" height="200" />
 		</div>
 		<div class="col-sm-8">
-			<h2>{{user.twitterProfile.name}}</h2>
-			<h3><i>@{{user.twitterProfile.screenName}}</i></h3>
+			<h2>{{user.profile.name}}</h2>
+			<h3><i>@{{user.profile.screenName}}</i></h3>
 
 			<a href="mailto:{{user.profile.email}}">{{user.profile.email}}</a>
+			<h4>
+				<a ng-if="user.profile.facebookUrl" ng-href="{{user.profile.facebookUrl}}" class="mnd-undecorated-a"><i class="fa fa-facebook"></i></a>
+				<a ng-if="user.profile.twitterUrl" ng-href="{{user.profile.twitterUrl}}" class="mnd-undecorated-a"><i class="fa fa-twitter"></i></a>
+				<a ng-if="user.profile.githubUrl" ng-href="{{user.profile.githubUrl}}" class="mnd-undecorated-a"><i class="fa fa-github"></i></a>
+				<a ng-if="user.profile.linkedInUrl" ng-href="{{user.profile.linkedInUrl}}" class="mnd-undecorated-a"><i class="fa fa-linkedin"></i></a>
+			</h4>
 		</div>
 	</div>
 
-	<br />
-	<br />
 	<div class="row">
-		<h3>
-			<a ng-if="user.profile.facebookUrl" ng-href="{{user.profile.facebookUrl}}"><i class="fa fa-facebook"></i></a>
-			<a ng-if="user.profile.twitterUrl" ng-href="{{user.profile.twitterUrl}}"><i class="fa fa-twitter"></i></a>
-			<a ng-if="user.profile.githubUrl" ng-href="{{user.profile.githubUrl}}"><i class="fa fa-github"></i></a>
-			<a ng-if="user.profile.linkedInUrl" ng-href="{{user.profile.linkedInUrl}}"><i class="fa fa-linkedin"></i></a>
-		</h3>
-	</div>
-
-	<br />
-	<br />
-	<div class="row">
+		<br />
+		<h3>Motto</h3>
+		<h4>{{user.profile.motto}}</h4>
 		<h3>Short bio</h3>
 		<div ng-bind-html="user.profile.bio"></div>
 	</div>

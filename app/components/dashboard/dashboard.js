@@ -1,6 +1,6 @@
 angular.module("mnd-web.components.dashboard", [])
 
-.controller("SidebarController", function ($scope, $state, MndSidebarService) {
+.controller("SidebarController", function ($scope, $state) {
 	$scope.addPost = function () {
 		var post = {
 			userId: $scope.user._id,
@@ -8,37 +8,32 @@ angular.module("mnd-web.components.dashboard", [])
 			authors: [
 				{
 					userId: $scope.user._id,
-					screenName: $scope.user.twitterProfile.screenName,
-					name: $scope.user.twitterProfile.name,
-					pictureUrl: $scope.user.twitterProfile.pictureUrl
+					screenName: $scope.user.profile.screenName,
+					name: $scope.user.profile.name,
+					pictureUrl: $scope.user.profile.pictureUrl
 				}
 			],
 			comments: [],
 			published: false
 		};
 		$scope.Posts.insert(post).remote.then(function (id) {
-			MndSidebarService.toggleSidebarStatus();
-			$scope.$root.$broadcast("sidebarStatusChanged");
 			$state.go("postEdit", {postId: id});
 		}, function (err) {
 			console.log(err);
 		});
 	};
-	$scope.closeSidebar = function () {
-		MndSidebarService.toggleSidebarStatus();
-		$scope.$root.$broadcast("sidebarStatusChanged");
-	};
-	var menu = {
-		items: [
+
+	var getMenu = function () {
+		var beforeItems = [
 			{
 				title: "Home",
-				href: "/#/",
-				ngClick: "closeSidebar"
-			},
+				href: "/#/"
+			}
+		];
+		var afterItems = [
 			{
 				title: "Meet the team",
-				href: "/#/team",
-				ngClick: "closeSidebar"
+				href: "/#/team"
 			},
 			{
 				title: "Governance",
@@ -66,26 +61,29 @@ angular.module("mnd-web.components.dashboard", [])
 					}
 				]
 			}
-		]
+		];
+		var dynamicItems = [];
+		if ($scope.user) {
+			if ($scope.user.roles.indexOf("blog") !== -1) {
+				dynamicItems.push({
+					title: "New post",
+					ngClick: "addPost"
+				});
+			}
+			dynamicItems.push({
+				title: "Profile",
+				href: "/#/profile"
+			});
+		}
+		var menu = {
+			items: [].concat(beforeItems, dynamicItems, afterItems)
+		};
+		return menu;
 	};
-	var loggedInMenu = angular.copy(menu);
-	loggedInMenu.items.splice(1, 0, {
-		title: "New post",
-		ngClick: "addPost"
-	});	
-	loggedInMenu.items.splice(2, 0, {
-		title: "Profile",
-		href: "/#/profile",
-		ngClick: "closeSidebar"
-	});
-	$scope.menu = menu;
+
 
 	$scope.$watch("user", function () {
-		if ($scope.user) {
-			$scope.menu = loggedInMenu;
-		} else {
-			$scope.menu = menu;
-		}
+		$scope.menu = getMenu();
 	});
 
 });

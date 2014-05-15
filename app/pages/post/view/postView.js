@@ -28,23 +28,54 @@ angular.module("mnd-web.pages.post.view", [])
 })
 
 .directive("readonlyEditor", function () {
+
+	var clearWindowSelection = function () {
+		if (window.getSelection) {
+			if (window.getSelection().empty) {
+				window.getSelection().empty();
+			} else if (window.getSelection().removeAllRanges) {
+				window.getSelection().removeAllRanges();
+			}
+		} else if (document.selection) {
+			document.selection.empty();
+		}
+	};
+
 	var Tweet = function (screenName) {
 		this.button = document.createElement("button");
 		this.button.className = "medium-editor-action";
 		this.button.innerHTML = "<i class=\"fa fa-twitter\"></i>";
-		this.button.target = "_blank";
 		this.button.onclick = function () {
 			var tweetBaseUrl = "https://twitter.com/intent/tweet?text=";
 			var tweetText = "\"" + window.getSelection().toString() + "\" - @";
 			tweetText += screenName + " " + window.location.href;
 			var url = tweetBaseUrl + tweetText;
 			var popup = window.open(url, "popup", "height=420,width=550");
+			clearWindowSelection();
 			if (!popup.focus) {
 				popup.focus();
 			}
 		};
 	};
+	Tweet.prototype.constructor = Tweet;
 	Tweet.prototype.getButton = function() {
+		return this.button;
+	};
+	var Highlight = function ($scope) {
+		this.button = document.createElement("button");
+		this.button.className = "medium-editor-action";
+		this.button.innerHTML = "<i class=\"fa fa-comment\"></i>";
+		this.button.onclick = function () {
+			$scope.safeApply(function () {
+				$scope.closeCommentBar();
+				$scope.openCommentBarAt($scope.$index);
+				$scope.comment.anchor = window.getSelection().toString();
+				clearWindowSelection();
+			});
+		};
+	};
+	Highlight.prototype.constructor = Highlight;
+	Highlight.prototype.getButton = function() {
 		return this.button;
 	};
 	return {
@@ -52,9 +83,10 @@ angular.module("mnd-web.pages.post.view", [])
 			var readonlyEditorOptions = {
 				placeholder: "",
 				disableEditing: true,
-				buttons: ["tweet"],
+				buttons: ["tweet", "highlight"],
 				extensions: {
-					tweet: new Tweet()
+					tweet: new Tweet($scope.post.authors[0].screenName),
+					highlight: new Highlight($scope)
 				}
 			};
 			$element[0].innerHTML = $scope.child;
@@ -228,6 +260,26 @@ angular.module("mnd-web.pages.post.view", [])
 		$scope.comment.paragraph = index;
 		$scope.Ceres.call("addCommentToPost", id, $scope.comment);
 		$scope.comment.text = "";
+	};
+
+	///////////////////////////////
+	// Comment text highlighting //
+	///////////////////////////////
+
+	$scope.setHighlight = function (comment) {
+		var p = document.querySelectorAll(".first-level-html-container .simplebox")[comment.paragraph];
+		var html = p.innerHTML;
+		var highlighted = "<span class=\"post-view-highlight\">" + comment.anchor + "</span>";
+		html = html.replace(comment.anchor, highlighted);
+		p.innerHTML = html;
+	};
+
+	$scope.clearHighlight = function (comment) {
+		var p = document.querySelectorAll(".first-level-html-container .simplebox")[comment.paragraph];
+		var html = p.innerHTML;
+		var highlighted = "<span class=\"post-view-highlight\">" + comment.anchor + "</span>";
+		html = html.replace(highlighted, comment.anchor);
+		p.innerHTML = html;
 	};
 
 });

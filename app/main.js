@@ -236,7 +236,7 @@ angular.module("mnd-web", [
 
 })
 
-.run(function ($rootScope, $state) {
+.run(function ($rootScope, $state, MndSidebarService) {
 
     $rootScope.safeApply = function (fn) {
         var phase = $rootScope.$$phase;
@@ -274,9 +274,11 @@ angular.module("mnd-web", [
 		});
 	});
 
-
-
 	$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) { 
+		if (MndSidebarService.getSidebarStatus()) {
+			MndSidebarService.toggleSidebarStatus();
+		}
+		$rootScope.$broadcast("sidebarStatusChanged");
 		if (toState.name === "home" && $rootScope.user) {
 			event.preventDefault(); 
 			$state.go("personalHome");
