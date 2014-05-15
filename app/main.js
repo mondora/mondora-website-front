@@ -4,16 +4,20 @@
 			host: "localhost:3000",
 			//debug: true
 		},
-		prod: {
+		test: {
 			host: "api.nocheros.info",
 			debug: true
-			// Uncomment this when we get SSL working
-			//ssl: true
+		},
+		prod: {
+			host: "met-server.nocheros.info",
+			ssl: true
 		}
 	};
 	var cfg;
 	if (/b/.test(APP_VERSION)) {
 		cfg = config.dev;
+	} else if (/t/.test(APP_VERSION)) {
+		cfg = config.test;
 	} else {
 		cfg = config.prod;
 	}

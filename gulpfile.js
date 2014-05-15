@@ -188,6 +188,32 @@ gulp.task("buildWeb", function () {
 
 });
 
+////////////////////////
+// Build for web.test //
+////////////////////////
+
+gulp.task("buildWebTest", function () {
+
+	mkdirp.sync("builds/web/dist/js");
+	mkdirp.sync("builds/web/dist/css");
+
+	// index.html
+	var html = fs.readFileSync("app/main.html", "utf8");
+	var webHtml = pp.preprocess(html, {TARGET: "web.test"});
+	fs.writeFileSync("builds/web/index.html", webHtml);
+
+	// Scripts
+	buildAppScripts("builds/web/dist/js");
+	buildAppTemplates("builds/web/dist/js");
+	buildVendorScriptsCDN("builds/web/dist/js");
+
+	//Styles
+	buildAppStyles("builds/web/dist/css");
+	buildVendorStylesCDN("builds/web/dist/css");
+
+});
+
+
 
 
 ///////////////////
