@@ -89,14 +89,27 @@
 	    margin-left: -49%; 
 	}
 	.p-mobile {
-		width: 90%;
+		width: 88%;
 	}
 	.p-mobile, .comment-pop {
 		display: inline-block;
 	}
 	.comment-pop {
-		width: 9%;
+		width: 11%;
 		vertical-align: top;
 		padding-top: 20px;
+		padding-right: 10px;
+	}
+	.mobile-modal-background {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		background-color: rgba(0,0,0,0.5);
+		z-index: 1000;
+	}
+	.mobile-comment {
+		position: absolute;
+		top: 0px;
+		z-index: 2000;
 	}
 }
