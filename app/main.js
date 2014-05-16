@@ -1,4 +1,3 @@
-(function () {
 	var config = {
 		dev: {
 			host: "localhost:3000",
@@ -23,15 +22,14 @@
 	}
 	//TODO Use ng-asteroid, fool!
 	var deferred = Q.defer();
-	Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
+	var Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 	Ceres.on("connected", function () {
 		deferred.resolve();
 	});
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
-	CERES_CONNECTED = deferred.promise.timeout(5000);
-})();
+	var CERES_CONNECTED = deferred.promise.timeout(5000);
 
 angular.module("mnd-web", [
 
