@@ -23,14 +23,14 @@
 	}
 	//TODO Use ng-asteroid, fool!
 	var deferred = Q.defer();
-	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
+	Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
 	Ceres.on("connected", function () {
 		deferred.resolve();
 	});
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
-	window.CERES_CONNECTED = deferred.promise.timeout(5000);
+	CERES_CONNECTED = deferred.promise.timeout(5000);
 })();
 
 angular.module("mnd-web", [
@@ -122,6 +122,11 @@ angular.module("mnd-web", [
 			homeConfig: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("configurations");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+			}
+		},
+		onEnter: function ($rootScope, $state) {
+			if ($rootScope.user) {
+				$state.go("personalHome");
 			}
 		}
     });
