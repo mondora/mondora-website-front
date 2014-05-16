@@ -26,6 +26,36 @@
 
 .topic-body {
 	position: relative;
-	top: 90%;
+	top: 93%;
+	padding-top: 20px;
 	font-size: 18px;
+	margin-top: 0px;
+}
+
+.topic-no-margin {
+	margin: 0px;
+}
+
+.title-topiclist h2 {
+	font-weight: bold;
+	font-size: 50px;;
+}
+
+.title-topiclist h4 {
+	font-size: 30px;;
+}
+.reading-topiclist {
+	font-size: 80%;
+	color: #A4A4A4;
+}
+
+.topic-bottom {
+	position: relative;
+	width: 100%;
+	height: 20px;
+	border-bottom: 1px solid #E6E6E6;
+}
+
+.found-posts {
+	margin: 0 0 30px 0;
 }
