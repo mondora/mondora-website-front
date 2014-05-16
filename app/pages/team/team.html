@@ -12,15 +12,13 @@
 </div>
 
 <div id="workWithUsBannerStripe" ng-if="!user || !user.mondoraTeamMember">
-	<div class="col-sm-1 col-sm-offset-2">
+	<div class="col-sm-6 col-sm-offset-2">
 		<div id="joinUsUserPicture">
 			<div ng-if="user">
 			</div>
 			<img ng-if="user" ng-src="{{user.profile.pictureUrl" class="img-circle" />
 			<i ng-if="!user" class="fa fa-question-circle"></i>
 		</div>
-	</div>
-	<div class="col-sm-3">
 		<div id="joinUsText">
 			<div ng-if="user">
 				<div ng-if="!linkSent">

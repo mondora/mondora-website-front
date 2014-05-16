@@ -24,6 +24,7 @@ angular.module("mnd-web.components.dashboard", [])
 	};
 
 	var getMenu = function () {
+		var user = $scope.user;
 		var beforeItems = [
 			{
 				title: "Home",
@@ -63,8 +64,8 @@ angular.module("mnd-web.components.dashboard", [])
 			}
 		];
 		var dynamicItems = [];
-		if ($scope.user) {
-			if ($scope.user.roles.indexOf("blog") !== -1) {
+		if (user) {
+			if (user.roles && user.roles.indexOf("blog") !== -1) {
 				dynamicItems.push({
 					title: "New post",
 					ngClick: "addPost"
