@@ -123,6 +123,11 @@ angular.module("mnd-web", [
 				var sub = Ceres.subscribe("configurations");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
+		},
+		onEnter: function ($rootScope, $state) {
+			if ($rootScope.user) {
+				$state.go("personalHome");
+			}
 		}
     });
 

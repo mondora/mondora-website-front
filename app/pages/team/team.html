@@ -1,26 +1,25 @@
-<div class="col-sm-8 col-sm-offset-2">
+<div id="teamMembersList" class="col-sm-8 col-sm-offset-2">
 	<br />
 	<a ng-repeat="member in team" ui-sref="user({userId: member._id})" class="teamMember img-circle">
 		<div class="teamMemberOverlay"></div>
 		<img ng-src="{{member.profile.pictureUrl}}" class="img-circle" />
 		<p class="teamMemberText">
-			<b>{{member.profile.name}}</b>
+			<b ng-bind-html="member.profile.name"></b>
 			<br />
-			<i>{{member.profile.motto}}</i>
+			<i ng-bind-html="member.profile.motto"></i>
 		</p>
 	</a>
 </div>
+<div id="teamMembersListFadeout"></div>
 
-<div id="workWithUsBannerStripe" ng-if="!user || !user.mondoraTeamMember">
-	<div class="col-sm-1 col-sm-offset-2">
+<div id="workWithUsBannerStripe">
+	<div class="col-sm-6 col-sm-offset-2" ng-if="!user || !user.mondoraTeamMember">
 		<div id="joinUsUserPicture">
 			<div ng-if="user">
 			</div>
-			<img ng-if="user" ng-src="{{user.profile.pictureUrl" class="img-circle" />
+			<img ng-if="user" ng-src="{{user.profile.pictureUrl}}" class="img-circle" />
 			<i ng-if="!user" class="fa fa-question-circle"></i>
 		</div>
-	</div>
-	<div class="col-sm-3">
 		<div id="joinUsText">
 			<div ng-if="user">
 				<div ng-if="!linkSent">
