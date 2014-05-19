@@ -174,6 +174,7 @@ angular.module("mnd-web.pages.post.edit", [])
 		var post = angular.copy($scope.post);
 		delete post._id;
 		delete post.userId;
+		delete post.authors;
 		$scope.Posts.update(id, post).remote.fail(function (err) {
 			console.log(err);
 		});

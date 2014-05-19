@@ -20,10 +20,10 @@
 	<div class="col-sm-8 col-sm-offset-2">
 		<h1 ng-bind-html="post.title" class="post-title" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h1>
 		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h2>
-		<div class="post-author" ng-repeat="author in post.authors">
+		<a class="post-author" ng-repeat="author in post.authors" ui-sref="user({userId: author.userId})">
 			<img class="img-circle" ng-src="{{author.pictureUrl}}" height="50" />
 			&nbsp;&nbsp;Author {{author.screenName}}
-		</div>
+		</a>
 	</div>
 </div>
 

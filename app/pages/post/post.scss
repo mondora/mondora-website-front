@@ -69,7 +69,13 @@
 }
 
 .post-author {
+	font-size: 18px;
 	color: #aeaeac;
+}
+
+.post-author:hover {
+	color: #aeaeac;
+	text-decoration: none;
 }
 
 .post-body-bottom-spacer {
