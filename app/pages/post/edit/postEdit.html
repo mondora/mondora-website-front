@@ -19,8 +19,7 @@
 
 <div class="post-cant-edit" ng-show="isMobile"> Contenuto non accessibile da dispositivi mobile.</div> 
 <div class="post-title-image" ng-show="!isMobile">
-	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed" alt="Immagine principale" />
-	<!--<img class="blur" ng-src="http://s3.amazonaws.com/mnd-website/img/blur.jpg" ng-if="titleImageIsDisplayed"  />-->
+	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
 </div>
 
 <div class="post-top-buttons" ng-if="isOwner()" ng-show="!isMobile">
@@ -38,30 +37,30 @@
 	</a>
 </div>
 
-<div class="mnd-mind-container grey-border" ng-class="{'black-connections': !titleImageIsDisplayed}" ng-show="!isMobile">
-		<div mnd-mind-map map="post.map" edit="true"></div>
+<div class="mnd-mind-container grey-border" ng-class="{'black-connections': !titleImageIsDisplayed()}" ng-show="!isMobile">
+	<div mnd-mind-map map="post.map" edit="true"></div>
 </div>
 
 <div class="post-header" ng-show="!isMobile">
 	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">
-		<input type="file" ng-file-select="onFileSelect($files)" class="hidden" />
-		<i ng-if="!titleImageIsDisplayed" class="fa fa-picture-o" ng-click="clickFileInput()"></i>
+		<input type="file" id="titleImage" ng-file-select="onFileSelect($files, 'titleImage')" class="hidden" />
+		<i ng-if="!titleImageIsDisplayed()" class="fa fa-picture-o" ng-click="clickFileInput('titleImage')"></i>
 	</div>
 	<div class="col-sm-5" id="post-edit-image-upload-progressbar">
 		<br />
 		<br />
-		<span ng-show="isUploading">
-			<progressbar value="uploadProgress"></progressbar>
+		<span ng-show="isUploading.titleImage">
+			<div progressbar value="uploadProgress.titleImage"></div>
 		</span>
 	</div>
 	<div class="col-sm-1" id="post-edit-image-upload-abort">
 		<br />
 		<br />
-		<i class="fa fa-times" ng-show="isUploading" ng-click="abortUpload()"></i>
+		<i class="fa fa-times" ng-show="isUploading.titleImage" ng-click="abortUpload('titleImage')"></i>
 	</div>
 	<div class="col-sm-8 col-sm-offset-2">
-		<h1 class="simplebox post-title" ng-class="{'color-me-white': titleImageIsDisplayed}" id="postTitleEditor"></h1>
-		<h2 class="simplebox post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed}" id="postSubtitleEditor"></h2>
+		<h1 class="simplebox post-title" ng-class="{'color-me-white': titleImageIsDisplayed()}" id="postTitleEditor"></h1>
+		<h2 class="simplebox post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed()}" id="postSubtitleEditor"></h2>
 	</div>
 </div>
 
@@ -69,6 +68,24 @@
 	<div class="col-sm-8 col-sm-offset-2">
 		<div class="simplebox" id="postBodyEditor"></div>
 		<div class="post-body-bottom-spacer"></div>
+		<!-- Image upload toolbar -->
+		<div id="rightClickToolbar" class="medium-editor-toolbar medium-toolbar-arrow-under medium-editor-toolbar-active">
+			<input type="file" id="bodyImage" ng-file-select="onFileSelect($files, 'bodyImage')" class="hidden" />
+			<ul id="medium-editor-toolbar-actions" class="medium-editor-toolbar-actions clearfix">
+				<li>
+					<button class="medium-editor-action medium-editor-button-first" ng-click="clickFileInput('bodyImage')">
+						<i class="fa fa-picture-o"></i>
+					</button>
+				</li>
+				<li>
+					<button class="medium-editor-action medium-editor-button-last">
+						<i class="fa fa-twitter"></i>
+					</button>
+				</li>
+			</ul>
+		</div>
+		<!-- Image upload progressbar -->
+		<div id="bodyImageProgressbar" ng-class="{hidden: !isUploading.bodyImage}" progressbar value="uploadProgress.bodyImage"></div>
 	</div>
 </div>
 

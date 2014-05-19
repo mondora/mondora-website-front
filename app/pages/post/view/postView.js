@@ -27,19 +27,7 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.directive("readonlyEditor", function () {
-
-	var clearWindowSelection = function () {
-		if (window.getSelection) {
-			if (window.getSelection().empty) {
-				window.getSelection().empty();
-			} else if (window.getSelection().removeAllRanges) {
-				window.getSelection().removeAllRanges();
-			}
-		} else if (document.selection) {
-			document.selection.empty();
-		}
-	};
+.directive("readonlyEditor", function (ClearWindowSelectionService) {
 
 	var Tweet = function (screenName) {
 		this.button = document.createElement("button");
@@ -51,7 +39,7 @@ angular.module("mnd-web.pages.post.view", [])
 			tweetText += screenName + " " + window.location.href;
 			var url = tweetBaseUrl + tweetText;
 			var popup = window.open(url, "popup", "height=420,width=550");
-			clearWindowSelection();
+			ClearWindowSelectionService.clear();
 			if (!popup.focus) {
 				popup.focus();
 			}
@@ -70,7 +58,7 @@ angular.module("mnd-web.pages.post.view", [])
 				$scope.closeCommentBar();
 				$scope.openCommentBarAt($scope.$index);
 				$scope.comment.anchor = window.getSelection().toString();
-				clearWindowSelection();
+				ClearWindowSelectionService.clear();
 			});
 		};
 	};

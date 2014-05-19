@@ -1,6 +1,6 @@
 angular.module("mnd-web.pages.post.edit", [])
 
-.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload, CheckMobileService) {
+.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload, CheckMobileService, ClearWindowSelectionService) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -60,8 +60,6 @@ angular.module("mnd-web.pages.post.edit", [])
 	};
 	new MediumEditor(body, bodyEditorOptions);
 
-
-
 	//////////////////////////////////
 	// Post publishing and deleting //
 	//////////////////////////////////
@@ -90,27 +88,29 @@ angular.module("mnd-web.pages.post.edit", [])
 		return $scope.user && $scope.post.userId === $scope.user._id;
 	};
 
-
-
 	//////////////////
 	// Image upload //
 	//////////////////
 
-	// Bind click on the image icon to the click on the (hidden) input element
-	$scope.clickFileInput = function () {
-		document.querySelector("#post-edit-image-upload input").click();
+	// Bind click to click on the (hidden) input element
+	$scope.clickFileInput = function (target) {
+		document.getElementById(target).click();
 	};
 
-	$scope.titleImageIsDisplayed = ($scope.post.titleImageUrl !== undefined);
+	$scope.isUploading = {};
+	$scope.uploadProgress = {};
+	var imageUpload = {};
+	var afterUpload = {};
+	var beforeUpload = {};
 
-	$scope.abortUpload = function () {
-		$scope.uploadProgress = 0;
-		$scope.isUploading = false;
-		$scope.imageUpload.abort();
-		delete $scope.imageUpload;
+	$scope.abortUpload = function (target) {
+		$scope.uploadProgress[target] = 0;
+		$scope.isUploading[target] = false;
+		imageUpload[target].abort();
+		delete imageUpload[target];
 	};
 
-	$scope.onFileSelect = function (files) {
+	$scope.onFileSelect = function (files, target) {
 		var file = files[0];
 		if (!/image/g.test(file.type)) {
 			alert("Devi caricare un'immagine.");
@@ -128,21 +128,76 @@ angular.module("mnd-web.pages.post.edit", [])
 			},
 			file: file
 		};
-		$scope.isUploading = true;
-		$scope.imageUpload = $upload.upload(uploadOptions)
+		var baseUrl = "https://s3-eu-west-1.amazonaws.com/ngtest/";
+
+		beforeUpload[target]();
+		$scope.isUploading[target] = true;
+		imageUpload[target] = $upload.upload(uploadOptions)
 			.progress(function (evt) {
-				$scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
+				$scope.uploadProgress[target] = parseInt(100.0 * evt.loaded / evt.total);
 			})
 			.success(function (response) {
-				$scope.uploadProgress = 100;
-				$scope.isUploading = false;
-				$scope.post.titleImageUrl = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
-				$scope.titleImageIsDisplayed = true;
-				$scope.save();
+				$scope.uploadProgress[target] = 100;
+				$scope.isUploading[target] = false;
+				afterUpload[target](baseUrl + fileName);
 			});
 	};
 
+	/////////////////
+	// Title image //
+	/////////////////
 
+	$scope.titleImageIsDisplayed = function () {
+		if (!$scope.post) return;
+		return $scope.post.titleImageUrl !== undefined;
+	};
+
+	beforeUpload.titleImage = function () {};
+
+	afterUpload.titleImage = function (url) {
+		$scope.post.titleImageUrl = url;
+	}; 
+
+	////////////////
+	// Body image //
+	////////////////
+
+	var rightClickToolbar = document.getElementById("rightClickToolbar");
+	var imageTargetParagraph;
+	var progressbar;
+
+	beforeUpload.bodyImage = function () {
+		$scope.dontSave = true;
+		progressbar = angular.element(document.getElementById("bodyImageProgressbar"));
+		imageTargetParagraph.after(progressbar);
+	};
+
+	afterUpload.bodyImage = function (url) {
+		$scope.dontSave = false;
+		angular.element(rightClickToolbar).after(progressbar);
+		var img = angular.element("<img />");
+		img.attr("src", url);
+		img.addClass("image-responsive");
+		imageTargetParagraph.after(img);
+	};
+
+	body.addEventListener("contextmenu", function (e) {
+		if (e.toElement.tagName === "IMG") return;
+		imageTargetParagraph = angular.element(e.toElement);
+		e.preventDefault();
+		ClearWindowSelectionService.clear();
+		rightClickToolbar.style.display = "block";
+		var computedStyle = window.getComputedStyle(rightClickToolbar);
+		var width = parseInt(computedStyle.width, 10);
+		var height = parseInt(computedStyle.height, 10);
+		rightClickToolbar.style.top = (e.layerY - (height + 20)) + "px";
+		rightClickToolbar.style.left = (e.layerX - width/2) + "px";
+		var listener = function () {
+			rightClickToolbar.style.display = "none";
+			document.removeEventListener("click", listener);
+		};
+		document.addEventListener("click", listener);
+	});
 
 	///////////////////
 	// Save function //
@@ -164,6 +219,9 @@ angular.module("mnd-web.pages.post.edit", [])
 	};
 
 	$scope.save = function () {
+		if ($scope.dontSave) {
+			return;
+		}
 		// Update innerHTML-s
 		$scope.post.title = title.innerHTML;
 		$scope.post.subtitle = subtitle.innerHTML;

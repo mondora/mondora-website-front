@@ -63,3 +63,21 @@
 .btn.btn-default.no:hover {
 	background-color: #01DF01;
 }
+
+#rightClickToolbar {
+	display: none;
+	position: absolute;
+}
+
+#rightClickToolbar ul {
+	display: block;
+}
+
+#bodyImageProgressbar,
+#bodyImageProgressbar * {
+	height: 10px;
+}
+
+#bodyImageProgressbar .progress-bar {
+	background-color: #aeaeac;
+}

@@ -51,6 +51,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
 	"mnd-web.components.check-mobile",
+	"mnd-web.components.clear-selection",
 	"mnd-web.pages.home",
 	"mnd-web.pages.staticHome",
 	"mnd-web.pages.personalHome",
