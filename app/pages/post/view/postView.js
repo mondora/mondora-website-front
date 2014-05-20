@@ -95,11 +95,16 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.filter("filterCommentsByApprovalStatus", function () {
-	return function (comments, userId) {
+.filter("filterCommentsByUser", function () {
+	return function (comments, user, isAuthor) {
+		var userId;
+		if (user) userId = user._id;
 		var filteredComments = [];
 		comments.forEach(function (comment) {
-			if (comment.approved || comment.userId === userId) {
+			// If the user is an author, display it
+			// If the comment belongs to the current user, display it
+			// If the comment is approved, display it
+			if (isAuthor || comment.approved || comment.userId === userId) {
 				filteredComments.push(comment);
 			}
 		});
@@ -107,7 +112,17 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.controller("PostViewController", function ($scope, $timeout, $stateParams, $state, $filter, MndTagStrippingService, firstLevelHtmlParser, readTimeEstimatingService, CheckMobileService) {
+.controller("PostViewController", function (
+	$scope,
+	$timeout,
+	$stateParams,
+	$state,
+	$filter,
+	MndTagStrippingService,
+	firstLevelHtmlParser,
+	readTimeEstimatingService,
+	CheckMobileService
+) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -194,12 +209,6 @@ angular.module("mnd-web.pages.post.view", [])
 	$scope.openCommentBarAt = function (index, event) {
 		$scope.commentBarIsOpen = true;
 		$scope.commentBarStatus[index] = true;
-		//var currentComment = event.target.parentElement.parentElement.querySelector(".modal-dialog");
-		//var currentParagraph = event.target.parentElement.parentElement.querySelector("p");
-		//window.scrollBy(0, currentParagraph.scrollHeight);
-		//$timeout(function () {
-		//	currentComment.scrollIntoView();
-		//}, 0);
 	};
 
 	$scope.commentBarIsOpenAt = function (index) {

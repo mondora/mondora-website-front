@@ -64,20 +64,34 @@
 	background-color: #01DF01;
 }
 
-#rightClickToolbar {
+.extraToolbar {
 	display: none;
 	position: absolute;
 }
 
-#rightClickToolbar ul {
+.extraToolbar ul {
 	display: block;
 }
 
-#bodyImageProgressbar,
-#bodyImageProgressbar * {
+.bodyImageProgressbar,
+.bodyImageProgressbar * {
 	height: 10px;
 }
 
-#bodyImageProgressbar .progress-bar {
+.bodyImageProgressbar .progress-bar {
 	background-color: #aeaeac;
+}
+
+.bodyImageLeft {
+	width: 50%;
+	float: left;
+}
+
+.bodyImageCenter {
+	width: 100%;
+}
+
+.bodyImageRight {
+	width: 50%;
+	float: right;
 }

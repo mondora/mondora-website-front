@@ -1,12 +1,12 @@
 angular.module("mnd-web.pages.user", [])
 
-.controller("UserController", function ($scope, $stateParams) {
+.controller("UserController", function ($scope, $stateParams, posts) {
 
-	////////////////////
+	/////////////////
 	// User object //
-	////////////////////
+	/////////////////
 
 	$scope.user = $scope.Users.reactiveQuery({_id: $stateParams.userId}).result[0];
-
+	$scope.posts = posts;
 
 });

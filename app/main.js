@@ -173,6 +173,10 @@ angular.module("mnd-web", [
 			userSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+			},
+			posts: function (TimeoutPromiseService, $stateParams) {
+				var meth = Ceres.call("getPostsByAuthor", $stateParams.userId);
+				return TimeoutPromiseService.timeoutPromise(meth.result, 5000);
 			}
 		}
     });

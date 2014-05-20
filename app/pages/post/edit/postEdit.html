@@ -69,7 +69,7 @@
 		<div class="simplebox" id="postBodyEditor"></div>
 		<div class="post-body-bottom-spacer"></div>
 		<!-- Image upload toolbar -->
-		<div id="rightClickToolbar" class="medium-editor-toolbar medium-toolbar-arrow-under medium-editor-toolbar-active">
+		<div id="rightClickToolbar" class="extraToolbar medium-editor-toolbar medium-toolbar-arrow-under medium-editor-toolbar-active">
 			<input type="file" id="bodyImage" ng-file-select="onFileSelect($files, 'bodyImage')" class="hidden" />
 			<ul id="medium-editor-toolbar-actions" class="medium-editor-toolbar-actions clearfix">
 				<li>
@@ -84,9 +84,41 @@
 				</li>
 			</ul>
 		</div>
-		<!-- Image upload progressbar -->
-		<div id="bodyImageProgressbar" ng-class="{hidden: !isUploading.bodyImage}" progressbar value="uploadProgress.bodyImage"></div>
+		<!-- Image positioning toolbar -->
+		<div id="imagePositioningToolbar" class="extraToolbar medium-editor-toolbar medium-toolbar-arrow-under medium-editor-toolbar-active">
+			<ul id="medium-editor-toolbar-actions" class="medium-editor-toolbar-actions clearfix">
+				<li>
+					<button class="medium-editor-action medium-editor-button-first" ng-click="moveImage.left()">
+						<i class="fa fa-align-left"></i>
+					</button>
+				</li>
+				<li>
+					<button class="medium-editor-action" ng-click="moveImage.center()">
+						<i class="fa fa-align-justify"></i>
+					</button>
+				</li>
+				<li>
+					<button class="medium-editor-action" ng-click="moveImage.right()">
+						<i class="fa fa-align-right"></i>
+					</button>
+				</li>
+				<li>
+					<button class="medium-editor-action medium-editor-button-last" ng-click="removeImage()">
+						<i class="fa fa-trash-o"></i>
+					</button>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
 
 <div class="post-end-spacer" ng-show="!isMobile"></div>
+
+<!-- Image upload progressbar -->
+<script type="text/ng-template" id="pages/post/edit/progressbar.html">
+	<div class="bodyImageProgressbar" ng-class="{hidden: !isUploading.bodyImage}" progressbar value="uploadProgress.bodyImage"></div>
+</script>
+
+<script type="text/ng-template" id="pages/post/edit/bodyImage.html">
+	<img class="bodyImageCenter" ng-src="{{url}}" />
+</script>

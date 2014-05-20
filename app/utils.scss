@@ -9,6 +9,12 @@
 	text-decoration: none;
 	color: inherit;
 }
+.mnd-ignore-mouse-input {
+	pointer-events:none;
+}
+.mnd-top-most {
+	z-index: 1000;
+}
 .mnd-fullsize {
 	position: relative;
 	width: 100%;
@@ -52,4 +58,9 @@ span.mnd-width-10 {
 	outline: none;
 	border: none !important;
 	box-shadow: none !important;
+}
+
+// Font-awesome dimension classes
+.fa-32 {
+	font-size: 32px;
 }

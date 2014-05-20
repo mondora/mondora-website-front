@@ -1,6 +1,16 @@
 angular.module("mnd-web.pages.post.edit", [])
 
-.controller("PostEditController", function ($scope, $interval, $state, $stateParams, $upload, CheckMobileService, ClearWindowSelectionService) {
+.controller("PostEditController", function (
+	$scope,
+	$interval,
+	$state,
+	$stateParams,
+	$templateCache,
+	$compile,
+	$upload,
+	CheckMobileService,
+	ClearWindowSelectionService
+) {
 
 	///////////////////////////
 	// Retrieve post to edit //
@@ -131,6 +141,7 @@ angular.module("mnd-web.pages.post.edit", [])
 		var baseUrl = "https://s3-eu-west-1.amazonaws.com/ngtest/";
 
 		beforeUpload[target]();
+		$scope.uploadProgress[target] = 0;
 		$scope.isUploading[target] = true;
 		imageUpload[target] = $upload.upload(uploadOptions)
 			.progress(function (evt) {
@@ -164,21 +175,25 @@ angular.module("mnd-web.pages.post.edit", [])
 
 	var rightClickToolbar = document.getElementById("rightClickToolbar");
 	var imageTargetParagraph;
+	var imagePositioningToolbar = document.getElementById("imagePositioningToolbar");
+	var imageTarget;
+	var progressbarTemplate = $templateCache.get("pages/post/edit/progressbar.html");
 	var progressbar;
+	var imageTemplate = $templateCache.get("pages/post/edit/bodyImage.html");
 
 	beforeUpload.bodyImage = function () {
 		$scope.dontSave = true;
-		progressbar = angular.element(document.getElementById("bodyImageProgressbar"));
+		progressbar = $compile(progressbarTemplate)($scope);
 		imageTargetParagraph.after(progressbar);
 	};
 
 	afterUpload.bodyImage = function (url) {
+		progressbar.remove();
 		$scope.dontSave = false;
-		angular.element(rightClickToolbar).after(progressbar);
-		var img = angular.element("<img />");
-		img.attr("src", url);
-		img.addClass("image-responsive");
-		imageTargetParagraph.after(img);
+		var scope = $scope.$new();
+		scope.url = url;
+		var image = $compile(imageTemplate)(scope);
+		imageTargetParagraph.after(image);
 	};
 
 	body.addEventListener("contextmenu", function (e) {
@@ -198,6 +213,45 @@ angular.module("mnd-web.pages.post.edit", [])
 		};
 		document.addEventListener("click", listener);
 	});
+
+	body.addEventListener("click", function (e) {
+		if (e.toElement.tagName !== "IMG") return;
+		imageTarget = angular.element(e.toElement);
+		imagePositioningToolbar.style.display = "block";
+		var computedStyle = window.getComputedStyle(imagePositioningToolbar);
+		var width = parseInt(computedStyle.width, 10);
+		var height = parseInt(computedStyle.height, 10);
+		window.a = imageTarget;
+		imagePositioningToolbar.style.top = (imageTarget[0].offsetTop - (height + 20)) + "px";
+		imagePositioningToolbar.style.left = (imageTarget[0].offsetLeft + imageTarget[0].clientWidth/2 - width/2) + "px";
+		var listener = function (e) {
+			if (e.toElement.tagName === "IMG") return;
+			imagePositioningToolbar.style.display = "none";
+			document.removeEventListener("click", listener);
+		};
+		setTimeout(function () {
+			document.addEventListener("click", listener);
+		}, 100);
+	});
+
+	$scope.moveImage = {
+		left: function () {
+			imageTarget.removeClass("bodyImageLeft bodyImageCenter bodyImageRight");
+			imageTarget.addClass("bodyImageLeft");
+		},
+		center: function () {
+			imageTarget.removeClass("bodyImageLeft bodyImageCenter bodyImageRight");
+			imageTarget.addClass("bodyImageCenter");
+		},
+		right: function () {
+			imageTarget.removeClass("bodyImageLeft bodyImageCenter bodyImageRight");
+			imageTarget.addClass("bodyImageRight");
+		}
+	};
+
+	$scope.removeImage = function () {
+		imageTarget.remove();
+	};
 
 	///////////////////
 	// Save function //
