@@ -5,11 +5,11 @@
 			//debug: true
 		},
 		test: {
-			host: "api.nocheros.info",
+			host: "test.api.mondora.com",
 			debug: true
 		},
 		prod: {
-			host: "met-server.nocheros.info",
+			host: "prod.api.mondora.com",
 			ssl: true
 		}
 	};
