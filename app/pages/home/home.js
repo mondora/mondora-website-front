@@ -2,7 +2,7 @@ angular.module("mnd-web.pages.home", [])
 
 .controller("HomeController", function ($scope, $sce, $state) {
 
-	var homeConfig = $scope.Configurations.reactiveQuery({page: "home"}).result[0];
+	var homeConfig = $scope.Configurations.reactiveQuery({name: "home"}).result[0];
 	$scope.sprinkleText = homeConfig.sprinkleText;
 	$scope.banner = homeConfig.banner;
 

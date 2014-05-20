@@ -227,7 +227,7 @@ angular.module("mnd-web.pages.post.view", [])
 		if ($scope.isAuthor()) {
 			return paragraphComments.length > 0;
 		}
-		var approvedComments = $filter("filterCommentsByApprovalStatus")(paragraphComments, $scope.user && $scope.user._id);
+		var approvedComments = $filter("filterCommentsByUser")(paragraphComments, $scope.user);
 		return approvedComments.length > 0;
 	};
 
@@ -237,7 +237,7 @@ angular.module("mnd-web.pages.post.view", [])
 		if ($scope.isAuthor()) {
 			return paragraphComments.length;
 		}
-		var approvedComments = $filter("filterCommentsByApprovalStatus")(paragraphComments, $scope.user && $scope.user._id);
+		var approvedComments = $filter("filterCommentsByUser")(paragraphComments, $scope.user);
 		return approvedComments.length;
 	};
 

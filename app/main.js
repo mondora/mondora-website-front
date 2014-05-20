@@ -107,6 +107,10 @@ angular.module("mnd-web", [
 						}
 						return true;
 					})
+					.then(function () {
+						var sub = Ceres.subscribe("configurations");
+						return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+					})
 					.fail(function () {
 						$state.go("staticHome");
 					});
@@ -119,23 +123,19 @@ angular.module("mnd-web", [
 		parent: "root",
         templateUrl: "pages/home/home.html",
 		controller: "HomeController",
-		resolve: {
-			homeConfig: function (TimeoutPromiseService) {
-				var sub = Ceres.subscribe("configurations");
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
-			}
-		},
 		onEnter: function ($rootScope, $state) {
 			if ($rootScope.user) {
 				$state.go("personalHome");
 			}
-		}
+		},
+		public: true
     });
 
     $stateProvider.state("staticHome", {
         url: "/staticHome",
         templateUrl: "pages/staticHome/staticHome.html",
-		controller: "StaticHomeController"
+		controller: "StaticHomeController",
+		public: true
     });
 
     $stateProvider.state("personalHome", {
@@ -148,13 +148,15 @@ angular.module("mnd-web", [
     $stateProvider.state("notFound", {
         url: "/notFound",
 		parent: "root",
-        templateUrl: "pages/notFound/notFound.html"
+        templateUrl: "pages/notFound/notFound.html",
+		public: true
     });
 
     $stateProvider.state("serverProblems", {
         url: "/serverProblems",
 		parent: "root",
-        templateUrl: "pages/serverProblems/serverProblems.html"
+        templateUrl: "pages/serverProblems/serverProblems.html",
+		public: true
     });
 
     $stateProvider.state("profile", {
@@ -178,7 +180,8 @@ angular.module("mnd-web", [
 				var meth = Ceres.call("getPostsByAuthor", $stateParams.userId);
 				return TimeoutPromiseService.timeoutPromise(meth.result, 5000);
 			}
-		}
+		},
+		public: true
     });
 
     $stateProvider.state("team", {
@@ -191,7 +194,8 @@ angular.module("mnd-web", [
 				var sub = Ceres.subscribe("teamUsers");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
-		}
+		},
+		public: true
     });
 
     $stateProvider.state("postView", {
@@ -204,7 +208,8 @@ angular.module("mnd-web", [
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
-		}
+		},
+		public: true
     });
 
     $stateProvider.state("postEdit", {
@@ -230,7 +235,8 @@ angular.module("mnd-web", [
 				var sub = Ceres.subscribe("latestPosts");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
 			}
-		}
+		},
+		public: true
     });
 
     $stateProvider.state("topic", {
@@ -243,7 +249,8 @@ angular.module("mnd-web", [
 				var meth = Ceres.call("getTopic", $stateParams.name);
 				return TimeoutPromiseService.timeoutPromise(meth.result, 5000);
 			}
-		}
+		},
+		public: true
     });
 
     $urlRouterProvider.otherwise("/");
@@ -285,6 +292,9 @@ angular.module("mnd-web", [
 		$rootScope.safeApply(function () {
 			delete $rootScope.user;
 			$rootScope.signedIn = false;
+			if (!$state.current.public) {
+				$state.go("home");
+			}
 		});
 	});
 

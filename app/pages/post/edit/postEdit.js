@@ -12,6 +12,9 @@ angular.module("mnd-web.pages.post.edit", [])
 	ClearWindowSelectionService
 ) {
 
+	// AmazonS3Config
+	var amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3Config"}).result[0];
+
 	///////////////////////////
 	// Retrieve post to edit //
 	///////////////////////////
@@ -129,7 +132,7 @@ angular.module("mnd-web.pages.post.edit", [])
 		var randomPrefix = Math.round(Math.random() * 1E16);
 		var fileName = randomPrefix + "__" + file.name;
 		var uploadOptions = {
-			url: "https://ngtest.s3.amazonaws.com/",
+			url: amazonS3Config.postUrl,
 			method: "POST",
 			data: {
 				"key": fileName,
@@ -138,7 +141,7 @@ angular.module("mnd-web.pages.post.edit", [])
 			},
 			file: file
 		};
-		var baseUrl = "https://s3-eu-west-1.amazonaws.com/ngtest/";
+		var baseUrl = amazonS3Config.getUrl;
 
 		beforeUpload[target]();
 		$scope.uploadProgress[target] = 0;

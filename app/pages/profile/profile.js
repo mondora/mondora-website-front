@@ -2,6 +2,9 @@ angular.module("mnd-web.pages.profile", [])
 
 .controller("ProfileController", function ($scope, $interval, $upload) {
 
+	// AmazonS3Config
+	var amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3Config"}).result[0];
+
 	////////////////////
 	// Profile object //
 	////////////////////
@@ -137,7 +140,7 @@ angular.module("mnd-web.pages.profile", [])
 		var randomPrefix = Math.round(Math.random() * 1E16);
 		var fileName = randomPrefix + "__" + file.name;
 		var uploadOptions = {
-			url: "https://ngtest.s3.amazonaws.com/",
+			url: amazonS3Config.postUrl,
 			method: "POST",
 			data: {
 				"key": fileName,
@@ -154,7 +157,7 @@ angular.module("mnd-web.pages.profile", [])
 			.success(function (response) {
 				$scope.uploadProgress = 100;
 				$scope.isUploading = false;
-				$scope.profile.pictureUrl = "https://s3-eu-west-1.amazonaws.com/ngtest/" + fileName;
+				$scope.profile.pictureUrl = amazonS3Config.getUrl + fileName;
 				$scope.save();
 			});
 	};
