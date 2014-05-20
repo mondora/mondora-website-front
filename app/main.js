@@ -5,12 +5,10 @@
 			//debug: true
 		},
 		test: {
-			host: "test.api.mondora.com",
-			debug: true
+			host: "test.api.mondora.com"
 		},
 		prod: {
-			host: "prod.api.mondora.com",
-			ssl: true
+			host: "prod.api.mondora.com"
 		}
 	};
 	var cfg;
