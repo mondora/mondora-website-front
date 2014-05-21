@@ -15,6 +15,7 @@ angular.module("mnd-web.components.menu-editor", [])
 					});
 				},
 				addSubitem: function (item) {
+					delete item.href;
 					item.type = item.type || "submenu";
 					item.items = item.items || [];
 					item.items.push({

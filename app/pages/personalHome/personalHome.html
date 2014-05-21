@@ -10,7 +10,10 @@
 	<br />
 	<br />
 	<br />
-	<div>
-		<a ui-sref="profile()" class="personalHomeAppLink"><i class="fa fa-user"></i></a>
+	<div class="personalHomeApp">
+		<a ui-sref="profile()"><i class="fa fa-user"></i></a>
+	</div>
+	<div ng-if="isAdmin()" class="personalHomeApp">
+		<a ui-sref="admin()"><i class="fa fa-dashboard"></i></a>
 	</div>
 </div>

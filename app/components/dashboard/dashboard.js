@@ -1,6 +1,7 @@
 angular.module("mnd-web.components.dashboard", [])
 
 .controller("SidebarController", function ($scope, $state) {
+
 	$scope.addPost = function () {
 		var post = {
 			userId: $scope.user._id,
@@ -23,11 +24,18 @@ angular.module("mnd-web.components.dashboard", [])
 		});
 	};
 
-	var menuConfig = $scope.Configurations.reactiveQuery({name: "menu"}).result[0];
-	var beforeItems = menuConfig.beforeItems;
-	var afterItems = menuConfig.afterItems;
+	var menuConfigQuery = $scope.Configurations.reactiveQuery({name: "menu"});
+	var menuConfig = menuConfigQuery.result[0];
+	menuConfigQuery.on("change", function () {
+		$scope.safeApply(function () {
+			menuConfig = menuConfigQuery.result[0];
+			$scope.menu = getMenu();
+		});
+	});
 
 	var getMenu = function () {
+		var beforeItems = menuConfig.beforeItems;
+		var afterItems = menuConfig.afterItems;
 		var user = $scope.user;
 		var dynamicItems = [];
 		if (user) {
@@ -47,7 +55,6 @@ angular.module("mnd-web.components.dashboard", [])
 		};
 		return menu;
 	};
-
 
 	$scope.$watch("user", function () {
 		$scope.menu = getMenu();
