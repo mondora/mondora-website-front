@@ -1,0 +1,56 @@
+<accordion class="mnd-menu-accordion">
+	<div ng-repeat="item in items">
+
+		<accordion-group class="mnd-menu-accordion-heading">
+			<accordion-heading>
+				{{item.title}}
+			</accordion-heading>
+			<div class="form-group">
+				<label>
+					<i class="fa fa-font"></i>
+					&nbsp;
+					Title
+				</label>
+				<input type="text" class="form-control" placeholder="Title" ng-model="item.title" />
+			</div>
+			<div class="form-group" ng-if="item.type !== 'submenu'">
+				<label>
+					<i class="fa fa-link"></i>
+					&nbsp;
+					Href
+				</label>
+				<input type="text" class="form-control" placeholder="Href" ng-model="item.href" />
+			</div>
+			<button type="button" class="btn btn-default" ng-click="menu.addSubitem(item)">Add subitem</button>
+			<button type="button" class="btn btn-default pull-right" ng-click="menu.deleteItem($index)">Delete</button>
+		</accordion-group>
+
+		<accordion-group ng-if="item.type === 'submenu'" ng-repeat="subitem in item.items" class="mnd-menu-accordion-heading mnd-menu-accordion-indented">
+			<accordion-heading>
+				{{subitem.title}}
+			</accordion-heading>
+			<div class="form-group">
+				<label>
+					<i class="fa fa-font"></i>
+					&nbsp;
+					Title
+				</label>
+				<input type="text" class="form-control" placeholder="Title" ng-model="subitem.title" />
+			</div>
+			<div class="form-group">
+				<label>
+					<i class="fa fa-link"></i>
+					&nbsp;
+					Href
+				</label>
+				<input type="text" class="form-control" placeholder="Href" ng-model="subitem.href" />
+			</div>
+			<button type="button" class="btn btn-default pull-right" ng-click="menu.deleteSubitem(item, $index)">Delete</button>
+		</accordion-group>
+
+	</div>
+</accordion>
+
+<br />
+
+<button type="button" class="btn btn-default" ng-click="menu.addItem()">Add subitem</button>

@@ -1,8 +1,7 @@
 (function () {
 	var config = {
 		dev: {
-			host: "localhost:3000",
-			//debug: true
+			host: "localhost:3000"
 		},
 		test: {
 			host: "test.api.mondora.com"
@@ -50,10 +49,12 @@ angular.module("mnd-web", [
 	"mnd-web.components.center",
 	"mnd-web.components.check-mobile",
 	"mnd-web.components.clear-selection",
+	"mnd-web.components.menu-editor",
 	"mnd-web.pages.home",
 	"mnd-web.pages.staticHome",
 	"mnd-web.pages.personalHome",
 	"mnd-web.pages.profile",
+	"mnd-web.pages.admin",
 	"mnd-web.pages.team",
 	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
@@ -162,6 +163,13 @@ angular.module("mnd-web", [
 		parent: "root",
         templateUrl: "pages/profile/profile.html",
 		controller: "ProfileController"
+    });
+
+    $stateProvider.state("admin", {
+        url: "/admin",
+		parent: "root",
+        templateUrl: "pages/admin/admin.html",
+		controller: "AdminController"
     });
 
     $stateProvider.state("user", {

@@ -3,7 +3,7 @@ angular.module("mnd-web.pages.profile", [])
 .controller("ProfileController", function ($scope, $interval, $upload) {
 
 	// AmazonS3Config
-	var amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3Config"}).result[0];
+	var amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3"}).result[0];
 
 	////////////////////
 	// Profile object //

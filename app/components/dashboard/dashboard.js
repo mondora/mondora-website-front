@@ -23,46 +23,12 @@ angular.module("mnd-web.components.dashboard", [])
 		});
 	};
 
+	var menuConfig = $scope.Configurations.reactiveQuery({name: "menu"}).result[0];
+	var beforeItems = menuConfig.beforeItems;
+	var afterItems = menuConfig.afterItems;
+
 	var getMenu = function () {
 		var user = $scope.user;
-		var beforeItems = [
-			{
-				title: "Home",
-				href: "/#/"
-			}
-		];
-		var afterItems = [
-			{
-				title: "Meet the team",
-				href: "/#/team"
-			},
-			{
-				title: "Governance",
-				href: "http://www.mondora.com"
-			},
-			{
-				title: "Formazione",
-				href: "http://www.mondora.com"
-			},
-			{
-				title: "Community",
-				href: "http://www.mondora.com"
-			},
-			{
-				title: "My mondora",
-				type: "submenu",
-				items: [
-					{
-						title: "Pomodoro",
-						href: "http://www.mondora.com"
-					},
-					{
-						title: "AaS",
-						href: "http://www.mondora.com"
-					}
-				]
-			}
-		];
 		var dynamicItems = [];
 		if (user) {
 			if (user.roles && user.roles.indexOf("blog") !== -1) {

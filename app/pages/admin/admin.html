@@ -1,0 +1,65 @@
+<div class="col-sm-8 col-sm-offset-2">
+
+	<br />
+	<br />
+
+	<div class="row">
+
+		<div class="col-sm-12">
+			<h3>Menu configuration</h3>
+		</div>
+
+		<div class="col-sm-6">
+			<h4>Before items</h4>
+			<div mnd-menu-editor items="menuConfig.beforeItems"></div>
+		</div>
+
+		<div class="col-sm-6">
+			<h4>After items</h4>
+			<div mnd-menu-editor items="menuConfig.afterItems"></div>
+		</div>
+
+	</div>
+
+	<br />
+	<br />
+
+	<div class="row">
+
+		<div class="col-sm-12">
+			<h3>Home configuration</h3>
+		</div>
+
+		<div class="col-sm-5">
+			<h4>Sprinkle text</h4>
+			<textarea class="form-control" rows="5" ng-model="homeConfig.sprinkleText"></textarea>
+		</div>
+
+		<div class="col-sm-6 col-sm-offset-1">
+			<h4>Banner</h4>
+			<div class="mnd-input-vertical-group">
+				<input type="text" class="form-control" ng-model="homeConfig.banner.title" placeholder="Title" />
+				<input type="text" class="form-control" ng-model="homeConfig.banner.date" placeholder="Date" />
+				<input type="text" class="form-control" ng-model="homeConfig.banner.text" placeholder="Text" />
+			</div>
+		</div>
+	
+	</div>
+
+	<br />
+	<br />
+
+	<h3>AmazonS3 configuration</h3>
+
+	<div class="form-group">
+		<label>Post URL (to upload)</label>
+		<input type="text" class="form-control" ng-model="amazonS3Config.postUrl" />
+	</div>
+
+	<div class="form-group">
+		<label>Get URL (to download)</label>
+		<input type="text" class="form-control" ng-model="amazonS3Config.getUrl" />
+	</div>
+
+
+</div>

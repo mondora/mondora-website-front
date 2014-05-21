@@ -13,7 +13,7 @@ angular.module("mnd-web.pages.post.edit", [])
 ) {
 
 	// AmazonS3Config
-	var amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3Config"}).result[0];
+	var amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3"}).result[0];
 
 	///////////////////////////
 	// Retrieve post to edit //
