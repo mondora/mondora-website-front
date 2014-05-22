@@ -86,6 +86,10 @@ angular.module("mnd-web", [
 	};
 })
 
+.config(function ($locationProvider) {
+	$locationProvider.hashPrefix("!");
+})
+
 .config(function ($stateProvider, $urlRouterProvider) {
 
 	// Here we should configure ng-asteroid before the router
