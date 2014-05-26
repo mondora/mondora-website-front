@@ -168,6 +168,9 @@ angular.module("mnd-web.pages.profile", [])
 	// Save function //
 	///////////////////
 
+	// Only update on change
+	var profileCache = angular.copy($scope.profile);
+
 	$scope.save = function () {
 		// Update innerHTML-s
 		$scope.profile.bio = bio.innerHTML;
@@ -180,11 +183,16 @@ angular.module("mnd-web.pages.profile", [])
 		$scope.profile.linkedInUrl = linkedIn.innerHTML;
 		$scope.profile.githubUrl = github.innerHTML;
 
-		$scope.Users.update($scope.user._id, {profile: $scope.profile}).remote.fail(function (err) {
-			console.log(err);
-		});
+		var profile = angular.copy($scope.profile);
+		if (!angular.equals(profile, profileCache)) {
+			profileCache = profile;
+			$scope.Users.update($scope.user._id, {profile: profile}).remote.fail(function (err) {
+				console.log(err);
+			});
+		}
+
 	};
-	var interval = $interval($scope.save, 5000);
+	var interval = $interval($scope.save, 2000);
 	$scope.$on("$destroy", function () {
 		$interval.cancel(interval);
 	});

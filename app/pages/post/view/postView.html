@@ -8,8 +8,8 @@
 </div>
 
 <div id="mnd-post-sprinkle-container">
-	<div mnd-sprinkle text="{{sprinklePostText()}}"></div>
-	<div class="pull-right read-time">Reading time {{estimateReadingTime()}} min</div>
+	<div mnd-sprinkle html="{{post.body}}" time="estimateReadingTime"></div>
+	<div class="pull-right read-time">Reading time {{estimateReadingTime}} min</div>
 </div>
 
 <div class="mnd-mind-container">

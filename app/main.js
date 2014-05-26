@@ -68,7 +68,6 @@ angular.module("mnd-web", [
 	"mnd-web.templates",
 	"mnd-web.components.dashboard",
 	"mnd-web.components.mindmap",
-	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
 	"mnd-web.components.check-mobile",
 	"mnd-web.components.clear-selection",

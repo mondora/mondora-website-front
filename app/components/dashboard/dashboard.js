@@ -47,7 +47,7 @@ angular.module("mnd-web.components.dashboard", [])
 			}
 			dynamicItems.push({
 				title: "Profile",
-				href: "/#/profile"
+				href: "/#!/profile"
 			});
 		}
 		var menu = {

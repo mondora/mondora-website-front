@@ -261,6 +261,13 @@ gulp.task("buildMac", function (cb) {
 // Start dev environment //
 ///////////////////////////
 
+var buildDevFonts = function () {
+	util.print("Building fonts... ");
+	mkdirp.sync("builds/dev/dist/fonts");
+	buildVendorFontsGlyphs("builds/dev/dist/fonts");
+	util.print("done\n");
+};
+
 var buildDevCss = function (lrServer) {
 	util.print("Building css... ");
 	mkdirp.sync("builds/dev/dist/css");
@@ -268,7 +275,7 @@ var buildDevCss = function (lrServer) {
 	buildVendorStyles("builds/dev/dist/css");
 	buildVendorFontsCss("builds/dev/dist/css");
 	if (lrServer) {
-		lrServer.changed("index.html");
+		lrServer.changed("dist/css/app.css");
 	}
 	util.print("done\n");
 };
@@ -280,17 +287,7 @@ var buildDevJs = function (lrServer) {
 	buildAppTemplates("builds/dev/dist/js");
 	buildVendorScripts("builds/dev/dist/js");
 	if (lrServer) {
-		lrServer.changed("index.html");
-	}
-	util.print("done\n");
-};
-
-var buildDevFonts = function (lrServer) {
-	util.print("Building fonts... ");
-	mkdirp.sync("builds/dev/dist/fonts");
-	buildVendorFontsGlyphs("builds/dev/dist/fonts");
-	if (lrServer) {
-		lrServer.changed("index.html");
+		lrServer.changed("dist/js/app.js");
 	}
 	util.print("done\n");
 };
