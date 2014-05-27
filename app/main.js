@@ -30,7 +30,8 @@
 			host: "test.api.mondora.com"
 		},
 		prod: {
-			host: "prod.api.mondora.com"
+			host: "api.mondora.com",
+			ssl: true
 		}
 	};
 	var cfg;
