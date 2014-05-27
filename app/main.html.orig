@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html ng-app="mnd-web">
+
+	<head>
+
+		<title>Mondora m:</title>
+		<meta name="viewport" content="width=400, user-scalable=no">
+		<meta charset="utf-8">
+
+
+
+		<!-- @if TARGET=='dev' -->
+
+			<!-- CSS from Bower Components and Google Fonts -->
+			<link href="dist/css/vendor.css" type="text/css" rel="stylesheet" />
+			<link href="dist/css/google_fonts.css" type="text/css" rel="stylesheet" />
+			<!-- Main App CSS -->
+			<link href="dist/css/app.css" type="text/css" rel="stylesheet" />
+
+			<!-- JS from Bower Components -->
+			<script src="dist/js/vendor.js"></script>
+			<!-- Livereload script -->
+			<script src="http://localhost:35729/livereload.js?snipver=1"></script>
+			<!-- Main App JS -->
+			<script>
+<<<<<<< HEAD
+				window.APP_VERSION = "v0.1.0t";
+=======
+				window.APP_VERSION = "v0.1.0b";
+>>>>>>> ad031617cd271f486c8e22b6752186e5bb7c695c
+			</script>
+			<script src="dist/js/app.js"></script>
+			<script src="dist/js/app.templates.js"></script>
+
+		<!-- @endif -->
+
+
+
+		<!-- @if TARGET=='mac.prod' -->
+
+			<!-- CSS from Bower Components and Google Fonts -->
+			<link href="dist/css/vendor.min.css" type="text/css" rel="stylesheet" />
+			<link href="dist/css/google_fonts.min.css" type="text/css" rel="stylesheet" />
+			<!-- Main App CSS -->
+			<link href="dist/css/app.min.css" type="text/css" rel="stylesheet" />
+
+			<!-- JS from Bower Components -->
+			<script src="dist/js/vendor.min.js"></script>
+			<!-- Main App JS -->
+			<script>
+				window.APP_VERSION = "v0.1.0";
+			</script>
+			<script src="dist/js/app.js"></script>
+			<script src="dist/js/app.templates.min.js"></script>
+
+		<!-- @endif -->
+
+
+
+		<!-- @if TARGET=='web.prod' -->
+
+			<!-- CSS from CDN -->
+			<link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet" type="text/css" />
+			<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,600,900" rel="stylesheet" type="text/css" />
+			<link href="https://cdn.jsdelivr.net/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" />
+			<link href="https://cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+			<!-- CSS from Bower Components -->
+			<link href="dist/css/cdn.vendor.min.css" type="text/css" rel="stylesheet" />
+			<!-- Main App CSS -->
+			<link href="dist/css/app.min.css" type="text/css" rel="stylesheet" />
+
+			<!-- JS from CDN -->
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/angular.ui-router/0.2.10/angular-ui-router.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/angular.bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+			<!-- JS from Bower Components -->
+			<script>
+				window.APP_VERSION = "v0.1.0";
+			</script>
+			<script src="dist/js/cdn.vendor.js"></script>
+			<!-- Main App JS -->
+			<script src="dist/js/app.js"></script>
+			<script src="dist/js/app.templates.min.js"></script>
+
+		<!-- @endif -->
+
+
+
+		<!-- @if TARGET=='web.test' -->
+
+			<!-- CSS from CDN -->
+			<link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet" type="text/css" />
+			<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,600,900" rel="stylesheet" type="text/css" />
+			<link href="https://cdn.jsdelivr.net/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" />
+			<link href="https://cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+			<!-- CSS from Bower Components -->
+			<link href="dist/css/cdn.vendor.min.css" type="text/css" rel="stylesheet" />
+			<!-- Main App CSS -->
+			<link href="dist/css/app.min.css" type="text/css" rel="stylesheet" />
+
+			<!-- JS from CDN -->
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/angular.ui-router/0.2.10/angular-ui-router.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/angular.bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+			<!-- JS from Bower Components -->
+			<script>
+				window.APP_VERSION = "v0.1.0t";
+			</script>
+			<script src="dist/js/cdn.vendor.js"></script>
+			<!-- Main App JS -->
+			<script src="dist/js/app.js"></script>
+			<script src="dist/js/app.templates.min.js"></script>
+
+		<!-- @endif -->
+
+
+
+	</head>
+
+	<body ng-controller="MainController">
+		<div ui-view class="mnd-fullsize"></div>
+	</body>
+
+</html>
