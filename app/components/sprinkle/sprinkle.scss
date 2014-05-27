@@ -86,20 +86,17 @@ $mnd-grey: #5e5f5f;
 	position: relative;
 	left: 0px;
 	background-color: $mnd-yellow;
-	height: 80px;
+	height: 40px;
 	width: 100%;
-	padding: 10px 0;
 }
 .sprinkle-control-bar-left {
-	height: 60px;
-	width: 30%;
-	padding-left:10px;
+	padding-left: 10px;
+	margin-top: -3px;
 }
 .sprinkle-control-bar-right {
-	height: 60px;
-	width: 69%;
-	text-align: right;
-	padding-right:10px;
+	float: right;
+	padding-right: 10px;
+	margin-top: -3px;
 }
 .sprinkle-control-bar-right, .sprinkle-control-bar-left {
 	display: inline-block;
@@ -108,15 +105,18 @@ $mnd-grey: #5e5f5f;
 	color: $mnd-grey;
 	padding-left: 5px;
 	display: inline-block;
-	font-size: 40px;
+	font-size: 32px;
 	border: none;
 	text-align: center;
 }
 .sprinkle-control-wpm {
 	color: $mnd-grey;
-	padding:0 15px;
+	position: relative;
+	top: -3px;
+	padding-left: 15px;
+	padding-right: 15px;
 	display: inline-block;
-	font-size: 40px;
+	font-size: 28px;
 	border: none;
 	text-align: center;
 }
