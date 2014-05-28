@@ -9,4 +9,8 @@ angular.module("mnd-web.pages.user", [])
 	$scope.user = $scope.Users.reactiveQuery({_id: $stateParams.userId}).result[0];
 	$scope.posts = posts;
 
+	$scope.isUser = function () {
+		return $scope.$root.user._id === $scope.user._id;
+	};
+
 });

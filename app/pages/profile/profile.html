@@ -1,10 +1,19 @@
+<div class="post-top-buttons">
+	<a ui-sref="user({userId: user._id})" class="btn btn-default">
+		Anteprima
+	</a>
+</div>
+
 <div class="col-sm-8 col-sm-offset-2">
 
 	<br />
 	<br />
 	<div class="row">
 		<div class="col-sm-4">
-			<img ng-src="{{user.profile.pictureUrl}}" class="img-circle mnd-clickable" ng-class="{dullProfilePicture: isUploading}" width="200" height="200" ng-click="clickFileInput()" />
+			<div class="user-profile-image">
+				<img ng-src="{{user.profile.pictureUrl}}" class="img-circle mnd-clickable" ng-class="{dullProfilePicture: isUploading}" width="200" height="200" ng-click="clickFileInput()" />
+				<div></div>
+			</div>
 			<input id="profilePictureFileInput" type="file" ng-file-select="onFileSelect($files)" class="hidden" />
 			<div id="profilePictureProgressbar" ng-show="isUploading">
 				<progressbar value="uploadProgress"></progressbar>

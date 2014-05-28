@@ -69,6 +69,7 @@ angular.module("mnd-web", [
 
 	// App modules
 	"mnd-web.templates",
+	"mnd-web.methods",
 	"mnd-web.components.dashboard",
 	"mnd-web.components.mindmap",
 	"mnd-web.components.center",

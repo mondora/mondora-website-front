@@ -1,10 +1,20 @@
 <div mnd-sidebar ng-controller="SidebarController">
 	<div name="before">
 		<div id="mnd-sidebar-user">
-			<div ng-if="user">
-				<img class="img-circle" ng-src="{{user.profile.pictureUrl}}" height="70" />
-				<span>{{user.profile.name}}</span>
-				<span ng-click="logout()" class="logout"><i class="fa fa-times-circle"></i></span>
+			<div ng-if="user" class="row">
+				<a class="col-xs-4 mnd-undecorated-a" ui-sref="profile()">
+					<div class="picture-grey-ring picture-sm">
+						<img class="img-circle" ng-src="{{user.profile.pictureUrl}}" />
+					</div>
+				</a>
+				<div class="col-xs-8">
+					<div class="mnd-vsp-6"></div>
+					<a class="mnd-undecorated-a" ui-sref="profile()">{{user.profile.name}}</a>
+					<br />
+					<span ng-click="logout()" class="logout mnd-clickable">
+						<small><i>Logout</i></small>
+					</span>
+				</div>
 			</div>
 			<div ng-if="!user" ng-click="login()" class="login">
 				<i class="fa fa-twitter"></i> Sign in with twitter
@@ -20,6 +30,7 @@
 			<span class="mnd-sidebar-footer-address">
 				Milano, Morbegno, Novara, St. Moritz (CH)<br />
 				Via Cornalia 7 - 20154, Milano <br />
+				PIVA 03680680968 <br />
 			</span>
 		</div>	
 	</div>	
