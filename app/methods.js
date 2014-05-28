@@ -31,8 +31,11 @@ angular.module("mnd-web.methods", [])
 		});
 	};
 
+	var noop = function () {};
+
 	return {
-		addPost: addPost
+		addPost: addPost,
+		noop: noop
 	};
 
 });

@@ -10,6 +10,7 @@ angular.module("mnd-web.components.menu-editor", [])
 		link: function ($scope) {
 			$scope.availableActions = Object.keys(AppMethods);
 			$scope.menu = {
+				// Move functions
 				moveUp: function (index, event) {
 					event.stopPropagation();
 					var item = $scope.items[index];
@@ -22,6 +23,19 @@ angular.module("mnd-web.components.menu-editor", [])
 					$scope.items.splice(index, 1);
 					$scope.items.splice(index + 1, 0, item);
 				},
+				moveSubitemUp: function (item, index, event) {
+					event.stopPropagation();
+					var subitem = item.items[index];
+					item.items.splice(index, 1);
+					item.items.splice(index - 1, 0, subitem);
+				},
+				moveSubitemDown: function (item, index, event) {
+					event.stopPropagation();
+					var subitem = item.items[index];
+					item.items.splice(index, 1);
+					item.items.splice(index + 1, 0, subitem);
+				},
+				// Add functions
 				addItem: function () {
 					$scope.items.push({
 						title: "Your title here",
@@ -35,6 +49,7 @@ angular.module("mnd-web.components.menu-editor", [])
 						type: "link"
 					});
 				},
+				// Delete functions
 				deleteItem: function (index) {
 					$scope.items.splice(index, 1);
 				},
