@@ -262,7 +262,7 @@ angular.module("mnd-web.pages.post.edit", [])
 
 	var processMap = function (map, isChild) {
 		if (isChild) {
-			if (!map.href || map.href.slice(0, 9) === "/#!/topic/") {
+			if (!map.href || map.href.slice(0, 10) === "/#!/topic/") {
 				map.href = "/#!/topic/" + map.text;
 			} else if (map.href.slice(0, 7) !== "http://") {
 				map.href = "http://" + map.href;
