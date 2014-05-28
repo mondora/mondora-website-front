@@ -21,6 +21,8 @@
 /* */
 /*****************************************************************************************************************/
 
+var GIVE_UP_DELAY = 10000;
+
 (function () {
 	var config = {
 		dev: {
@@ -51,7 +53,7 @@
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
-	window.CERES_CONNECTED = deferred.promise.timeout(5000);
+	window.CERES_CONNECTED = deferred.promise.timeout(GIVE_UP_DELAY);
 })();
 
 angular.module("mnd-web", [
@@ -126,7 +128,7 @@ angular.module("mnd-web", [
 					.then(function () {
 						var resProm = Ceres.resumeLoginPromise;
 						if (resProm.isPending()) {
-							return TimeoutPromiseService.timeoutPromise(resProm, 5000)
+							return TimeoutPromiseService.timeoutPromise(resProm, GIVE_UP_DELAY)
 								.finally(function () {
 									return true;
 								});
@@ -135,7 +137,7 @@ angular.module("mnd-web", [
 					})
 					.then(function () {
 						var sub = Ceres.subscribe("configurations");
-						return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+						return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 					})
 					.fail(function () {
 						$state.go("staticHome");
@@ -207,11 +209,11 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			},
 			posts: function (TimeoutPromiseService, $stateParams) {
 				var meth = Ceres.call("getPostsByAuthor", $stateParams.userId);
-				return TimeoutPromiseService.timeoutPromise(meth.result, 5000);
+				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -225,7 +227,7 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("teamUsers");
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -239,7 +241,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -253,7 +255,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		}
     });
@@ -266,7 +268,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("latestPosts");
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -280,7 +282,7 @@ angular.module("mnd-web", [
 		resolve: {
 			topic: function (TimeoutPromiseService, $stateParams) {
 				var meth = Ceres.call("getTopic", $stateParams.name);
-				return TimeoutPromiseService.timeoutPromise(meth.result, 5000);
+					return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
 			}
 		},
 		public: true
