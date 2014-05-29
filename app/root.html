@@ -3,9 +3,7 @@
 		<div id="mnd-sidebar-user">
 			<div ng-if="user" class="row">
 				<a class="col-xs-4 mnd-undecorated-a" ui-sref="profile()">
-					<div class="picture-grey-ring picture-sm">
-						<img class="img-circle" ng-src="{{user.profile.pictureUrl}}" />
-					</div>
+					<div mnd-cig-image source="user.profile.pictureUrl" size="70"></div>
 				</a>
 				<div class="col-xs-8">
 					<div class="mnd-vsp-6"></div>

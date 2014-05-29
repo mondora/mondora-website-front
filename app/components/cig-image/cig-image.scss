@@ -1,0 +1,13 @@
+// Colours
+$mnd-yellow: #ffcc00;
+$mnd-grey: #5e5f5f;
+$mnd-light-grey: #abadad;
+
+// Circle picture with grey border
+.picture-circle-in-grey {
+	position: relative;
+	overflow: hidden;
+	border-radius: 50%;
+	border-color: $mnd-grey;
+	border-style: solid;
+}

@@ -10,11 +10,8 @@
 	<br />
 	<div class="row">
 		<div class="col-sm-4">
-			<div class="user-profile-image">
-				<img ng-src="{{user.profile.pictureUrl}}" class="img-circle mnd-clickable" ng-class="{dullProfilePicture: isUploading}" width="200" height="200" ng-click="clickFileInput()" />
-				<div></div>
-			</div>
 			<input id="profilePictureFileInput" type="file" ng-file-select="onFileSelect($files)" class="hidden" />
+			<div mnd-cig-image source="user.profile.pictureUrl" size="200" class="mnd-clickable" ng-click="clickFileInput()"></div>
 			<div id="profilePictureProgressbar" ng-show="isUploading">
 				<progressbar value="uploadProgress"></progressbar>
 			</div>

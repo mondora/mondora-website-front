@@ -24,7 +24,7 @@
 		</a>
 		<div class="post-author-topiclist">
 			<a ui-sref="user({userId: post.author._id})" >
-				<img class="img-circle" width="30" height="30" ng-src="{{post.author.pictureUrl}}" />
+				<div mnd-cig-image source="post.author.pictureUrl" size="30" class="mnd-inline-block mnd-valign-middle"></div>
 				{{post.author.name}}
 			</a>
 			<span class="reading-topiclist">Reading time {{post.readingLength}} min</span>

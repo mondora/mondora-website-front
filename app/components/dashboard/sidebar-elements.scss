@@ -23,23 +23,6 @@ $mnd-font: "Source Sans Pro", sans-serif;
 		padding: 15px 10px 10px 15px;
 	}
 }
-.picture-grey-ring {
-	position: relative;
-	border-radius: 100%;
-	background: $mnd-grey;
-	overflow: hidden;
-}
-.picture-sm {
-	width: 70px;
-	height: 70px;
-}
-.picture-sm img {
-	position: relative;
-	left: 3px;
-	top: 3px;
-	width: 64px;
-}
-
 
 // Sidebar footer
 #mnd-sidebar-footer {
@@ -63,7 +46,6 @@ $mnd-font: "Source Sans Pro", sans-serif;
 		display: none;
 	}
 }
-
 
 // Menu
 .nav {

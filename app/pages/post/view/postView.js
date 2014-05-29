@@ -147,7 +147,6 @@ angular.module("mnd-web.pages.post.view", [])
 	///////////////////////////////////////
 
 	$scope.estimateReadingTime = 0;
-	console.log($scope.post.body);
 
 	////////////////////////////////////////////////
 	// Set various properties that shape the html //

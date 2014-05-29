@@ -1,3 +1,8 @@
+// Colours
+$mnd-yellow: #ffcc00;
+$mnd-grey: #5e5f5f;
+$mnd-light-grey: #abadad;
+
 // Misc
 .mnd-clickable {
 	cursor: pointer;
@@ -19,6 +24,12 @@
 	position: relative;
 	width: 100%;
 	height: 100%;
+}
+.mnd-inline-block {
+	display: inline-block;
+}
+.mnd-valign-middle {
+	vertical-align: middle;
 }
 
 // Vertical spaces

@@ -1,8 +1,7 @@
 <div id="teamMembersList" class="col-sm-8 col-sm-offset-2">
 	<br />
-	<a ng-repeat="member in team" ui-sref="user({userId: member._id})" class="teamMember img-circle">
-		<div class="teamMemberOverlay"></div>
-		<img ng-src="{{member.profile.pictureUrl}}" class="img-circle" />
+	<a ng-repeat="member in team" ui-sref="user({userId: member._id})" class="teamMember">
+		<div mnd-cig-image source="member.profile.pictureUrl" size="100" class="mnd-inline-block"></div>
 		<p class="teamMemberText">
 			<b ng-bind-html="member.profile.name"></b>
 			<br />
@@ -18,9 +17,7 @@
 <div id="workWithUsBannerStripe">
 	<div class="col-sm-6 col-sm-offset-2" ng-if="!user || !user.mondoraTeamMember">
 		<div id="joinUsUserPicture">
-			<div ng-if="user">
-			</div>
-			<img ng-if="user" ng-src="{{user.profile.pictureUrl}}" class="img-circle" />
+			<div mnd-cig-image source="user.profile.pictureUrl" size="100" ng-if="user"></div>
 			<i ng-if="!user" class="fa fa-question-circle"></i>
 		</div>
 		<div id="joinUsText">

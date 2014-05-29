@@ -76,6 +76,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.check-mobile",
 	"mnd-web.components.clear-selection",
 	"mnd-web.components.menu-editor",
+	"mnd-web.components.cig-image",
 	"mnd-web.pages.home",
 	"mnd-web.pages.staticHome",
 	"mnd-web.pages.personalHome",
