@@ -5,9 +5,13 @@ $mnd-light-grey: #abadad;
 
 // Circle picture with grey border
 .picture-circle-in-grey {
+	box-sizing: border-box;
 	position: relative;
 	overflow: hidden;
 	border-radius: 50%;
 	border-color: $mnd-grey;
 	border-style: solid;
+}
+.picture-circle-in-grey img {
+	position: relative;
 }

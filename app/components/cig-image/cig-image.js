@@ -9,31 +9,45 @@ angular.module("mnd-web.components.cig-image", [])
 		},
 		link: function ($scope, $element){
 			// Save the size as number
-			var size = parseInt($scope.size, 10);
+			var fullSize = parseInt($scope.size, 10);
 			// Get acceptable border sizes
-			var borderSize = Math.round(size / 20);
+			var borderSize = fullSize / 20;
 			if (borderSize < 2) borderSize = 2;
-			if (borderSize > 10) borderSize = 10;
+			if (borderSize > 6) borderSize = 6;
+			var size = fullSize - (borderSize * 2);
 			// Add the required class to the external div
 			$element.addClass("picture-circle-in-grey");
 			var insertImage = function () {
 				var img = new Image();
 				img.addEventListener("load", function () {
+					if ($scope.imageLoaded) return;
+					$scope.imageLoaded = true;
 					$element.empty();
-					if (img.width <= img.height) {
-						img.width = size;
-					} else {
+					if (img.width >= img.height) {
 						img.height = size;
+					} else {
+						img.width = size;
 					}
 					$element.append(img);
+					var style = window.getComputedStyle(img);
+					var top = (parseFloat(style.height, 10) - size) / -2;
+					var left = (parseFloat(style.width, 10) - size) / -2;
+					if (!isNaN(top)) {
+						img.style.top = top + "px";
+					}
+					if (!isNaN(left)) {
+						img.style.left = left + "px";
+					}
 				}, false);
 				img.src = $scope.source;
 			};
-			insertImage();
-			$scope.$watch("source", insertImage);
+			$scope.$watch("source", function () {
+				$scope.imageLoaded = false;
+				insertImage();
+			});
 			$element.css({
-				width: size + "px",
-				height: size + "px",
+				width: fullSize + "px",
+				height: fullSize + "px",
 				"border-width": borderSize + "px"
 			});
 		}
