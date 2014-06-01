@@ -1,0 +1,40 @@
+.page-page-container {
+	position: absolute;
+	top: 0px;
+	left: 100px;
+	width: calc(100% - 100px);
+	height: 100%;
+}
+.page-left-pane {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 50%;
+	height: 100%;
+	background-image: url(https://s3-eu-west-1.amazonaws.com/ngtest/8373420247808099__mountains.jpg);
+	background-repeat: no-repeat;
+	background-size: auto 100%;
+}
+
+.page-right-pane {
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	width: 50%;
+	height: 100%;
+}
+
+.page-right-pane p {
+	font-size: 16px;
+}
+
+.page-right-pane h3 {
+	font-weight: bold;
+	color: #ffcc00;
+}
+
+.page-right-pane p,
+.page-right-pane h3 {
+	text-align: justify;
+	line-height: 1.8em;
+}

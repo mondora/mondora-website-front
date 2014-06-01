@@ -1,0 +1,36 @@
+<div class="mnd-pomodoro">
+	<div>
+		Remaining time:
+		<br />
+		<br />
+		{{remaining | date: format}}
+	</div>
+
+	<svg width="100" height="100" viewbox="0 0 100 100">
+		<path class="svg-clock-border" transform="translate(50, 50)"/>
+		<path class="svg-clock-loader" transform="translate(50, 50)"/>
+	</svg>
+
+	<!--
+    <h4>Add participants</h4>
+	<div class="input-group">
+		<input
+			type="text" class="form-control" placeholder="Add participant"
+			ng-model="participant" 
+			typeahead="participant as participant.screenName for participant in ps.getParticipants() | filter: {screenName: $viewValue}"
+			typeahead-template-url="apps/pomodoro/userTypeahead.html"
+		/>
+		<span class="input-group-btn">
+			<button class="btn btn-default" type="button" ng-click="ps.addParticipant()">Add</button>
+		</span>
+	</div>
+	-->
+
+</div>
+
+<script type="text/ng-template" id="apps/pomodoro/userTypeahead.html">
+	<a>
+		<div mnd-cig-image source="match.model.pictureUrl" size="16" class="mnd-inline-block"></div>
+		<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+	</a>
+</script>

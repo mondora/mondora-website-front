@@ -12,7 +12,7 @@ angular.module("mnd-web.components.cig-image", [])
 			var fullSize = parseInt($scope.size, 10);
 			// Get acceptable border sizes
 			var borderSize = fullSize / 20;
-			if (borderSize < 2) borderSize = 2;
+			if (borderSize < 1) borderSize = 1;
 			if (borderSize > 6) borderSize = 6;
 			var size = fullSize - (borderSize * 2);
 			// Add the required class to the external div

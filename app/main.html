@@ -20,8 +20,15 @@
 
 			<!-- JS from Bower Components -->
 			<script src="dist/js/vendor.js"></script>
-			<!-- Livereload script -->
-			<script src="http://localhost:35729/livereload.js?snipver=1"></script>
+			<!-- Browser reload script -->
+			<script>
+				(function () {
+					var ws = new WebSocket("ws://localhost:8000");
+					ws.onmessage = function (e) {
+						location.reload();
+					};
+				})();
+			</script>
 			<!-- Main App JS -->
 			<script>
 				window.APP_VERSION = "v0.1.0b";

@@ -11,7 +11,11 @@ $mnd-light-grey: #abadad;
 	border-radius: 50%;
 	border-color: $mnd-grey;
 	border-style: solid;
+	padding: 0px;
+	margin: 0px;
 }
 .picture-circle-in-grey img {
-	position: relative;
+	position: absolute;
+	padding: 0px;
+	margin: 0px;
 }

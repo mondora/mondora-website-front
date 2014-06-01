@@ -70,6 +70,7 @@ angular.module("mnd-web", [
 	// App modules
 	"mnd-web.templates",
 	"mnd-web.methods",
+	// Components
 	"mnd-web.components.dashboard",
 	"mnd-web.components.mindmap",
 	"mnd-web.components.center",
@@ -77,11 +78,19 @@ angular.module("mnd-web", [
 	"mnd-web.components.clear-selection",
 	"mnd-web.components.menu-editor",
 	"mnd-web.components.cig-image",
+	"mnd-web.components.pomodoro",
+	// Apps
+	// ...
+	// Pages
 	"mnd-web.pages.home",
 	"mnd-web.pages.staticHome",
 	"mnd-web.pages.personalHome",
+	// TODO dynamic injection
 	"mnd-web.pages.profile",
+	"mnd-web.pages.page",
 	"mnd-web.pages.admin",
+	"mnd-web.pages.pomodoro.list",
+	"mnd-web.pages.pomodoro.view",
 	"mnd-web.pages.team",
 	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
@@ -168,6 +177,22 @@ angular.module("mnd-web", [
 		public: true
     });
 
+    $stateProvider.state("approach", {
+        url: "/approach",
+		parent: "root",
+        templateUrl: "pages/page/page.html",
+		resolve: {
+			/*
+			pageSub: function ($stateParams, TimeoutPromiseService) {
+				var sub = Ceres.subscribe("singlePage", $stateParams.pageName);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}
+			*/
+		},
+		controller: "PageController",
+		public: true
+    });
+
     $stateProvider.state("personalHome", {
         url: "/home",
 		parent: "root",
@@ -189,6 +214,8 @@ angular.module("mnd-web", [
 		public: true
     });
 
+	// Apps
+	// TODO make this dynamic
     $stateProvider.state("profile", {
         url: "/profile",
 		parent: "root",
@@ -202,6 +229,40 @@ angular.module("mnd-web", [
         templateUrl: "pages/admin/admin.html",
 		controller: "AdminController"
     });
+
+    $stateProvider.state("pomodoroList", {
+        url: "/pomodoro",
+		parent: "root",
+        templateUrl: "pages/pomodoro/list/pomodoroList.html",
+		controller: "PomodoroListController",
+		resolve: {
+			pomoSub: function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("pomodoros");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			},
+			participants: function (TimeoutPromiseService) {
+				var meth = Ceres.call("getPomodoroParticipants");
+				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
+			}
+		}
+    });
+    $stateProvider.state("pomodoroView", {
+        url: "/pomodoro/:pomodoroId",
+		parent: "root",
+        templateUrl: "pages/pomodoro/view/pomodoroView.html",
+		controller: "PomodoroViewController",
+		resolve: {
+			pomoSub: function (TimeoutPromiseService, $stateParams) {
+				var sub = Ceres.subscribe("singlePomodoro", $stateParams.pomodoroId);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			},
+			participants: function (TimeoutPromiseService) {
+				var meth = Ceres.call("getPomodoroParticipants");
+				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
+			}
+		}
+    });
+	// END apps
 
     $stateProvider.state("user", {
         url: "/user/:userId",
@@ -284,7 +345,7 @@ angular.module("mnd-web", [
 		resolve: {
 			topic: function (TimeoutPromiseService, $stateParams) {
 				var meth = Ceres.call("getTopic", $stateParams.name);
-					return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
+				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
 			}
 		},
 		public: true
