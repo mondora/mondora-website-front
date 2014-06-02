@@ -1,0 +1,25 @@
+.pomodoro-page-container {
+	position: absolute;
+	top: 0px;
+	left: 100px;
+	width: calc(100% - 100px);
+	height: 100%;
+}
+.pomodoro-left-pane {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 50%;
+	height: 100%;
+	background-image: url(https://s3-eu-west-1.amazonaws.com/ngtest/5773308074567467__tomatoes-413728095.jpg);
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+}
+
+.pomodoro-right-pane {
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	width: 50%;
+	height: 100%;
+}

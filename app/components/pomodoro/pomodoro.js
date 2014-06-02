@@ -52,76 +52,110 @@ angular.module("mnd-web.components.pomodoro", [])
 	};
 })
 
-.directive("mndPomodoroSummary", function ($interval, PomodoroService) {
+.directive("mndPomodoroTimer", function ($interval, PomodoroService) {
 	return {
 		restrict: "EA",
-		templateUrl: "components/pomodoro/pomodoro-summary.html",
+		templateUrl: "components/pomodoro/pomodoro-timer.html",
+		replace: true,
 		scope: {
-			pomodoro: "="
+			pomodoro: "=",
+			size: "@?"
 		},
-		link: function ($scope) {
+		link: function ($scope, $element) {
+
+			///////////
+			// Setup //
+			///////////
+			
+			var CW = parseInt($scope.size || "100", 10);
+			var HCW = CW / 2;
 			$scope.format = "mm:ss";
-			$scope.remaining = PomodoroService.calculateRemaining($scope.pomodoro);
-			if ($scope.pomodoro.status === "running") {
-				var interval = $interval(function () {
-					$scope.remaining = PomodoroService.calculateRemaining($scope.pomodoro);
-					if ($scope.remaining <= 0) {
-						PomodoroService.stop($scope.pomodoro);
-					}
-				}, 1000);
-			}
+
+			var svg = $element.find("svg");
+			var path = $element.find("path");
+			var circle = $element.find("circle");
+			var div = $element.find("div");
+
+			$element.css({
+				width: CW + "px",
+				height: CW + "px"
+			});
+
+			svg.attr("width", CW);
+			svg.attr("height", CW);
+			svg.attr("viewbox", "0 0 " + CW + " " + CW);
+
+			path.attr("transform", "translate(" + HCW + ", " + HCW + ")");
+
+			circle.attr("r", HCW * 0.7);
+			circle.attr("transform", "translate(" + HCW + ", " + HCW + ")");
+
+			div.css({
+				"height": CW + "px",
+				"line-height": CW + "px",
+				"font-size": CW * 0.20 + "px"
+			});
+
+			///////////////////////
+			// Drawing functions //
+			///////////////////////
+
+			var drawCircle = function () {
+				var angleInRadiants = (1 - $scope.remaining / $scope.pomodoro.duration) * 2 * Math.PI;
+				var x = Math.sin(angleInRadiants) * HCW;
+				var y = Math.cos(angleInRadiants) * HCW * -1;
+				var widerThanPI = (angleInRadiants > Math.PI ) ? 1 : 0;
+				var animation = "M 0 0 v -" + HCW + " A " + HCW + " " + HCW + " 1 " + widerThanPI + " 1 " + x + " " + y + " z";
+				path.attr("d", animation);
+			};
+
+			var render = function () {
+				$scope.remaining = PomodoroService.calculateRemaining($scope.pomodoro);
+				drawCircle();
+			};
+
+			////////////////////
+			// Initial render //
+			////////////////////
+			
+			render();
+
+			/////////////////
+			// Timer setup //
+			/////////////////
+
+			var interval;
+			$scope.$watch("pomodoro.status", function (status) {
+				if (status === "running") {
+					interval = $interval(function () {
+						if ($scope.remaining <= 0) {
+							$scope.remaining = 0;
+							$interval.cancel(interval);
+							PomodoroService.stop($scope.pomodoro);
+						} else {
+							render();
+						}
+					}, 1000);
+				} else if (status === "puased") {
+					$interval.cancel(interval);
+				} else if (status === "stopped") {
+					$interval.cancel(interval);
+					$scope.remaining = 0;
+				}
+			});
+			// Clear the interval when the scope is destroyed
 			$scope.$on("$destroy", function () {
 				$interval.cancel(interval);
 			});
 
-
-
-
-
-
-
-
-
-var loader = document.querySelector('.svg-clock-loader')
-  , border = document.querySelector('.svg-clock-border')
-  , α = 0
-  , π = Math.PI
-  , t = 30;
-
-(function draw() {
-  α++;
-  α %= 360;
-  var r = ( α * π / 180 )
-    , x = Math.sin( r ) * 50
-    , y = Math.cos( r ) * - 50
-    , mid = ( α > 180 ) ? 1 : 0
-    , anim = 'M 0 0 v -50 A 50 50 1 ' 
-           + mid + ' 1 ' 
-           +  x  + ' ' 
-           +  y  + ' z';
-  //[x,y].forEach(function( d ){
-  //  d = Math.round( d * 1e3 ) / 1e3;
-  //});
- 
-  loader.setAttribute( 'd', anim );
-  border.setAttribute( 'd', anim );
-  
-  setTimeout(draw, t); // Redraw
-})();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		}
+	};
+})
+
+.directive("mndPomodoroSummary", function ($interval, PomodoroService) {
+	return {
+		restrict: "EA",
+		templateUrl: "components/pomodoro/pomodoro-summary.html",
+		replace: true
 	};
 });

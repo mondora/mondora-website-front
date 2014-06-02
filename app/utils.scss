@@ -47,6 +47,12 @@ $mnd-light-grey: #abadad;
 }
 
 // Horizontal alignement classes
+.mnd-width-80 {
+	width: 80px;
+}
+span.mnd-width-80 {
+	display: inline-block;
+}
 .mnd-width-40 {
 	width: 40px;
 }

@@ -79,6 +79,7 @@ angular.module("mnd-web", [
 	"mnd-web.components.menu-editor",
 	"mnd-web.components.cig-image",
 	"mnd-web.components.pomodoro",
+	"mnd-web.components.user-input",
 	// Apps
 	// ...
 	// Pages
@@ -239,10 +240,6 @@ angular.module("mnd-web", [
 			pomoSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("pomodoros");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			},
-			participants: function (TimeoutPromiseService) {
-				var meth = Ceres.call("getPomodoroParticipants");
-				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
 			}
 		}
     });
@@ -255,10 +252,6 @@ angular.module("mnd-web", [
 			pomoSub: function (TimeoutPromiseService, $stateParams) {
 				var sub = Ceres.subscribe("singlePomodoro", $stateParams.pomodoroId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			},
-			participants: function (TimeoutPromiseService) {
-				var meth = Ceres.call("getPomodoroParticipants");
-				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
 			}
 		}
     });
@@ -370,6 +363,7 @@ angular.module("mnd-web", [
 
 	$rootScope.Ceres = Ceres;
 	Ceres.subscribe("userAdditionalInfo");
+	Ceres.subscribe("allUsers");
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");

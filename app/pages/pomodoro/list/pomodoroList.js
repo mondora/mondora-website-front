@@ -1,14 +1,12 @@
 angular.module("mnd-web.pages.pomodoro.list", [])
 
-.controller("PomodoroListController", function ($scope, $interval, participants) {
+.controller("PomodoroListController", function ($scope, $interval) {
 
 	var POMODORO_DEFAULT_DURATION = 25 * 60 * 1000;
 
 	var user = $scope.user;
 
 	var Pomodoros = $scope.Ceres.createCollection("pomodoros");
-
-	$scope.participants = participants;
 
 	$scope.addPomodoro = function () {
 		var pomodoro = {

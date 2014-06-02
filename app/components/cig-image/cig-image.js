@@ -9,12 +9,11 @@ angular.module("mnd-web.components.cig-image", [])
 		},
 		link: function ($scope, $element){
 			// Save the size as number
-			var fullSize = parseInt($scope.size, 10);
+			var size = parseInt($scope.size, 10);
 			// Get acceptable border sizes
-			var borderSize = fullSize / 20;
+			var borderSize = size / 20;
 			if (borderSize < 1) borderSize = 1;
 			if (borderSize > 6) borderSize = 6;
-			var size = fullSize - (borderSize * 2);
 			// Add the required class to the external div
 			$element.addClass("picture-circle-in-grey");
 			var insertImage = function () {
@@ -30,11 +29,11 @@ angular.module("mnd-web.components.cig-image", [])
 					}
 					$element.append(img);
 					var style = window.getComputedStyle(img);
-					var top = (parseFloat(style.height, 10) - size) / -2;
-					var left = (parseFloat(style.width, 10) - size) / -2;
+					var top = ((parseFloat(style.height, 10) - size) / -2) - borderSize;
 					if (!isNaN(top)) {
 						img.style.top = top + "px";
 					}
+					var left = ((parseFloat(style.width, 10) - size) / -2) - borderSize;
 					if (!isNaN(left)) {
 						img.style.left = left + "px";
 					}
@@ -46,8 +45,8 @@ angular.module("mnd-web.components.cig-image", [])
 				insertImage();
 			});
 			$element.css({
-				width: fullSize + "px",
-				height: fullSize + "px",
+				width: size + "px",
+				height: size + "px",
 				"border-width": borderSize + "px"
 			});
 		}
