@@ -54,6 +54,10 @@ var buildAppTemplates = function (dest) {
 		.pipe(gulp.dest(dest));
 };
 
+var buildAppFavicon = function (dest) {
+	return gulp.src("app/favicon.ico").pipe(gulp.dest(dest));
+};
+
 
 
 /////////////////////////////////////
@@ -185,9 +189,12 @@ gulp.task("buildWeb", function () {
 	buildAppTemplates("builds/web/dist/js");
 	buildVendorScriptsCDN("builds/web/dist/js");
 
-	//Styles
+	// Styles
 	buildAppStyles("builds/web/dist/css");
 	buildVendorStylesCDN("builds/web/dist/css");
+
+	// Favicon
+	buildAppFavicon("builds/web");
 
 });
 
@@ -210,9 +217,12 @@ gulp.task("buildWebTest", function () {
 	buildAppTemplates("builds/web/dist/js");
 	buildVendorScriptsCDN("builds/web/dist/js");
 
-	//Styles
+	// Styles
 	buildAppStyles("builds/web/dist/css");
 	buildVendorStylesCDN("builds/web/dist/css");
+
+	// Favicon
+	buildAppFavicon("builds/web");
 
 });
 
@@ -246,6 +256,9 @@ gulp.task("buildMac", function (cb) {
 
 	// Fonts
 	buildVendorFontsGlyphs("builds/mac/dist/fonts");
+
+	// Favicon
+	buildAppFavicon("builds/mac");
 
 	var deferred = Q.defer();
 	var mg = spawn("macgap", ["build", "-n", "mnd", "-o", "builds/", "builds/mac/"]);
@@ -296,11 +309,18 @@ var buildDevHtml = function () {
 	util.print("done\n");
 };
 
+var buildDevFavicon = function () {
+	util.print("Building favicon... ");
+	buildAppFavicon("builds/dev");
+	util.print("done\n");
+};
+
 gulp.task("dev", function () {
 	buildDevJs();
 	buildDevCss();
 	buildDevHtml();
 	buildDevFonts();
+	buildDevFavicon();
 
 	// Set up static file server
 	var file = new static.Server("./builds/dev/");

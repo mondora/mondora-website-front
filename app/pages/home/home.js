@@ -5,6 +5,7 @@ angular.module("mnd-web.pages.home", [])
 	var homeConfig = $scope.Configurations.reactiveQuery({name: "home"}).result[0];
 	$scope.sprinkleText = homeConfig.sprinkleText;
 	$scope.banner = homeConfig.banner;
+	$scope.payoff = homeConfig.payoff;
 
 	$scope.login = function () {
 		$scope.Ceres.loginWithTwitter().then(function () {

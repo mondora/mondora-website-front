@@ -77,12 +77,21 @@
 	font-style: bold;
 	text-align: center;
 	text-transform: uppercase;
-	opacity: 0;
-  transition: opacity 1s ease-in;
+	opacity: 0.5;
+	animation-name: payoff;
+	animation-duration: 16s;
 	z-index: 10;
 }
-#mnd-hidden-payoff:hover {
-	opacity: 0.5;
+@keyframes payoff {
+	0% {
+		opacity: 0;
+	}
+	55% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0.5;
+	}
 }
 @media (max-width: 767px) {
   #mnd-hidden-payoff{
