@@ -1,22 +1,21 @@
+<div class="common-background"></div>
 <div class="col-sm-8 col-sm-offset-2">
 	<br />
 	<br />
-	<h2>Hello {{user.profile.screenName}}!</h2>
+	<h2 class="personalHome-h2">Hello {{user.profile.screenName}}!</h2>
+
+	<br />
 
 	<br />
 	<br />
-	<h3>Your apps</h3>
-
 	<br />
-	<br />
-	<br />
-	<div class="personalHomeApp">
-		<a ui-sref="profile()"><i class="fa fa-user"></i></a>
-	</div>
-	<div ng-if="isAdmin()" class="personalHomeApp">
-		<a ui-sref="admin()"><i class="fa fa-dashboard"></i></a>
-	</div>
-	<div class="personalHomeApp">
-		<a ui-sref="pomodoroList()"><i class="fa fa-clock-o"></i></a>
-	</div>
+	<a ui-sref="profile()" class="personalHomeApp">
+		<i class="fa fa-user"></i>
+	</a>
+	<a ui-sref="admin()" ng-if="isAdmin()" class="personalHomeApp">
+		<i class="fa fa-dashboard"></i>
+	</a>
+	<a ui-sref="pomodoroList()" class="personalHomeApp">
+		<i class="fa fa-clock-o"></i>
+	</a>
 </div>

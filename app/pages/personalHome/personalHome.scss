@@ -1,3 +1,9 @@
+// Colours
+$mnd-yellow: #ffcc00;
+$mnd-grey: #5e5f5f;
+$mnd-light-grey: #abadad;
+
+//page Css
 .personalHomeApp {
 	display: inline-block;
 	height: 100px;
@@ -8,8 +14,14 @@
 	text-align: center;
 	font-size: 40px;
 	border-radius: 25px;
+	box-shadow:4px 4px 6px #414141;
+	color: $mnd-grey;
 }
-
-.personalHomeApp a {
-	color: #5e5f5f;
+.personalHomeApp:hover {
+	color: $mnd-grey;
+}
+.personalHome-h2{
+	text-align: center;
+	border-bottom: solid 1px $mnd-light-grey;
+	box-shadow:0px 4px 4px -3px $mnd-light-grey;
 }
