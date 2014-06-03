@@ -1,83 +1,102 @@
 $mnd-yellow: #ffcc00;
 $mnd-grey: #5e5f5f;
 
-.sprinkle-result {
+.sprinkle-container {
 	position: relative;
-	width: 100%;
-    color: #fff;
-    font-size: 50px;
-    font-family: 'Cutive Mono' ;
-    height: 100px;
-    background-color: rgba(0,0,0,0.4);
-    border-top: 3px solid #ffcc00;
-    z-index: 0;
+	user-select: none;
 }
 
+
+
+////////////////////
+// Result section //
+////////////////////
+
+.sprinkle-result {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+    height: 100px;
+    color: #fff;
+    font-size: 50px;
+    font-family: "Cutive Mono", monospace;
+    background: rgba(0,0,0,0.4);
+    border-top: 3px solid $mnd-yellow;
+    border-bottom: 3px solid $mnd-yellow;
+    z-index: 0;
+}
 .sprinkle-result span {
 	display: inline-block;
 	margin: 0px;
-	padding-top: 15px;
+	padding-top: 10px;
 	z-index: 10;
 }
-.sprinkle-center-line-top{
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 50%;
-	height: 25%;
-	border-right: 2px solid #fff;
-	opacity: 0.4;
-	z-index: -11;
-}
-.sprinkle-center-line-center{
-	position: absolute;
-	top: 30%;
-	left: 0px;
-	width: 50%;
-	height: 50%;
-}
-.sprinkle-center-line-bottom{
-	position: absolute;
-	top: 75%;
-	left: 0px;
-	width: 50%;
-	height: 25%;
-	border-right: 2px solid #fff;
-	opacity: 0.4;
-	z-index: -11;
+.sprinkle-left, .sprinkle-pivot, .sprinkle-right {
+	height: 94px;
 }
 .sprinkle-left {
 	float: left;
 	text-align: right;
-	width: 50%;
+	width: 49%;
 }
 .sprinkle-pivot {
 	position: relative;
 	float: left;
-    color: #ffcc00;
+    color: $mnd-yellow;
 }
 .sprinkle-right {
 	float: left;
 }
-.sprinkle-left, .sprinkle-pivot, .sprinkle-right {
-	min-height: 98px;
+
+
+
+/////////////////
+// Center line //
+/////////////////
+
+.sprinkle-center-line-top {
+	position: absolute;
+	top: 0px;
+	left: 49%;
+	width: 2px;
+	height: 25%;
+	background: white;
+	opacity: 0.4;
+	z-index: -11;
 }
+.sprinkle-center-line-bottom {
+	position: absolute;
+	bottom: 0px;
+	left: 49%;
+	width: 2px;
+	height: 25%;
+	background: white;
+	opacity: 0.4;
+	z-index: -11;
+}
+
+
+
+/////////////////
+// Control bar //
+/////////////////
+
 .sprinkle-control-bar {
-	background-color: #ffcc00;
-	height: 80px;
+	position: relative;
+	left: 0px;
+	background-color: $mnd-yellow;
+	height: 40px;
 	width: 100%;
-	padding: 10px 0;
 }
 .sprinkle-control-bar-left {
-	height: 60px;
-	width: 30%;
-	padding-left:10px;
+	padding-left: 10px;
+	margin-top: -3px;
 }
 .sprinkle-control-bar-right {
-	height: 60px;
-	width: 69%;
-	text-align: right;
-	padding-right:10px;
+	float: right;
+	padding-right: 10px;
+	margin-top: -3px;
 }
 .sprinkle-control-bar-right, .sprinkle-control-bar-left {
 	display: inline-block;
@@ -86,44 +105,27 @@ $mnd-grey: #5e5f5f;
 	color: $mnd-grey;
 	padding-left: 5px;
 	display: inline-block;
-	font-size: 40px;
+	font-size: 32px;
 	border: none;
 	text-align: center;
 }
 .sprinkle-control-wpm {
 	color: $mnd-grey;
-	padding:0 15px;
+	position: relative;
+	top: -3px;
+	padding-left: 15px;
+	padding-right: 15px;
 	display: inline-block;
-	font-size: 40px;
+	font-size: 28px;
 	border: none;
 	text-align: center;
 }
 .sprinkle-control-btn:hover{
 	cursor: pointer;
 }
-.wpm-btn {
-	padding: 0 5px;
-}
 
 @media (max-width: 767px){
-  .sprinkle-result {
-    font-size: 35px;
-    border-bottom: 3px solid #ffcc00;
-  }
-  .sprinkle-result span {
-    padding-top: 25px;
-  }
   .sprinkle-control-bar {
-    /*height: 60px;*/
     display: none;
-  }
-  .sprinkle-control-bar-left {
-    padding-left: 5px;
-  }
-  .sprinkle-control-bar-right {
-    padding-right: 5px;
-  }
-  .sprinkle-control-btn, .sprinkle-control-wpm {
-    font-size: 30px;
   }
 }

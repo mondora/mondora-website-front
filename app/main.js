@@ -21,6 +21,8 @@
 /* */
 /*****************************************************************************************************************/
 
+var GIVE_UP_DELAY = 10000;
+
 (function () {
 	var config = {
 		dev: {
@@ -51,7 +53,7 @@
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
-	window.CERES_CONNECTED = deferred.promise.timeout(5000);
+	window.CERES_CONNECTED = deferred.promise.timeout(GIVE_UP_DELAY);
 })();
 
 angular.module("mnd-web", [
@@ -67,18 +69,29 @@ angular.module("mnd-web", [
 
 	// App modules
 	"mnd-web.templates",
+	"mnd-web.methods",
+	// Components
 	"mnd-web.components.dashboard",
 	"mnd-web.components.mindmap",
-	"mnd-web.components.tag-strip",
 	"mnd-web.components.center",
 	"mnd-web.components.check-mobile",
 	"mnd-web.components.clear-selection",
 	"mnd-web.components.menu-editor",
+	"mnd-web.components.cig-image",
+	"mnd-web.components.pomodoro",
+	"mnd-web.components.user-input",
+	// Apps
+	// ...
+	// Pages
 	"mnd-web.pages.home",
 	"mnd-web.pages.staticHome",
 	"mnd-web.pages.personalHome",
+	// TODO dynamic injection
 	"mnd-web.pages.profile",
+	"mnd-web.pages.page",
 	"mnd-web.pages.admin",
+	"mnd-web.pages.pomodoro.list",
+	"mnd-web.pages.pomodoro.view",
 	"mnd-web.pages.team",
 	"mnd-web.pages.user",
 	"mnd-web.pages.post.edit",
@@ -127,7 +140,7 @@ angular.module("mnd-web", [
 					.then(function () {
 						var resProm = Ceres.resumeLoginPromise;
 						if (resProm.isPending()) {
-							return TimeoutPromiseService.timeoutPromise(resProm, 5000)
+							return TimeoutPromiseService.timeoutPromise(resProm, GIVE_UP_DELAY)
 								.finally(function () {
 									return true;
 								});
@@ -136,7 +149,7 @@ angular.module("mnd-web", [
 					})
 					.then(function () {
 						var sub = Ceres.subscribe("configurations");
-						return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+						return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 					})
 					.fail(function () {
 						$state.go("staticHome");
@@ -165,6 +178,22 @@ angular.module("mnd-web", [
 		public: true
     });
 
+    $stateProvider.state("approach", {
+        url: "/approach",
+		parent: "root",
+        templateUrl: "pages/page/page.html",
+		resolve: {
+			/*
+			pageSub: function ($stateParams, TimeoutPromiseService) {
+				var sub = Ceres.subscribe("singlePage", $stateParams.pageName);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}
+			*/
+		},
+		controller: "PageController",
+		public: true
+    });
+
     $stateProvider.state("personalHome", {
         url: "/home",
 		parent: "root",
@@ -186,6 +215,8 @@ angular.module("mnd-web", [
 		public: true
     });
 
+	// Apps
+	// TODO make this dynamic
     $stateProvider.state("profile", {
         url: "/profile",
 		parent: "root",
@@ -200,6 +231,32 @@ angular.module("mnd-web", [
 		controller: "AdminController"
     });
 
+    $stateProvider.state("pomodoroList", {
+        url: "/pomodoro",
+		parent: "root",
+        templateUrl: "pages/pomodoro/list/pomodoroList.html",
+		controller: "PomodoroListController",
+		resolve: {
+			pomoSub: function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("pomodoros");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}
+		}
+    });
+    $stateProvider.state("pomodoroView", {
+        url: "/pomodoro/:pomodoroId",
+		parent: "root",
+        templateUrl: "pages/pomodoro/view/pomodoroView.html",
+		controller: "PomodoroViewController",
+		resolve: {
+			pomoSub: function (TimeoutPromiseService, $stateParams) {
+				var sub = Ceres.subscribe("singlePomodoro", $stateParams.pomodoroId);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}
+		}
+    });
+	// END apps
+
     $stateProvider.state("user", {
         url: "/user/:userId",
 		parent: "root",
@@ -208,11 +265,11 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singleUser", $stateParams.userId);
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			},
 			posts: function (TimeoutPromiseService, $stateParams) {
 				var meth = Ceres.call("getPostsByAuthor", $stateParams.userId);
-				return TimeoutPromiseService.timeoutPromise(meth.result, 5000);
+				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -226,7 +283,7 @@ angular.module("mnd-web", [
 		resolve: {
 			userSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("teamUsers");
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -240,7 +297,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -254,7 +311,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function ($stateParams, TimeoutPromiseService) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		}
     });
@@ -267,7 +324,7 @@ angular.module("mnd-web", [
 		resolve: {
 			postSub: function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("latestPosts");
-				return TimeoutPromiseService.timeoutPromise(sub.ready, 5000);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -281,7 +338,7 @@ angular.module("mnd-web", [
 		resolve: {
 			topic: function (TimeoutPromiseService, $stateParams) {
 				var meth = Ceres.call("getTopic", $stateParams.name);
-				return TimeoutPromiseService.timeoutPromise(meth.result, 5000);
+				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
 			}
 		},
 		public: true
@@ -306,6 +363,7 @@ angular.module("mnd-web", [
 
 	$rootScope.Ceres = Ceres;
 	Ceres.subscribe("userAdditionalInfo");
+	Ceres.subscribe("allUsers");
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
 	$rootScope.Users = Ceres.createCollection("users");

@@ -1,0 +1,26 @@
+.mnd-pomodoro-timer {
+	position: relative;
+}
+
+.mnd-pomodoro-timer div {
+	position: absolute;
+	width: 100%;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.mnd-pomodoro-timer svg {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.mnd-pomodoro-timer path {
+	fill: #dd0000;
+}
+
+.mnd-pomodoro-timer circle {
+	fill: #dd0000;
+}

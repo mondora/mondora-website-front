@@ -1,3 +1,8 @@
+// Colours
+$mnd-yellow: #ffcc00;
+$mnd-grey: #5e5f5f;
+$mnd-light-grey: #abadad;
+
 // Misc
 .mnd-clickable {
 	cursor: pointer;
@@ -20,14 +25,40 @@
 	width: 100%;
 	height: 100%;
 }
+.mnd-inline-block {
+	display: inline-block;
+}
+.mnd-valign-middle {
+	vertical-align: middle;
+}
 
 // Vertical spaces
 .mnd-vsp-4 {
 	width: 100%;
 	height: 4px;
 }
+.mnd-vsp-6 {
+	width: 100%;
+	height: 6px;
+}
+.mnd-vsp-16 {
+	width: 100%;
+	height: 16px;
+}
 
 // Horizontal alignement classes
+.mnd-width-80 {
+	width: 80px;
+}
+span.mnd-width-80 {
+	display: inline-block;
+}
+.mnd-width-40 {
+	width: 40px;
+}
+span.mnd-width-40 {
+	display: inline-block;
+}
 .mnd-width-30 {
 	width: 30px;
 }

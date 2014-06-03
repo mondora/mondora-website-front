@@ -3,9 +3,27 @@
 
 		<accordion-group class="mnd-menu-accordion-heading">
 			<accordion-heading>
+
 				{{item.title}}
+
+				<span class="pull-right mnd-clickable mnd-width-20 text-center" ng-click="menu.deleteItem($index)">
+					<i class="fa fa-trash-o"></i>
+				</span>
+				<span class="pull-right mnd-width-20">
+					&nbsp;
+				</span>
+				<span class="pull-right mnd-clickable mnd-width-20 text-center" ng-click="menu.moveUp($index, $event)">
+					<i ng-if="$index !== 0" class="fa fa-caret-up"></i>
+					<i ng-if="$index === 0">&nbsp;</i>
+				</span>
+				<span class="pull-right mnd-clickable mnd-width-20 text-center" ng-click="menu.moveDown($index, $event)">
+					<i ng-if="$index !== (items.length - 1)" class="fa fa-caret-down"></i>
+					<i ng-if="$index === (items.length - 1)">&nbsp;</i>
+				</span>
+
 			</accordion-heading>
-			<div class="form-group">
+
+			<div class="col-sm-12 form-group">
 				<label>
 					<i class="fa fa-font"></i>
 					&nbsp;
@@ -13,23 +31,95 @@
 				</label>
 				<input type="text" class="form-control" placeholder="Title" ng-model="item.title" />
 			</div>
-			<div class="form-group" ng-if="item.type !== 'submenu'">
+
+			<div class="col-sm-12 form-group">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="item.loginRequired">
+						Only display to logged-in users
+					</label>
+				</div>
+			</div>
+
+			<div class="col-sm-12 form-group">
+				<label>
+					<i class="fa fa-user"></i>
+					&nbsp;
+					Restrict to roles
+				</label>
+				<input type="text" class="form-control" placeholder="blog, admin, ..." ng-model="item.roles" />
+			</div>
+
+			<div class="col-sm-12">
+				<label>
+					<i class="fa fa-dot-circle-o"></i>
+					&nbsp;
+					Type
+				</label>
+			</div>
+			<div class="col-sm-12 form-group">
+					<div class="col-sm-4">
+					<label class="radio-inline">
+						<input type="radio" name="{{'type' + $index}}" ng-model="item.type" value="link" /> Link
+					</label>
+				</div>
+				<div class="col-sm-4">
+					<label class="radio-inline">
+						<input type="radio" name="{{'type' + $index}}" ng-model="item.type" value="action" /> Action
+					</label>
+				</div>
+				<div class="col-sm-4">
+					<label class="radio-inline">
+						<input type="radio" name="{{'type' + $index}}" ng-model="item.type" value="submenu" /> Sumbenu
+					</label>
+				</div>
+			</div>
+
+			<div class="col-sm-12 form-group" ng-if="item.type === 'link'">
 				<label>
 					<i class="fa fa-link"></i>
 					&nbsp;
-					Href
+					Link
 				</label>
-				<input type="text" class="form-control" placeholder="Href" ng-model="item.href" />
+				<input type="text" class="form-control" placeholder="Absolute or relative path" ng-model="item.link" />
 			</div>
-			<button type="button" class="btn btn-default" ng-click="menu.addSubitem(item)">Add subitem</button>
-			<button type="button" class="btn btn-default pull-right" ng-click="menu.deleteItem($index)">Delete</button>
+			<div class="col-sm-12 form-group" ng-if="item.type === 'action'">
+				<label>
+					<i class="fa fa-bolt"></i>
+					&nbsp;
+					Action
+				</label>
+				<select class="form-control" ng-model="item.action" ng-options="action for action in availableActions"></select>
+			</div>
+			<div class="col-sm-12 form-group" ng-if="item.type === 'submenu'">
+				<button type="button" class="btn btn-default btn-block" ng-click="menu.addSubitem(item)">Add subitem</button>
+			</div>
+
 		</accordion-group>
 
 		<accordion-group ng-if="item.type === 'submenu'" ng-repeat="subitem in item.items" class="mnd-menu-accordion-heading mnd-menu-accordion-indented">
 			<accordion-heading>
+
 				{{subitem.title}}
+
+				<span class="pull-right mnd-clickable mnd-width-20 text-center" ng-click="menu.deleteSubitem(item, $index)">
+					<i class="fa fa-trash-o"></i>
+				</span>
+				<span class="pull-right mnd-width-20">
+					&nbsp;
+				</span>
+				<span class="pull-right mnd-clickable mnd-width-20 text-center" ng-click="menu.moveSubitemUp(item, $index, $event)">
+					<i ng-if="$index !== 0" class="fa fa-caret-up"></i>
+					<i ng-if="$index === 0">&nbsp;</i>
+				</span>
+				<span class="pull-right mnd-clickable mnd-width-20 text-center" ng-click="menu.moveSubitemDown(item, $index, $event)">
+					<i ng-if="$index !== (item.items.length - 1)" class="fa fa-caret-down"></i>
+					<i ng-if="$index === (item.items.length - 1)">&nbsp;</i>
+				</span>
+
 			</accordion-heading>
-			<div class="form-group">
+
+			<div class="col-sm-12 form-group">
 				<label>
 					<i class="fa fa-font"></i>
 					&nbsp;
@@ -37,15 +127,16 @@
 				</label>
 				<input type="text" class="form-control" placeholder="Title" ng-model="subitem.title" />
 			</div>
-			<div class="form-group">
+
+			<div class="col-sm-12 form-group">
 				<label>
 					<i class="fa fa-link"></i>
 					&nbsp;
-					Href
+					Link
 				</label>
-				<input type="text" class="form-control" placeholder="Href" ng-model="subitem.href" />
+				<input type="text" class="form-control" placeholder="Absolute or relative path" ng-model="subitem.link" />
 			</div>
-			<button type="button" class="btn btn-default pull-right" ng-click="menu.deleteSubitem(item, $index)">Delete</button>
+
 		</accordion-group>
 
 	</div>
@@ -53,4 +144,4 @@
 
 <br />
 
-<button type="button" class="btn btn-default" ng-click="menu.addItem()">Add subitem</button>
+<button type="button" class="btn btn-default" ng-click="menu.addItem()">Add item</button>

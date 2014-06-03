@@ -262,8 +262,8 @@ angular.module("mnd-web.pages.post.edit", [])
 
 	var processMap = function (map, isChild) {
 		if (isChild) {
-			if (!map.href || map.href.slice(0, 9) === "/#/topic/") {
-				map.href = "/#/topic/" + map.text;
+			if (!map.href || map.href.slice(0, 10) === "/#!/topic/") {
+				map.href = "/#!/topic/" + map.text;
 			} else if (map.href.slice(0, 7) !== "http://") {
 				map.href = "http://" + map.href;
 
@@ -275,6 +275,12 @@ angular.module("mnd-web.pages.post.edit", [])
 		});
 	};
 
+	// Only update on change
+	var postCache = angular.copy($scope.post);
+	delete postCache._id;
+	delete postCache.userId;
+	delete postCache.authors;
+
 	$scope.save = function () {
 		if ($scope.dontSave) {
 			return;
@@ -285,16 +291,19 @@ angular.module("mnd-web.pages.post.edit", [])
 		$scope.post.body = body.innerHTML;
 		processMap($scope.post.map);
 
-		// Strip the _id and userId properties, which can't be updated
+		// Strip properties which can't be updated
 		var post = angular.copy($scope.post);
 		delete post._id;
 		delete post.userId;
 		delete post.authors;
-		$scope.Posts.update(id, post).remote.fail(function (err) {
-			console.log(err);
-		});
+		if (!angular.equals(post, postCache)) {
+			postCache = post;
+			$scope.Posts.update(id, post).remote.fail(function (err) {
+				console.log(err);
+			});
+		}
 	};
-	var interval = $interval($scope.save, 5000);
+	var interval = $interval($scope.save, 2500);
 	$scope.$on("$destroy", function () {
 		$interval.cancel(interval);
 	});

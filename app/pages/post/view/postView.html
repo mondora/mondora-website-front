@@ -8,8 +8,8 @@
 </div>
 
 <div id="mnd-post-sprinkle-container">
-	<div mnd-sprinkle text="{{sprinklePostText()}}"></div>
-	<div class="pull-right read-time">Reading time {{estimateReadingTime()}} min</div>
+	<div mnd-sprinkle html="{{post.body}}" time="estimateReadingTime"></div>
+	<div class="pull-right read-time">Reading time {{estimateReadingTime}} min</div>
 </div>
 
 <div class="mnd-mind-container">
@@ -20,9 +20,12 @@
 	<div class="col-sm-8 col-sm-offset-2">
 		<h1 ng-bind-html="post.title" class="post-title" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h1>
 		<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h2>
-		<a class="post-author" ng-repeat="author in post.authors" ui-sref="user({userId: author.userId})">
-			<img class="img-circle" ng-src="{{author.pictureUrl}}" height="50" />
+		<a class="post-author" ng-if="!post.repost" ng-repeat="author in post.authors" ui-sref="user({userId: author.userId})">
+			<div mnd-cig-image source="author.pictureUrl" size="40" class="mnd-inline-block mnd-valign-middle"></div>
 			&nbsp;&nbsp;Author {{author.screenName}}
+		</a>
+		<a class="post-author" ng-if="post.repost" href="{{post.original.url}}">
+			By {{post.original.author}}, reposted by {{post.authors.0.screenName}} 
 		</a>
 	</div>
 </div>

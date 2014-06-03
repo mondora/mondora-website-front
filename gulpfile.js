@@ -2,17 +2,19 @@
 // Dependencies //
 //////////////////
 
-var gulp	= require("gulp");
-var plugins	= require("gulp-load-plugins")();
-var static	= require("node-static");
-var http	= require("http");
-var fs		= require("fs");
-var pp		= require('preprocess');
-var mkdirp	= require("mkdirp");
-var spawn	= require("child_process").spawn;
-var Q		= require("q");
-var util	= require("util");
-
+var crypto		= require("crypto");
+var fs			= require("fs");
+var gulp		= require("gulp");
+var plugins		= require("gulp-load-plugins")();
+var http		= require("http");
+var _			= require("lodash");
+var mkdirp		= require("mkdirp");
+var pp			= require("preprocess");
+var Q			= require("q");
+var spawn		= require("child_process").spawn;
+var static		= require("node-static");
+var util		= require("util");
+var WebSocket	= require("faye-websocket");
 
 
 //////////////////////////////////
@@ -261,48 +263,36 @@ gulp.task("buildMac", function (cb) {
 // Start dev environment //
 ///////////////////////////
 
-var buildDevCss = function (lrServer) {
+var buildDevFonts = function () {
+	util.print("Building fonts... ");
+	mkdirp.sync("builds/dev/dist/fonts");
+	buildVendorFontsGlyphs("builds/dev/dist/fonts");
+	util.print("done\n");
+};
+
+var buildDevCss = function () {
 	util.print("Building css... ");
 	mkdirp.sync("builds/dev/dist/css");
 	buildAppStyles("builds/dev/dist/css");
 	buildVendorStyles("builds/dev/dist/css");
 	buildVendorFontsCss("builds/dev/dist/css");
-	if (lrServer) {
-		lrServer.changed("index.html");
-	}
 	util.print("done\n");
 };
 
-var buildDevJs = function (lrServer) {
+var buildDevJs = function () {
 	util.print("Building js... ");
 	mkdirp.sync("builds/dev/dist/js");
 	buildAppScripts("builds/dev/dist/js");
 	buildAppTemplates("builds/dev/dist/js");
 	buildVendorScripts("builds/dev/dist/js");
-	if (lrServer) {
-		lrServer.changed("index.html");
-	}
 	util.print("done\n");
 };
 
-var buildDevFonts = function (lrServer) {
-	util.print("Building fonts... ");
-	mkdirp.sync("builds/dev/dist/fonts");
-	buildVendorFontsGlyphs("builds/dev/dist/fonts");
-	if (lrServer) {
-		lrServer.changed("index.html");
-	}
-	util.print("done\n");
-};
-
-var buildDevHtml = function (lrServer) {
+var buildDevHtml = function () {
 	util.print("Building html... ");
 	var html = fs.readFileSync("app/main.html", "utf8");
 	var devHtml = pp.preprocess(html, {TARGET: "dev"});
 	fs.writeFileSync("builds/dev/index.html", devHtml);
-	if (lrServer) {
-		lrServer.changed("index.html");
-	}
 	util.print("done\n");
 };
 
@@ -311,26 +301,49 @@ gulp.task("dev", function () {
 	buildDevCss();
 	buildDevHtml();
 	buildDevFonts();
-	var lrServer = plugins.livereload();
-	var dvServer = http.createServer(function (req, res) {
-		var stServer = new static.Server("./builds/dev/", {cache: false});
+
+	// Set up static file server
+	var file = new static.Server("./builds/dev/");
+	http.createServer(function (req, res) {
 		req.on("end", function () {
-			stServer.serve(req, res);
-		});
-		req.resume();
+			file.serve(req, res);
+		}).resume();
 	}).listen(8080, "0.0.0.0");
+
+	// Set up WebSocket server to reload the browser
+	var ws = {
+		sockets: {},
+		send: function (msg) {
+			_.forEach(this.sockets, function (socket) {
+				socket.send(msg);
+			});
+		}
+	};
+	http.createServer().on("upgrade", function (req, sock, body) {
+		var key = crypto.randomBytes(16).toString("hex");
+		if (WebSocket.isWebSocket(req)) {
+			ws.sockets[key] = new WebSocket(req, sock, body).on("close", function () {
+				delete ws.sockets[key];
+			});
+		}
+	}).listen(8000, "0.0.0.0");
+
 	var scssWatcher = gulp.watch("app/**/*.scss");
 	scssWatcher.on("change", function () {
-		buildDevCss(lrServer);
+		buildDevCss();
+		ws.send("reload");
 	});
 	var jsWatcher = gulp.watch(["app/**/*.html", "!app/main.html", "app/**/*.js"]);
 	jsWatcher.on("change", function () {
-		buildDevJs(lrServer);
+		buildDevJs();
+		ws.send("reload");
 	});
 	var htmlWatcher = gulp.watch("app/main.html");
 	htmlWatcher.on("change", function () {
-		buildDevHtml(lrServer);
+		buildDevHtml();
+		ws.send("reload");
 	});
+
 });
 
 

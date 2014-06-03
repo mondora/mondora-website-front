@@ -14,19 +14,6 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
-.factory("readTimeEstimatingService", function (MndTagStrippingService) {
-	var estimate = function (text) {
-		var strippedText = MndTagStrippingService.strip(text);
-		strippedText = strippedText.replace(/\s+/g, " ");
-		var wordCount = strippedText.split(" ").length;
-		var averageReadingSpeedInWpm = 250;
-		return Math.round(wordCount / averageReadingSpeedInWpm);
-	};
-	return {
-		estimate: estimate
-	};
-})
-
 .directive("readonlyEditor", function (ClearWindowSelectionService) {
 
 	var Tweet = function (screenName) {
@@ -118,9 +105,7 @@ angular.module("mnd-web.pages.post.view", [])
 	$stateParams,
 	$state,
 	$filter,
-	MndTagStrippingService,
 	firstLevelHtmlParser,
-	readTimeEstimatingService,
 	CheckMobileService
 ) {
 
@@ -157,25 +142,11 @@ angular.module("mnd-web.pages.post.view", [])
 		return firstLevelHtmlParser.parse($scope.post.body);
 	};
 
-	/////////////////////////////////////////////////////
-	// Strip the post text to fit it into the sprinkle //
-	/////////////////////////////////////////////////////
+	///////////////////////////////////////
+	// Reading time placeholder variable //
+	///////////////////////////////////////
 
-	$scope.sprinklePostText = function () {
-		if (!$scope.post) return;
-		if (!$scope.post.body) return "";
-		return MndTagStrippingService.strip($scope.post.body);
-	};
-
-	////////////////////////////
-	// Calculate reading time //
-	////////////////////////////
-
-	$scope.estimateReadingTime = function () {
-		if (!$scope.post) return;
-		if (!$scope.post.body) return 0;
-		return readTimeEstimatingService.estimate($scope.post.body);
-	};
+	$scope.estimateReadingTime = 0;
 
 	////////////////////////////////////////////////
 	// Set various properties that shape the html //

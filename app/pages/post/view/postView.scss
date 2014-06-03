@@ -2,7 +2,7 @@
 	position: absolute;
 	width: 620px;
 	left: 50%;
-	top: 45%;
+	top: 40%;
 	margin-left: -260px;
 	z-index: 1;
 }
@@ -53,10 +53,12 @@
 }
 
 .read-time {
+	position: absolute;
+	bottom: -40px;
+	right: 10px;
 	font-size: 30px;
 	font-weight: bold;
 	color: #fff;
-	padding-right: 10px;
 }
 
 .comment-author {
