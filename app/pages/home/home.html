@@ -5,7 +5,9 @@
 	</div>
 
 	<div id="mnd-hidden-payoff">
-		ONE STEP AHEAD<br />THE FUTURE
+		{{payoff.firstLine}}
+		<br />
+		{{payoff.secondLine}}
 	</div>
 
 	<div id="mnd-sprinkle-container">
@@ -20,8 +22,8 @@
 		</div>
 		<div id="mnd-home-banner">
 			<div id="mnd-home-banner-content">
-				<h1>{{banner.title}}</h1>
-				<h2>{{banner.date}}</h2>
+				<h1 ng-bind-html="banner.title"></h1>
+				<h2 ng-bind-html="banner.date"></h2>
 				{{banner.text}}
 			</div>
 			<div id="mnd-home-banner-arrow"></div>

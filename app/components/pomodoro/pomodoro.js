@@ -39,7 +39,11 @@ angular.module("mnd-web.components.pomodoro", [])
 	};
 	var calculateRemaining = function (pomodoro) {
 		var elapsed = calculateElapsed(pomodoro);
-		return pomodoro.duration - elapsed;
+		var remaining = pomodoro.duration - elapsed;
+		if (remaining < 1000) {
+			remaining = 0;
+		}
+		return remaining;
 	};
 
 	return {
@@ -101,7 +105,12 @@ angular.module("mnd-web.components.pomodoro", [])
 			///////////////////////
 
 			var drawCircle = function () {
-				var angleInRadiants = (1 - $scope.remaining / $scope.pomodoro.duration) * 2 * Math.PI;
+				if ($scope.remaining === 0) {
+					path.remove();
+					circle.attr("r", HCW);
+					return;
+				}
+				var angleInRadiants = (1 - $scope.remaining/$scope.pomodoro.duration) * 2 * Math.PI;
 				var x = Math.sin(angleInRadiants) * HCW;
 				var y = Math.cos(angleInRadiants) * HCW * -1;
 				var widerThanPI = (angleInRadiants > Math.PI ) ? 1 : 0;
@@ -128,12 +137,10 @@ angular.module("mnd-web.components.pomodoro", [])
 			$scope.$watch("pomodoro.status", function (status) {
 				if (status === "running") {
 					interval = $interval(function () {
-						if ($scope.remaining <= 0) {
-							$scope.remaining = 0;
+						render();
+						if ($scope.remaining === 0) {
 							$interval.cancel(interval);
 							PomodoroService.stop($scope.pomodoro);
-						} else {
-							render();
 						}
 					}, 1000);
 				} else if (status === "puased") {

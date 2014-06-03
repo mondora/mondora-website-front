@@ -22,7 +22,7 @@ angular.module("mnd-web.pages.pomodoro.view", [])
 	$scope.stop = function () {
 		PomodoroService.stop($scope.pomodoro);
 	};
-	var FIVE_MINUTES = 5 * 60 * 1000;
+	var FIVE_MINUTES = 1 * 15 * 1000;
 	$scope.plusFiveMinutes = function () {
 		var newDuration = $scope.pomodoro.duration + FIVE_MINUTES;
 		PomodoroService.setDuration($scope.pomodoro, newDuration);

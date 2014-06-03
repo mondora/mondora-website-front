@@ -19,18 +19,18 @@
 	<br />
 	<br />
 
-	<div class="row">
 
+	<div class="row">
 		<div class="col-sm-12">
 			<h3>Home configuration</h3>
 		</div>
-
-		<div class="col-sm-5">
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
 			<h4>Sprinkle text</h4>
-			<textarea class="form-control" rows="5" ng-model="homeConfig.sprinkleText"></textarea>
+			<textarea class="form-control" rows="4" ng-model="homeConfig.sprinkleText"></textarea>
 		</div>
-
-		<div class="col-sm-6 col-sm-offset-1">
+		<div class="col-sm-6">
 			<h4>Banner</h4>
 			<div class="mnd-input-vertical-group">
 				<input type="text" class="form-control" ng-model="homeConfig.banner.title" placeholder="Title" />
@@ -38,7 +38,15 @@
 				<input type="text" class="form-control" ng-model="homeConfig.banner.text" placeholder="Text" />
 			</div>
 		</div>
-	
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<h4>Payoff</h4>
+			<div class="mnd-input-vertical-group">
+				<input type="text" class="form-control" ng-model="homeConfig.payoff.firstLine" placeholder="First line" />
+				<input type="text" class="form-control" ng-model="homeConfig.payoff.secondLine" placeholder="Second line" />
+			</div>
+		</div>
 	</div>
 
 	<br />
