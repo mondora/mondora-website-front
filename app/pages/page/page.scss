@@ -60,10 +60,23 @@
 
 @media (max-width: 767px){
 	.page-content{
+		box-sizing: border-box;
 		font-size: 25px;
+		background-image: url('https://s3.amazonaws.com/mnd-website/img/raster-dark.png');
+		margin: 0px;
+		padding-bottom: 5%;;
 	}
 	.page-content h3{
 		font-size: 35px;
 	}
-	
+	.mnd-page-overlay{
+		display: none;
+	}
+	.img-background{
+		display: none;
+	}
+	.page-page-container{
+		background-image: url('https://s3.amazonaws.com/mnd-website/img/456512_3454297838885_57042764_o.jpg');
+		margin: 0px;
+	}
 }
