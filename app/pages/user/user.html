@@ -1,65 +1,66 @@
-<div class="common-background"></div>
-<div class="post-top-buttons" ng-if="isUser()">
-	<a ui-sref="profile()" class="btn btn-default">
-		Modifica
-	</a>
-</div>
-
-<div class="col-sm-12">
-
-	<br />
-	<br />
-	<div class="col-xs-12 col-md-6 col-md-offset-1">
-		<div class="row">
-			<div class="col-xs-5 col-sm-3 col-md-5 col-lg-4">
-				<div mnd-cig-image source="user.profile.pictureUrl" size="200" class="hidden-xs"></div>
-				<div mnd-cig-image source="user.profile.pictureUrl" size="150" class="visible-xs"></div>
-			</div>
-			<div class="col-xs-6 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-6 col-md-offset-1 col-lg-7 col-lg-offset-1">
-				<h2 ng-bind-html="user.profile.name"></h2>
-				<h3>
-					<i>
-						@<span ng-bind-html="user.profile.screenName"></span>
-					</i>
-				</h3>
-				<a href="mailto:{{user.profile.email}}">{{user.profile.email}}</a>
-				<h4>
-					<a ng-if="user.profile.facebookUrl" ng-href="{{user.profile.facebookUrl}}" class="mnd-undecorated-a"><i class="fa fa-facebook"></i></a>
-					<a ng-if="user.profile.twitterUrl" ng-href="{{user.profile.twitterUrl}}" class="mnd-undecorated-a"><i class="fa fa-twitter"></i></a>
-					<a ng-if="user.profile.githubUrl" ng-href="{{user.profile.githubUrl}}" class="mnd-undecorated-a"><i class="fa fa-github"></i></a>
-					<a ng-if="user.profile.linkedInUrl" ng-href="{{user.profile.linkedInUrl}}" class="mnd-undecorated-a"><i class="fa fa-linkedin"></i></a>
-				</h4>
-			</div>
-		</div>
-
-		<br />
-		<br />
-		<div class="user-profile-motto">
-			<h2>Motto</h2>
-			<h4 ng-bind-html="user.profile.motto"></h4>
-		</div>
-
-		<br />
-		<div class="user-profile-short-bio">
-			<h2>Short bio</h2>
-			<div ng-bind-html="user.profile.bio"></div>
-		</div>
+<div class="radial-bacground">
+	<div class="post-top-buttons" ng-if="isUser()">
+		<a ui-sref="profile()" class="btn btn-default">
+			Modifica
+		</a>
 	</div>
 
-	<div class="col-xs-12 col-md-3 col-md-offset-1">
-		<div class="user-profile-posts">
-			<h2>Articles</h2>
-			<div ng-repeat="post in posts" class="found-posts">
-				<a ui-sref="postView({postId: post._id})" class="mnd-undecorated-a">
-					<h3>{{post.title}}</h3>
-					<h4>{{post.subtitle}}</h4>
-				</a>
-				<div class="post-author-topiclist">
-					<span class="reading-topiclist">Reading time {{post.readingLength}} min</span>
+	<div class="col-sm-12 radial-background">
+
+		<br />
+		<br />
+		<div class="col-xs-12 col-md-6 col-md-offset-1">
+			<div class="row">
+				<div class="col-xs-5 col-sm-3 col-md-5 col-lg-4">
+					<div mnd-cig-image source="user.profile.pictureUrl" size="200" class="hidden-xs"></div>
+					<div mnd-cig-image source="user.profile.pictureUrl" size="150" class="visible-xs"></div>
 				</div>
-				<div class="topic-bottom"></div>
+				<div class="col-xs-6 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-6 col-md-offset-1 col-lg-7 col-lg-offset-1">
+					<h2 ng-bind-html="user.profile.name"></h2>
+					<h3>
+						<i>
+							@<span ng-bind-html="user.profile.screenName"></span>
+						</i>
+					</h3>
+					<a href="mailto:{{user.profile.email}}">{{user.profile.email}}</a>
+					<h4>
+						<a ng-if="user.profile.facebookUrl" ng-href="{{user.profile.facebookUrl}}" class="mnd-undecorated-a"><i class="fa fa-facebook"></i></a>
+						<a ng-if="user.profile.twitterUrl" ng-href="{{user.profile.twitterUrl}}" class="mnd-undecorated-a"><i class="fa fa-twitter"></i></a>
+						<a ng-if="user.profile.githubUrl" ng-href="{{user.profile.githubUrl}}" class="mnd-undecorated-a"><i class="fa fa-github"></i></a>
+						<a ng-if="user.profile.linkedInUrl" ng-href="{{user.profile.linkedInUrl}}" class="mnd-undecorated-a"><i class="fa fa-linkedin"></i></a>
+					</h4>
+				</div>
+			</div>
+
+			<br />
+			<br />
+			<div class="user-profile-motto">
+				<h2>Motto</h2>
+				<h4 ng-bind-html="user.profile.motto"></h4>
+			</div>
+
+			<br />
+			<div class="user-profile-short-bio">
+				<h2>Short bio</h2>
+				<div ng-bind-html="user.profile.bio"></div>
 			</div>
 		</div>
-	</div>
 
+		<div class="col-xs-12 col-md-3 col-md-offset-1">
+			<div class="user-profile-posts">
+				<h2>Articles</h2>
+				<div ng-repeat="post in posts" class="found-posts">
+					<a ui-sref="postView({postId: post._id})" class="mnd-undecorated-a">
+						<h3>{{post.title}}</h3>
+						<h4>{{post.subtitle}}</h4>
+					</a>
+					<div class="post-author-topiclist">
+						<span class="reading-topiclist">Reading time {{post.readingLength}} min</span>
+					</div>
+					<div class="topic-bottom"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
 </div>
