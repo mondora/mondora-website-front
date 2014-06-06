@@ -48,6 +48,14 @@ $mnd-grey: #5e5f5f;
 .sprinkle-right {
 	float: left;
 }
+@media (max-width: 767px){
+	.sprinkle-result {
+		font-size: 35px;
+	}
+	.sprinkle-result span {
+		padding-top: 20px;
+	}
+}
 
 
 
@@ -125,6 +133,7 @@ $mnd-grey: #5e5f5f;
 }
 
 @media (max-width: 767px){
+
   .sprinkle-control-bar {
     display: none;
   }
