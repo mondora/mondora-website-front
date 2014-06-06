@@ -31,10 +31,34 @@ angular.module("mnd-web.methods", [])
 		});
 	};
 
+	var addChannel = function () {
+		var user = $rootScope.user;
+		if (!user) {
+			return;
+		}
+		var channel = {
+			userId: user._id,
+			curators: [{
+				userId: user._id,
+				screenName: user.profile.screenName,
+				name: user.profile.name,
+				pictureUrl: user.profile.pictureUrl
+			}],
+			groups: [],
+			members: []
+		};
+		$rootScope.Channels.insert(channel).remote.then(function (id) {
+			$state.go("channelEdit", {channelId: id});
+		}, function (err) {
+			console.log(err);
+		});
+	};
+
 	var noop = function () {};
 
 	return {
 		addPost: addPost,
+		addChannel: addChannel,
 		noop: noop
 	};
 

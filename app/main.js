@@ -97,6 +97,8 @@ angular.module("mnd-web", [
 	"mnd-web.pages.post.edit",
 	"mnd-web.pages.post.view",
 	"mnd-web.pages.post.list",
+	"mnd-web.pages.channel.edit",
+	"mnd-web.pages.channel.view",
 	"mnd-web.pages.topic"
 
 ])
@@ -366,6 +368,7 @@ angular.module("mnd-web", [
 	Ceres.subscribe("allUsers");
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
+	$rootScope.Channels = Ceres.createCollection("channels");
 	$rootScope.Users = Ceres.createCollection("users");
 
 	Ceres.on("login", function (userId) {
