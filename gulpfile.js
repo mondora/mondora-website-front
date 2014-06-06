@@ -66,6 +66,7 @@ var buildAppFavicon = function (dest) {
 
 var buildVendorScripts = function (dest) {
 	var sources = [
+		"bower_components/lodash/dist/lodash.js",
 		"bower_components/angular/angular.js",
 		"bower_components/angular-ui-router/release/angular-ui-router.js",
 		"bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
