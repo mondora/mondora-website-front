@@ -8,3 +8,17 @@
 h3 span {
 	font-size: 20px;
 }
+.user-page-container {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
+}
+
+@media (max-width: 767px){
+	.user-page-container{
+		padding-left: 0px;
+	}
+}
