@@ -154,6 +154,7 @@ var buildVendorScriptsCDN = function (dest) {
 		"bower_components/mnd.multi-transclude/multi-transclude.js",
 		"bower_components/mnd-dashboard/dist/dashboard-tpls.js",
 		"bower_components/mnd-sprinkle/dist/sprinkle-tpls.js",
+		"bower_components/bower-sockjs-client/sockjs.js",
 		"bower_components/q/q.js",
 		"bower_components/ddp.js/ddp.js",
 		"bower_components/asteroid/dist/asteroid.js",
