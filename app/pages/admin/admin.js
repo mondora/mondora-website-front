@@ -1,6 +1,6 @@
-angular.module("mnd-web.pages.admin", [])
+angular.module("mnd-web.pages")
 
-.controller("AdminController", function ($scope, $interval, $upload) {
+.controller("AdminController", ["$scope", "$interval", function ($scope, $interval) {
 
 	// Configurations
 	$scope.amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3"}).result[0];
@@ -60,4 +60,4 @@ angular.module("mnd-web.pages.admin", [])
 		$interval.cancel(interval);
 	});
 
-});
+}]);

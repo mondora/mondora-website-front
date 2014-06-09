@@ -1,6 +1,6 @@
-angular.module("mnd-web.pages.pomodoro.list", [])
+angular.module("mnd-web.pages")
 
-.controller("PomodoroListController", function ($scope, $interval) {
+.controller("PomodoroListController", ["$scope", function ($scope) {
 
 	var POMODORO_DEFAULT_DURATION = 25 * 60 * 1000;
 
@@ -34,4 +34,4 @@ angular.module("mnd-web.pages.pomodoro.list", [])
 	});
 	$scope.pomodoros = pomodorosRQ.result;
 
-});
+}]);

@@ -1,6 +1,6 @@
-angular.module("mnd-web.components.menu-editor", [])
+angular.module("mnd-web.components")
 
-.directive("mndMenuEditor", function (AppMethods) {
+.directive("mndMenuEditor", ["AppMethods", function (AppMethods) {
 	return {
 		restrict: "EA",
 		templateUrl: "components/menu-editor/menu-editor.html",
@@ -59,4 +59,4 @@ angular.module("mnd-web.components.menu-editor", [])
 			};
 		}
 	};
-});
+}]);

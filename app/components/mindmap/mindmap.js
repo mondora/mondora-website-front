@@ -1,6 +1,6 @@
-angular.module("mnd-web.components.mindmap", [])
+angular.module("mnd-web.components")
 
-.directive("mndMindMapRecursive", function (RecursionHelper) {
+.directive("mndMindMapRecursive", ["RecursionHelper", function (RecursionHelper) {
 	return {
 		restrict: "EA",
 		replace: true,
@@ -27,7 +27,7 @@ angular.module("mnd-web.components.mindmap", [])
 			});
 		}
 	};
-})
+}])
 
 .directive("mndMindMap", function () {
 	return {
@@ -39,5 +39,5 @@ angular.module("mnd-web.components.mindmap", [])
 			edit: "=?",
 			child: "=?"
 		}
-	}
-})
+	};
+});

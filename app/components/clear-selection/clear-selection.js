@@ -1,4 +1,4 @@
-angular.module("mnd-web.components.clear-selection", [])
+angular.module("mnd-web.components")
 
 .factory("ClearWindowSelectionService", function () {
 	var clearWindowSelection = function () {

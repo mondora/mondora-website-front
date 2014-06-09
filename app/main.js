@@ -56,6 +56,12 @@ var GIVE_UP_DELAY = 10000;
 	window.CERES_CONNECTED = deferred.promise.timeout(GIVE_UP_DELAY);
 })();
 
+// Create app modules
+angular.module("mnd-web.templates", []);
+angular.module("mnd-web.methods", []);
+angular.module("mnd-web.components", []);
+angular.module("mnd-web.pages", []);
+
 angular.module("mnd-web", [
 
 	// Third party modules
@@ -70,40 +76,12 @@ angular.module("mnd-web", [
 	// App modules
 	"mnd-web.templates",
 	"mnd-web.methods",
-	// Components
-	"mnd-web.components.dashboard",
-	"mnd-web.components.mindmap",
-	"mnd-web.components.center",
-	"mnd-web.components.check-mobile",
-	"mnd-web.components.clear-selection",
-	"mnd-web.components.menu-editor",
-	"mnd-web.components.cig-image",
-	"mnd-web.components.pomodoro",
-	"mnd-web.components.user-input",
-	// Apps
-	// ...
-	// Pages
-	"mnd-web.pages.home",
-	"mnd-web.pages.staticHome",
-	"mnd-web.pages.personalHome",
-	// TODO dynamic injection
-	"mnd-web.pages.profile",
-	"mnd-web.pages.page",
-	"mnd-web.pages.admin",
-	"mnd-web.pages.pomodoro.list",
-	"mnd-web.pages.pomodoro.view",
-	"mnd-web.pages.team",
-	"mnd-web.pages.user",
-	"mnd-web.pages.post.edit",
-	"mnd-web.pages.post.view",
-	"mnd-web.pages.post.list",
-	"mnd-web.pages.channel.edit",
-	"mnd-web.pages.channel.view",
-	"mnd-web.pages.topic"
+	"mnd-web.components",
+	"mnd-web.pages"
 
 ])
 
-.factory("TimeoutPromiseService", function ($q, $timeout, $state) {
+.factory("TimeoutPromiseService", ["$q", "$timeout", "$state", function ($q, $timeout, $state) {
 	var timeoutPromise = function (promise, t) {
 		var deferred = $q.defer();
 		var timer = $timeout(function () {
@@ -123,13 +101,13 @@ angular.module("mnd-web", [
 	return {
 		timeoutPromise: timeoutPromise
 	};
-})
+}])
 
-.config(function ($locationProvider) {
+.config(["$locationProvider", function ($locationProvider) {
 	$locationProvider.hashPrefix("!");
-})
+}])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
 
 	// Here we should configure ng-asteroid before the router
 
@@ -348,9 +326,9 @@ angular.module("mnd-web", [
 
     $urlRouterProvider.otherwise("/");
 
-})
+}])
 
-.run(function ($rootScope, $state, MndSidebarService) {
+.run(["$rootScope", "$state", "MndSidebarService", function ($rootScope, $state, MndSidebarService) {
 
     $rootScope.safeApply = function (fn) {
         var phase = $rootScope.$$phase;
@@ -404,13 +382,13 @@ angular.module("mnd-web", [
 		}
 	});
 
-})
+}])
 
-.controller("MainController", function ($scope) {
+.controller("MainController", ["$scope", function ($scope) {
 	$scope.login = function () {
 		$scope.Ceres.loginWithTwitter();
 	};
 	$scope.logout = function () {
 		$scope.Ceres.logout();
 	};
-});
+}]);

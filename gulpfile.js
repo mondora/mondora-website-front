@@ -66,6 +66,7 @@ var buildAppFavicon = function (dest) {
 
 var buildVendorScripts = function (dest) {
 	var sources = [
+		"bower_components/blueimp-md5/js/md5.js",
 		"bower_components/lodash/dist/lodash.js",
 		"bower_components/angular/angular.js",
 		"bower_components/angular-ui-router/release/angular-ui-router.js",
@@ -148,6 +149,8 @@ var buildVendorStylesCDN = function (dest) {
 // Does not include some dependencies that are retrieved via CDN
 var buildVendorScriptsCDN = function (dest) {
 	var sources = [
+		"bower_components/blueimp-md5/js/md5.js",
+		"bower_components/lodash/dist/lodash.js",
 		"bower_components/angular-recursion/angular-recursion.js",
 		"bower_components/angular-sanitize/angular-sanitize.js",
 		"bower_components/ng-file-upload/angular-file-upload.js",

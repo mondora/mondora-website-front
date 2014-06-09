@@ -1,6 +1,6 @@
-angular.module("mnd-web.pages.user", [])
+angular.module("mnd-web.pages")
 
-.controller("UserController", function ($scope, $stateParams, posts) {
+.controller("UserController", ["$scope", "$stateParams", "posts", function ($scope, $stateParams, posts) {
 
 	/////////////////
 	// User object //
@@ -13,4 +13,4 @@ angular.module("mnd-web.pages.user", [])
 		return $scope.$root.user._id === $scope.user._id;
 	};
 
-});
+}]);

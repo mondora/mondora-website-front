@@ -1,4 +1,4 @@
-angular.module("mnd-web.pages.page.edit", [])
+angular.module("mnd-web.pages")
 
 .controller("PageEditController", ["$scope", "$interval", "$state", "$stateParams", "CheckMobileService", function (
 	$scope,
@@ -7,12 +7,6 @@ angular.module("mnd-web.pages.page.edit", [])
 	$stateParams,
 	CheckMobileService
 ) {
-
-	////////////////////
-	// AmazonS3Config //
-	////////////////////
-
-	var amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3"}).result[0];
 
 
 

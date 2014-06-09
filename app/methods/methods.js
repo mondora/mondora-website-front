@@ -1,5 +1,5 @@
 // This module defines application-wide methods
-angular.module("mnd-web.methods", [])
+angular.module("mnd-web.methods")
 
 .factory("AppMethods", function (
 	$rootScope,

@@ -1,4 +1,4 @@
-angular.module("mnd-web.components.check-mobile", [])
+angular.module("mnd-web.components")
 
 .factory("CheckMobileService", function () {
 	return {
