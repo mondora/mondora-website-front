@@ -132,11 +132,11 @@
 	float: right;
 	padding-right: 20px;
 	overflow: hidden;
+	opacity: 0.5;
 }
 .mnd-mondora-logo img{
 	width: 100%;
 	height: 100%;
-	opacity: 0.5;
 }
 
 .home-shadow{
@@ -146,6 +146,9 @@
 @media (max-width: 767px) {
   #mnd-home-logo {
     display: none;
+  }
+  .home-shadow{
+  	box-shadow: none;
   }
 }
 
@@ -237,6 +240,7 @@
   #mnd-home-banner-content {
     height: 150px;
     width: 100%;
+    border-radius: 0px;
   }
   #mnd-home-banner-content h1{
     text-transform: uppercase;
