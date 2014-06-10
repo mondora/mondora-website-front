@@ -98,9 +98,10 @@
 		text-align: center !important;
 	}
 	.mnd-mind-container {
-		top: 39%;
+		top: 30%;
 		height: 20%;
 		overflow-x: scroll;
+		overflow-y: hidden;
 		-webkit-overflow-scrolling: touch;
 	}
 	.post-header {

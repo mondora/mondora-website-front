@@ -1,3 +1,13 @@
+.post-page-container {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
 #mnd-post-sprinkle-container {
 	position: absolute;
 	width: 620px;
@@ -101,13 +111,6 @@
 		vertical-align: top;
 		padding-top: 20px;
 		padding-right: 10px;
-	}
-	.mobile-modal-background {
-		position: absolute;
-		height: 100%;
-		width: 100%;
-		background-color: rgba(0,0,0,0.5);
-		z-index: 1000;
 	}
 	.mobile-comment {
 		position: absolute;
