@@ -35,7 +35,7 @@
 <div class="post-body">
 	<div class="first-level-html-container" ng-repeat="child in bodyChildren() track by $index">
 		<div class="col-sm-8" ng-class="{'col-sm-offset-2': !commentBarIsOpen, 'col-sm-offset-1': commentBarIsOpen, 'p-mobile' : isMobile}">
-			<div class="simplebox" readonly-editor data-disable-editing></div>
+			<div class="simplebox" mnd-readonly-editor data-disable-editing></div>
 		</div>
 		<div class="col-sm-2" ng-class="{'comment-pop': isMobile}">
 			<i class="fa fa-comment comment-bubble" ng-if="!paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index, $event)"></i>

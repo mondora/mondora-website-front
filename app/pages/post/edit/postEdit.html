@@ -1,13 +1,13 @@
-<!--modale eliminiazione post-->
+<!-- Post deletion modal -->
 <div class="modal-background" ng-if="showDelete">
 	<div id="delete-post-modal" class="modal-dialog" ng-if="showDelete">
 		<div class="modal-content">
 	    	<div class="modal-header">
-				Sei sicuro di voler eliminare il post?
+				Are you sure you want to delete this post?
 			</div>
 			<div class="modal-body">
 				<button type="button" class="btn btn-default yes" ng-click="deletePost()">
-					Sì
+					Yes
 				</button>
 				<button type="button" class="btn btn-default no" ng-click="toggleDelete()">
 					No
@@ -17,108 +17,66 @@
 	</div>
 </div>
 
-<div class="post-cant-edit" ng-show="isMobile"> Contenuto non accessibile da dispositivi mobile.</div> 
+<div class="post-cant-edit" ng-show="isMobile">Content not accessible from mobile devices.</div> 
 <div class="post-title-image" ng-show="!isMobile">
 	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
 </div>
 
-<div class="post-top-buttons" ng-if="isOwner()" ng-show="!isMobile">
-	<button type="button" class="btn btn-default" ng-click="toggleDelete()" ng-if="!showDelete">
-		Elimina
+<div class="post-top-buttons" ng-if="isAuthor()" ng-show="!isMobile">
+	<button type="button" class="btn btn-default" ng-click="toggleDelete()" ng-if="isOwner() && !showDelete">
+		Delete
 	</button>
-	<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="!post.published">
-		Pubblica
+	<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="isOwner() && !post.published">
+		Publish
 	</button>
-	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="post.published">
-		Rendi privato
+	<button type="button" class="btn btn-default" ng-click="unpublishPost()" ng-if="isOwner() && post.published">
+		Unpublish
 	</button>
 	<a ui-sref="postView({postId: post._id})" class="btn btn-default">
-		Anteprima
+		Preview
 	</a>
 </div>
 
-<div class="mnd-mind-container grey-border" ng-class="{'black-connections': !titleImageIsDisplayed()}" ng-show="!isMobile">
+<div class="mnd-mind-container grey-border" ng-class="{'black-connections': !titleImageIsDisplayed()}" ng-show="!isMobile" ng-keyup="processMap($event)">
 	<div mnd-mind-map map="post.map" edit="true"></div>
 </div>
 
 <div class="post-header" ng-show="!isMobile">
 	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">
-		<input type="file" id="titleImage" ng-file-select="onFileSelect($files, 'titleImage')" class="hidden" />
-		<i class="fa fa-picture-o" ng-click="clickFileInput('titleImage')"></i>
+		<i class="fa fa-picture-o" mnd-s3-image-upload after-upload="afterUploadTitleImage" is-uploading="isUploadingTitleImage" upload-progress="uploadProgressTitleImage"></i>
 	</div>
 	<div class="col-sm-5" id="post-edit-image-upload-progressbar">
 		<br />
 		<br />
-		<span ng-show="isUploading.titleImage">
-			<div progressbar value="uploadProgress.titleImage"></div>
+		<span ng-show="isUploadingTitleImage">
+			<div progressbar value="uploadProgressTitleImage"></div>
 		</span>
 	</div>
 	<div class="col-sm-1" id="post-edit-image-upload-abort">
 		<br />
 		<br />
-		<i class="fa fa-times" ng-show="isUploading.titleImage" ng-click="abortUpload('titleImage')"></i>
+		<i class="fa fa-times" ng-show="isUploadingTitleImage" ng-click="abortUpload('titleImage')"></i>
 	</div>
 	<div class="col-sm-8 col-sm-offset-2">
-		<h1 class="simplebox post-title" ng-class="{'color-me-white': titleImageIsDisplayed()}" id="postTitleEditor"></h1>
-		<h2 class="simplebox post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed()}" id="postSubtitleEditor"></h2>
+		<h1
+			class="simplebox post-title"
+			ng-class="{'color-me-white': titleImageIsDisplayed()}"
+			mnd-medium-editor
+			content="post.title"
+			options="titleEditorOptions">
+		</h1>
+		<h2
+			class="simplebox post-subtitle"
+			ng-class="{'color-me-white': titleImageIsDisplayed()}"
+			mnd-medium-editor
+			content="post.subtitle"
+			options="subtitleEditorOptions">
+		</h2>
 	</div>
 </div>
 
 <div class="post-body" ng-show="!isMobile">
 	<div class="col-sm-8 col-sm-offset-2">
-		<div class="simplebox" id="postBodyEditor"></div>
-		<div class="post-body-bottom-spacer"></div>
-		<!-- Image upload toolbar -->
-		<div id="rightClickToolbar" class="extraToolbar medium-editor-toolbar medium-toolbar-arrow-under medium-editor-toolbar-active">
-			<input type="file" id="bodyImage" ng-file-select="onFileSelect($files, 'bodyImage')" class="hidden" />
-			<ul id="medium-editor-toolbar-actions" class="medium-editor-toolbar-actions clearfix">
-				<li>
-					<button class="medium-editor-action medium-editor-button-first" ng-click="clickFileInput('bodyImage')">
-						<i class="fa fa-picture-o"></i>
-					</button>
-				</li>
-				<li>
-					<button class="medium-editor-action medium-editor-button-last">
-						<i class="fa fa-twitter"></i>
-					</button>
-				</li>
-			</ul>
-		</div>
-		<!-- Image positioning toolbar -->
-		<div id="imagePositioningToolbar" class="extraToolbar medium-editor-toolbar medium-toolbar-arrow-under medium-editor-toolbar-active">
-			<ul id="medium-editor-toolbar-actions" class="medium-editor-toolbar-actions clearfix">
-				<li>
-					<button class="medium-editor-action medium-editor-button-first" ng-click="moveImage.left()">
-						<i class="fa fa-align-left"></i>
-					</button>
-				</li>
-				<li>
-					<button class="medium-editor-action" ng-click="moveImage.center()">
-						<i class="fa fa-align-justify"></i>
-					</button>
-				</li>
-				<li>
-					<button class="medium-editor-action" ng-click="moveImage.right()">
-						<i class="fa fa-align-right"></i>
-					</button>
-				</li>
-				<li>
-					<button class="medium-editor-action medium-editor-button-last" ng-click="removeImage()">
-						<i class="fa fa-trash-o"></i>
-					</button>
-				</li>
-			</ul>
-		</div>
+		<div class="simplebox" mnd-medium-editor content="post.body" options="bodyEditorOptions"></div>
 	</div>
 </div>
-
-<div class="post-end-spacer" ng-show="!isMobile"></div>
-
-<!-- Image upload progressbar -->
-<script type="text/ng-template" id="pages/post/edit/progressbar.html">
-	<div class="bodyImageProgressbar" ng-class="{hidden: !isUploading.bodyImage}" progressbar value="uploadProgress.bodyImage"></div>
-</script>
-
-<script type="text/ng-template" id="pages/post/edit/bodyImage.html">
-	<img class="bodyImageCenter" ng-src="{{url}}" />
-</script>
