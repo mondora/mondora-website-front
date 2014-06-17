@@ -226,18 +226,7 @@ angular.module("mnd-web.pages")
 	$scope.saveCommentAt = function (index) {
 		$scope.comment.paragraph = index;
 		$scope.Ceres.call("addCommentToPost", $scope.post._id, $scope.comment);
-		var matches = $scope.comment.text.match(/#\w/g);
-		if (matches) {
-			var entry = {
-				type: "comment",
-				content: angular.copy($scope.comment)
-			};
-			matches.forEach(function (channel) {
-				$scope.Ceres.call("addEntryToChannelByTitle", channel.slice(1), entry);
-			});
-		}
 		$scope.comment.text = "";
-		$scope.comment.anchor = "";
 	};
 
 	///////////////////////////////

@@ -1,6 +1,6 @@
 angular.module("mnd-web.components")
 
-.directive("mndMediumEditor", ["$templateCache", "$compile", "ClearWindowSelectionService", function ($templateCache, $compile, ClearWindowSelectionService) {
+.directive("mndMediumEditor", ["$templateCache", "$compile", "$timeout", "ClearWindowSelectionService", function ($templateCache, $compile, $timeout, ClearWindowSelectionService) {
 	return {
 		restrict: "EA",
 		scope: {
@@ -12,6 +12,7 @@ angular.module("mnd-web.components")
 				if ($scope.dontUpdate) return;
 				$scope.$root.safeApply(function () {
 					$scope.content = $element.html();
+					console.log($scope.content);
 				});
 			};
 			// Populate the editor
@@ -44,7 +45,8 @@ angular.module("mnd-web.components")
 					scope.url = url;
 					var image = $compile(imageTemplate)(scope);
 					imageTargetParagraph.after(image);
-					updateContent();
+					// Update in the next tick to not have un-linked template issues
+					$timeout(updateContent, 0);
 				};
 
 				var rightClickToolbarTemplate = $templateCache.get("components/medium-editor/right-click-toolbar.html");
@@ -77,66 +79,55 @@ angular.module("mnd-web.components")
 					document.addEventListener("click", listener);
 				});
 
+
+				var imageTarget;
+				$scope.moveImage = {
+					center: function () {
+						imageTarget.removeClass("editor-image-center editor-image-justify");
+						imageTarget.addClass("editor-image-center");
+					},
+					justify: function () {
+						imageTarget.removeClass("editor-image-center editor-image-justify");
+						imageTarget.addClass("editor-image-justify");
+					}
+				};
+
+				$scope.removeImage = function () {
+					imageTarget.remove();
+				};
+
+				var imagePositioningToolbarTemplate = $templateCache.get("components/medium-editor/image-positioning-toolbar.html");
+				var imagePositioningToolbar = $compile(imagePositioningToolbarTemplate)($scope);
+				$element.after(imagePositioningToolbar);
+				$element.on("click", function (e) {
+					if (e.toElement.tagName !== "IMG") return;
+					imageTarget = angular.element(e.toElement);
+					imagePositioningToolbar.css({
+						display: "block"
+					});
+					var computedStyle = window.getComputedStyle(imagePositioningToolbar[0]);
+					var width = parseInt(computedStyle.width, 10);
+					var height = parseInt(computedStyle.height, 10);
+					imagePositioningToolbar.css({
+						top: (imageTarget[0].offsetTop - (height + 20)) + "px"
+					});
+					imagePositioningToolbar.css({
+						left: (imageTarget[0].offsetLeft + imageTarget[0].clientWidth/2 - width/2) + "px"
+					});
+					var listener = function (e) {
+						if (e.toElement.tagName === "IMG") return;
+						imagePositioningToolbar.css({
+							display: "none"
+						});
+						document.removeEventListener("click", listener);
+					};
+					setTimeout(function () {
+						document.addEventListener("click", listener);
+					}, 100);
+				});
+
 			}
 
-		}
-	};
-}])
-
-.directive("mndReadonlyEditor", ["ClearWindowSelectionService", function (ClearWindowSelectionService) {
-
-	var Tweet = function (screenName) {
-		this.button = document.createElement("button");
-		this.button.className = "medium-editor-action";
-		this.button.innerHTML = "<i class=\"fa fa-twitter\"></i>";
-		this.button.onclick = function () {
-			var tweetBaseUrl = "https://twitter.com/intent/tweet?text=";
-			var tweetText = "\"" + window.getSelection().toString() + "\" - @";
-			tweetText += screenName + " " + window.location.href;
-			var url = tweetBaseUrl + tweetText;
-			var popup = window.open(url, "popup", "height=420,width=550");
-			ClearWindowSelectionService.clear();
-			if (!popup.focus) {
-				popup.focus();
-			}
-		};
-	};
-	Tweet.prototype.constructor = Tweet;
-	Tweet.prototype.getButton = function() {
-		return this.button;
-	};
-
-	var Highlight = function ($scope) {
-		this.button = document.createElement("button");
-		this.button.className = "medium-editor-action";
-		this.button.innerHTML = "<i class=\"fa fa-comment\"></i>";
-		this.button.onclick = function () {
-			$scope.safeApply(function () {
-				$scope.closeCommentBar();
-				$scope.openCommentBarAt($scope.$index);
-				$scope.comment.anchor = window.getSelection().toString();
-				ClearWindowSelectionService.clear();
-			});
-		};
-	};
-	Highlight.prototype.constructor = Highlight;
-	Highlight.prototype.getButton = function() {
-		return this.button;
-	};
-
-	return {
-		link: function ($scope, $element) {
-			var readonlyEditorOptions = {
-				placeholder: "",
-				disableEditing: true,
-				buttons: ["tweet", "highlight"],
-				extensions: {
-					tweet: new Tweet($scope.post.authors[0].screenName),
-					highlight: new Highlight($scope)
-				}
-			};
-			$element[0].innerHTML = $scope.child;
-			new MediumEditor($element[0], readonlyEditorOptions);
 		}
 	};
 }]);

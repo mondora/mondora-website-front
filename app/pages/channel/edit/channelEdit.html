@@ -1,0 +1,31 @@
+<div class="channel-left-side">
+	<div class="col-sm-8 col-sm-offset-2">
+		<h1
+			class="simplebox channel-title"
+			ng-class="{'color-me-white': mainImageIsDisplayed()}"
+			mnd-medium-editor
+			content="channel.title"
+			options="titleEditorOptions">
+		</h1>
+		<h2
+			class="simplebox channel-subtitle"
+			ng-class="{'color-me-white': mainImageIsDisplayed()}"
+			mnd-medium-editor
+			content="channel.subtitle"
+			options="subtitleEditorOptions">
+		</h2>
+	</div>
+	<div class="col-sm-8 col-sm-offset-2">
+		<div class="simplebox" mnd-medium-editor content="channel.body" options="bodyEditorOptions"></div>
+	</div>
+</div>
+
+<div class="channel-right-side">
+	<div class="col-sm-8 col-sm-offset-2">
+		<div ng-repeat="entry in channel.entries">
+			<div ng-if="entry.type === 'link'">
+				{{entry.content.href}}
+			</div>
+		</div>
+	</div>
+</div>

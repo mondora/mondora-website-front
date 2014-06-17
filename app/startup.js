@@ -240,10 +240,10 @@ angular.module("mnd-web")
 	$stateProvider.state("postView", {
 		url: "/post/:postId",
 		parent: "root",
-		templateUrl: "pages/post/view/view.html",
+		templateUrl: "pages/post/view/postView.html",
 		controller: "PostViewController",
 		resolve: {
-			postSubId: function ($stateParams, TimeoutPromiseService) {
+			postSubId: function ($stateParams, TimeoutPromiseService, resumingLogin) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
@@ -257,16 +257,55 @@ angular.module("mnd-web")
 	$stateProvider.state("postEdit", {
 		url: "/post/:postId/edit",
 		parent: "root",
-		templateUrl: "pages/post/edit/edit.html",
+		templateUrl: "pages/post/edit/postEdit.html",
 		controller: "PostEditController",
 		resolve: {
-			postSubId: function ($stateParams, TimeoutPromiseService) {
+			postSubId: function ($stateParams, TimeoutPromiseService, resumingLogin) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
 		},
 		onExit: function (postSubId) {
 			Ceres.subscriptions[postSubId].stop();
+		}
+	});
+
+
+
+	/////////////
+	// Channel //
+	/////////////
+
+	$stateProvider.state("channelView", {
+		url: "/channel/:channelId",
+		parent: "root",
+		templateUrl: "pages/channel/view/channelView.html",
+		controller: "ChannelViewController",
+		resolve: {
+			channelSubId: function ($stateParams, TimeoutPromiseService, resumingLogin) {
+				var sub = Ceres.subscribe("singleChannel", $stateParams.channelId);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}
+		},
+		onExit: function (channelSubId) {
+			Ceres.subscriptions[channelSubId].stop();
+		},
+		public: true
+	});
+
+	$stateProvider.state("channelEdit", {
+		url: "/channel/:channelId/edit",
+		parent: "root",
+		templateUrl: "pages/channel/edit/channelEdit.html",
+		controller: "ChannelEditController",
+		resolve: {
+			channelSubId: function ($stateParams, TimeoutPromiseService, resumingLogin) {
+				var sub = Ceres.subscribe("singleChannel", $stateParams.channelId);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}
+		},
+		onExit: function (channelSubId) {
+			Ceres.subscriptions[channelSubId].stop();
 		}
 	});
 
@@ -301,6 +340,7 @@ angular.module("mnd-web")
 	Ceres.subscribe("allUsers");
 	$rootScope.Configurations = Ceres.createCollection("configurations");
 	$rootScope.Posts = Ceres.createCollection("posts");
+	$rootScope.Channels = Ceres.createCollection("channels");
 	$rootScope.Users = Ceres.createCollection("users");
 
 	Ceres.on("login", function (userId) {

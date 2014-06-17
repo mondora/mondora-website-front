@@ -1,0 +1,16 @@
+.channel-left-side {
+	width: calc(50% - 50px);
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 100px;
+	background: lighten(#ff0000, 20%);
+}
+
+.channel-right-side {
+	width: calc(50% - 50px);
+	height: 100%;
+	position: absolute;
+	left: calc(50% + 50px);
+	background: lighten(#00ff00, 20%);
+}
