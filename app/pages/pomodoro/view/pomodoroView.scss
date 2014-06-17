@@ -1,9 +1,9 @@
 .pomodoro-page-container {
 	position: absolute;
 	top: 0px;
-	left: 100px;
-	width: calc(100% - 100px);
+	left: 0px;
 	height: 100%;
+	text-align: center;
 }
 .pomodoro-left-pane {
 	position: absolute;
@@ -22,4 +22,10 @@
 	left: 50%;
 	width: 50%;
 	height: 100%;
+}
+
+@media (max-width: 767px){
+	.pomodoro-page-container {
+		top: 80px;
+	}
 }

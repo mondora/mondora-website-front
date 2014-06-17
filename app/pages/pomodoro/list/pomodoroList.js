@@ -1,4 +1,4 @@
-angular.module("mnd-web.pages")
+angular.module("mnd-web.pages.pomodoro.list", [])
 
 .controller("PomodoroListController", ["$scope", function ($scope) {
 
@@ -32,6 +32,7 @@ angular.module("mnd-web.pages")
 			$scope.pomodoros = pomodorosRQ.result;
 		});
 	});
+	
 	$scope.pomodoros = pomodorosRQ.result;
 
 }]);

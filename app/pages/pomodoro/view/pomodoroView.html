@@ -14,6 +14,7 @@
 			<button type="button" class="btn btn-default mnd-width-80" ng-if="pomodoro.status === 'running'" ng-click="pause()">Pause</button>
 			<button type="button" class="btn btn-default mnd-width-80 pull-right" ng-click="stop()">Stop</button>
 
+
 			<br />
 			<br />
 			<div ng-repeat="participant in pomodoro.participants">
@@ -25,8 +26,8 @@
 			<br />
 			<div class="input-group">
 				<input type="text" class="form-control" placeholder="Invite" mnd-user-input user-model="participant" />
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button" ng-click="addParticipant()">Add</button>
+				<span class="input-group-addon mnd-clickable">
+					<i class="fa fa-plus-circle" ng-click="addParticipant()"></i>
 				</span>
 			</div>
 		</div>

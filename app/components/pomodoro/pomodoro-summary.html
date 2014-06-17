@@ -1,6 +1,8 @@
 <div class="mnd-pomodoro-summary mnd-inline-block">
 	<div mnd-pomodoro-timer pomodoro="pomodoro" size="150"></div>
-	<div class="mnd-pomodoro-summary-participants">
-		<div class="mnd-inline-block" ng-repeat="participant in pomodoro.participants" mnd-cig-image source="participant.pictureUrl" size="45"></div>
+	<div class="mnd-pomodoro-details">
+		<div class="mnd-pomodoro-task"><h4>Task Name Task Name Task Name</h4></div>
+		<div class="mnd-inline-block" ng-repeat="participant in pomodoro.participants" mnd-cig-image source="participant.pictureUrl" size="45">
+		</div>
 	</div>
 </div>
