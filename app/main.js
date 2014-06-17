@@ -245,13 +245,15 @@ angular.module("mnd-web", [
 			}
 		}
     });
+    
     $stateProvider.state("pomodoroView", {
         url: "/pomodoro/:pomodoroId",
 		parent: "root",
-        templateUrl: "pages/pomodoro/view/pomodoroView.html",
-		controller: "PomodoroViewController",
+        templateUrl: "pages/pomodoro/list/pomodoroList.html",
+		controller: "PomodoroListController",
 		resolve: {
 			pomoSub: function (TimeoutPromiseService, $stateParams) {
+				var sub1 = Ceres.subscribe("pomodoros");
 				var sub = Ceres.subscribe("singlePomodoro", $stateParams.pomodoroId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}
