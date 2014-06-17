@@ -1,5 +1,5 @@
-<div class="post-top-buttons">
-	<a ui-sref="channelView({channelId: channel._id})" class="btn btn-default">Preview</a>
+<div ng-if="isCurator()" class="post-top-buttons">
+	<a ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default">Edit</a>
 </div>
 
 <!-- Entry modal -->
@@ -86,34 +86,13 @@
 
 
 <div class="channel-left-side">
-	<img class="channel-main-image" ng-src="{{channel.mainImageUrl}}" />
+	<img class="channel-main-image" ng-if="mainImageIsDisplayed()" ng-src="{{channel.mainImageUrl}}" />
 	<div class="col-sm-8 col-sm-offset-2">
-		<i
-			class="fa fa-picture-o file-upload-icon-lg"
-			mnd-s3-file-upload
-			file-type="image"
-			after-upload="afterUploadMainImage"
-			is-uploading="mainImageIsUploading"
-			upload-progress="mainImageUploadProgress">
-		</i>
-		<div class="channel-image-upload-progressbar" ng-if="mainImageIsUploading" progressbar value="mainImageUploadProgress"></div>
-		<h1
-			class="simplebox channel-title"
-			ng-class="{'color-me-white': mainImageIsDisplayed()}"
-			mnd-medium-editor
-			content="channel.title"
-			options="titleEditorOptions">
-		</h1>
-		<h2
-			class="simplebox channel-subtitle"
-			ng-class="{'color-me-white': mainImageIsDisplayed()}"
-			mnd-medium-editor
-			content="channel.subtitle"
-			options="subtitleEditorOptions">
-		</h2>
+		<h1 ng-bind-html="channel.title"></h1>
+		<h2 ng-bind-html="channel.subtitle"></h2>
 	</div>
 	<div class="col-sm-8 col-sm-offset-2">
-		<div class="simplebox" mnd-medium-editor content="channel.body" options="bodyEditorOptions"></div>
+		<div ng-bind-html="channel.body"></div>
 	</div>
 </div>
 
