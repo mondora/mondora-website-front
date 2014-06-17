@@ -1,5 +1,5 @@
 .channel-left-side {
-	width: calc(50% - 50px);
+	width: calc(70% - 70px);
 	height: 100%;
 	position: absolute;
 	top: 0px;
@@ -8,20 +8,12 @@
 }
 
 .channel-right-side {
-	width: calc(50% - 50px);
+	width: calc(30% - 30px);
 	height: 100%;
 	position: absolute;
-	left: calc(50% + 50px);
+	top: 0px;
+	left: calc(70% + 30px);
 	background: lighten(#00ff00, 20%);
-}
-
-.file-upload-icon-lg {
-	font-size: 70px;
-	cursor: pointer;
-	opacity: 0.7;
-}
-.file-upload-icon-lg:hover {
-	opacity: 0.8;
 }
 
 .channel-image-upload-progressbar,
