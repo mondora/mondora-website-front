@@ -17,19 +17,21 @@ module.exports = function(config) {
 
 		files: [
 			"node_modules/lodash/dist/lodash.js",
-			"node_modules/sinon/pkg/sinon-1.9.1.js",
+			"node_modules/sinon/pkg/sinon-1.10.2.js",
 			"node_modules/should/should.js",
-			"dist/js/vendor.js",
+			"builds/dev/dist/js/vendor.js",
 			"bower_components/angular-mocks/angular-mocks.js",
-			"dist/js/app.templates.js",
-			"app/**/*.js",
+			"app/main.js",
+			"builds/dev/dist/js/app.templates.js",
+			"app/components/**/*.js",
+			"app/pages/**/*.js",
 			"test/unit/**/*.js"
 		],
 
 
 		// list of files to exclude
 		exclude: [
-			"app/main.js"
+			"app/startup.js"
 		],
 
 

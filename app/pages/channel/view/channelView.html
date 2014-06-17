@@ -1,0 +1,149 @@
+<div ng-if="isCurator()" class="post-top-buttons">
+	<a ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default">Edit</a>
+</div>
+
+<!-- Entry modal -->
+<div class="modal-background" ng-if="showEntryModal">
+	<div id="add-entry-modal" class="modal-dialog">
+		<div class="modal-content">
+	    	<div class="modal-header">
+				Add an entry to this channel
+			</div>
+			<div class="modal-body">
+
+				<label>Entry type</label>
+				<select class="form-control" ng-init="entry.type = 'link'" ng-model="entry.type">
+					<option value="link">Link</option>
+					<option value="file">File</option>
+				</select>
+
+				<br />
+				<div ng-if="entry.type === 'link'">
+
+					<div class="form-group">
+						<label>Title</label>
+						<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.title" />
+					</div>
+
+					<div class="form-group">
+						<label>Link</label>
+						<input type="text" class="form-control" placeholder="Link" ng-model="entry.content.href" />
+					</div>
+
+					<label>Description</label>
+					<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
+
+				</div>
+
+				<div ng-if="entry.type === 'file'">
+
+					<div class="row">
+						<div class="col-sm-8">
+							<div class="form-group">
+								<label>File name</label>
+								<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.name" />
+							</div>
+
+							<label>Description</label>
+							<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
+						</div>
+
+						<div class="col-sm-4">
+							<br />
+							<br />
+							<div class="text-center">
+								<i
+									class="fa {{getFileFAClass(entry.content.type)}} file-upload-icon-lg"
+									mnd-s3-file-upload
+									before-upload="beforeUploadEntryFile"
+									after-upload="afterUploadEntryFile"
+									is-uploading="entryFileIsUploading"
+									upload-progress="entryFileUploadProgress">
+								</i>
+								<br />
+								<br />
+								<div class="entry-file-upload-progressbar" ng-if="entryFileIsUploading" progressbar value="entryFileUploadProgress"></div>
+								<p ng-if="!entryFileIsUploading">{{entry.content.name}}</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<br />
+				<button type="button" class="btn btn-default" ng-click="addEntry()">
+					Add
+				</button>
+				<button type="button" class="btn btn-default" ng-click="toggleEntryModal()">
+					Cancel
+				</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="channel-left-side">
+	<img class="channel-main-image" ng-if="mainImageIsDisplayed()" ng-src="{{channel.mainImageUrl}}" />
+	<div class="col-sm-8 col-sm-offset-2">
+		<h1 ng-bind-html="channel.title"></h1>
+		<h2 ng-bind-html="channel.subtitle"></h2>
+	</div>
+	<div class="col-sm-8 col-sm-offset-2">
+		<div ng-bind-html="channel.body"></div>
+	</div>
+</div>
+
+
+
+<div class="channel-right-side">
+	<div class="col-sm-8 col-sm-offset-2">
+		<button type="button" class="btn btn-default" ng-click="toggleEntryModal()">Add entry</button>
+	</div>
+	<div class="col-sm-8 col-sm-offset-2">
+		<div class="row" ng-repeat="entry in channel.entries">
+
+			<div ng-if="entry.type === 'link'">
+				<div class="col-sm-2">
+					<div mnd-cig-image source="entry.userPictureUrl" size="50"></div>
+				</div>
+				<div class="col-sm-4">
+					<a class="h4" href="{{entry.content.href}}">{{entry.content.title}}</a>
+				</div>
+				<div class="col-sm-6">
+					<p>{{entry.content.description}}</p>
+				</div>
+			</div>
+
+			<div ng-if="entry.type === 'file'">
+				<div class="col-sm-2">
+					<div mnd-cig-image source="entry.userPictureUrl" size="50"></div>
+				</div>
+				<div class="col-sm-4">
+					<a class="h4" href="{{entry.content.url}}" target="_blank">
+						<i class="fa {{getFileFAClass(entry.content.type)}}"></i>
+						{{entry.content.name}}
+					</a>
+				</div>
+				<div class="col-sm-6">
+					<p>{{entry.content.description}}</p>
+				</div>
+			</div>
+
+			<div ng-if="entry.type === 'comment'">
+				<div class="col-sm-2">
+					<div mnd-cig-image source="entry.userPictureUrl" size="50"></div>
+				</div>
+				<div class="col-sm-4">
+					<a class="h4" ui-sref="postView({postId: entry.content.postId})">{{entry.content.postTitle}}</a>
+				</div>
+				<div class="col-sm-6">
+					<p>{{entry.content.text}}</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

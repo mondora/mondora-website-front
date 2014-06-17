@@ -1,6 +1,6 @@
-angular.module("mnd-web.pages.home", [])
+angular.module("mnd-web.pages")
 
-.controller("HomeController", function ($scope, $sce, $state) {
+.controller("HomeController", ["$scope", "$sce", "$state", function ($scope, $sce, $state) {
 
 	var homeConfig = $scope.Configurations.reactiveQuery({name: "home"}).result[0];
 	$scope.sprinkleText = homeConfig.sprinkleText;
@@ -13,12 +13,12 @@ angular.module("mnd-web.pages.home", [])
 		});
 	};
 
-	//$scope.videoSource = "http://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4";
+	// Video
 	var videoSource = "http://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4";
 	$scope.videoSource = $sce.trustAsResourceUrl(videoSource);
 
-	//video poster
+	// Video poster
 	var videoPoster = "http://s3.amazonaws.com/mnd-website/vd-back.jpg";
 	$scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
 
-});
+}]);

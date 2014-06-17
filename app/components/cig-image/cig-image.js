@@ -1,4 +1,4 @@
-angular.module("mnd-web.components.cig-image", [])
+angular.module("mnd-web.components")
 
 .directive("mndCigImage", function () {
 	return {

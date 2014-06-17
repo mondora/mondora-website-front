@@ -1,4 +1,4 @@
-angular.module("mnd-web.pages.post.view", [])
+angular.module("mnd-web.pages")
 
 .factory("firstLevelHtmlParser", function () {
 	var parse = function (html) {
@@ -11,62 +11,6 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 	return {
 		parse: parse
-	};
-})
-
-.directive("readonlyEditor", function (ClearWindowSelectionService) {
-
-	var Tweet = function (screenName) {
-		this.button = document.createElement("button");
-		this.button.className = "medium-editor-action";
-		this.button.innerHTML = "<i class=\"fa fa-twitter\"></i>";
-		this.button.onclick = function () {
-			var tweetBaseUrl = "https://twitter.com/intent/tweet?text=";
-			var tweetText = "\"" + window.getSelection().toString() + "\" - @";
-			tweetText += screenName + " " + window.location.href;
-			var url = tweetBaseUrl + tweetText;
-			var popup = window.open(url, "popup", "height=420,width=550");
-			ClearWindowSelectionService.clear();
-			if (!popup.focus) {
-				popup.focus();
-			}
-		};
-	};
-	Tweet.prototype.constructor = Tweet;
-	Tweet.prototype.getButton = function() {
-		return this.button;
-	};
-	var Highlight = function ($scope) {
-		this.button = document.createElement("button");
-		this.button.className = "medium-editor-action";
-		this.button.innerHTML = "<i class=\"fa fa-comment\"></i>";
-		this.button.onclick = function () {
-			$scope.safeApply(function () {
-				$scope.closeCommentBar();
-				$scope.openCommentBarAt($scope.$index);
-				$scope.comment.anchor = window.getSelection().toString();
-				ClearWindowSelectionService.clear();
-			});
-		};
-	};
-	Highlight.prototype.constructor = Highlight;
-	Highlight.prototype.getButton = function() {
-		return this.button;
-	};
-	return {
-		link: function ($scope, $element) {
-			var readonlyEditorOptions = {
-				placeholder: "",
-				disableEditing: true,
-				buttons: ["tweet", "highlight"],
-				extensions: {
-					tweet: new Tweet($scope.post.authors[0].screenName),
-					highlight: new Highlight($scope)
-				}
-			};
-			$element[0].innerHTML = $scope.child;
-			new MediumEditor($element[0], readonlyEditorOptions);
-		}
 	};
 })
 
@@ -99,6 +43,64 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 })
 
+.directive("postViewReadonlyEditor", ["ClearWindowSelectionService", function (ClearWindowSelectionService) {
+
+	var Tweet = function (screenName) {
+		this.button = document.createElement("button");
+		this.button.className = "medium-editor-action";
+		this.button.innerHTML = "<i class=\"fa fa-twitter\"></i>";
+		this.button.onclick = function () {
+			var tweetBaseUrl = "https://twitter.com/intent/tweet?text=";
+			var tweetText = "\"" + window.getSelection().toString() + "\" - @";
+			tweetText += screenName + " " + window.encodeURIComponent(window.location.href);
+			var url = tweetBaseUrl + tweetText;
+			var popup = window.open(url, "popup", "height=420,width=550");
+			ClearWindowSelectionService.clear();
+			if (!popup.focus) {
+				popup.focus();
+			}
+		};
+	};
+	Tweet.prototype.constructor = Tweet;
+	Tweet.prototype.getButton = function() {
+		return this.button;
+	};
+
+	var Highlight = function ($scope) {
+		this.button = document.createElement("button");
+		this.button.className = "medium-editor-action";
+		this.button.innerHTML = "<i class=\"fa fa-comment\"></i>";
+		this.button.onclick = function () {
+			$scope.safeApply(function () {
+				$scope.closeCommentBar();
+				$scope.openCommentBarAt($scope.$index);
+				$scope.comment.anchor = window.getSelection().toString();
+				ClearWindowSelectionService.clear();
+			});
+		};
+	};
+	Highlight.prototype.constructor = Highlight;
+	Highlight.prototype.getButton = function() {
+		return this.button;
+	};
+
+	return {
+		link: function ($scope, $element) {
+			var readonlyEditorOptions = {
+				placeholder: "",
+				disableEditing: true,
+				buttons: ["tweet", "highlight"],
+				extensions: {
+					tweet: new Tweet($scope.post.authors[0].screenName),
+					highlight: new Highlight($scope)
+				}
+			};
+			$element[0].innerHTML = $scope.child;
+			new MediumEditor($element[0], readonlyEditorOptions);
+		}
+	};
+}])
+
 .controller("PostViewController", function (
 	$scope,
 	$timeout,
@@ -110,26 +112,26 @@ angular.module("mnd-web.pages.post.view", [])
 ) {
 
 	///////////////////////////
-	// Retrieve post to edit //
+	// Retrieve post to view //
 	///////////////////////////
 
-	var id = $stateParams.postId;
-	var postQuery = $scope.Posts.reactiveQuery({_id: id});
-	postQuery.on("change", function () {
+	var postRQ = $scope.Posts.reactiveQuery({_id: $stateParams.postId});
+	postRQ.on("change", function () {
 		$scope.safeApply(function () {
-			$scope.post = postQuery.result[0];
+			$scope.post = postRQ.result[0];
+			if (!$scope.post) {
+				$state.go("notFound");
+			}
 		});
 	});
-	$scope.post = postQuery.result[0];
-
+	$scope.post = postRQ.result[0];
 	if (!$scope.post) {
-		$state.go("notFound");
-		return;
+		return $state.go("notFound");
 	}
 
-	/////////////////////////
-	///// check mobile //////
-	/////////////////////////
+	//////////////////
+	// Check mobile //
+	//////////////////
 
 	$scope.isMobile = CheckMobileService.isMobile();
 
@@ -138,7 +140,6 @@ angular.module("mnd-web.pages.post.view", [])
 	////////////////////////////////////////////////////
 
 	$scope.bodyChildren = function () {
-		if (!$scope.post) return;
 		return firstLevelHtmlParser.parse($scope.post.body);
 	};
 
@@ -153,12 +154,10 @@ angular.module("mnd-web.pages.post.view", [])
 	////////////////////////////////////////////////
 
 	$scope.titleImageIsDisplayed = function () {
-		if (!$scope.post) return;
 		return $scope.post.titleImageUrl !== undefined;
 	};
 
 	$scope.isAuthor = function () {
-		if (!$scope.post) return;
 		var isAuthor = false;
 		if ($scope.user) {
 			$scope.post.authors.forEach(function (author) {
@@ -193,7 +192,6 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 
 	$scope.paragraphHasComments = function (index) {
-		if (!$scope.post) return;
 		var paragraphComments = $filter("filterCommentsByParagraph")($scope.post.comments, index);
 		if ($scope.isAuthor()) {
 			return paragraphComments.length > 0;
@@ -203,7 +201,6 @@ angular.module("mnd-web.pages.post.view", [])
 	};
 
 	$scope.paragraphCommentsLength = function (index) {
-		if (!$scope.post) return;
 		var paragraphComments = $filter("filterCommentsByParagraph")($scope.post.comments, index);
 		if ($scope.isAuthor()) {
 			return paragraphComments.length;
@@ -219,21 +216,33 @@ angular.module("mnd-web.pages.post.view", [])
 	$scope.comment = {};
 
 	$scope.deleteComment = function (comment) {
-		var promises = $scope.Ceres.call("deleteCommentFromPost", id, comment._id);
-		promises.updated.then(function () {
-			$scope.post = $scope.Posts.db.get(id);
-			$scope.$apply();
-		});
+		$scope.Ceres.call("deleteCommentFromPost", $scope.post._id, comment._id);
 	};
 
 	$scope.publishComment = function (comment) {
-		$scope.Ceres.call("publishCommentOfPost", id, comment._id);
+		$scope.Ceres.call("publishCommentOfPost", $scope.post._id, comment._id);
 	};
 
 	$scope.saveCommentAt = function (index) {
 		$scope.comment.paragraph = index;
-		$scope.Ceres.call("addCommentToPost", id, $scope.comment);
+		$scope.Ceres.call("addCommentToPost", $scope.post._id, $scope.comment);
+		var matches = $scope.comment.text.match(/#\w+/g);
+		if (matches) {
+			var entry = {
+				type: "comment",
+				content: {
+					postId: $scope.post._id,
+					postTitle: $scope.post.title,
+					text: $scope.comment.text,
+					anchor: $scope.comment.anchor
+				}
+			};
+			matches.forEach(function (channel) {
+				$scope.Ceres.call("addEntryToChannelByTitle", channel.slice(1), entry);
+			});
+		}
 		$scope.comment.text = "";
+		$scope.comment.anchor = "";
 	};
 
 	///////////////////////////////

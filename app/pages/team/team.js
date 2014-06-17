@@ -1,6 +1,6 @@
-angular.module("mnd-web.pages.team", [])
+angular.module("mnd-web.pages")
 
-.controller("TeamController", function ($scope) {
+.controller("TeamController", ["$scope", function ($scope) {
 
 	var teamQuery = $scope.Users.reactiveQuery({mondoraTeamMember: true});
 	teamQuery.on("change", function () {
@@ -19,4 +19,4 @@ angular.module("mnd-web.pages.team", [])
 		return /linkedin\.com/.test(url);
 	};
 
-});
+}]);
