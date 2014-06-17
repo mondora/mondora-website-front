@@ -31,23 +31,50 @@ angular.module("mnd-web.pages")
 
 
 
-	//////////////////////
-	// Channel deletion //
-	//////////////////////
+	/////////////////////
+	// Entry insertion //
+	/////////////////////
 
-	$scope.toggleDelete = function () {
-		$scope.showDelete = !$scope.showDelete;
+	var emptyEntry = {
+		content: {}
+	};
+	$scope.entry = angular.copy(emptyEntry);
+
+	$scope.toggleEntryModal = function () {
+		$scope.showEntryModal = !$scope.showEntryModal;
 		var body = document.querySelector("body");
 		angular.element(body).toggleClass("modal-open");
+		$scope.entry = angular.copy(emptyEntry);
 	};
-	$scope.deleteChannel = function () {
-		$scope.Channels.remove($scope.channel._id).remote.then(function () {
-			$state.go("home");
-		}, function () {
-			// TODO - make a modal
-			alert("An error occurred.");
-		});
+
+	$scope.beforeUploadEntryFile = function (file) {
+		$scope.entry.content.name = file.name;
+		$scope.entry.content.type = file.type;
 	};
+
+	$scope.afterUploadEntryFile = function (url) {
+		$scope.entry.content.url = url;
+	};
+
+	$scope.addEntry = function () {
+		Ceres.call("addEntryToChannel", $scope.channel._id, $scope.entry);
+		$scope.toggleEntryModal();
+	};
+
+	$scope.getFileFAClass = function (type) {
+		var faClass;
+		if (!type) {
+			faClass = "fa-cloud-upload";
+		} else if (/pdf/.test(type)) {
+			faClass = "fa-file-pdf-o";
+		} else if (/image/.test(type)) {
+			faClass = "fa-file-image-o";
+		} else {
+			faClass = "fa-file-code-o";
+		}
+		return faClass;
+	};
+
 
 
 
