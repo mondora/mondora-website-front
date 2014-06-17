@@ -1,4 +1,4 @@
-angular.module("mnd-web.pages.profile", [])
+angular.module("mnd-web.pages")
 
 .controller("ProfileController", function ($scope, $interval, $upload) {
 

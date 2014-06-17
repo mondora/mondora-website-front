@@ -1,5 +1,5 @@
-angular.module("mnd-web.pages.topic", [])
+angular.module("mnd-web.pages")
 
-.controller("TopicController", function ($scope, topic) {
+.controller("TopicController", ["$scope", "topic", function ($scope, topic) {
 	$scope.topic = topic;
-});
+}]);

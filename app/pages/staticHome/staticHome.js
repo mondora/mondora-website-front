@@ -1,6 +1,6 @@
-angular.module("mnd-web.pages.staticHome", [])
+angular.module("mnd-web.pages")
 
-.controller("StaticHomeController", function ($scope, $sce) {
+.controller("StaticHomeController", ["$scope", "$sce", function ($scope, $sce) {
 
 	$scope.sprinkleText = "Essere al passo con i tempi, concreti e con una stretta e profonda visione tecnologica: questo è il modo con il quale ci caratterizziamo";
 
@@ -12,4 +12,4 @@ angular.module("mnd-web.pages.staticHome", [])
 	var videoPoster = "http://s3.amazonaws.com/mnd-website/vd-back.jpg";
 	$scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
 
-});
+}]);

@@ -1,6 +1,6 @@
-angular.module("mnd-web.components.pomodoro", [])
+angular.module("mnd-web.components")
 
-.factory("PomodoroService", function ($rootScope) {
+.factory("PomodoroService", ["$rootScope", function ($rootScope) {
 
 	var Pomodoros = $rootScope.Ceres.createCollection("pomodoros");
 
@@ -54,9 +54,9 @@ angular.module("mnd-web.components.pomodoro", [])
 		setDuration: setDuration,
 		calculateRemaining: calculateRemaining
 	};
-})
+}])
 
-.directive("mndPomodoroTimer", function ($interval, PomodoroService) {
+.directive("mndPomodoroTimer", ["$interval", "PomodoroService", function ($interval, PomodoroService) {
 	return {
 		restrict: "EA",
 		templateUrl: "components/pomodoro/pomodoro-timer.html",
@@ -157,12 +157,12 @@ angular.module("mnd-web.components.pomodoro", [])
 
 		}
 	};
-})
+}])
 
-.directive("mndPomodoroSummary", function ($interval, PomodoroService) {
+.directive("mndPomodoroSummary", ["$interval", "PomodoroService", function ($interval, PomodoroService) {
 	return {
 		restrict: "EA",
 		templateUrl: "components/pomodoro/pomodoro-summary.html",
 		replace: true
 	};
-});
+}]);

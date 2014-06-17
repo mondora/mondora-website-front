@@ -63,35 +63,3 @@
 .btn.btn-default.no:hover {
 	background-color: #01DF01;
 }
-
-.extraToolbar {
-	display: none;
-	position: absolute;
-}
-
-.extraToolbar ul {
-	display: block;
-}
-
-.bodyImageProgressbar,
-.bodyImageProgressbar * {
-	height: 10px;
-}
-
-.bodyImageProgressbar .progress-bar {
-	background-color: #aeaeac;
-}
-
-.bodyImageLeft {
-	width: 50%;
-	float: left;
-}
-
-.bodyImageCenter {
-	width: 100%;
-}
-
-.bodyImageRight {
-	width: 50%;
-	float: right;
-}

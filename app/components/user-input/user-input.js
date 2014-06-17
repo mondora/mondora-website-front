@@ -1,4 +1,4 @@
-angular.module("mnd-web.components.user-input", [])
+angular.module("mnd-web.components")
 
 .filter("filterByNameAndScreenName", function() {
 	return function (users, input) {
@@ -16,7 +16,7 @@ angular.module("mnd-web.components.user-input", [])
 	};
 })
 
-.directive("mndUserInput", function ($rootScope, $compile) {
+.directive("mndUserInput", ["$rootScope", "$compile", function ($rootScope, $compile) {
 	return {
 		restrict: "A",
 		terminal: true,
@@ -46,4 +46,4 @@ angular.module("mnd-web.components.user-input", [])
 			};
 		}
 	};
-});
+}]);

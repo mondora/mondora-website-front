@@ -1,6 +1,6 @@
-angular.module("mnd-web.components.center", [])
+angular.module("mnd-web.components")
 
-.directive("mndCenter", function ($timeout) {
+.directive("mndCenter", ["$timeout", function ($timeout) {
 	return {
 		restrict: "A",
 		priority: 1000,
@@ -20,4 +20,4 @@ angular.module("mnd-web.components.center", [])
 		}
 
 	}
-});
+}]);

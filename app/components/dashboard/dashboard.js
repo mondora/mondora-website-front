@@ -1,6 +1,6 @@
-angular.module("mnd-web.components.dashboard", [])
+angular.module("mnd-web.components")
 
-.controller("SidebarController", function ($scope, $state, AppMethods) {
+.controller("SidebarController", ["$scope", "$state", "AppMethods", function ($scope, $state, AppMethods) {
 
 	$scope.actions = AppMethods;
 
@@ -52,4 +52,4 @@ angular.module("mnd-web.components.dashboard", [])
 		$scope.menu = getMenu();
 	});
 
-});
+}]);

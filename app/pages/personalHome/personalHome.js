@@ -1,6 +1,6 @@
-angular.module("mnd-web.pages.personalHome", [])
+angular.module("mnd-web.pages")
 
-.controller("PersonalHomeController", function ($scope) {
+.controller("PersonalHomeController", ["$scope", function ($scope) {
 
 	$scope.isAdmin = function () {
 		if ($scope.user && Array.isArray($scope.user.roles)) {
@@ -8,4 +8,4 @@ angular.module("mnd-web.pages.personalHome", [])
 		}
 	};
 
-});
+}]);

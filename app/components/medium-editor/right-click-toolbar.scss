@@ -1,0 +1,18 @@
+.right-click-toolbar {
+	display: none;
+	position: absolute;
+}
+
+.right-click-toolbar ul {
+	display: block;
+}
+
+
+.editor-upload-progressbar,
+.editor-upload-progressbar * {
+	height: 10px;
+}
+
+.editor-upload-progressbar .progress-bar {
+	background-color: #aeaeac;
+}

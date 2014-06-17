@@ -1,6 +1,6 @@
-angular.module("mnd-web.pages.pomodoro.view", [])
+angular.module("mnd-web.pages")
 
-.controller("PomodoroViewController", function ($scope, $stateParams, PomodoroService) {
+.controller("PomodoroViewController", ["$scope", "$stateParams", "PomodoroService", function ($scope, $stateParams, PomodoroService) {
 	var Pomodoros = $scope.Ceres.createCollection("pomodoros");
 	var pomodoroRQ = Pomodoros.reactiveQuery({_id: $stateParams.pomodoroId});
 	pomodoroRQ.on("change", function () {
@@ -34,4 +34,4 @@ angular.module("mnd-web.pages.pomodoro.view", [])
 		var newDuration = $scope.pomodoro.duration - FIVE_MINUTES;
 		PomodoroService.setDuration($scope.pomodoro, newDuration);
 	};
-});
+}]);

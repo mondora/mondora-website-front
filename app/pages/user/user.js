@@ -1,16 +1,23 @@
-angular.module("mnd-web.pages.user", [])
+angular.module("mnd-web.pages")
 
-.controller("UserController", function ($scope, $stateParams, posts) {
+.controller("UserController", ["$scope", "$stateParams", "userSub", "postsMeth", function ($scope, $stateParams, userSub, postsMeth) {
 
-	/////////////////
-	// User object //
-	/////////////////
+	// User
+	userSub.ready.then(function () {
+		$scope.safeApply(function () {
+			$scope.user = $scope.Users.reactiveQuery({_id: $stateParams.userId}).result[0];
+		});
+	});
 
-	$scope.user = $scope.Users.reactiveQuery({_id: $stateParams.userId}).result[0];
-	$scope.posts = posts;
+	// Posts
+	postsMeth.result.then(function (posts) {
+		$scope.safeApply(function () {
+			$scope.posts = posts;
+		});
+	});
 
 	$scope.isUser = function () {
 		return $scope.$root.user._id === $scope.user._id;
 	};
 
-});
+}]);
