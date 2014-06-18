@@ -142,20 +142,21 @@
 		display: flex;
 		flex-shrink: 3;
 	}
+	.tree ul li {
+		height: 70px;
+	}
 	.tree ul li a {
 		width: 130px;
-		height: 60px;
 		margin-right: 10px;
 		margin-bottom: 10px;
-		padding-top: 18px;
+		padding-top: 10px;
 		padding-right: 6px;
-		padding-left: 35px;
+		padding-left: 38px;
 		float: left;
 		color: #fff;
 		font-size: 13px;
-		text-align: right;
-		word-break: break-all;
 		background-image: url(http://s3.amazonaws.com/mnd-website/img/tag.png);
 		background-size: cover;
+		text-decoration: none;
 	}
 }

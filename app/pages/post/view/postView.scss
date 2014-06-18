@@ -17,6 +17,10 @@
 	z-index: 1;
 }
 
+.first-level-html-container {
+	box-sizing: border-box;
+}
+
 .first-level-html-container .comment-bubble {
 	color: #aeaeac;
 	opacity: 0;
@@ -53,8 +57,7 @@
 
 .side-comment-container {
 	position: absolute;
-	margin-top: -50px;
-	margin-left: 10%;
+	margin-top: -20px;
 }
 
 .comment-badge:hover {
@@ -64,11 +67,11 @@
 
 .read-time {
 	position: absolute;
-	bottom: -40px;
 	right: 10px;
-	font-size: 30px;
-	font-weight: bold;
+	font-size: 25px;
+	font-weight: 600;
 	color: #fff;
+	line-height: 25px;
 }
 
 .comment-author {
@@ -88,6 +91,23 @@
 .post-view-highlight {
 	background: #5cb85c;
 }
+
+.simplebox {
+	text-align: justify;
+}
+
+.simplebox b{
+	font-weight: 600;
+}
+
+.comment-author {
+	clear: left;
+}
+
+.mnd-top-most p{
+	word-wrap: break-word;
+}
+
 
 //media queries
 @media (max-width: 767px) {
