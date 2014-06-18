@@ -56,14 +56,17 @@ angular.module("mnd-web.components")
 	};
 }])
 
-.directive("mndPomodoroTimer", ["$interval", "PomodoroService", function ($interval, PomodoroService) {
+.directive("mndPomodoroTimer", ["$interval", "$rootScope", "PomodoroService", function ($interval, $rootScope, PomodoroService) {
 	return {
 		restrict: "EA",
 		templateUrl: "components/pomodoro/pomodoro-timer.html",
 		replace: true,
 		scope: {
 			pomodoro: "=",
-			size: "@?"
+			size: "@?",
+			ticker: "=?",
+			ticked: "=?",
+			tickWith: "@?"
 		},
 		link: function ($scope, $element) {
 
@@ -127,42 +130,48 @@ angular.module("mnd-web.components")
 			// Initial render //
 			////////////////////
 			
-			render();
+			$scope.$watch("pomodoro._id", function () {
+				render();
+			});
 
 			/////////////////
 			// Timer setup //
 			/////////////////
 
-			var interval;
 			$scope.$watch("pomodoro.status", function (status) {
-				if (status === "running") {
-					interval = $interval(function () {
-						render();
-						if ($scope.remaining === 0) {
-							$interval.cancel(interval);
-							PomodoroService.stop($scope.pomodoro);
+				if ($scope.ticked) {
+					$rootScope.$on("pomodoroTick", function (e, pomodoroId, remaining) {
+						if (pomodoroId === $scope.tickWith) {
+							$scope.remaining = remaining;
+							drawCircle();
 						}
-					}, 1000);
-				} else if (status === "puased") {
-					$interval.cancel(interval);
-				} else if (status === "stopped") {
-					$interval.cancel(interval);
-					$scope.remaining = 0;
+					});
+				} else {
+					if (status === "running") {
+						$scope.interval = $interval(function () {
+							render();
+							if ($scope.ticker) {
+								$rootScope.$emit("pomodoroTick", $scope.pomodoro._id, $scope.remaining);
+							}
+							if ($scope.remaining === 0) {
+								$interval.cancel($scope.interval);
+								PomodoroService.stop($scope.pomodoro);
+							}
+						}, 1000);
+					} else if (status === "puased") {
+						$interval.cancel($scope.interval);
+					} else if (status === "stopped") {
+						$interval.cancel($scope.interval);
+						$scope.remaining = 0;
+					}
 				}
 			});
 			// Clear the interval when the scope is destroyed
 			$scope.$on("$destroy", function () {
-				$interval.cancel(interval);
+				$interval.cancel($scope.interval);
 			});
 
 		}
 	};
-}])
 
-.directive("mndPomodoroSummary", ["$interval", "PomodoroService", function ($interval, PomodoroService) {
-	return {
-		restrict: "EA",
-		templateUrl: "components/pomodoro/pomodoro-summary.html",
-		replace: true
-	};
 }]);
