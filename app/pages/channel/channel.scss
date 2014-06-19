@@ -1,19 +1,64 @@
-.channel-left-side {
-	width: calc(70% - 70px);
-	height: 100%;
-	position: absolute;
+.channel-page-container {
+	position: relative;
 	top: 0px;
-	left: 100px;
-	background: lighten(#ff0000, 20%);
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+.channel-left-side {
+	height: 100%;
+	padding: 0px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+.channel-header {
+	position: relative;
+	min-height: 50%;
+	overflow: hidden;
+}
+
+.channel-title-group {
+	position: absolute;
+	bottom: 10px;
+}
+
+.channel-title{
+	font-size: 45px;
+	font-weight: 600;
+}
+
+.channel-subtitle {
+	font-size: 30px;
+}
+
+.channel-text-body {
+	padding-top: 20px;
+	font-size: 18px;
 }
 
 .channel-right-side {
-	width: calc(30% - 30px);
 	height: 100%;
-	position: absolute;
-	top: 0px;
-	left: calc(70% + 30px);
-	background: lighten(#00ff00, 20%);
+	overflow: hidden;
+	overflow-y: scroll;
+	background-color: #fff;
+}
+
+.channel-add-entry {
+	position: relative;
+	padding: 50px;
+	text-align: center;
+}
+
+.channel-add-entry button{
+	font-weight: bold;
+}
+
+.channel-entry {
+	padding-bottom: 20px;
 }
 
 .channel-image-upload-progressbar,
@@ -30,5 +75,24 @@
 
 .channel-main-image {
 	position: absolute;
+	box-sizing: border-box;
+	left: 0px;
+	top: 0px;
 	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.channel-main-image img{
+	min-height: 100%;
+	width: 100%;
+}
+
+.channel-top-buttons {
+	position: absolute;
+	z-index: 100;
+}
+
+.entry-title {
+	word-break: break-all;
 }
