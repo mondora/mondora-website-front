@@ -1,6 +1,6 @@
 <!-- Post deletion modal -->
 <div class="modal-background" ng-if="showDelete">
-	<div id="delete-post-modal" class="modal-dialog" ng-if="showDelete">
+	<div id="delete-post-modal" class="modal-dialog">
 		<div class="modal-content">
 	    	<div class="modal-header">
 				Are you sure you want to delete this post?
@@ -17,6 +17,57 @@
 	</div>
 </div>
 
+<!-- Permissions editor modal -->
+<div class="modal-background" ng-if="showPermissionsEditor">
+	<div class="modal-dialog">
+		<div class="modal-content">
+	    	<div class="modal-header">
+				Edit permissions
+			</div>
+			<div class="modal-body">
+
+				<div tabset>
+
+					<div tab heading="Visibility">
+						<br />
+						<div mnd-permissions-editor permissions="post.permissions"></div>
+					</div>
+
+					<div tab heading="Authors" ng-controller="PostAuthorsController">
+
+						<label>Authors</label>
+						<div class="participant-list" ng-repeat="author in post.authors">
+							<div class="mnd-inline-block mnd-valign-middle" mnd-cig-image source="author.pictureUrl" size="30"></div>
+							<span>{{author.name}}</span>
+							<span class="pull-right mnd-clickable" ng-click="deleteAuthor($index)">
+								<i class="fa fa-times-circle"></i>
+							</span>
+						</div>
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Add member" mnd-user-input user-model="author.model" />
+							<span class="input-group-addon mnd-clickable" ng-click="addAuthor()">
+								<i class="fa fa-plus-circle"></i>
+							</span>
+						</div>
+
+					</div>
+
+					<div tab heading="Channels">
+					</div>
+
+				</div>
+
+				<br />
+				<div class="text-right">
+					<button type="button" class="btn btn-default" ng-click="togglePermissionsEditor()">
+						Close
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="post-cant-edit" ng-show="isMobile">Content not accessible from mobile devices.</div> 
 <div class="post-title-image" ng-show="!isMobile">
 	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
@@ -25,6 +76,9 @@
 <div class="post-top-buttons" ng-if="isAuthor()" ng-show="!isMobile">
 	<button type="button" class="btn btn-default" ng-click="toggleDelete()" ng-if="isOwner() && !showDelete">
 		Delete
+	</button>
+	<button type="button" class="btn btn-default" ng-click="togglePermissionsEditor()">
+		Share
 	</button>
 	<button type="button" class="btn btn-default" ng-click="publishPost()" ng-if="isOwner() && !post.published">
 		Publish
