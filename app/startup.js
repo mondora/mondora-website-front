@@ -276,6 +276,20 @@ angular.module("mnd-web")
 		}
 	});
 
+    $stateProvider.state("topic", {
+        url: "/topic/:name",
+		parent: "root",
+        templateUrl: "pages/topic/topic.html",
+		controller: "TopicController",
+		resolve: {
+			topic: function (TimeoutPromiseService, $stateParams) {
+				var meth = Ceres.call("getTopic", $stateParams.name);
+				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
+			}
+		},
+		public: true
+    });
+
 
 
 	/////////////
