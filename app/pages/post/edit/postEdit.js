@@ -40,12 +40,12 @@ angular.module("mnd-web.pages")
 		});
 	};
 
-	/////////////////////////////
-	// Post permissions editor //
-	/////////////////////////////
+	//////////////////////////
+	// Post settings editor //
+	//////////////////////////
 
-	$scope.togglePermissionsEditor = function () {
-		$scope.showPermissionsEditor = !$scope.showPermissionsEditor;
+	$scope.toggleSettingsEditor = function () {
+		$scope.showSettingsEditor = !$scope.showSettingsEditor;
 		var body = document.querySelector("body");
 		angular.element(body).toggleClass("modal-open");
 	};
