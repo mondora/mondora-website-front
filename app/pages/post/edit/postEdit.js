@@ -180,7 +180,7 @@ angular.module("mnd-web.pages")
 	};
 
 	$scope.deleteAuthor = function (index) {
-		$scope.post.authors.slice(index, 1);
+		$scope.post.authors.splice(index, 1);
 	};
 
 }]);
