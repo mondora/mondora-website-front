@@ -120,3 +120,8 @@ span.mnd-width-10 {
 .file-upload-icon-lg:hover {
 	opacity: 0.8;
 }
+
+// Medium Editor Fixes
+.medium-editor-placeholder:after {
+	position: static;
+}
