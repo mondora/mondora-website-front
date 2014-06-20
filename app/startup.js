@@ -164,6 +164,19 @@ angular.module("mnd-web")
 		controller: "AdminController"
 	});
 
+	$stateProvider.state("users", {
+		url: "/users",
+		parent: "root",
+		templateUrl: "pages/users/users.html",
+		controller: "UsersController",
+		resolve: {
+			usersAdminSub: function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("usersAdmin");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}
+		}
+	});
+
 	$stateProvider.state("pomodoro", {
 		url: "/pomodoro",
 		parent: "root",

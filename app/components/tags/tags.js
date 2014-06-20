@@ -6,11 +6,16 @@ angular.module("mnd-web.components")
 		templateUrl: "components/tags/tags.html",
 		scope: {
 			tags: "=",
-			placeholder: "@"
+			placeholder: "@",
+			onAdd: "&?",
+			onRemove: "&?"
 		},
 		link: function ($scope) {
 			$scope.delTag = function (index) {
-				$scope.tags.splice(index, 1);
+				var removedTags = $scope.tags.splice(index, 1);
+				if ($scope.onRemove) {
+					$scope.onRemove()(removedTags[0]);
+				}
 			};
 			$scope.addingKeyCodes = [13, 32, 188, 186];
 			$scope.addTag = function (e) {
@@ -37,6 +42,9 @@ angular.module("mnd-web.components")
 				}
 				if ($scope.tags.indexOf(tag) === -1) {
 					$scope.tags.push(tag);
+					if ($scope.onAdd) {
+						$scope.onAdd()(tag);
+					}
 				}
 				$scope.newTag = "";
 			};
