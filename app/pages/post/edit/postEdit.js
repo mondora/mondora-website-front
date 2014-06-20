@@ -50,6 +50,16 @@ angular.module("mnd-web.pages")
 		angular.element(body).toggleClass("modal-open");
 	};
 
+	//////////////////
+	// Form builder //
+	//////////////////
+
+	$scope.toggleFormBuilder = function () {
+		$scope.showFormBuilder = !$scope.showFormBuilder;
+		var body = document.querySelector("body");
+		angular.element(body).toggleClass("modal-open");
+	};
+
 	//////////////////////
 	// Post publication //
 	//////////////////////

@@ -1,0 +1,13 @@
+<div ng-repeat="parameter in actionSchema.parameters">
+
+	<div ng-if="parameter.type === 'text'" class="form-group">
+		<label>{{parameter.label}}</label>
+		<input type="{{parameter.type}}" ng-model="actionSettings.parameters[$index]" class="form-control" />
+	</div>
+
+	<div ng-if="parameter.type === 'textarea'" class="form-group">
+		<label>{{parameter.label}}</label>
+		<textarea class="form-control" rows="5" ng-model="actionSettings.parameters[$index]"></textarea>
+	</div>
+
+</div>

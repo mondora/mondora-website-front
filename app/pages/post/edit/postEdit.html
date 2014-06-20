@@ -17,6 +17,8 @@
 	</div>
 </div>
 
+
+
 <!-- Settings editor modal -->
 <div class="modal-background" ng-if="showSettingsEditor">
 	<div class="modal-dialog">
@@ -117,6 +119,30 @@
 	</div>
 </div>
 
+
+
+<!-- Form builder modal -->
+<div class="modal-background" ng-if="showFormBuilder">
+	<div class="modal-dialog">
+		<div class="modal-content">
+	    	<div class="modal-header">
+				<span class="h3">Form builder</span>
+			</div>
+			<div class="modal-body">
+				<div mnd-form-builder form-schema="post.formSchema"></div>
+				<div>
+					<br />
+					<button type="button" class="btn btn-default pull-rihgt" ng-click="toggleFormBuilder()">
+						Close
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 <div class="post-cant-edit" ng-show="isMobile">Content not accessible from mobile devices.</div> 
 <div class="post-title-image" ng-show="!isMobile">
 	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
@@ -128,6 +154,9 @@
 	</button>
 	<button type="button" class="btn btn-default" ng-click="toggleSettingsEditor()">
 		Settings
+	</button>
+	<button type="button" class="btn btn-default" ng-click="toggleFormBuilder()">
+		Attach form
 	</button>
 	<a ui-sref="postView({postId: post._id})" class="btn btn-default">
 		Preview
