@@ -25,6 +25,8 @@
 			<a class="post-author" ng-if="!post.repost" ng-repeat="author in post.authors" ui-sref="user({userId: author.userId})">
 				<div mnd-cig-image source="author.pictureUrl" size="40" class="mnd-inline-block mnd-valign-middle"></div>
 				&nbsp;&nbsp;Author {{author.name || author.screenName}}
+				<br />
+				<div class="mnd-vsp-4"></div>
 			</a>
 			<a class="post-author" ng-if="post.repost" href="{{post.original.url}}">
 				By {{post.original.author}}, reposted by {{post.authors.0.name || post.author.0.screenName}} 
