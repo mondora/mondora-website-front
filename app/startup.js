@@ -136,6 +136,12 @@ angular.module("mnd-web")
 		public: true
 	});
 
+    $stateProvider.state("approach", {
+        url: "/approach",
+		parent: "root",
+        templateUrl: "pages/approach/approach.html"
+    });
+
 
 
 	//////////
