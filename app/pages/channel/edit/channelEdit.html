@@ -1,76 +1,155 @@
-<!-- Settings editor modal -->
-<div class="modal-background" ng-if="showSettingsEditor">
-	<div class="modal-dialog">
-		<div class="modal-content">
-	    	<div class="modal-header">
-				<span class="h3">Settings</span>
-			</div>
-			<div class="modal-body">
-
-				<div tabset justified="true">
-
-					<div tab heading="Permissions">
-
-						<br />
-						<div>
-							<h4><b>Status</b></h4>
-							<div class="row">
-								<div class="col-sm-6">
-									<label class="radio-inline">
-										<input type="radio" name="publishedOrUnpublished" ng-model="channel.published" ng-value="true" /> Published
-									</label>
-								</div>
-								<div class="col-sm-6">
-									<label class="radio-inline">
-										<input type="radio" name="publishedOrUnpublished" ng-model="channel.published" ng-value="false" /> Unpublished
-									</label>
-								</div>
-							</div>
-						</div>
-
-						<br />
-						<div mnd-permissions-editor permissions="channel.permissions"></div>
-
-					</div>
-
-					<div tab heading="Curators" ng-controller="ChannelCuratorsController">
-
-						<div>
-							<br />
-							<h4><b>Curators</b></h4>
-							<div class="participant-list" ng-repeat="curator in channel.curators">
-								<div class="mnd-inline-block mnd-valign-middle" mnd-cig-image source="curator.pictureUrl" size="30"></div>
-								<span>{{curator.name}}</span>
-								<span class="pull-right mnd-clickable" ng-click="deleteCurator($index)">
-									<i class="fa fa-times-circle"></i>
-								</span>
-							</div>
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Add curator" mnd-user-input user-model="curator.model" />
-								<span class="input-group-addon mnd-clickable" ng-click="addCurator()">
-									<i class="fa fa-plus-circle"></i>
-								</span>
-							</div>
-						</div>
-
-					</div>
-
+<div class="channel-page-container">
+	<!-- Settings editor modal -->
+	<div class="modal-background" ng-if="showSettingsEditor">
+		<div class="modal-dialog">
+			<div class="modal-content">
+		    	<div class="modal-header">
+					<span class="h3">Settings</span>
 				</div>
+				<div class="modal-body">
 
-				<br />
-				<div class="text-right">
-					<button type="button" class="btn btn-default" ng-click="toggleSettingsEditor()">
-						Close
-					</button>
+					<div tabset justified="true">
+
+						<div tab heading="Permissions">
+
+							<br />
+							<div>
+								<h4><b>Status</b></h4>
+								<div class="row">
+									<div class="col-sm-6">
+										<label class="radio-inline">
+											<input type="radio" name="publishedOrUnpublished" ng-model="channel.published" ng-value="true" /> Published
+										</label>
+									</div>
+									<div class="col-sm-6">
+										<label class="radio-inline">
+											<input type="radio" name="publishedOrUnpublished" ng-model="channel.published" ng-value="false" /> Unpublished
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<br />
+							<div mnd-permissions-editor permissions="channel.permissions"></div>
+
+						</div>
+
+						<div tab heading="Curators" ng-controller="ChannelCuratorsController">
+
+							<div>
+								<br />
+								<h4><b>Curators</b></h4>
+								<div class="participant-list" ng-repeat="curator in channel.curators">
+									<div class="mnd-inline-block mnd-valign-middle" mnd-cig-image source="curator.pictureUrl" size="30"></div>
+									<span>{{curator.name}}</span>
+									<span class="pull-right mnd-clickable" ng-click="deleteCurator($index)">
+										<i class="fa fa-times-circle"></i>
+									</span>
+								</div>
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Add curator" mnd-user-input user-model="curator.model" />
+									<span class="input-group-addon mnd-clickable" ng-click="addCurator()">
+										<i class="fa fa-plus-circle"></i>
+									</span>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<br />
+					<div class="text-right">
+						<button type="button" class="btn btn-default" ng-click="toggleSettingsEditor()">
+							Close
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
+<!-- Entry modal -->
+	<div class="modal-background" ng-if="showEntryModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+		    	<div class="modal-header">
+					Add an entry to this channel
+				</div>
+				<div class="modal-body">
 
+					<label>Entry type</label>
+					<select class="form-control" ng-init="entry.type = 'link'" ng-model="entry.type">
+						<option value="link">Link</option>
+						<option value="file">File</option>
+					</select>
 
-<div class="channel-page-container">
+					<br />
+					<div ng-if="entry.type === 'link'">
+
+						<div class="form-group">
+							<label>Title</label>
+							<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.title" />
+						</div>
+
+						<div class="form-group">
+							<label>Link</label>
+							<input type="text" class="form-control" placeholder="Link" ng-model="entry.content.href" />
+						</div>
+
+						<label>Description</label>
+						<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
+
+					</div>
+
+					<div ng-if="entry.type === 'file'">
+
+						<div class="row">
+							<div class="col-sm-8">
+								<div class="form-group">
+									<label>File name</label>
+									<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.name" />
+								</div>
+
+								<label>Description</label>
+								<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
+							</div>
+
+							<div class="col-sm-4">
+								<br />
+								<br />
+								<div class="text-center">
+									<i
+										class="fa {{getFileFAClass(entry.content.type)}} file-upload-icon-lg"
+										mnd-s3-file-upload
+										before-upload="beforeUploadEntryFile"
+										after-upload="afterUploadEntryFile"
+										is-uploading="entryFileIsUploading"
+										upload-progress="entryFileUploadProgress">
+									</i>
+									<br />
+									<br />
+									<div class="entry-file-upload-progressbar" ng-if="entryFileIsUploading" progressbar value="entryFileUploadProgress"></div>
+									<p ng-if="!entryFileIsUploading">{{entry.content.name}}</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<br />
+					<button type="button" class="btn btn-default" ng-click="addEntry()">
+						Add
+					</button>
+					<button type="button" class="btn btn-default" ng-click="toggleEntryModal()">
+						Cancel
+					</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="channel-top-buttons">
 		<a ui-sref="channelView({channelId: channel._id})" class="btn btn-default">Preview</a>
 		<button type="button" class="btn btn-default" ng-click="toggleSettingsEditor()">
@@ -78,87 +157,91 @@
 		</button>
 	</div>
 
-	<div class="col-sm-8 channel-left-side">
-		<div class="channel-main-image">
-			<div class="mnd-page-overlay" ng-show="mainImageIsDisplayed()"></div>
-			<img ng-src="{{channel.mainImageUrl}}" />
-		</div>
-		<div class="col-sm-8 col-sm-offset-2 channel-title-group">
-			<i
-				class="fa fa-picture-o file-upload-icon-lg"
-				ng-class="{'color-me-white': mainImageIsDisplayed()}"
-				mnd-s3-file-upload
-				file-type="image"
-				after-upload="afterUploadMainImage"
-				is-uploading="mainImageIsUploading"
-				upload-progress="mainImageUploadProgress">
-			</i>
-			<div class="channel-image-upload-progressbar" ng-if="mainImageIsUploading" progressbar value="mainImageUploadProgress"></div>
-			<h1
-				class="simplebox channel-title"
-				ng-class="{'color-me-white': mainImageIsDisplayed()}"
-				mnd-medium-editor
-				content="channel.title"
-				options="titleEditorOptions">
-			</h1>
-			<h2
-				class="simplebox channel-subtitle"
-				ng-class="{'color-me-white': mainImageIsDisplayed()}"
-				mnd-medium-editor
-				content="channel.subtitle"
-				options="subtitleEditorOptions">
-			</h2>
-		</div>
-		<div class="col-sm-8 col-sm-offset-2 channel-text-body">
-			<div class="simplebox" mnd-medium-editor content="channel.body" options="bodyEditorOptions"></div>
-		</div>
+	<div class="channel-main-image">
+		<div class="channel-overlay" ng-show="mainImageIsDisplayed()"></div>
+		<img ng-src="{{channel.mainImageUrl}}" />
 	</div>
 
+	<div class="channel-page-content">
+		<div class="col-sm-6 channel-left-side">
+			<div class="col-sm-9 col-sm-offset-1 channel-title-group">
+				<i
+					class="fa fa-picture-o file-upload-icon-lg"
+					ng-class="{'color-me-white': mainImageIsDisplayed()}"
+					mnd-s3-file-upload
+					file-type="image"
+					after-upload="afterUploadMainImage"
+					is-uploading="mainImageIsUploading"
+					upload-progress="mainImageUploadProgress">
+				</i>
+				<div class="channel-image-upload-progressbar" ng-if="mainImageIsUploading" progressbar value="mainImageUploadProgress"></div>
+				<h1
+					class="simplebox channel-title"
+					ng-class="{'color-me-white': mainImageIsDisplayed()}"
+					mnd-medium-editor
+					content="channel.title"
+					options="titleEditorOptions">
+				</h1>
+				<h2
+					class="simplebox channel-subtitle"
+					ng-class="{'color-me-white': mainImageIsDisplayed()}"
+					mnd-medium-editor
+					content="channel.subtitle"
+					options="subtitleEditorOptions">
+				</h2>
+			</div>
+			<div class="col-sm-9 col-sm-offset-1 channel-text-body">
+				<div class="simplebox" mnd-medium-editor content="channel.body" options="bodyEditorOptions"></div>
+			</div>
+		</div>
 
+		<div class="col-sm-6 channel-right-side">
+			<div class="col-sm-11 channel-entries-box radial-background">
+				<div class="channel-entries-list">
+					<div class="row channel-entry-single" ng-repeat="entry in channel.entries">
+						<div ng-if="entry.type === 'link'">
+							<div class="col-sm-2">
+								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
+							</div>
+							<div class="col-sm-4">
+								<a class="h4" href="{{entry.content.href}}">{{entry.content.title}}</a>
+							</div>
+							<div class="col-sm-6">
+								<p>{{entry.content.description}}</p>
+							</div>
+						</div>
 
-	<div class="col-sm-4 channel-right-side red-background">
-		<div class="col-sm-8 col-sm-offset-2">
-			<div class="row" ng-repeat="entry in channel.entries">
+						<div ng-if="entry.type === 'file'">
+							<div class="col-sm-2">
+								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
+							</div>
+							<div class="col-sm-4 entry-title">
+								<a class="h4" href="{{entry.content.url}}" target="_blank">
+									<i class="fa {{getFileFAClass(entry.content.type)}}"></i>
+									{{entry.content.name}}
+								</a>
+							</div>
+							<div class="col-sm-6">
+								<p>{{entry.content.description}}</p>
+							</div>
+						</div>
 
-				<div ng-if="entry.type === 'link'">
-					<div class="col-sm-2">
-						<div mnd-cig-image source="entry.userPictureUrl" size="50"></div>
-					</div>
-					<div class="col-sm-4">
-						<a class="h4" href="{{entry.content.href}}">{{entry.content.title}}</a>
-					</div>
-					<div class="col-sm-6">
-						<p>{{entry.content.description}}</p>
+						<div ng-if="entry.type === 'comment'">
+							<div class="col-sm-2">
+								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
+							</div>
+							<div class="col-sm-4">
+								<a class="h4" ui-sref="postView({postId: entry.content.postId})">{{entry.content.postTitle}}</a>
+							</div>
+							<div class="col-sm-6">
+								<p>{{entry.content.text}}</p>
+							</div>
+						</div>
 					</div>
 				</div>
-
-				<div ng-if="entry.type === 'file'">
-					<div class="col-sm-2">
-						<div mnd-cig-image source="entry.userPictureUrl" size="50"></div>
-					</div>
-					<div class="col-sm-4">
-						<a class="h4" href="{{entry.content.url}}" target="_blank">
-							<i class="fa {{getFileFAClass(entry.content.type)}}"></i>
-							{{entry.content.name}}
-						</a>
-					</div>
-					<div class="col-sm-6">
-						<p>{{entry.content.description}}</p>
-					</div>
+				<div class="channel-add-entry">
+					<button type="button" class="btn btn-default" ng-click="toggleEntryModal()">Add entry</button>
 				</div>
-
-				<div ng-if="entry.type === 'comment'">
-					<div class="col-sm-2">
-						<div mnd-cig-image source="entry.userPictureUrl" size="50"></div>
-					</div>
-					<div class="col-sm-4">
-						<a class="h4" ui-sref="postView({postId: entry.content.postId})">{{entry.content.postTitle}}</a>
-					</div>
-					<div class="col-sm-6">
-						<p>{{entry.content.text}}</p>
-					</div>
-				</div>
-
 			</div>
 		</div>
 	</div>

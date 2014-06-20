@@ -5,7 +5,15 @@
 	height: 100%;
 	width: 100%;
 	overflow: scroll;
+	overflow-x: hidden;
 	-webkit-overflow-scrolling: touch;
+}
+
+.channel-page-content {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	overflow-y: scroll;
 }
 
 .channel-left-side {
@@ -45,13 +53,14 @@
 .channel-right-side {
 	height: 100%;
 	overflow: hidden;
-	overflow-y: scroll;
-	background-color: #fff;
 }
 
 .channel-add-entry {
-	position: relative;
-	padding: 50px;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 10px;
 	text-align: center;
 }
 
@@ -59,8 +68,35 @@
 	font-weight: bold;
 }
 
-.channel-entry {
-	padding-bottom: 20px;
+.channel-entry-single {
+	padding-bottom: 15px;
+}
+
+.channel-entries-box {
+	position: relative;
+	top: 0px;
+	height: 90%;
+	margin-top: 5%;
+	border-radius: 10px;
+	opacity: 0.9;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
+}
+
+.channel-entries-list {
+	position: relative;
+	height: calc(100% - 60px);
+	padding-top: 30px;
+	padding-right: 5px;
+	padding-bottom: 60px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.channel-entry-avatar {
+	width: 100%;
+	text-align: center;
 }
 
 .channel-image-upload-progressbar,
@@ -75,19 +111,31 @@
 	background-color: #aeaeac;
 }
 
-.channel-main-image {
+.channel-main-image {	
 	position: absolute;
-	box-sizing: border-box;
-	left: 0px;
 	top: 0px;
-	width: 100%;
+	left: 0px;
+	min-width: 100%;
 	height: 100%;
-	overflow: hidden;
+	z-index: -10;
 }
 
 .channel-main-image img{
+	position: absolute;
+	top: 0px;
 	height: 100%;
 	min-width: 100%;
+	z-index: -1;
+}
+.channel-overlay{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	opacity: 0.8;
+	background-image: url('https://s3.amazonaws.com/mnd-website/img/raster-dark.png');
+	background-repeat: repeat;
 }
 
 .channel-top-buttons {
@@ -101,4 +149,14 @@
 
 .red-background {
 	background-color: #ff0000;
+}
+
+@media (max-width: 767px){
+	.channel-page-content {
+		padding-bottom: 30px;
+	}
+
+	.channel-title, .channel-subtitle {
+		text-align: center;
+	}
 }
