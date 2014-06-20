@@ -1,0 +1,16 @@
+<div ng-if="!noTags()">
+	<span class="label label-default mnd-tag" ng-repeat="tag in tags">
+		{{tag}}
+		<i class="fa fa-times mnd-clickable" ng-click="delTag($index)"></i>
+	</span>
+	<div class="mnd-vsp-4"></div>
+	<div class="mnd-vsp-4"></div>
+</div>
+<div class="input-group">
+	<input class="form-control" placeholder="{{placeholder}}" ng-model="newTag" ng-keyup="addTag($event)" />
+	<span class="input-group-btn">
+		<button class="btn btn-default" type="button" ng-click="addTag($event)">
+			<i class="fa fa-plus"></i>
+		</button>
+	</span>
+</div>

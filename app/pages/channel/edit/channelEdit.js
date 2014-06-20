@@ -21,15 +21,11 @@ angular.module("mnd-web.pages")
 	});
 	$scope.channel = channelRQ.result[0];
 
-
-
 	//////////////////
 	// Check mobile //
 	//////////////////
 
 	$scope.isMobile = CheckMobileService.isMobile();
-
-
 
 	/////////////////////
 	// Entry insertion //
@@ -75,8 +71,15 @@ angular.module("mnd-web.pages")
 		return faClass;
 	};
 
+	/////////////////////////////
+	// Channel settings editor //
+	/////////////////////////////
 
-
+	$scope.toggleSettingsEditor = function () {
+		$scope.showSettingsEditor = !$scope.showSettingsEditor;
+		var body = document.querySelector("body");
+		angular.element(body).toggleClass("modal-open");
+	};
 
 	/////////////////////////
 	// Channel publication //
@@ -96,8 +99,6 @@ angular.module("mnd-web.pages")
 		}
 		return isCurator;
 	};
-
-
 
 	////////////////////////////
 	// Medium editors options //
@@ -131,8 +132,6 @@ angular.module("mnd-web.pages")
 		imageInsertion: true
 	};
 
-
-
 	/////////////////
 	// Main image //
 	/////////////////
@@ -144,8 +143,6 @@ angular.module("mnd-web.pages")
 	$scope.afterUploadMainImage = function (url) {
 		$scope.channel.mainImageUrl = url;
 	}; 
-
-
 
 	///////////////////
 	// Save function //
@@ -164,6 +161,26 @@ angular.module("mnd-web.pages")
 		$interval.cancel(interval);
 	});
 
+}])
 
+
+
+.controller("ChannelCuratorsController", ["$scope", function ($scope) {
+
+	$scope.curator = {};
+
+	$scope.addCurator = function () {
+		$scope.channel.curators.push({
+			userId: $scope.curator.model._id,
+			name: $scope.curator.model.profile.name,
+			screenName: $scope.curator.model.profile.screenName,
+			pictureUrl: $scope.curator.model.profile.pictureUrl
+		});
+		$scope.curator.model = "";
+	};
+
+	$scope.deleteCurator = function (index) {
+		$scope.channel.curators.splice(index, 1);
+	};
 
 }]);

@@ -16,15 +16,11 @@ angular.module("mnd-web.pages")
 	var postRQ = $scope.Posts.reactiveQuery({_id: $stateParams.postId});
 	$scope.post = postRQ.result[0];
 
-
-
 	//////////////////
 	// Check mobile //
 	//////////////////
 
 	$scope.isMobile = CheckMobileService.isMobile();
-
-
 
 	///////////////////
 	// Post deletion //
@@ -44,7 +40,15 @@ angular.module("mnd-web.pages")
 		});
 	};
 
+	//////////////////////////
+	// Post settings editor //
+	//////////////////////////
 
+	$scope.toggleSettingsEditor = function () {
+		$scope.showSettingsEditor = !$scope.showSettingsEditor;
+		var body = document.querySelector("body");
+		angular.element(body).toggleClass("modal-open");
+	};
 
 	//////////////////////
 	// Post publication //
@@ -71,8 +75,6 @@ angular.module("mnd-web.pages")
 		}
 		return isAuthor;
 	};
-
-
 
 	////////////////////////////
 	// Medium editors options //
@@ -159,6 +161,26 @@ angular.module("mnd-web.pages")
 		$interval.cancel(interval);
 	});
 
+}])
 
+
+
+.controller("PostAuthorsController", ["$scope", function ($scope) {
+
+	$scope.author = {};
+
+	$scope.addAuthor = function () {
+		$scope.post.authors.push({
+			userId: $scope.author.model._id,
+			name: $scope.author.model.profile.name,
+			screenName: $scope.author.model.profile.screenName,
+			pictureUrl: $scope.author.model.profile.pictureUrl
+		});
+		$scope.author.model = "";
+	};
+
+	$scope.deleteAuthor = function (index) {
+		$scope.post.authors.splice(index, 1);
+	};
 
 }]);
