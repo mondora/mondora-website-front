@@ -238,7 +238,7 @@ angular.module("mnd-web.pages")
 				}
 			};
 			matches.forEach(function (channel) {
-				$scope.Ceres.call("addEntryToChannelByTitle", channel.slice(1), entry);
+				$scope.Ceres.call("addEntryToChannel", channel.slice(1), entry);
 			});
 		}
 		$scope.comment.text = "";
