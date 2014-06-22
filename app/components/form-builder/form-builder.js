@@ -68,4 +68,29 @@ angular.module("mnd-web.components")
 			};
 		}
 	};
+}])
+
+
+
+.directive("mndFormGenerator", [function () {
+	return {
+		restrict: "EA",
+		templateUrl: "components/form-builder/form-template.html",
+		scope: {
+			formSchema: "="
+		},
+		link: function ($scope) {
+			$scope.form = {};
+			$scope.onSubmit = function () {
+				var methodName = $scope.formSchema.actionSettings.methodName;
+				var parameters = $scope.formSchema.actionSettings.parameters;
+				parameters.unshift($scope.form);
+				$scope.$root.Ceres.apply(methodName, parameters).result.then(function () {
+					$scope.$root.safeApply(function () {
+						$scope.submitted = true;
+					});
+				});
+			};
+		}
+	};
 }]);
