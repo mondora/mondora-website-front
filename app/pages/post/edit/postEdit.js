@@ -22,15 +22,12 @@ angular.module("mnd-web.pages")
 
 	$scope.isMobile = CheckMobileService.isMobile();
 
-	///////////////////
-	// Post deletion //
-	///////////////////
+	////////////
+	// Modals //
+	////////////
+	
+	$scope.modalStatus = {};
 
-	$scope.toggleDelete = function () {
-		$scope.showDelete = !$scope.showDelete;
-		var body = document.querySelector("body");
-		angular.element(body).toggleClass("modal-open");
-	};
 	$scope.deletePost = function () {
 		$scope.Posts.remove($scope.post._id).remote.then(function () {
 			$state.go("home");
@@ -40,37 +37,10 @@ angular.module("mnd-web.pages")
 		});
 	};
 
-	//////////////////////////
-	// Post settings editor //
-	//////////////////////////
+	////////////////////
+	// Post ownership //
+	////////////////////
 
-	$scope.toggleSettingsEditor = function () {
-		$scope.showSettingsEditor = !$scope.showSettingsEditor;
-		var body = document.querySelector("body");
-		angular.element(body).toggleClass("modal-open");
-	};
-
-	//////////////////
-	// Form builder //
-	//////////////////
-
-	$scope.toggleFormBuilder = function () {
-		$scope.showFormBuilder = !$scope.showFormBuilder;
-		var body = document.querySelector("body");
-		angular.element(body).toggleClass("modal-open");
-	};
-
-	//////////////////////
-	// Post publication //
-	//////////////////////
-
-	$scope.publishPost = function () {
-		$scope.post.published = true;
-		$scope.post.publishedOn = Date.now();
-	};
-	$scope.unpublishPost = function () {
-		$scope.post.published = false;
-	};
 	$scope.isOwner = function () {
 		return $scope.user && $scope.post.userId === $scope.user._id;
 	};

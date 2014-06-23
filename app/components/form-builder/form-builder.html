@@ -4,6 +4,20 @@
 
 	<div tab heading="Settings">
 		<br />
+		<label>Attach form</label>
+		<div class="row">
+			<div class="col-sm-2">
+				<label class="radio-inline">
+					<input type="radio" name="attachForm" ng-model="form.attached" ng-value="true" /> Yes
+				</label>
+			</div>
+			<div class="col-sm-2">
+				<label class="radio-inline">
+					<input type="radio" name="attachForm" ng-model="form.attached" ng-value="false" /> No
+				</label>
+			</div>
+		</div>
+		<br />
 		<div class="form-group">
 			<label>Form name</label>
 			<input type="text" class="form-control" ng-model="form.name" />
