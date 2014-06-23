@@ -9,3 +9,7 @@ body {
 	font-family: $mnd-font;	
 	overflow-x: hidden;
 }
+
+*::-webkit-scrollbar {
+	display:none;
+}

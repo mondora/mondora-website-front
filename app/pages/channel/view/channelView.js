@@ -74,7 +74,15 @@ angular.module("mnd-web.pages")
 		return faClass;
 	};
 
+	/////////////////////////
+	//   Right Side height //
+	/////////////////////////
 
+	$scope.getContentHeight = function () {
+		var contentElement = document.querySelector("#left-side");
+		var contentHeight = getComputedStyle(contentElement).height;
+		return { "max-height": contentHeight };
+	};
 
 
 	/////////////////////////
