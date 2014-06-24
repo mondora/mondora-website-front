@@ -81,7 +81,6 @@ var buildVendorScripts = function (dest) {
 		"bower_components/q/q.js",
 		"bower_components/ddp.js/ddp.js",
 		"bower_components/asteroid/dist/asteroid.js",
-		"bower_components/ng-asteroid/src/ng-asteroid.js",
 		"bower_components/medium-editor/dist/js/medium-editor.js",
 		"bower_components/angular-medium-editor/dist/angular-medium-editor.js"
 	];
@@ -131,47 +130,6 @@ var buildVendorFontsGlyphs = function (dest) {
 		.pipe(gulp.dest(dest));
 };
 
-// Does not include some dependencies that are retrieved via CDN
-var buildVendorStylesCDN = function (dest) {
-	var sources = [
-		"bower_components/medium-editor/dist/css/medium-editor.css",
-		"bower_components/medium-editor/dist/css/themes/default.css"
-	];
-	return gulp.src(sources)
-		.pipe(plugins.concat("cdn.vendor.css"))
-		.pipe(gulp.dest(dest))
-		.pipe(plugins.minifyCss())
-		.pipe(plugins.rename("cdn.vendor.min.css"))
-		.pipe(gulp.dest(dest));
-};
-
-// Does not include some dependencies that are retrieved via CDN
-var buildVendorScriptsCDN = function (dest) {
-	var sources = [
-		"bower_components/blueimp-md5/js/md5.js",
-		"bower_components/lodash/dist/lodash.js",
-		"bower_components/angular-recursion/angular-recursion.js",
-		"bower_components/angular-sanitize/angular-sanitize.js",
-		"bower_components/ng-file-upload/angular-file-upload.js",
-		"bower_components/ng-file-upload/angular-file-upload-shim.js",
-		"bower_components/mnd.multi-transclude/multi-transclude.js",
-		"bower_components/mnd-dashboard/dist/dashboard-tpls.js",
-		"bower_components/mnd-sprinkle/dist/sprinkle-tpls.js",
-		"bower_components/bower-sockjs-client/sockjs.js",
-		"bower_components/q/q.js",
-		"bower_components/ddp.js/ddp.js",
-		"bower_components/asteroid/dist/asteroid.js",
-		//"bower_components/ng-asteroid/src/ng-asteroid.js",
-		"bower_components/medium-editor/dist/js/medium-editor.js"
-	];
-	return gulp.src(sources)
-		.pipe(plugins.concat("cdn.vendor.js"))
-		.pipe(gulp.dest(dest))
-		.pipe(plugins.uglify())
-		.pipe(plugins.rename("cdn.vendor.min.js"))
-		.pipe(gulp.dest(dest));
-};
-
 
 
 ///////////////////
@@ -188,14 +146,18 @@ gulp.task("buildWeb", function () {
 	var webHtml = pp.preprocess(html, {TARGET: "web.prod"});
 	fs.writeFileSync("builds/web/index.html", webHtml);
 
+	// Fonts
+	buildVendorFontsGlyphs("builds/web/dist/fonts");
+	buildVendorFontsCss("builds/web/dist/css");
+
 	// Scripts
 	buildAppScripts("builds/web/dist/js");
 	buildAppTemplates("builds/web/dist/js");
-	buildVendorScriptsCDN("builds/web/dist/js");
+	buildVendorScripts("builds/web/dist/js");
 
 	// Styles
 	buildAppStyles("builds/web/dist/css");
-	buildVendorStylesCDN("builds/web/dist/css");
+	buildVendorStyles("builds/web/dist/css");
 
 	// Favicon
 	buildAppFavicon("builds/web");
@@ -216,61 +178,21 @@ gulp.task("buildWebTest", function () {
 	var webHtml = pp.preprocess(html, {TARGET: "web.test"});
 	fs.writeFileSync("builds/web/index.html", webHtml);
 
+	// Fonts
+	buildVendorFontsGlyphs("builds/web/dist/fonts");
+	buildVendorFontsCss("builds/web/dist/css");
+
 	// Scripts
 	buildAppScripts("builds/web/dist/js");
 	buildAppTemplates("builds/web/dist/js");
-	buildVendorScriptsCDN("builds/web/dist/js");
+	buildVendorScripts("builds/web/dist/js");
 
 	// Styles
 	buildAppStyles("builds/web/dist/css");
-	buildVendorStylesCDN("builds/web/dist/css");
+	buildVendorStyles("builds/web/dist/css");
 
 	// Favicon
 	buildAppFavicon("builds/web");
-
-});
-
-
-
-
-///////////////////
-// Build for mac //
-///////////////////
-
-gulp.task("buildMac", function (cb) {
-
-	mkdirp.sync("builds/mac/dist/js");
-	mkdirp.sync("builds/mac/dist/css");
-	mkdirp.sync("builds/mac/dist/fonts");
-
-	// index.html
-	var html = fs.readFileSync("app/main.html", "utf8");
-	var macHtml = pp.preprocess(html, {TARGET: "mac.prod"});
-	fs.writeFileSync("builds/mac/index.html", macHtml);
-
-	// Scripts
-	buildAppScripts("builds/mac/dist/js");
-	buildAppTemplates("builds/mac/dist/js");
-	buildVendorScripts("builds/mac/dist/js");
-
-	// Styles
-	buildAppStyles("builds/mac/dist/css");
-	buildVendorStyles("builds/mac/dist/css");
-	buildVendorFontsCss("builds/mac/dist/css");
-
-	// Fonts
-	buildVendorFontsGlyphs("builds/mac/dist/fonts");
-
-	// Favicon
-	buildAppFavicon("builds/mac");
-
-	var deferred = Q.defer();
-	var mg = spawn("macgap", ["build", "-n", "mnd", "-o", "builds/", "builds/mac/"]);
-	mg.on("close", function (code) {
-		if (code !== 0) deferred.reject(code);
-		else deferred.resolve();
-	});
-	return deferred.promise;
 
 });
 

@@ -29,7 +29,7 @@ angular.module("mnd-web.components")
 	};
 }])
 
-.directive("mndMindMap", function () {
+.directive("mndMindMap", [function () {
 	return {
 		restrict: "EA",
 		replace: true,
@@ -40,4 +40,4 @@ angular.module("mnd-web.components")
 			child: "=?"
 		}
 	};
-});
+}]);

@@ -1,6 +1,6 @@
 angular.module("mnd-web.components")
 
-.factory("DiffingService", function () {
+.factory("DiffingService", [function () {
 	var getDiffFunction = function (baseObject) {
 		var oldObject = angular.copy(baseObject);
 		return function (newObject) {
@@ -22,4 +22,4 @@ angular.module("mnd-web.components")
 	return {
 		getDiffFunction: getDiffFunction
 	};
-});
+}]);

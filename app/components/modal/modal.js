@@ -1,6 +1,6 @@
 angular.module("mnd-web.components")
 
-.directive("mndModal", function () {
+.directive("mndModal", [function () {
 	return {
 		restrict: "EA",
 		templateUrl: "components/modal/modal.html",
@@ -20,4 +20,4 @@ angular.module("mnd-web.components")
 			});
 		}
 	};
-});
+}]);

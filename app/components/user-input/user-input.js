@@ -1,6 +1,6 @@
 angular.module("mnd-web.components")
 
-.filter("filterByNameAndScreenName", function() {
+.filter("filterByNameAndScreenName", [function() {
 	return function (users, input) {
 		var filteredUsers = [];
 		var ire = new RegExp(input, "i");
@@ -14,7 +14,7 @@ angular.module("mnd-web.components")
 		});
 		return filteredUsers;
 	};
-})
+}])
 
 .directive("mndUserInput", ["$rootScope", "$compile", function ($rootScope, $compile) {
 	return {
