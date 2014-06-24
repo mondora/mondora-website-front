@@ -150,6 +150,7 @@
 		</div>
 	</div>
 
+
 	<div class="channel-top-buttons">
 		<a ui-sref="channelView({channelId: channel._id})" class="btn btn-default">Preview</a>
 		<button type="button" class="btn btn-default" ng-click="toggleSettingsEditor()">
@@ -196,51 +197,66 @@
 		</div>
 
 		<div class="col-sm-6 channel-right-side">
-			<div class="col-sm-11 channel-entries-box radial-background">
-				<div class="channel-entries-list">
+			<div id="channel-entries-box" class="col-sm-11">
+				<div class="channel-add-entry">
+					<button type="button" class="btn btn-default" ng-click="toggleEntryModal()">Add entry</button>
+				</div>
+				<div class="channel-entries-list" ng-style="getContentHeight()">
 					<div class="row channel-entry-single" ng-repeat="entry in channel.entries">
+						<!--delete modal-->
+						<div mnd-modal class="delete-entry-modal" header="Delete entry" open="modalStatus.deleteEntry">
+							<h4>Are you sure you want to delete this entry?</h4>
+							<button type="button" class="btn btn-default mnd-width-50" ng-click="deleteEntry()">
+								Yes
+							</button>
+							<button type="button" class="btn btn-default mnd-width-50" ng-click="modalStatus.deleteEntry = false">
+								No
+							</button>
+						</div>
+						<!-- end delete modal-->
+						<div class="remove-entry" ng-click="modalStatus.deleteEntry = true"><i class="fa fa-times-circle"></i></div>
 						<div ng-if="entry.type === 'link'">
-							<div class="col-sm-2">
+							<div class="col-sm-1 padding-top-10">
 								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
 							</div>
-							<div class="col-sm-4">
-								<a class="h4" href="{{entry.content.href}}">{{entry.content.title}}</a>
+							<div class="col-sm-1 entry-icon padding-top-10">
+								<a href="{{entry.content.href}}"><i class="fa fa-link"></i></a>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-9">
+								<a class="h4" href="{{entry.content.href}}">{{entry.content.title}}</a>
 								<p>{{entry.content.description}}</p>
 							</div>
 						</div>
 
 						<div ng-if="entry.type === 'file'">
-							<div class="col-sm-2">
+							<div class="col-sm-1 padding-top-10">
 								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
 							</div>
-							<div class="col-sm-4 entry-title">
-								<a class="h4" href="{{entry.content.url}}" target="_blank">
+							<div class="col-sm-1 entry-icon padding-top-10">
+								<a href="{{entry.content.url}}" target="_blank">
 									<i class="fa {{getFileFAClass(entry.content.type)}}"></i>
-									{{entry.content.name}}
 								</a>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-9">
+								<h4>{{entry.content.name}}</h4>
+								<img src="{{entry.content.url}}" ng-if="isImage(entry.content.type)" />
 								<p>{{entry.content.description}}</p>
 							</div>
 						</div>
 
 						<div ng-if="entry.type === 'comment'">
-							<div class="col-sm-2">
+							<div class="col-sm-1 padding-top-10">
 								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
 							</div>
-							<div class="col-sm-4">
-								<a class="h4" ui-sref="postView({postId: entry.content.postId})">{{entry.content.postTitle}}</a>
+							<div class="col-sm-1 entry-icon padding-top-10">
+								<a ui-sref="postView({postId: entry.content.postId})"><i class="fa fa-comments"></i></a>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-9">
+								<h4>{{entry.content.postTitle}}</h4>
 								<p>{{entry.content.text}}</p>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="channel-add-entry">
-					<button type="button" class="btn btn-default" ng-click="toggleEntryModal()">Add entry</button>
 				</div>
 			</div>
 		</div>

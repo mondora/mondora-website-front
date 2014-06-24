@@ -74,14 +74,33 @@ angular.module("mnd-web.pages")
 		return faClass;
 	};
 
+	$scope.isImage = function (type) {
+		var isImage;
+		if (/image/.test(type)) {
+			isImage = true;
+		}
+		return isImage;
+	};
+
 	/////////////////////////
 	//   Right Side height //
 	/////////////////////////
 
+	//$scope.getContentHeight = function () {
+	//	var contentElement = document.querySelector("#left-side");
+	//	var contentHeight = getComputedStyle(contentElement).height;
+	//	return { "max-height": contentHeight };
+	//};
 	$scope.getContentHeight = function () {
+		var channelPage = document.querySelector(".channel-page-content");
+		var pageHeight = parseInt(getComputedStyle(channelPage).height);
 		var contentElement = document.querySelector("#left-side");
-		var contentHeight = getComputedStyle(contentElement).height;
-		return { "max-height": contentHeight };
+		var contentHeight = parseInt(getComputedStyle(contentElement).height);
+		console.log(pageHeight);
+		console.log(contentHeight);
+		if (contentHeight > pageHeight) {
+			return { "max-height": contentHeight + 'px'};
+		} else return {"max-height": "100%"};
 	};
 
 

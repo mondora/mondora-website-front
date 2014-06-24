@@ -57,6 +57,12 @@ angular.module("mnd-web.pages")
 		$scope.toggleEntryModal();
 	};
 
+	$scope.deleteEntry = function () {
+		Ceres.call("deleteEntryFromChannel", $scope.channel._id, $scope.entry);
+	};
+
+	$scope.modalStatus = {};
+
 	$scope.getFileFAClass = function (type) {
 		var faClass;
 		if (!type) {
