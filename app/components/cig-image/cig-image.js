@@ -1,6 +1,6 @@
 angular.module("mnd-web.components")
 
-.directive("mndCigImage", function () {
+.directive("mndCigImage", [function () {
 	return {
 		restrict: "EA",
 		scope: {
@@ -52,4 +52,4 @@ angular.module("mnd-web.components")
 		}
 	};
 
-});
+}]);

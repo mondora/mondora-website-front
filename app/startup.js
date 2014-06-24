@@ -73,7 +73,7 @@ angular.module("mnd-web")
 		abstract: true,
 		templateUrl: "root.html",
 		resolve: {
-			resumingLogin: function (TimeoutPromiseService, $state) {
+			resumingLogin: ["TimeoutPromiseService", "$state", function (TimeoutPromiseService, $state) {
 				return CERES_CONNECTED
 					.then(function () {
 						var resProm = Ceres.resumeLoginPromise;
@@ -92,7 +92,7 @@ angular.module("mnd-web")
 					.fail(function () {
 						$state.go("staticHome");
 					});
-			}
+			}]
 		}
 	});
 
@@ -107,11 +107,11 @@ angular.module("mnd-web")
 		parent: "root",
 		templateUrl: "pages/home/home.html",
 		controller: "HomeController",
-		onEnter: function ($rootScope, $state) {
+		onEnter: ["$rootScope", "$state", function ($rootScope, $state) {
 			if ($rootScope.user) {
 				$state.go("personalHome");
 			}
-		},
+		}],
 		public: true
 	});
 
@@ -176,10 +176,10 @@ angular.module("mnd-web")
 		templateUrl: "pages/users/users.html",
 		controller: "UsersController",
 		resolve: {
-			usersAdminSub: function (TimeoutPromiseService) {
+			usersAdminSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("usersAdmin");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}
+			}]
 		}
 	});
 
@@ -189,10 +189,10 @@ angular.module("mnd-web")
 		templateUrl: "pages/pomodoro/pomodoro.html",
 		controller: "PomodoroController",
 		resolve: {
-			pomoSub: function (TimeoutPromiseService) {
+			pomoSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("pomodoros");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}
+			}]
 		}
 	});
 
@@ -208,16 +208,16 @@ angular.module("mnd-web")
 		templateUrl: "pages/user/user.html",
 		controller: "UserController",
 		resolve: {
-			userSub: function ($stateParams) {
+			userSub: ["$stateParams", function ($stateParams) {
 				return Ceres.subscribe("singleUser", $stateParams.userId);
-			},
-			postsMeth: function ($stateParams) {
+			}],
+			postsMeth: ["$stateParams", function ($stateParams) {
 				return Ceres.call("getPostsByAuthor", $stateParams.userId);
-			}
+			}]
 		},
-		onExit: function (userSub) {
+		onExit: ["userSub", function (userSub) {
 			userSub.stop();
-		},
+		}],
 		public: true
 	});
 
@@ -227,13 +227,13 @@ angular.module("mnd-web")
 		templateUrl: "pages/team/team.html",
 		controller: "TeamController",
 		resolve: {
-			teamSub: function () {
+			teamSub: [function () {
 				return Ceres.subscribe("teamUsers");
-			}
+			}]
 		},
-		onExit: function (teamSub) {
+		onExit: ["teamSub", function (teamSub) {
 			teamSub.stop();
-		},
+		}],
 		public: true
 	});
 
@@ -249,14 +249,14 @@ angular.module("mnd-web")
 		templateUrl: "pages/post/view/postView.html",
 		controller: "PostViewController",
 		resolve: {
-			postSubId: function ($stateParams, TimeoutPromiseService, resumingLogin) {
+			postSubId: ["$stateParams", "TimeoutPromiseService", "resumingLogin", function ($stateParams, TimeoutPromiseService, resumingLogin) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}
+			}]
 		},
-		onExit: function (postSubId) {
+		onExit: ["postSubId", function (postSubId) {
 			Ceres.subscriptions[postSubId].stop();
-		},
+		}],
 		public: true
 	});
 
@@ -266,14 +266,14 @@ angular.module("mnd-web")
 		templateUrl: "pages/post/edit/postEdit.html",
 		controller: "PostEditController",
 		resolve: {
-			postSubId: function ($stateParams, TimeoutPromiseService, resumingLogin) {
+			postSubId: ["$stateParams", "TimeoutPromiseService", "resumingLogin", function ($stateParams, TimeoutPromiseService, resumingLogin) {
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}
+			}]
 		},
-		onExit: function (postSubId) {
+		onExit: ["postSubId", function (postSubId) {
 			Ceres.subscriptions[postSubId].stop();
-		}
+		}]
 	});
 
     $stateProvider.state("topic", {
@@ -282,10 +282,10 @@ angular.module("mnd-web")
         templateUrl: "pages/topic/topic.html",
 		controller: "TopicController",
 		resolve: {
-			topic: function (TimeoutPromiseService, $stateParams) {
+			topic: ["TimeoutPromiseService", "$stateParams", function (TimeoutPromiseService, $stateParams) {
 				var meth = Ceres.call("getTopic", $stateParams.name);
 				return TimeoutPromiseService.timeoutPromise(meth.result, GIVE_UP_DELAY);
-			}
+			}]
 		},
 		public: true
     });
@@ -302,14 +302,14 @@ angular.module("mnd-web")
 		templateUrl: "pages/channel/view/channelView.html",
 		controller: "ChannelViewController",
 		resolve: {
-			channelSubId: function ($stateParams, TimeoutPromiseService, resumingLogin) {
+			channelSubId: ["$stateParams", "TimeoutPromiseService", "resumingLogin", function ($stateParams, TimeoutPromiseService, resumingLogin) {
 				var sub = Ceres.subscribe("singleChannel", $stateParams.channelId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}
+			}]
 		},
-		onExit: function (channelSubId) {
+		onExit: ["channelSubId", function (channelSubId) {
 			Ceres.subscriptions[channelSubId].stop();
-		},
+		}],
 		public: true
 	});
 
@@ -319,14 +319,14 @@ angular.module("mnd-web")
 		templateUrl: "pages/channel/edit/channelEdit.html",
 		controller: "ChannelEditController",
 		resolve: {
-			channelSubId: function ($stateParams, TimeoutPromiseService, resumingLogin) {
+			channelSubId: ["$stateParams", "TimeoutPromiseService", "resumingLogin", function ($stateParams, TimeoutPromiseService, resumingLogin) {
 				var sub = Ceres.subscribe("singleChannel", $stateParams.channelId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}
+			}]
 		},
-		onExit: function (channelSubId) {
+		onExit: ["channelSubId", function (channelSubId) {
 			Ceres.subscriptions[channelSubId].stop();
-		}
+		}]
 	});
 
 

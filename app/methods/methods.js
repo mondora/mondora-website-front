@@ -1,7 +1,7 @@
 // This module defines application-wide methods
 angular.module("mnd-web.methods")
 
-.factory("AppMethods", function (
+.factory("AppMethods", ["$rootScope", "$state", "$stateParams", function (
 	$rootScope,
 	$state,
 	$stateParams
@@ -62,4 +62,4 @@ angular.module("mnd-web.methods")
 		noop: noop
 	};
 
-});
+}]);

@@ -1,6 +1,6 @@
 angular.module("mnd-web.pages")
 
-.controller("ProfileController", function ($scope, $interval, $upload) {
+.controller("ProfileController", ["$scope", "$interval", "$upload", function ($scope, $interval, $upload) {
 
 	// AmazonS3Config
 	var amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3"}).result[0];
@@ -199,4 +199,4 @@ angular.module("mnd-web.pages")
 
 
 
-});
+}]);

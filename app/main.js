@@ -22,7 +22,11 @@
 /*****************************************************************************************************************/
 
 // Create app modules
-angular.module("mnd-web.templates", []);
+try {
+	angular.module("mnd-web.templates");
+} catch (e) {
+	angular.module("mnd-web.templates", []);
+}
 angular.module("mnd-web.methods", []);
 angular.module("mnd-web.components", []);
 angular.module("mnd-web.pages", []);

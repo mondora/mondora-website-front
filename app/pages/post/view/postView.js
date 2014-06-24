@@ -1,6 +1,6 @@
 angular.module("mnd-web.pages")
 
-.factory("firstLevelHtmlParser", function () {
+.factory("firstLevelHtmlParser", [function () {
 	var parse = function (html) {
 		var div = document.createElement("div");
 		div.innerHTML = html;
@@ -12,9 +12,9 @@ angular.module("mnd-web.pages")
 	return {
 		parse: parse
 	};
-})
+}])
 
-.filter("filterCommentsByParagraph", function () {
+.filter("filterCommentsByParagraph", [function () {
 	return function (comments, paragraph) {
 		var filteredComments = [];
 		comments.forEach(function (comment) {
@@ -24,9 +24,9 @@ angular.module("mnd-web.pages")
 		});
 		return filteredComments;
 	};
-})
+}])
 
-.filter("filterCommentsByUser", function () {
+.filter("filterCommentsByUser", [function () {
 	return function (comments, user, isAuthor) {
 		var userId;
 		if (user) userId = user._id;
@@ -41,7 +41,7 @@ angular.module("mnd-web.pages")
 		});
 		return filteredComments;
 	};
-})
+}])
 
 .directive("postViewReadonlyEditor", ["ClearWindowSelectionService", "$templateCache", "$compile", function (ClearWindowSelectionService, $templateCache, $compile) {
 
@@ -107,7 +107,7 @@ angular.module("mnd-web.pages")
 	};
 }])
 
-.controller("PostViewController", function (
+.controller("PostViewController", ["$scope", "$timeout", "$stateParams", "$state", "$filter", "firstLevelHtmlParser", "CheckMobileService", function (
 	$scope,
 	$timeout,
 	$stateParams,
@@ -271,4 +271,4 @@ angular.module("mnd-web.pages")
 		p.innerHTML = html;
 	};
 
-});
+}]);
