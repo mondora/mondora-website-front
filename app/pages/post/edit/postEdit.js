@@ -85,7 +85,10 @@ angular.module("mnd-web.pages")
 			"header2",
 			"quote"
 		],
-		imageInsertion: true
+		mediaInsertion: true,
+		openFormBuilderModal: function () {
+			$scope.modalStatus.form = true;
+		}
 	};
 
 	/////////////////
