@@ -149,8 +149,8 @@ angular.module("mnd-web.components")
 						var iframe = angular.element("<iframe></iframe>");
 						iframe.attr({
 							src: "https://www.youtube.com/embed/" + id,
-							width: 560,
-							height: 315,
+							width: 960,
+							height: 540,
 							frameborder: 0,
 							allowfullscreen: true
 						});
@@ -161,6 +161,7 @@ angular.module("mnd-web.components")
 					twitter: function (url) {
 						var iframe = angular.element("<iframe></iframe>");
 						iframe.attr({
+							id: _.unique("embedded_tweet_"),
 							src: "https://twitframe.com/show?url=" + encodeURIComponent(url),
 							width: 550,
 							height: 250,
@@ -179,6 +180,7 @@ angular.module("mnd-web.components")
 					var htmlElement = getExternalSourceHtmlElement[externalResourceSource]($scope.input.content);
 					targetParagraph.after(htmlElement);
 					$scope.closeExternalResourceInput();
+					updateContent();
 				};
 				$scope.closeExternalResourceInput = function () {
 					$scope.input.show = false;
@@ -204,6 +206,7 @@ angular.module("mnd-web.components")
 				$scope.addFormAfterCurrentParagraph = function () {
 					$scope.options.openFormBuilderModal();
 					targetParagraph.after(formPlaceholder);
+					updateContent();
 				};
 
 			}

@@ -1,0 +1,32 @@
+.mnd-embedded-yt {
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 25px;
+	height: 0px;
+}
+
+.mnd-embedded-yt iframe {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	width: 90%;
+	height: 90%;
+}
+
+.mnd-embedded-tw {
+	width: 100%;
+	text-align: center;
+	margin-top: 32px;
+	margin-bottom: 32px;
+}
+
+.mnd-form-placeholder {
+	width: 100%;
+	text-align: center;
+	margin-top: 32px;
+	margin-bottom: 32px;
+}
+.mnd-form-placeholder button {
+	width: 80%;
+	display: inline-block;
+}

@@ -96,7 +96,7 @@ angular.module("mnd-web.pages")
 				}
 			};
 			$element[0].innerHTML = $scope.child;
-			if ($element[0].querySelector(".form-placeholder")) {
+			if ($element[0].querySelector(".mnd-form-placeholder")) {
 				var formTemplate = $templateCache.get("pages/post/view/form.html");
 				var form = $compile(formTemplate)($scope);
 				$element.empty();

@@ -1,5 +1,7 @@
-<div class="panel panel-default">
-	<div class="panel-heading">{{formSchema.name}}</div>
+<div class="panel panel-default mnd-generated-form">
+	<div class="panel-heading">
+		<span class="h4" ng-bind-html="formSchema.name"></span>
+	</div>
 	<div class="panel-body">
 
 		<form ng-if="!submitted" ng-submit="onSubmit()">
@@ -13,6 +15,7 @@
 				<div ng-if="field.type === 'textarea'">
 					<label>{{field.label}}</label>
 					<textarea class="form-control" rows="5" name="{{field.name}}" ng-model="form[field.name]" ng-required="field.required"></textarea>
+					<div class="mnd-vsp-16"></div>
 				</div>
 
 				<div ng-if="field.type === 'checkbox'" class="checkbox">
@@ -26,11 +29,11 @@
 					<label>{{field.label}}</label>
 					<div class="radio" ng-repeat="option in field.options">
 						<label>
-							<input type="radio" name="{{field.name}}" ng-model="form[field.name]" ng-value="field.value" ng-required="field.required">
+							<input type="radio" name="{{field.name}}" ng-model="form[field.name]" ng-value="option.value" ng-required="field.required">
 							{{option.label}}
 						</label>
 					</div>
-					<br />
+					<div class="mnd-vsp-8"></div>
 				</div>
 
 				<div ng-if="field.type === 'select'">
@@ -42,16 +45,14 @@
 						ng-required="field.required"
 						ng-options="option.value as option.label for option in field.options">
 					</select>
-					<br />
+					<div class="mnd-vsp-8"></div>
 				</div>
 
 			</div>
-			<button type="submit" class="btn btn-default">{{formSchema.submitButtonText}}</button>
+			<button type="submit" class="btn btn-default" ng-bind-html="formSchema.submitButtonText"></button>
 		</form>
 
-		<div ng-if="submitted">
-			Thanks, your form has been submitted correctly.
-		</div>
+		<div ng-if="submitted" ng-bind-html="formSchema.afterSubmitText"></div>
 
 	</div>
 </div>

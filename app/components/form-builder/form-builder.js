@@ -75,7 +75,7 @@ angular.module("mnd-web.components")
 .directive("mndFormGenerator", [function () {
 	return {
 		restrict: "EA",
-		templateUrl: "components/form-builder/form-template.html",
+		templateUrl: "components/form-builder/form-schema.html",
 		scope: {
 			formSchema: "="
 		},
