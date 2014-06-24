@@ -42,7 +42,7 @@
 .channel-text-body {
 	padding-top: 20px;
 	font-size: 18px;
-	color: #fff;
+	color: #000;
 }
 
 .channel-right-side {
@@ -56,7 +56,7 @@
 	text-align: center;
 }
 
-.channel-add-entry button{
+.channel-add-entry{
 	font-weight: bold;
 }
 
@@ -144,7 +144,20 @@
 
 .channel-top-buttons {
 	position: absolute;
+	padding-left: 10px;
+	padding-top: 5px;
+	height: 50px;
 	z-index: 100;
+}
+
+.channel-top-buttons button,
+.channel-btn-default {
+	border: 2px solid #fff;
+	border-radius: 20px;
+	border-color: #fff;
+	background-color: rgba(0,0,0,0.3);
+	color: #fff;
+	font-size: 20px;
 }
 
 .entry-title {
@@ -152,7 +165,7 @@
 }
 
 .entry-icon {
-	font-size: 25px;
+	font-size: 35px;
 	padding-left: 20px;
 }
 
