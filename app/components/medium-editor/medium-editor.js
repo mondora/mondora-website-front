@@ -12,7 +12,6 @@ angular.module("mnd-web.components")
 				if ($scope.dontUpdate) return;
 				$scope.$root.safeApply(function () {
 					$scope.content = $element.html();
-					console.log($scope.content);
 				});
 			};
 			// Populate the editor
@@ -25,10 +24,15 @@ angular.module("mnd-web.components")
 
 
 			/////////////////////////////////////
-			// Add support for image uploading //
+			// Add support for media insertion //
 			/////////////////////////////////////
 
-			if ($scope.options.imageInsertion) {
+			if ($scope.options.mediaInsertion) {
+
+				var targetParagraph;
+
+				// Property to show/hide elements with ng-if and ng-click
+				$scope.upload = {};
 
 				var imageTemplate = $templateCache.get("components/medium-editor/image.html");
 				var progressbarTemplate = $templateCache.get("components/medium-editor/progressbar.html");
@@ -36,7 +40,7 @@ angular.module("mnd-web.components")
 				$scope.beforeUpload = function () {
 					$scope.dontUpdate = true;
 					progressbar = $compile(progressbarTemplate)($scope);
-					imageTargetParagraph.after(progressbar);
+					targetParagraph.after(progressbar);
 				};
 				$scope.afterUpload = function (url) {
 					progressbar.remove();
@@ -44,7 +48,7 @@ angular.module("mnd-web.components")
 					var scope = $scope.$new();
 					scope.url = url;
 					var image = $compile(imageTemplate)(scope);
-					imageTargetParagraph.after(image);
+					targetParagraph.after(image);
 					// Update in the next tick to not have un-linked template issues
 					$timeout(updateContent, 0);
 				};
@@ -56,7 +60,7 @@ angular.module("mnd-web.components")
 				$element.on("contextmenu", function (e) {
 					if (e.toElement.tagName === "IMG") return;
 					e.preventDefault();
-					imageTargetParagraph = angular.element(e.toElement);
+					targetParagraph = angular.element(e.toElement);
 					ClearWindowSelectionService.clear();
 					rightClickToolbar.css({
 						display: "block"
@@ -70,7 +74,11 @@ angular.module("mnd-web.components")
 					rightClickToolbar.css({
 						left: (e.layerX - width/2) + "px"
 					});
-					var listener = function () {
+					var listener = function (e) {
+						var target = angular.element(e.target);
+						if (target.hasClass("medium-editor-input-action") || target.parent().hasClass("medium-editor-input-action")) {
+							return;
+						}
 						rightClickToolbar.css({
 							display: "none"
 						});
@@ -125,6 +133,78 @@ angular.module("mnd-web.components")
 						document.addEventListener("click", listener);
 					}, 100);
 				});
+
+				$scope.input = {};
+				var getExternalSourceHtmlElement = {
+					youtube: function (url) {
+						var id;
+						var a = document.createElement("a");
+						a.href = url;
+						var parts = a.search.slice(1).split("&");
+						parts.forEach(function (part) {
+							if (part.slice(0,2) === "v=") {
+								id = part.slice(2);
+							}
+						});
+						var iframe = angular.element("<iframe></iframe>");
+						iframe.attr({
+							src: "https://www.youtube.com/embed/" + id,
+							width: 560,
+							height: 315,
+							frameborder: 0,
+							allowfullscreen: true
+						});
+						var wrapperDiv = angular.element("<div class=\"mnd-embedded-yt\"></div>");
+						wrapperDiv.append(iframe);
+						return wrapperDiv;
+					},
+					twitter: function (url) {
+						var iframe = angular.element("<iframe></iframe>");
+						iframe.attr({
+							src: "https://twitframe.com/show?url=" + encodeURIComponent(url),
+							width: 550,
+							height: 250,
+							border: 0,
+							frameborder: 0,
+							allowfullscreen: true
+						});
+						var wrapperDiv = angular.element("<div class=\"mnd-embedded-tw\"></div>");
+						wrapperDiv.append(iframe);
+						return wrapperDiv;
+					}
+				};
+
+				var externalResourceSource;
+				$scope.addExternalResource = function () {
+					var htmlElement = getExternalSourceHtmlElement[externalResourceSource]($scope.input.content);
+					targetParagraph.after(htmlElement);
+					$scope.closeExternalResourceInput();
+				};
+				$scope.closeExternalResourceInput = function () {
+					$scope.input.show = false;
+					$scope.input.content = "";
+					$scope.externalResourceSource = "";
+				};
+
+				$scope.openYoutubeInput = function () {
+					$scope.input.show = true;
+					externalResourceSource = "youtube";
+				};
+				$scope.openTwitterInput = function () {
+					$scope.input.show = true;
+					externalResourceSource = "twitter";
+				};
+
+				var formPlaceholderTemplate = $templateCache.get("components/medium-editor/form-placeholder.html");
+				var formPlaceholder = $compile(formPlaceholderTemplate)($scope);
+				var existingPlaceholder = angular.element($element[0].querySelector("button.form-placeholder"));
+				if (existingPlaceholder) {
+					existingPlaceholder.replaceWith(formPlaceholder);
+				}
+				$scope.addFormAfterCurrentParagraph = function () {
+					$scope.options.openFormBuilderModal();
+					targetParagraph.after(formPlaceholder);
+				};
 
 			}
 

@@ -109,66 +109,65 @@
 
 
 
-<div class="post-cant-edit" ng-show="isMobile">Content not accessible from mobile devices.</div> 
-<div class="post-title-image" ng-show="!isMobile">
-	<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
-</div>
-
-<div class="post-top-buttons" ng-if="isAuthor()" ng-show="!isMobile">
-	<button type="button" class="btn btn-default" ng-click="modalStatus.delete = true" ng-if="isOwner() && !showDelete">
-		Delete
-	</button>
-	<button type="button" class="btn btn-default" ng-click="modalStatus.settings = true">
-		Settings
-	</button>
-	<button type="button" class="btn btn-default" ng-click="modalStatus.form = true">
-		Form
-	</button>
-	<a ui-sref="postView({postId: post._id})" class="btn btn-default">
-		Preview
-	</a>
-</div>
-
-<div class="mnd-mind-container grey-border" ng-class="{'black-connections': !titleImageIsDisplayed()}" ng-show="!isMobile" ng-keyup="processMap($event)">
-	<div mnd-mind-map map="post.map" edit="true"></div>
-</div>
-
-<div class="post-header" ng-show="!isMobile">
-	<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">
-		<i class="fa fa-picture-o" mnd-s3-file-upload file-type="image" after-upload="afterUploadTitleImage" is-uploading="isUploadingTitleImage" upload-progress="uploadProgressTitleImage"></i>
+<div class="post-page-container">
+	<div class="post-cant-edit" ng-show="isMobile">Content not accessible from mobile devices.</div> 
+	<div class="post-title-image" ng-show="!isMobile">
+		<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
 	</div>
-	<div class="col-sm-5" id="post-edit-image-upload-progressbar">
-		<br />
-		<br />
-		<span ng-show="isUploadingTitleImage">
-			<div progressbar value="uploadProgressTitleImage"></div>
-		</span>
-	</div>
-	<div class="col-sm-1" id="post-edit-image-upload-abort">
-		<br />
-		<br />
-		<i class="fa fa-times" ng-show="isUploadingTitleImage" ng-click="abortUpload('titleImage')"></i>
-	</div>
-	<div class="col-sm-8 col-sm-offset-2">
-		<h1
-			class="simplebox post-title"
-			ng-class="{'color-me-white': titleImageIsDisplayed()}"
-			mnd-medium-editor
-			content="post.title"
-			options="titleEditorOptions">
-		</h1>
-		<h2
-			class="simplebox post-subtitle"
-			ng-class="{'color-me-white': titleImageIsDisplayed()}"
-			mnd-medium-editor
-			content="post.subtitle"
-			options="subtitleEditorOptions">
-		</h2>
-	</div>
-</div>
 
-<div class="post-body" ng-show="!isMobile">
-	<div class="col-sm-8 col-sm-offset-2">
-		<div class="simplebox" mnd-medium-editor content="post.body" options="bodyEditorOptions"></div>
+	<div class="post-top-buttons" ng-if="isAuthor()" ng-show="!isMobile">
+		<button type="button" class="btn btn-default" ng-click="modalStatus.delete = true" ng-if="isOwner() && !showDelete">
+			Delete
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.settings = true">
+			Settings
+		</button>
+		<a ui-sref="postView({postId: post._id})" class="btn btn-default">
+			Preview
+		</a>
+	</div>
+
+	<div class="mnd-mind-container grey-border" ng-class="{'black-connections': !titleImageIsDisplayed()}" ng-show="!isMobile" ng-keyup="processMap($event)">
+		<div mnd-mind-map map="post.map" edit="true"></div>
+	</div>
+
+	<div class="post-header" ng-show="!isMobile">
+		<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">
+			<i class="fa fa-picture-o" mnd-s3-file-upload file-type="image" after-upload="afterUploadTitleImage" is-uploading="isUploadingTitleImage" upload-progress="uploadProgressTitleImage"></i>
+		</div>
+		<div class="col-sm-5" id="post-edit-image-upload-progressbar">
+			<br />
+			<br />
+			<span ng-show="isUploadingTitleImage">
+				<div progressbar value="uploadProgressTitleImage"></div>
+			</span>
+		</div>
+		<div class="col-sm-1" id="post-edit-image-upload-abort">
+			<br />
+			<br />
+			<i class="fa fa-times" ng-show="isUploadingTitleImage" ng-click="abortUpload('titleImage')"></i>
+		</div>
+		<div class="col-sm-8 col-sm-offset-2">
+			<h1
+				class="simplebox post-title"
+				ng-class="{'color-me-white': titleImageIsDisplayed()}"
+				mnd-medium-editor
+				content="post.title"
+				options="titleEditorOptions">
+			</h1>
+			<h2
+				class="simplebox post-subtitle"
+				ng-class="{'color-me-white': titleImageIsDisplayed()}"
+				mnd-medium-editor
+				content="post.subtitle"
+				options="subtitleEditorOptions">
+			</h2>
+		</div>
+	</div>
+
+	<div class="post-body" ng-show="!isMobile">
+		<div class="col-sm-8 col-sm-offset-2">
+			<div class="simplebox" mnd-medium-editor content="post.body" options="bodyEditorOptions"></div>
+		</div>
 	</div>
 </div>
