@@ -107,7 +107,15 @@
 	</head>
 
 	<body ng-controller="MainController">
-		<div ui-view class="mnd-fullsize"></div>
+		<div ui-view class="mnd-fullsize">
+			<div id="init-placeholder" class="radial-background">
+				<div id="init-placeholder-sidebar">
+					<i class="fa fa-bars"></i>
+					<img src="http://mnd-website.s3.amazonaws.com/img/mondora-logo.png">
+				</div>
+				<i id="init-placeholder-spinner" class="fa fa-cog fa-spin"></i>
+			</div>
+		</div>
 	</body>
 
 </html>
