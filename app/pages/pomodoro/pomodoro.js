@@ -11,11 +11,7 @@ angular.module("mnd-web.pages")
 	});
 	$scope.pomodoros = pomodorosRQ.result;
 
-	$scope.toggleAddModal = function () {
-		$scope.showAddModal = !$scope.showAddModal;
-		var body = document.querySelector("body");
-		angular.element(body).toggleClass("modal-open");
-	};
+	$scope.modalStatus = {};
 
 	$scope.selectPomodoro = function (index) {
 		$scope.pIndex = index;
@@ -89,7 +85,7 @@ angular.module("mnd-web.pages")
 			console.log(err);
 		});
 		$scope.pomodoro = angular.copy(defaultPomodoro);
-		$scope.toggleAddModal();
+		$scope.modalStatus.addPomodoro = false;
 	};
 
 	var zeroPad = function (number) {

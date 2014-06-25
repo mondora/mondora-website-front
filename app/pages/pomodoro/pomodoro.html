@@ -1,63 +1,51 @@
-<div class="pomodoro-page-container radial-background">
-
-
-
-	<div class="modal-background" ng-if="showAddModal" ng-controller="AddPomodoroModalController">
-		<div id="add-pomodoro-modal" class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2>Add Pomodoro</h2>
-				</div>
-				<div class="modal-body">
-
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Task" ng-model="pomodoro.task" />
-					</div>
-
-					<div class="form-group">
-						<input type="datetime-local" step="1800" class="form-control" ng-model="scheduledStart" />
-					</div>
-
-					<br />
-					<div class="form-group">
-						<textarea class="form-control" rows="4" placeholder="Description" ng-model="pomodoro.description"></textarea>
-					</div>
-
-					<div class="participant-list" ng-repeat="participant in pomodoro.participants">
-						<div class="mnd-inline-block mnd-valign-middle" mnd-cig-image source="participant.pictureUrl" size="30"></div>
-						<span>{{participant.name}}</span>
-					</div>
-
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Invite" mnd-user-input user-model="participant.model" />
-						<span class="input-group-addon mnd-clickable" ng-click="addParticipant()">
-							<i class="fa fa-plus-circle"></i>
-						</span>
-					</div>
-
-					<br />
-					<button type="button" class="btn btn-default" ng-click="addPomodoro()">
-						Add
-					</button>
-					<button type="button" class="btn btn-default" ng-click="toggleAddModal()">
-						Cancel
-					</button>
-
-				</div>
-			</div>
+<!-- Post deletion modal -->
+<div mnd-modal header="Add pomodoro" open="modalStatus.addPomodoro">
+	<div ng-controller="AddPomodoroModalController">
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="Task" ng-model="pomodoro.task" />
 		</div>
+
+		<div class="form-group">
+			<input type="datetime-local" step="1800" class="form-control" ng-model="scheduledStart" />
+		</div>
+
+		<br />
+		<div class="form-group">
+			<textarea class="form-control" rows="4" placeholder="Description" ng-model="pomodoro.description"></textarea>
+		</div>
+
+		<div class="participant-list" ng-repeat="participant in pomodoro.participants">
+			<div class="mnd-inline-block mnd-valign-middle" mnd-cig-image source="participant.pictureUrl" size="30"></div>
+			<span>{{participant.name}}</span>
+		</div>
+
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Invite" mnd-user-input user-model="participant.model" />
+			<span class="input-group-addon mnd-clickable" ng-click="addParticipant()">
+				<i class="fa fa-plus-circle"></i>
+			</span>
+		</div>
+
+		<br />
+		<button type="button" class="btn btn-default" ng-click="addPomodoro()">
+			Add
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.addPomodoro = false">
+			Cancel
+		</button>
 	</div>
+</div>
 
 
+
+<div class="pomodoro-page-container radial-background">
 
 	<div class="mnd-pomodoro-header">
 		<h2 class="personalHome-h2">
 			Your Daily Plan
 		</h2> 
-		<button type="button" class="btn btn-default" ng-click="toggleAddModal()"><span>Add Pomodoro</span></button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.addPomodoro = true"><span>Add Pomodoro</span></button>
 	</div>
-
-
 
 	<div class="pomodoros col-sm-7 col-sm-offset-1">
 		<div class="mnd-inline-block mnd-clickable" ng-repeat="pomodoro in pomodoros" ng-click="selectPomodoro($index)">
@@ -69,8 +57,6 @@
 			</div>
 		</div>
 	</div>
-
-
 
 	<div class="col-sm-3" ng-if="pomodoros[pIndex]">
 		<div class="text-center">
@@ -105,7 +91,5 @@
 		</div>
 
 	</div> 
-
-
 
 </div>
