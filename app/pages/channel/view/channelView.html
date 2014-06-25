@@ -82,7 +82,7 @@
 
 
 	<div ng-if="isCurator()" class="channel-top-buttons">
-		<a ui-sref="channelEdit({channelId: channel._id})" class="btn channel-btn-default">Edit</a>
+		<button ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default">Edit</button>
 	</div>
 
 
@@ -105,7 +105,7 @@
 		<div class="col-sm-6 channel-right-side">
 			<div id="channel-entries-box" class="col-sm-11">
 				<div class="channel-add-entry">
-					<button type="button" class="btn channel-btn-default" ng-click="toggleEntryModal()"><i class="fa fa-plus"></i></button>
+					<button type="button" class="btn btn-default" ng-click="toggleEntryModal()"><i class="fa fa-plus"></i></button>
 					Add Entry
 				</div>
 				<div class="channel-entries-list" ng-style="getContentHeight()">

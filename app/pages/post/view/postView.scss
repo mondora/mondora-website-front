@@ -4,7 +4,8 @@
 	left: 0px;
 	height: 100%;
 	width: 100%;
-	overflow: scroll;
+	overflow: auto;
+	overflow-x: hidden;
 	-webkit-overflow-scrolling: touch;
 }
 

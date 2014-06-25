@@ -152,7 +152,7 @@
 
 
 	<div class="channel-top-buttons">
-		<a ui-sref="channelView({channelId: channel._id})" class="btn channel-btn-default">Preview</a>
+		<button ui-sref="channelView({channelId: channel._id})" class="btn btn-default">Preview</button>
 		<button type="button" class="btn btn-default" ng-click="toggleSettingsEditor()">
 			Settings
 		</button>
@@ -167,7 +167,7 @@
 		<div class="col-sm-6 channel-left-side">
 			<div class="col-sm-9 col-sm-offset-1 channel-title-group">
 				<i
-					class="fa fa-picture-o file-upload-icon-lg padding-top-10"
+					class="fa fa-picture-o file-upload-icon-lg padding-top-20"
 					ng-class="{'color-me-white': mainImageIsDisplayed()}"
 					mnd-s3-file-upload
 					file-type="image"
@@ -197,9 +197,9 @@
 		</div>
 
 		<div class="col-sm-6 channel-right-side">
-			<div id="channel-entries-box" class="col-sm-11">
+			<div id="channel-entries-box" class="col-sm-11" ng-class="{'thin-border': !mainImageIsDisplayed()}">
 				<div class="channel-add-entry">
-					<button type="button" class="btn channel-btn-default" ng-click="toggleEntryModal()"><i class="fa fa-plus"></i></button>
+					<button type="button" class="btn btn-default" ng-click="toggleEntryModal()"><i class="fa fa-plus"></i></button>
 					Add Entry
 				</div>
 				<div class="channel-entries-list" ng-style="getContentHeight()">

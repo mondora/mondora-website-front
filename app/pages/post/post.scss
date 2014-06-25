@@ -26,11 +26,10 @@
 
 .mnd-mind-container {
 	position: absolute;
-	overflow: hidden;
 	width: 100%;
 	padding-left: 5px;
 	height: 40%;
-	overflow: scroll;
+	overflow: auto;
 }
 
 .post-top-buttons {
