@@ -65,6 +65,75 @@ angular.module("mnd-web")
 
 
 
+	//////////////
+	// SEO tags //
+	//////////////
+
+	var setSeoTags = function (values) {
+
+		// Description
+		var descriptionNodesSelector = [
+			"#meta-description",
+			"#meta-gp-description",
+			"#meta-tw-description",
+			"#meta-fb-description"
+		].join(",");
+		var descriptionNodes = angular.element(document.querySelectorAll(descriptionNodesSelector));
+		descriptionNodes.attr({
+			content: values.description
+		});
+
+		// Title
+		var titleNodesSelector = [
+			"#meta-gp-title",
+			"#meta-tw-title",
+			"#meta-fb-title"
+		].join(",");
+		var titleNodes = angular.element(document.querySelectorAll(titleNodesSelector));
+		titleNodes.attr({
+			content: values.title
+		});
+		// Set the page title
+		angular.element(document.querySelector("title")).html(values.title);
+
+		// Image
+		var imageNodesSelector = [
+			"#meta-gp-image",
+			"#meta-tw-image",
+			"#meta-fb-image"
+		].join(",");
+		var imageNodes = angular.element(document.querySelectorAll(imageNodesSelector));
+		imageNodes.attr({
+			content: values.image
+		});
+
+		// Type
+		var html = angular.element(document.querySelector("html"));
+		html.attr({
+			itemtype: values.itemtype
+		});
+		var typeNodesSelector = [
+			"#meta-fb-type"
+		].join(",");
+		var typeNodes = angular.element(document.querySelector(typeNodesSelector));
+		typeNodes.attr({
+			content: values.type
+		});
+
+	};
+
+	var resetSeoTags = function () {
+		setSeoTags({
+			description: "Mondora App",
+			title: "Mondora :m",
+			image: "http://mnd-website.s3.amazonaws.com/img/mondora-logo.png",
+			type: "website",
+			itemtype: "http://schema.org/Organization"
+		});
+	};
+
+
+
 	/////////////////////////
 	// Root abstract state //
 	/////////////////////////
@@ -254,8 +323,19 @@ angular.module("mnd-web")
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
+		onEnter: ["$stateParams", "$rootScope", "MndTagStrippingService", function ($stateParams, $rootScope, MndTagStrippingService) {
+			var post = $rootScope.Posts.reactiveQuery({_id: $stateParams.postId}).result[0];
+			setSeoTags({
+				description: MndTagStrippingService(post.body).slice(0, 150),
+				title: "Mondora :m - " + post.title,
+				image: post.titleImageUrl,
+				type: "article",
+				itemtype: "http://schema.org/Article"
+			});
+		}],
 		onExit: ["postSubId", function (postSubId) {
 			Ceres.subscriptions[postSubId].stop();
+			resetSeoTags();
 		}],
 		public: true
 	});
