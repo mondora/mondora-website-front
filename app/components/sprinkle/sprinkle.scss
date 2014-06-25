@@ -48,6 +48,11 @@ $mnd-grey: #5e5f5f;
 .sprinkle-right {
 	float: left;
 }
+.sprinkle-never-run {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
 @media (max-width: 767px){
 	.sprinkle-result {
 		font-size: 35px;

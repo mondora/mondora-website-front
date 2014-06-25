@@ -8,6 +8,7 @@ angular.module("mnd-web.components")
 			permissions: "="
 		},
 		link: function ($scope) {
+			$scope.permissions = $scope.permissions || {};
 			$scope.permissions.members = $scope.permissions.members || [];
 			$scope.member = {};
 

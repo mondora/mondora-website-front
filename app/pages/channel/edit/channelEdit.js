@@ -21,6 +21,12 @@ angular.module("mnd-web.pages")
 	});
 	$scope.channel = channelRQ.result[0];
 
+	/////////////////////////
+	// Modal status object //
+	/////////////////////////
+
+	$scope.modalStatus = {};
+
 	//////////////////
 	// Check mobile //
 	//////////////////
@@ -37,9 +43,7 @@ angular.module("mnd-web.pages")
 	$scope.entry = angular.copy(emptyEntry);
 
 	$scope.toggleEntryModal = function () {
-		$scope.showEntryModal = !$scope.showEntryModal;
-		var body = document.querySelector("body");
-		angular.element(body).toggleClass("modal-open");
+		$scope.modalStatus.entry = !$scope.modalStatus.entry;
 		$scope.entry = angular.copy(emptyEntry);
 	};
 
@@ -49,19 +53,18 @@ angular.module("mnd-web.pages")
 	};
 
 	$scope.afterUploadEntryFile = function (url) {
-		$scope.entry.content.url = url;
+		$scope.toggleEntryModal();
 	};
 
 	$scope.addEntry = function () {
 		Ceres.call("addEntryToChannel", $scope.channel._id, $scope.entry);
-		$scope.toggleEntryModal();
+		$scope.modalStatus.entry = false;
 	};
 
 	$scope.deleteEntry = function () {
 		Ceres.call("deleteEntryFromChannel", $scope.channel._id, $scope.entry);
 	};
 
-	$scope.modalStatus = {};
 
 	$scope.getFileFAClass = function (type) {
 		var faClass;
@@ -75,16 +78,6 @@ angular.module("mnd-web.pages")
 			faClass = "fa-file-code-o";
 		}
 		return faClass;
-	};
-
-	/////////////////////////////
-	// Channel settings editor //
-	/////////////////////////////
-
-	$scope.toggleSettingsEditor = function () {
-		$scope.showSettingsEditor = !$scope.showSettingsEditor;
-		var body = document.querySelector("body");
-		angular.element(body).toggleClass("modal-open");
 	};
 
 	/////////////////////////
@@ -135,7 +128,10 @@ angular.module("mnd-web.pages")
 			"header2",
 			"quote"
 		],
-		imageInsertion: true
+		mediaInsertion: true,
+		openFormBuilderModal: function () {
+			$scope.modalStatus.form = true;
+		}
 	};
 
 	/////////////////
