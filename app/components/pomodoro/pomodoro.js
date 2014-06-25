@@ -135,6 +135,12 @@ angular.module("mnd-web.components")
 			});
 
 			/////////////////
+			// Timer Alarm //
+			/////////////////
+
+			var timerAlarm = new Audio('https://s3.amazonaws.com/mnd-website/alert-sound/pomodoro-alert.mp3');
+
+			/////////////////
 			// Timer setup //
 			/////////////////
 
@@ -154,6 +160,9 @@ angular.module("mnd-web.components")
 								$rootScope.$emit("pomodoroTick", $scope.pomodoro._id, $scope.remaining);
 							}
 							if ($scope.remaining === 0) {
+
+								timerAlarm.play();
+
 								$interval.cancel($scope.interval);
 								PomodoroService.stop($scope.pomodoro);
 							}

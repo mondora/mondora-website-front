@@ -9,11 +9,16 @@ body {
 	height: 100%;
 	width: 100%;
 	font-family: $mnd-font;	
+	overflow: auto;
 	overflow-x: hidden;
 }
 
 *::-webkit-scrollbar {
 	display:none;
+}
+
+* {
+	-ms-overflow-style: none;
 }
 
 #init-placeholder {

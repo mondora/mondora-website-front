@@ -78,7 +78,10 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	width: 100%;
 	height: 100%;
 	padding-left: 100px;
+	padding-right: 0px;
+	margin: 0px;
 	z-index: 0;
+	overflow: hidden;
 	background-color: #ffffff;
 	transform: translate3d(0, 0, 0);
 	transform: translateX(0px);
@@ -90,6 +93,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 .mnd-content {
 	height: 100%;
 	width: 100%;
+	overflow: hidden;
 }
 
 @media (max-width: 767px) {

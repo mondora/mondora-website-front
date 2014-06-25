@@ -2,10 +2,23 @@
 	position: relative;
 	top: 0px;
 	left: 0px;
+	box-sizing: border-box;
+	padding: 0px;
+	margin: 0px;
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
 }
+
+.channel-page-container button {
+	border: 2px solid #fff;
+	border-radius: 20px;
+	border-color: #fff;
+	background-color: rgba(0,0,0,0.3);
+	color: #fff;
+	font-size: 20px;
+}
+
 
 .channel-page-content {
 	position: absolute;
@@ -46,7 +59,9 @@
 }
 
 .channel-right-side {
-	height: 100%;
+	position: relative;
+	overflow: hidden;
+	padding: 0px;
 }
 
 .channel-add-entry {
@@ -150,16 +165,6 @@
 	z-index: 100;
 }
 
-.channel-top-buttons button,
-.channel-btn-default {
-	border: 2px solid #fff;
-	border-radius: 20px;
-	border-color: #fff;
-	background-color: rgba(0,0,0,0.3);
-	color: #fff;
-	font-size: 20px;
-}
-
 .entry-title {
 	word-break: break-all;
 }
@@ -182,8 +187,16 @@
 	border-radius: 10px;
 }
 
+.thin-border {
+	border: 1px solid rgba(0,0,0,0.2);
+}
+
 .padding-top-10 {
 	padding-top: 10px;
+}
+
+.padding-top-20 {
+	padding-top: 20px;
 }
 
 @media (max-width: 767px){
