@@ -24,13 +24,13 @@ angular.module("mnd-web.components")
 		scope: {
 			userModel: "="
 		},
-		controller: function ($scope) {
+		controller: ["$scope", function ($scope) {
 			var usersRQ = $rootScope.Users.reactiveQuery({});
 			usersRQ.on("change", function () {
 				$scope.users = usersRQ.result;
 			});
 			$scope.users = usersRQ.result;
-		},
+		}],
 		compile: function (element, attrs) {
 			element.attr("ng-model", "userModel");
 			element.attr("typeahead", "user as user.profile.name for user in users | filterByNameAndScreenName : $viewValue");
