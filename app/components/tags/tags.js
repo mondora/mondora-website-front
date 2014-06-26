@@ -42,7 +42,7 @@ angular.module("mnd-web.components")
 				}
 				if ($scope.tags.indexOf(tag) === -1) {
 					$scope.tags.push(tag);
-					if ($scope.onAdd) {
+					if ($scope.onAdd()) {
 						$scope.onAdd()(tag);
 					}
 				}

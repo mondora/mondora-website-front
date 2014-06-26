@@ -199,7 +199,7 @@ angular.module("mnd-web.components")
 
 				var formPlaceholderTemplate = $templateCache.get("components/medium-editor/form-placeholder.html");
 				var formPlaceholder = $compile(formPlaceholderTemplate)($scope);
-				var existingPlaceholder = angular.element($element[0].querySelector("button.form-placeholder"));
+				var existingPlaceholder = angular.element($element[0].querySelector(".mnd-form-placeholder"));
 				if (existingPlaceholder) {
 					existingPlaceholder.replaceWith(formPlaceholder);
 				}
