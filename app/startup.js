@@ -1,4 +1,4 @@
-var GIVE_UP_DELAY = 10000;
+var GIVE_UP_DELAY = 30000;
 
 (function () {
 	var config = {
