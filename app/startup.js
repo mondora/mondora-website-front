@@ -124,8 +124,8 @@ angular.module("mnd-web")
 
 	var resetSeoTags = function () {
 		setSeoTags({
-			description: "Mondora App",
-			title: "Mondora :m",
+			description: "mondora app",
+			title: "mondora :m",
 			image: "http://mnd-website.s3.amazonaws.com/img/mondora-logo.png",
 			type: "website",
 			itemtype: "http://schema.org/Organization"
@@ -327,7 +327,7 @@ angular.module("mnd-web")
 			var post = $rootScope.Posts.reactiveQuery({_id: $stateParams.postId}).result[0];
 			setSeoTags({
 				description: MndTagStrippingService(post.body).slice(0, 150),
-				title: "Mondora :m - " + post.title,
+				title: "mondora :m - " + post.title,
 				image: post.titleImageUrl,
 				type: "article",
 				itemtype: "http://schema.org/Article"
