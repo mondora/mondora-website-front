@@ -207,21 +207,20 @@ gulp.task("buildWeb", function () {
 	var webHtml = pp.preprocess(html, {TARGET: "web.prod"});
 	fs.writeFileSync("builds/web/index.html", webHtml);
 
-	// Fonts
-	buildVendorFontsGlyphs("builds/web/dist/fonts");
-	buildVendorFontsCss("builds/web/dist/css");
-
-	// Scripts
-	buildAppScripts("builds/web/dist/js");
-	buildAppTemplates("builds/web/dist/js");
-	buildVendorScripts("builds/web/dist/js");
-
-	// Styles
-	buildAppStyles("builds/web/dist/css");
-	buildVendorStyles("builds/web/dist/css");
-
-	// Favicon
-	buildAppFavicon("builds/web");
+	return Q.all([
+		// Fonts
+		buildVendorFontsGlyphs("builds/web/dist/fonts"),
+		buildVendorFontsCss("builds/web/dist/css", true),
+		// Scripts
+		buildAppScripts("builds/web/dist/js", true),
+		buildAppTemplates("builds/web/dist/js", true),
+		buildVendorScripts("builds/web/dist/js", true),
+		// Styles
+		buildAppStyles("builds/web/dist/css", true),
+		buildVendorStyles("builds/web/dist/css", true),
+		// Favicon
+		buildAppFavicon("builds/web"),
+	]);
 
 });
 
@@ -239,21 +238,20 @@ gulp.task("buildWebTest", function () {
 	var webHtml = pp.preprocess(html, {TARGET: "web.test"});
 	fs.writeFileSync("builds/web/index.html", webHtml);
 
-	// Fonts
-	buildVendorFontsGlyphs("builds/web/dist/fonts");
-	buildVendorFontsCss("builds/web/dist/css");
-
-	// Scripts
-	buildAppScripts("builds/web/dist/js");
-	buildAppTemplates("builds/web/dist/js");
-	buildVendorScripts("builds/web/dist/js");
-
-	// Styles
-	buildAppStyles("builds/web/dist/css");
-	buildVendorStyles("builds/web/dist/css");
-
-	// Favicon
-	buildAppFavicon("builds/web");
+	return Q.all([
+		// Fonts
+		buildVendorFontsGlyphs("builds/web/dist/fonts"),
+		buildVendorFontsCss("builds/web/dist/css", true),
+		// Scripts
+		buildAppScripts("builds/web/dist/js", true),
+		buildAppTemplates("builds/web/dist/js", true),
+		buildVendorScripts("builds/web/dist/js", true),
+		// Styles
+		buildAppStyles("builds/web/dist/css", true),
+		buildVendorStyles("builds/web/dist/css", true),
+		// Favicon
+		buildAppFavicon("builds/web"),
+	]);
 
 });
 
@@ -264,63 +262,42 @@ gulp.task("buildWebTest", function () {
 ///////////////////////////
 
 var buildDevFonts = function () {
-	util.print("Building fonts... ");
+	console.log("Building fonts... ");
 	mkdirp.sync("builds/dev/dist/fonts");
-	buildVendorFontsGlyphs("builds/dev/dist/fonts");
-	util.print("done\n");
+	return buildVendorFontsGlyphs("builds/dev/dist/fonts");
 };
 
 var buildDevCss = function () {
-	return Q()
-		.then(function () {
-			util.print("Building css... ");
-			mkdirp.sync("builds/dev/dist/css");
-			return buildAppStyles("builds/dev/dist/css");
-		})
-		.then(function () {
-			return buildVendorStyles("builds/dev/dist/css");
-		})
-		.then(function () {
-			return buildVendorFontsCss("builds/dev/dist/css");
-		})
-		.then(function () {
-			util.print("done\n");
-		});
+	console.log("Building css... ");
+	mkdirp.sync("builds/dev/dist/css");
+	return Q.all([
+		buildAppStyles("builds/dev/dist/css"),
+		buildVendorStyles("builds/dev/dist/css"),
+		buildVendorFontsCss("builds/dev/dist/css")
+	]);
 };
 
 var buildDevJs = function () {
-	return Q()
-		.then(function () {
-			util.print("Building js... ");
-			mkdirp.sync("builds/dev/dist/js");
-			buildAppScripts("builds/dev/dist/js");
-		})
-		.then(function () {
-			return buildAppTemplates("builds/dev/dist/js");
-		})
-		.then(function () {
-			return buildVendorScripts("builds/dev/dist/js");
-		})
-		.then(function () {
-			util.print("done\n");
-		});
+	console.log("Building js... ");
+	mkdirp.sync("builds/dev/dist/js");
+	return Q.all([
+		buildAppScripts("builds/dev/dist/js"),
+		buildAppTemplates("builds/dev/dist/js"),
+		buildVendorScripts("builds/dev/dist/js")
+	]);
 };
 
 var buildDevHtml = function () {
-	return Q()
-		.then(function () {
-			util.print("Building html... ");
-			var html = fs.readFileSync("app/main.html", "utf8");
-			var devHtml = pp.preprocess(html, {TARGET: "dev"});
-			fs.writeFileSync("builds/dev/index.html", devHtml);
-			util.print("done\n");
-		});
+	console.log("Building html... ");
+	var html = fs.readFileSync("app/main.html", "utf8");
+	var devHtml = pp.preprocess(html, {TARGET: "dev"});
+	fs.writeFileSync("builds/dev/index.html", devHtml);
+	return Q();
 };
 
 var buildDevFavicon = function () {
-	util.print("Building favicon... ");
-	buildAppFavicon("builds/dev");
-	util.print("done\n");
+	console.log("Building favicon... ");
+	return buildAppFavicon("builds/dev");
 };
 
 gulp.task("dev", function () {
