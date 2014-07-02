@@ -73,7 +73,7 @@
 		<div ng-if="tasks.length !== 0" ui-tree>
 			<ol ui-tree-nodes="" ng-model="tasks">
 				<li ng-repeat="task in tasks" ui-tree-node>
-					<div ng-click="selectTask(task)" class="task-summary task-status-{{task.status}}">
+					<div ng-click="selectTask(task._id)" class="task-summary task-status-{{task.status}}">
 						<div ui-tree-handle class="left-border" mnd-color-me="{{getDayFromDate(task.date)}}"></div>
 						<div class="pomodoros-container">
 							<i ng-repeat="pomodoro in task.pomodoros" class="fa fa-clock-o"></i>
@@ -97,20 +97,36 @@
 		</div>
 	</div>
 
-	<div class="col-sm-4 col-sm-offset-1" ng-if="selectedTask" ng-controller="SelectedTaskController">
+	<div class="col-sm-4 col-sm-offset-1" ng-if="selectedTaskId" ng-controller="SelectedTaskController">
 
-		<div class="text-center">
-			<div>
-				<div mnd-pomodoro-timer class="running-pomodoro mnd-inline-block" size="200" pomodoro="getFirstUncompletedPomodoro()"></div>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="mnd-inline-block" ng-repeat="pomodoro in completedPomodoros()">
+					<i class="fa fa-clock-o fa-32"></i>
+				</div>
 			</div>
-			<div class="mnd-vsp-4"></div>
-			<div class="mnd-vsp-4"></div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-default" ng-click="start()"><i class="fa fa-play"></i></button>
-				<button type="button" class="btn btn-default" ng-click="pause()"><i class="fa fa-pause"></i></button>
-				<button type="button" class="btn btn-default" ng-click="stop()"><i class="fa fa-stop"></i></button>
+			<div class="col-sm-4">
+				<div ng-if="uncompletedPomodoros()[0]" class="text-center">
+					<div mnd-pomodoro-timer class="running-pomodoro mnd-inline-block" size="100" pomodoro="uncompletedPomodoros()[0]" task-id="{{selectedTask._id}}"></div>
+					<div class="btn-group mnd-inline-block">
+						<button type="button" ng-if="uncompletedPomodoros()[0].status !== 'running'" class="btn btn-default" ng-click="start()"><i class="fa fa-play"></i></button>
+						<button type="button" ng-if="uncompletedPomodoros()[0].status === 'running'" class="btn btn-default" ng-click="pause()"><i class="fa fa-pause"></i></button>
+						<button type="button" class="btn btn-default" ng-click="abort()"><i class="fa fa-times"></i></button>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="mnd-inline-block" ng-repeat="pomodoro in uncompletedPomodoros().slice(1)">
+					<i class="fa fa-clock-o fa-32"></i>
+				</div>
+				<div class="mnd-inline-block mnd-clickable" ng-click="addPomodoro()">
+					<i class="fa fa-plus-circle fa-32"></i>
+				</div>
 			</div>
 		</div>
+
+		<br />
+		<br />
 
 		<br />
 		<label>Status</label>

@@ -2,9 +2,9 @@ angular.module("mnd-web.pages")
 
 
 
-.controller("TodayController", ["$scope", "PomodoroService", "DiffingService", function ($scope, PomodoroService, DiffingService) {
+.controller("TodayController", ["$scope", function ($scope) {
 
-	var DEFAULT_POMODORO_DURATION = 25 * 60 * 1000;
+	$scope.DEFAULT_POMODORO_DURATION = 1 * 10 * 1000;
 
 	$scope.Tasks = $scope.Ceres.createCollection("tasks");
 	var tasksRQ = $scope.Tasks.reactiveQuery({});
@@ -21,19 +21,11 @@ angular.module("mnd-web.pages")
 		return new Date(date).toString().slice(4, 15);
 	};
 
-	$scope.selectTask = function (taskOrTaskId) {
-		if (typeof taskOrTaskId === "string") {
-			$scope.tasks.forEach(function (task) {
-				if (task._id === taskOrTaskId) {
-					taskOrTaskId = task;
-				}
-			});
-		}
-		$scope.selectedTask = taskOrTaskId;
-		$scope.taskDiffFunction = DiffingService.getDiffFunction($scope.selectedTask);
+	$scope.selectTask = function (taskId) {
+		$scope.selectedTaskId = taskId;
 	};
 	$scope.unselectTask = function () {
-		delete $scope.selectedTask;
+		delete $scope.selectedTaskId;
 	};
 
 	//////////////////
@@ -55,10 +47,10 @@ angular.module("mnd-web.pages")
 			pictureUrl: $scope.user.profile.pictureUrl
 		}],
 		pomodoros: [{
-			_id: 0,
+			_id: $scope.guid(),
 			events: [],
-			status: "paused",
-			duration: DEFAULT_POMODORO_DURATION
+			status: "pristine",
+			duration: $scope.DEFAULT_POMODORO_DURATION
 		}],
 		date: new Date().getTime(),
 		status: "todo"	
@@ -79,7 +71,31 @@ angular.module("mnd-web.pages")
 
 
 
-.controller("SelectedTaskController", ["$scope", "$interval", function ($scope, $interval) {
+.controller("SelectedTaskController", ["$scope", "$interval", "DiffingService", "PomodoroService", function ($scope, $interval, DiffingService, PomodoroService) {
+
+	///////////////////
+	// Selected task //
+	///////////////////
+
+	var updateSelectedTask = function () {
+		$scope.tasks.forEach(function (task) {
+			if (task._id === $scope.selectedTaskId) {
+				$scope.selectedTask = task;
+				$scope.taskDiffFunction = DiffingService.getDiffFunction(task);
+			}
+		});
+	};
+	$scope.$watch("selectedTaskId", function () {
+		updateSelectedTask();
+	});
+	$scope.$watch("tasks", function () {
+		updateSelectedTask();
+	});
+	updateSelectedTask();
+
+	//////////////////
+	// Participants //
+	//////////////////
 
 	$scope.participant = {};
 	$scope.addParticipant = function () {
@@ -93,12 +109,43 @@ angular.module("mnd-web.pages")
 		$scope.participant = {};
 	};
 
-	$scope.getFirstUncompletedPomodoro = function () {
-		return $scope.selectedTask.pomodoros.reduce(function (prev, pomodoro) {
-			if (prev) return prev;
-			if (pomodoro.status !== "done") return pomodoro;
-		}, false);
+	///////////////
+	// Pomodoros //
+	///////////////
+
+	$scope.completedPomodoros = function () {
+		return $scope.selectedTask.pomodoros.filter(function (pomodoro) {
+			var status = pomodoro.status;
+			return status === "done" || status === "aborted";
+		});
 	};
+	$scope.uncompletedPomodoros = function () {
+		return $scope.selectedTask.pomodoros.filter(function (pomodoro) {
+			var status = pomodoro.status;
+			return status !== "done" && status !== "aborted";
+		});
+	};
+	$scope.addPomodoro = function () {
+		$scope.selectedTask.pomodoros.push({
+			_id: $scope.guid(),
+			events: [],
+			status: "pristine",
+			duration: $scope.DEFAULT_POMODORO_DURATION
+		});
+	};
+	$scope.start = function () {
+		PomodoroService.start($scope.selectedTask._id, $scope.selectedTask.pomodoros[0]._id);
+	};
+	$scope.pause = function () {
+		PomodoroService.pause($scope.selectedTask._id, $scope.selectedTask.pomodoros[0]._id, "No reason");
+	};
+	$scope.abort = function () {
+		PomodoroService.abort($scope.selectedTask._id, $scope.selectedTask.pomodoros[0]._id, "No reason");
+	};
+
+	/////////////////////////////////////////
+	// Name and description editor options //
+	/////////////////////////////////////////
 
 	$scope.nameEditorOptions = {
 		placeholder: "Task name",
@@ -106,7 +153,6 @@ angular.module("mnd-web.pages")
 		forcePlainText: true,
 		disableReturn: true
 	};
-
 	$scope.descriptionEditorOptions = {
 		placeholder: "Description",
 		buttonLabels: "fontawesome",
@@ -120,7 +166,10 @@ angular.module("mnd-web.pages")
 		]
 	};
 
-	// Date
+	//////////
+	// Date //
+	//////////
+
 	$scope.date = {};
 	$scope.$watch("selectedTask.date", function () {
 		$scope.date.task = new Date($scope.selectedTask.date);
@@ -147,11 +196,12 @@ angular.module("mnd-web.pages")
 	// Save function //
 	///////////////////
 
-	// Diff the old and new objects
 	$scope.save = function () {
 		var fields = $scope.taskDiffFunction($scope.selectedTask);
 		if (!_.isEmpty(fields)) {
-			$scope.Tasks.update($scope.selectedTask._id, fields);
+			$scope.Tasks.update($scope.selectedTask._id, fields).remote.fail(function (e) {
+				console.log(e);
+			});
 		}
 	};
 	var interval = $interval($scope.save, 1000);
@@ -164,8 +214,6 @@ angular.module("mnd-web.pages")
 
 
 .controller("AddTaskModalController", ["$scope", function ($scope) {
-
-	var DEFAULT_POMODORO_DURATION = 25 * 60 * 1000;
 
 	$scope.task = {
 		userId: $scope.user._id,
@@ -191,8 +239,8 @@ angular.module("mnd-web.pages")
 			pomodoros.push({
 				_id: i,
 				events: [],
-				status: "paused",
-				duration: DEFAULT_POMODORO_DURATION
+				status: "pristine",
+				duration: $scope.DEFAULT_POMODORO_DURATION
 			});
 		}
 		return pomodoros;

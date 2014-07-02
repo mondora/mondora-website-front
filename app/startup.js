@@ -421,7 +421,7 @@ angular.module("mnd-web")
 
 
 
-.run(["$rootScope", "$state", "MndSidebarService", function ($rootScope, $state, MndSidebarService) {
+.run(["$rootScope", "$state", "$interval", "MndSidebarService", function ($rootScope, $state, $interval, MndSidebarService) {
 
 	// TODO: REFACTOR
 	$rootScope.safeApply = function (fn) {
@@ -476,7 +476,38 @@ angular.module("mnd-web")
 		}
 	});
 
+	// Utility functions and properties
+	$rootScope.guid = function () {
+		return md5(Math.random().toString());
+	};
+
+	/////////////////
+	// Server time //
+	/////////////////
+
+	$rootScope.serverTimeDelta = 0;
+	$rootScope.serverTime = Date.now();
+
+	var update = function () {
+		if (Ceres.ddp.readyState !== 1) return;
+		var outLatencyTimestamp = Date.now();
+		Ceres.call("getServerTime").result.then(function (serverTime) {
+			var inLatencyTimestamp = Date.now();
+			var distance = (inLatencyTimestamp - outLatencyTimestamp) / 2;
+			$rootScope.safeApply(function () {
+				$rootScope.serverTime = serverTime;
+				$rootScope.serverTimeDelta = inLatencyTimestamp - (serverTime + distance);
+			});
+		});
+	};
+	CERES_CONNECTED.then(function () {
+		update();
+		$interval(update, 10000, 0, false);
+	});
+
 }])
+
+
 
 .controller("MainController", ["$scope", function ($scope) {
 	$scope.login = function () {
