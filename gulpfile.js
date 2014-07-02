@@ -112,7 +112,7 @@ var buildVendorScripts = function (dest, minify) {
 		"bower_components/ddp.js/ddp.js",
 		"bower_components/asteroid/dist/asteroid.js",
 		"bower_components/medium-editor/dist/js/medium-editor.js",
-		"bower_components/angular-datepicker/dist/index.js",
+		"bower_components/angular-datepicker/dist/index.min.js",
 		"bower_components/angular-ui-tree/dist/angular-ui-tree.js"
 	];
 	var step = gulp.src(sources)
