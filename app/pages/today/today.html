@@ -1,0 +1,164 @@
+<!--
+<div mnd-modal header="Add task" open="modalStatus.addTask">
+	<div ng-controller="AddTaskModalController">
+		<div class="form-group">
+			<label>Name</label>
+			<input type="text" class="form-control" placeholder="Name" ng-model="task.name" />
+		</div>
+
+		<div class="form-group">
+			<label>Estimated pomodoros</label>
+			<input type="number" class="form-control" ng-model="task.pomodoros" />
+		</div>
+
+		<div>
+			<label>Description</label>
+			<textarea class="form-control" rows="4" placeholder="Description" ng-model="task.description"></textarea>
+		</div>
+
+		<br />
+		<label>Tags</label>
+		<div mnd-tags tags="task.tags" placeholder="Add tag"></div>
+		<br />
+
+		<div class="form-group">
+			<label>Day</label>
+			<input type="datetime" date-time max-view="date" min-view="date" format="yyyy-MM-dd" class="form-control" ng-model="task.date" />
+		</div>
+		
+		<label>Participants</label>
+		<div class="participant-list" ng-repeat="participant in task.participants">
+			<div class="mnd-inline-block mnd-valign-middle" mnd-cig-image source="participant.pictureUrl" size="30"></div>
+			<span>{{participant.name}}</span>
+		</div>
+
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Add participant" mnd-user-input user-model="participant.model" />
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="addParticipant()">
+					<i class="fa fa-plus"></i>
+				</button>
+			</span>
+		</div>
+
+		<br />
+		<button type="button" class="btn btn-default" ng-click="addTask()">
+			Add
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.addTask = false">
+			Cancel
+		</button>
+	</div>
+</div>
+-->
+
+
+
+<div class="today-page-container radial-background">
+
+	<div class="mnd-vsp-64"></div>
+
+	<div class="col-sm-4 col-sm-offset-1">
+
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Add task" ng-model="newTask.name" mnd-enter="addTask()" />
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="addTask()">
+					<i class="fa fa-plus"></i>
+				</button>
+			</span>
+		</div>
+
+		<br />
+		<div ng-if="tasks.length !== 0" ui-tree>
+			<ol ui-tree-nodes="" ng-model="tasks">
+				<li ng-repeat="task in tasks" ui-tree-node>
+					<div ng-click="selectTask(task)" class="task-summary task-status-{{task.status}}">
+						<div ui-tree-handle class="left-border" mnd-color-me="{{getDayFromDate(task.date)}}"></div>
+						<div class="pomodoros-container">
+							<i ng-repeat="pomodoro in task.pomodoros" class="fa fa-clock-o"></i>
+						</div>
+						<div class="name-container">
+							{{task.name}}
+						</div>
+						<div class="tags-container">
+							<span ng-repeat="tag in task.tags" class="label label-default">{{tag}}</span>
+						</div>
+						<!-- WAIT UNTIL RE-DRAWING PROBLEM IS RESOLVED
+						<div class="participants-container">
+							<span ng-repeat="participant in task.participants">
+								<div mnd-cig-image source="participant.pictureUrl" size="30" class="mnd-inline-block"></div>
+							</span>
+						</div>
+						-->
+					</div>
+				</li>
+			</ol>
+		</div>
+	</div>
+
+	<div class="col-sm-4 col-sm-offset-1" ng-if="selectedTask" ng-controller="SelectedTaskController">
+
+		<div class="text-center">
+			<div>
+				<div mnd-pomodoro-timer class="running-pomodoro mnd-inline-block" size="200" pomodoro="getFirstUncompletedPomodoro()"></div>
+			</div>
+			<div class="mnd-vsp-4"></div>
+			<div class="mnd-vsp-4"></div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default" ng-click="start()"><i class="fa fa-play"></i></button>
+				<button type="button" class="btn btn-default" ng-click="pause()"><i class="fa fa-pause"></i></button>
+				<button type="button" class="btn btn-default" ng-click="stop()"><i class="fa fa-stop"></i></button>
+			</div>
+		</div>
+
+		<br />
+		<label>Status</label>
+		<div class="btn-group btn-group-justified">
+			<label class="btn btn-default" ng-model="selectedTask.status" btn-radio="'todo'" uncheckable>Todo</label>
+			<label class="btn btn-default" ng-model="selectedTask.status" btn-radio="'progress'" uncheckable>In progress</label>
+			<label class="btn btn-default" ng-model="selectedTask.status" btn-radio="'done'" uncheckable>Done</label>
+		</div>
+
+		<br />
+		<label>Name</label>
+		<div class="simplebox" mnd-medium-editor content="selectedTask.name" options="nameEditorOptions"></div>
+
+		<br />
+		<label>Summary</label>
+		<div class="simplebox" mnd-medium-editor content="selectedTask.description" options="descriptionEditorOptions"></div>
+
+		<br />
+		<br />
+		<label>Tags</label>
+		<div mnd-tags tags="selectedTask.tags" placeholder="Add tag"></div>
+
+		<br />
+		<label>Participants</label>
+		<br />
+		<span class="mnd-width-40 mnd-valign-middle" ng-repeat="participant in selectedTask.participants">
+			<div class="mnd-inline-block" mnd-cig-image source="participant.pictureUrl" size="35"></div>
+		</span>
+		<div class="mnd-vsp-4"></div>
+		<div class="mnd-vsp-4"></div>
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Invite" mnd-user-input user-model="participant.model" />
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="addParticipant()">
+					<i class="fa fa-plus"></i>
+				</button>
+			</span>
+		</div>
+
+		<br />
+		<div class="form-group">
+			<label>Day</label>
+			<input type="datetime" date-time max-view="date" min-view="date" format="yyyy-MM-dd" class="form-control" ng-model="date.task" />
+		</div>
+
+		<br />
+		<button type="button" class="btn btn-default" ng-click="deleteTask()">Delete</button>
+
+	</div> 
+
+</div>

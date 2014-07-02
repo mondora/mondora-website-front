@@ -21,40 +21,69 @@ var WebSocket	= require("faye-websocket");
 // App files building functions //
 //////////////////////////////////
 
-var buildAppStyles = function (dest) {
-	return gulp.src("app/**/*.scss")
+var buildAppStyles = function (dest, minify) {
+	var deferred = Q.defer();
+	var step = gulp.src("app/**/*.scss")
 		.pipe(plugins.sass())
 		.pipe(plugins.concat("app.css"))
 		.pipe(plugins.autoprefixer("last 3 version"))
-		.pipe(gulp.dest(dest))
-		.pipe(plugins.minifyCss())
-		.pipe(plugins.rename("app.min.css"))
 		.pipe(gulp.dest(dest));
+	if (minify) {
+		step = step
+			.pipe(plugins.minifyCss())
+			.pipe(plugins.rename("app.min.css"))
+			.pipe(gulp.dest(dest));
+	}
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
 };
 
-var buildAppScripts = function (dest) {
-	return gulp.src("app/**/*.js")
+var buildAppScripts = function (dest, minify) {
+	var deferred = Q.defer();
+	var step = gulp.src("app/**/*.js")
 		.pipe(plugins.concat("app.js"))
-		.pipe(gulp.dest(dest))
-		.pipe(plugins.uglify())
-		.pipe(plugins.rename("app.min.js"))
 		.pipe(gulp.dest(dest));
+	if (minify) {
+		step = step
+			.pipe(plugins.uglify())
+			.pipe(plugins.rename("app.min.js"))
+			.pipe(gulp.dest(dest));
+	}
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
 };
 
-var buildAppTemplates = function (dest) {
-	return gulp.src(["app/**/*.html", "!app/main.html"])
+var buildAppTemplates = function (dest, minify) {
+	var deferred = Q.defer();
+	var step = gulp.src(["app/**/*.html", "!app/main.html"])
 		.pipe(plugins.ngHtml2js({
 			moduleName: "mnd-web.templates"
 		}))
 		.pipe(plugins.concat("app.templates.js"))
-		.pipe(gulp.dest(dest))
-		.pipe(plugins.uglify())
-		.pipe(plugins.rename("app.templates.min.js"))
 		.pipe(gulp.dest(dest));
+	if (minify) {
+		step = step
+			.pipe(plugins.uglify())
+			.pipe(plugins.rename("app.templates.min.js"))
+			.pipe(gulp.dest(dest));
+	}
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
 };
 
 var buildAppFavicon = function (dest) {
-	return gulp.src("app/favicon.ico").pipe(gulp.dest(dest));
+	var deferred = Q.defer();
+	var step = gulp.src("app/favicon.ico").pipe(gulp.dest(dest));
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
 };
 
 
@@ -63,7 +92,8 @@ var buildAppFavicon = function (dest) {
 // Vendor files building functions //
 /////////////////////////////////////
 
-var buildVendorScripts = function (dest) {
+var buildVendorScripts = function (dest, minify) {
+	var deferred = Q.defer();
 	var sources = [
 		"bower_components/blueimp-md5/js/md5.js",
 		"bower_components/lodash/dist/lodash.js",
@@ -82,52 +112,83 @@ var buildVendorScripts = function (dest) {
 		"bower_components/ddp.js/ddp.js",
 		"bower_components/asteroid/dist/asteroid.js",
 		"bower_components/medium-editor/dist/js/medium-editor.js",
-		"bower_components/angular-medium-editor/dist/angular-medium-editor.js"
+		"bower_components/angular-datepicker/dist/index.js",
+		"bower_components/angular-ui-tree/dist/angular-ui-tree.js"
 	];
-	return gulp.src(sources)
+	var step = gulp.src(sources)
 		.pipe(plugins.concat("vendor.js"))
-		.pipe(gulp.dest(dest))
-		.pipe(plugins.uglify())
-		.pipe(plugins.rename("vendor.min.js"))
 		.pipe(gulp.dest(dest));
+	if (minify) {
+		step = step
+			.pipe(plugins.uglify())
+			.pipe(plugins.rename("vendor.min.js"))
+			.pipe(gulp.dest(dest));
+	}
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
 };
 
-var buildVendorStyles = function (dest) {
+var buildVendorStyles = function (dest, minify) {
+	var deferred = Q.defer();
 	var sources = [
 		"bower_components/fontawesome/css/font-awesome.css",
 		"bower_components/bootstrap/dist/css/bootstrap.css",
 		"bower_components/medium-editor/dist/css/medium-editor.css",
-		"bower_components/medium-editor/dist/css/themes/default.css"
+		"bower_components/medium-editor/dist/css/themes/default.css",
+		"bower_components/angular-ui-tree/source/angular-ui-tree.css",
+		"bower_components/angular-datepicker/dist/index.css"
 	];
-	return gulp.src(sources)
+	var step = gulp.src(sources)
 		.pipe(plugins.concat("vendor.css"))
-		.pipe(gulp.dest(dest))
-		.pipe(plugins.minifyCss())
-		.pipe(plugins.rename("vendor.min.css"))
 		.pipe(gulp.dest(dest));
+	if (minify) {
+		step = step
+			.pipe(plugins.minifyCss())
+			.pipe(plugins.rename("vendor.min.css"))
+			.pipe(gulp.dest(dest));
+	}
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
 };
 
-var buildVendorFontsCss = function (dest) {
+var buildVendorFontsCss = function (dest, minify) {
+	var deferred = Q.defer();
 	// Building fonts' css sources
 	var fontsCssSources = [
 		"google_fonts/css/*"
 	];
-	return gulp.src(fontsCssSources)
+	var step = gulp.src(fontsCssSources)
 		.pipe(plugins.concat("google_fonts.css"))
-		.pipe(gulp.dest(dest))
-		.pipe(plugins.minifyCss())
-		.pipe(plugins.rename("google_fonts.min.css"))
 		.pipe(gulp.dest(dest));
+	if (minify) {
+		step = step
+			.pipe(plugins.minifyCss())
+			.pipe(plugins.rename("google_fonts.min.css"))
+			.pipe(gulp.dest(dest));
+	}
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
 };
 
 var buildVendorFontsGlyphs = function (dest) {
+	var deferred = Q.defer();
 	// Copying fonts in the right place
 	var fontSources = [
 		"bower_components/fontawesome/fonts/*",
 		"google_fonts/fonts/*"
 	];
-	return gulp.src(fontSources)
+	var step = gulp.src(fontSources)
 		.pipe(gulp.dest(dest));
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
 };
 
 
@@ -210,29 +271,50 @@ var buildDevFonts = function () {
 };
 
 var buildDevCss = function () {
-	util.print("Building css... ");
-	mkdirp.sync("builds/dev/dist/css");
-	buildAppStyles("builds/dev/dist/css");
-	buildVendorStyles("builds/dev/dist/css");
-	buildVendorFontsCss("builds/dev/dist/css");
-	util.print("done\n");
+	return Q()
+		.then(function () {
+			util.print("Building css... ");
+			mkdirp.sync("builds/dev/dist/css");
+			return buildAppStyles("builds/dev/dist/css");
+		})
+		.then(function () {
+			return buildVendorStyles("builds/dev/dist/css");
+		})
+		.then(function () {
+			return buildVendorFontsCss("builds/dev/dist/css");
+		})
+		.then(function () {
+			util.print("done\n");
+		});
 };
 
 var buildDevJs = function () {
-	util.print("Building js... ");
-	mkdirp.sync("builds/dev/dist/js");
-	buildAppScripts("builds/dev/dist/js");
-	buildAppTemplates("builds/dev/dist/js");
-	buildVendorScripts("builds/dev/dist/js");
-	util.print("done\n");
+	return Q()
+		.then(function () {
+			util.print("Building js... ");
+			mkdirp.sync("builds/dev/dist/js");
+			buildAppScripts("builds/dev/dist/js");
+		})
+		.then(function () {
+			return buildAppTemplates("builds/dev/dist/js");
+		})
+		.then(function () {
+			return buildVendorScripts("builds/dev/dist/js");
+		})
+		.then(function () {
+			util.print("done\n");
+		});
 };
 
 var buildDevHtml = function () {
-	util.print("Building html... ");
-	var html = fs.readFileSync("app/main.html", "utf8");
-	var devHtml = pp.preprocess(html, {TARGET: "dev"});
-	fs.writeFileSync("builds/dev/index.html", devHtml);
-	util.print("done\n");
+	return Q()
+		.then(function () {
+			util.print("Building html... ");
+			var html = fs.readFileSync("app/main.html", "utf8");
+			var devHtml = pp.preprocess(html, {TARGET: "dev"});
+			fs.writeFileSync("builds/dev/index.html", devHtml);
+			util.print("done\n");
+		});
 };
 
 var buildDevFavicon = function () {
@@ -275,20 +357,31 @@ gulp.task("dev", function () {
 	}).listen(8000, "0.0.0.0");
 
 	var scssWatcher = gulp.watch("app/**/*.scss");
-	scssWatcher.on("change", function () {
-		buildDevCss();
-		ws.send("reload");
-	});
+	var scssHandler = _.throttle(function () {
+		buildDevCss()
+			.then(function () {
+				ws.send("reload");
+			});
+	}, 1000);
+	scssWatcher.on("change", scssHandler);
+
 	var jsWatcher = gulp.watch(["app/**/*.html", "!app/main.html", "app/**/*.js"]);
-	jsWatcher.on("change", function () {
-		buildDevJs();
-		ws.send("reload");
-	});
+	var jsHandler = _.throttle(function () {
+		buildDevJs()
+			.then(function () {
+				ws.send("reload");
+			});
+	}, 1000);
+	jsWatcher.on("change", jsHandler);
+
 	var htmlWatcher = gulp.watch("app/main.html");
-	htmlWatcher.on("change", function () {
-		buildDevHtml();
-		ws.send("reload");
-	});
+	var htmlHandler = _.throttle(function () {
+		buildDevHtml()
+			.then(function () {
+				ws.send("reload");
+			});
+	}, 1000);
+	htmlWatcher.on("change", htmlHandler);
 
 });
 

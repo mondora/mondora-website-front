@@ -82,6 +82,12 @@ angular.module("mnd-web.pages")
 		return isImage;
 	};
 
+	$scope.canAddEntry = function () {
+		if (!$scope.user) {
+			return false;
+		}
+	};
+
 	/////////////////////////
 	//   Right Side height //
 	/////////////////////////

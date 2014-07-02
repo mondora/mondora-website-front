@@ -48,7 +48,7 @@
 				(function () {
 					var ws = new WebSocket("ws://localhost:8000");
 					ws.onmessage = function (e) {
-						location.reload();
+						location.reload(true);
 					};
 				})();
 			</script>
