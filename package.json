@@ -32,7 +32,7 @@
     "gulp-ng-html2js": "^0.1.7",
     "gulp-preprocess": "^1.1.1",
     "gulp-rename": "^1.2.0",
-    "gulp-sass": "0.7.2",
+    "gulp-sass": "0.7.1",
     "gulp-uglify": "^0.3.1",
     "istanbul": "^0.2.14",
     "karma": "^0.12.16",
