@@ -4,7 +4,7 @@ angular.module("mnd-web.pages")
 
 .controller("TodayController", ["$scope", function ($scope) {
 
-	$scope.DEFAULT_POMODORO_DURATION = 1 * 10 * 1000;
+	$scope.DEFAULT_POMODORO_DURATION = 15 * 60 * 1000;
 
 	$scope.Tasks = $scope.Ceres.createCollection("tasks");
 	var tasksRQ = $scope.Tasks.reactiveQuery({});
