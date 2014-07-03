@@ -5,6 +5,34 @@
 		<input type="{{parameter.type}}" ng-model="actionSettings.parameters[$index]" class="form-control" />
 	</div>
 
+	<div ng-if="parameter.type === 'number'" class="form-group">
+		<label>{{parameter.label}}</label>
+		<input type="{{parameter.type}}" ng-model="actionSettings.parameters[$index]" class="form-control" />
+	</div>
+
+	<div ng-if="parameter.type === 'tags'">
+		<label>{{parameter.label}}</label>
+		<div mnd-tags tags="actionSettings.parameters[$index]" placeholder="{{parameter.placeholder}}"></div>
+	</div>
+
+	<div ng-if="parameter.type === 'users'">
+		<label>{{parameter.label}}</label>
+		<br />
+		<span ng-repeat="user in actionSettings.parameters[$index]" class="mnd-width-35">
+			<div class="mnd-inline-block" mnd-cig-image source="user.pictureUrl" size="30"></div>
+		</span>
+		<br />
+		<div class="input-group">
+			<input type="text" class="form-control" mnd-user-input user-model="user.model" placeholder="{{parameter.placeholder}}" />
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="addUser($index)">
+					<i class="fa fa-plus"></i>
+				</button>
+			</span>
+		</div>
+		<br />
+	</div>
+
 	<div ng-if="parameter.type === 'textarea'" class="form-group">
 		<label>{{parameter.label}}</label>
 		<textarea class="form-control" rows="5" ng-model="actionSettings.parameters[$index]"></textarea>
