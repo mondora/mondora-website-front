@@ -13,7 +13,7 @@ angular.module("mnd-web.components")
 		link: function ($scope) {
 			$scope.delTag = function (index) {
 				var removedTags = $scope.tags.splice(index, 1);
-				if ($scope.onRemove) {
+				if ($scope.onRemove()) {
 					$scope.onRemove()(removedTags[0]);
 				}
 			};

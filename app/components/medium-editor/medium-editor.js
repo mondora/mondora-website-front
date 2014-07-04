@@ -17,10 +17,30 @@ angular.module("mnd-web.components")
 			// Populate the editor
 			$element.html($scope.content);
 			// Instantiate the editor
-			new MediumEditor($element[0], $scope.options);
+			$scope.mediumEditorInstance = new MediumEditor($element[0], $scope.options);
 			// Register for changes, throttling events
 			$element.on("keyup", _.throttle(updateContent, 500));
 
+			var setPlaceholders = function () {
+				$element.removeClass("medium-editor-placeholder");
+				if (
+					!($element[0].querySelector("img")) &&
+					!($element[0].querySelector("blockquote")) &&
+					$element[0].textContent.replace(/^\s+|\s+$/g, "") === ""
+				) {
+					$element.addClass("medium-editor-placeholder");
+				}
+			};
+
+			var updateContentFromOutside = function () {
+				if ($scope.content !== $element.html()) {
+					$element.html($scope.content);
+				}
+				setPlaceholders();
+			};
+			$scope.$watch("content", function () {
+				updateContentFromOutside();
+			});
 
 
 			/////////////////////////////////////

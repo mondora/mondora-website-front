@@ -78,6 +78,12 @@ span.mnd-width-50 {
 span.mnd-width-40 {
 	display: inline-block;
 }
+.mnd-width-35 {
+	width: 35px;
+}
+span.mnd-width-35 {
+	display: inline-block;
+}
 .mnd-width-30 {
 	width: 30px;
 }
@@ -138,9 +144,4 @@ span.mnd-width-10 {
 }
 .file-upload-icon-lg:hover {
 	opacity: 0.8;
-}
-
-// Medium Editor Fixes
-.medium-editor-placeholder:after {
-	position: static;
 }

@@ -22,7 +22,8 @@ angular.module("mnd-web.components")
 		terminal: true,
 		priority: 1000,
 		scope: {
-			userModel: "="
+			userModel: "=",
+			placeholder: "@"
 		},
 		controller: ["$scope", function ($scope) {
 			var usersRQ = $rootScope.Users.reactiveQuery({});
@@ -30,9 +31,11 @@ angular.module("mnd-web.components")
 				$scope.users = usersRQ.result;
 			});
 			$scope.users = usersRQ.result;
+			$scope.ph = $scope.placeholder;
 		}],
 		compile: function (element, attrs) {
 			element.attr("ng-model", "userModel");
+			element.attr("placeholder", "{{ph}}");
 			element.attr("typeahead", "user as user.profile.name for user in users | filterByNameAndScreenName : $viewValue");
 			element.attr("typeahead-template-url", "components/user-input/user-input.html");
 			element.removeAttr("mnd-user-input");

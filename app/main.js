@@ -36,11 +36,13 @@ angular.module("mnd-web", [
 	// Third party modules
 	"ui.bootstrap",
 	"ui.router",
+	"ui.tree",
 	"mnd.sprinkle",
 	"mnd.dashboard",
 	"angularFileUpload",
 	"ngSanitize",
 	"RecursionHelper",
+	"datePicker",
 
 	// App modules
 	"mnd-web.templates",

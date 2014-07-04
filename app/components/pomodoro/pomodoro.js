@@ -2,26 +2,37 @@ angular.module("mnd-web.components")
 
 .factory("PomodoroService", ["$rootScope", function ($rootScope) {
 
-	var Pomodoros = $rootScope.Ceres.createCollection("pomodoros");
-
-	var start = function (pomodoro) {
-		return $rootScope.Ceres.call("startPomodoro", pomodoro._id);
+	var start = function (taskId, pomodoroId) {
+		var event = {
+			action: "start"
+		};
+		return Ceres.call("addPomodoroEvent", taskId, pomodoroId, event);
 	};
 
-	var pause = function (pomodoro) {
-		return $rootScope.Ceres.call("pausePomodoro", pomodoro._id);
+	var pause = function (taskId, pomodoroId, reason) {
+		var event = {
+			action: "pause",
+			reason: reason
+		};
+		return Ceres.call("addPomodoroEvent", taskId, pomodoroId, event);
 	};
 
-	var stop = function (pomodoro) {
-		return $rootScope.Ceres.call("stopPomodoro", pomodoro._id);
+	var stop = function (taskId, pomodoroId) {
+		var event = {
+			action: "stop"
+		};
+		return Ceres.call("addPomodoroEvent", taskId, pomodoroId, event);
 	};
 
-	var addParticipant = function (pomodoro, participantId) {
-		return $rootScope.Ceres.call("addPomodoroParticipant", pomodoro._id, participantId);
+	var abort = function (taskId, pomodoroId, reason) {
+		var event = {
+			action: "abort"
+		};
+		return Ceres.call("addPomodoroEvent", taskId, pomodoroId, event);
 	};
 
-	var setDuration = function (pomodoro, duration) {
-		return $rootScope.Ceres.call("setPomodoroDuration", pomodoro._id, duration);
+	var setDuration = function (taskId, pomodoroId, duration) {
+		return Ceres.call("setPomodoroDuration", taskId, pomodoroId, duration);
 	};
 
 	var calculateElapsed = function (pomodoro) {
@@ -30,13 +41,14 @@ angular.module("mnd-web.components")
 				pre += arr[idx].time - arr[idx - 1].time;
 				return pre;
 			} else if (idx === (arr.length - 1)) {
-				pre += Date.now() - arr[idx].time;
+				pre += Date.now() - (arr[idx].time + $rootScope.serverTimeDelta);
 				return pre;
 			} else {
 				return pre;
 			}
 		}, 0);
 	};
+
 	var calculateRemaining = function (pomodoro) {
 		var elapsed = calculateElapsed(pomodoro);
 		var remaining = pomodoro.duration - elapsed;
@@ -50,8 +62,9 @@ angular.module("mnd-web.components")
 		start: start,
 		pause: pause,
 		stop: stop,
-		addParticipant: addParticipant,
+		abort: abort,
 		setDuration: setDuration,
+		calculateElapsed: calculateElapsed,
 		calculateRemaining: calculateRemaining
 	};
 }])
@@ -63,10 +76,8 @@ angular.module("mnd-web.components")
 		replace: true,
 		scope: {
 			pomodoro: "=",
-			size: "@?",
-			ticker: "=?",
-			ticked: "=?",
-			tickWith: "@?"
+			taskId: "@",
+			size: "@?"
 		},
 		link: function ($scope, $element) {
 
@@ -145,34 +156,23 @@ angular.module("mnd-web.components")
 			/////////////////
 
 			$scope.$watch("pomodoro.status", function (status) {
-				if ($scope.ticked) {
-					$rootScope.$on("pomodoroTick", function (e, pomodoroId, remaining) {
-						if (pomodoroId === $scope.tickWith) {
-							$scope.remaining = remaining;
-							drawCircle();
+				if (status === "running") {
+					$scope.interval = $interval(function () {
+						render();
+						if ($scope.ticker) {
+							$rootScope.$emit("pomodoroTick", $scope.pomodoro._id, $scope.remaining);
 						}
-					});
-				} else {
-					if (status === "running") {
-						$scope.interval = $interval(function () {
-							render();
-							if ($scope.ticker) {
-								$rootScope.$emit("pomodoroTick", $scope.pomodoro._id, $scope.remaining);
-							}
-							if ($scope.remaining === 0) {
-
-								timerAlarm.play();
-
-								$interval.cancel($scope.interval);
-								PomodoroService.stop($scope.pomodoro);
-							}
-						}, 1000);
-					} else if (status === "puased") {
-						$interval.cancel($scope.interval);
-					} else if (status === "stopped") {
-						$interval.cancel($scope.interval);
-						$scope.remaining = 0;
-					}
+						if ($scope.remaining === 0) {
+							$interval.cancel($scope.interval);
+							PomodoroService.stop($scope.taskId, $scope.pomodoro._id);
+							timerAlarm.play();
+						}
+					}, 1000);
+				} else if (status === "paused") {
+					$interval.cancel($scope.interval);
+				} else if (status === "stopped") {
+					$interval.cancel($scope.interval);
+					$scope.remaining = 0;
 				}
 			});
 			// Clear the interval when the scope is destroyed

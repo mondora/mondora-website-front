@@ -19,6 +19,19 @@ angular.module("mnd-web.components")
 					$scope.actionSettings.methodName = $scope.actionSchema.methodName;
 				}
 			});
+
+			$scope.user = {};
+			$scope.addUser = function (index) {
+				$scope.actionSettings.parameters[index] = $scope.actionSettings.parameters[index] || [];
+				$scope.actionSettings.parameters[index].push({
+					userId: $scope.user.model._id,
+					name: $scope.user.model.profile.name,
+					screenName: $scope.user.model.profile.screenName,
+					pictureUrl: $scope.user.model.profile.pictureUrl
+				});
+				$scope.user = {};
+			};
+
 		}
 	};
 }])
