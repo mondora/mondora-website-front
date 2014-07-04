@@ -269,6 +269,6 @@ angular.module("mnd-web.pages")
 		var highlighted = "<span class=\"post-view-highlight\">" + comment.anchor + "</span>";
 		html = html.replace(highlighted, comment.anchor);
 		p.innerHTML = html;
-	};
+	}
 
 }]);

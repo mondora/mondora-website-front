@@ -24,7 +24,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 #mnd-sidebar.sidebar-open{
 	transform: translateX(300px);
 }
-@media (max-width: 767px) {
+@media (max-width: 767px) and (orientation: portrait) {
 	#mnd-sidebar {
 		left: -240px;
 		width: 240px;
@@ -55,7 +55,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 #mnd-toggle-sidebar.sidebar-open{
 	transform: translateX(300px);
 }
-@media (max-width: 767px) {
+@media (max-width: 767px) and (orientation: portrait) {
 	#mnd-toggle-sidebar {
 		height: 80px;
 		min-height: 0px;
@@ -96,7 +96,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	overflow: hidden;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px) and (orientation: portrait) {
 	#mnd-content {
 		padding-left: 0px;
 		padding-top: 70px;
