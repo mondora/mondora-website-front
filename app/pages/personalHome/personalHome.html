@@ -1,27 +1,45 @@
 <div class="personal-home-container radial-background">
-	<div class="col-sm-8 col-sm-offset-2">
-		<br />
-		<br />
-		<h2 class="personalHome-h2">Hello {{user.profile.screenName}}!</h2>
+	<div class="mnd-vsp-32"></div>
+	<div class="row">
+		<div class="col-sm-12">
+			<h2 class="text-center">Hello {{user.profile.screenName}}!</h2>
+		</div>
+	</div>
 
-		<br />
-
-		<br />
-		<div class="app-box">
-			<a ui-sref="profile()" class="personalHomeApp">
+	<div class="col-sm-4">
+		<div class="text-center">
+			<h4>Your apps</h4>
+			<a class="app-box" ui-sref="profile()">
 				<i class="fa fa-user"></i>
 			</a>
-			<div class="notification">999</div>
-		</div>
-		<div class="app-box">
-			<a ui-sref="admin()" ng-if="isAdmin()" class="personalHomeApp">
+			<a class="app-box" ui-sref="admin()" ng-if="isAdmin()">
 				<i class="fa fa-dashboard"></i>
 			</a>
-		</div>
-		<div class="app-box">	
-			<a ui-sref="today()" class="personalHomeApp">
+			<a class="app-box" ui-sref="today()">
 				<i class="fa fa-tasks"></i>
+			</a>
+			<a class="app-box" ui-sref="inbox()">
+				<i class="fa fa-inbox"></i>
 			</a>
 		</div>
 	</div>
+
+	<div class="col-sm-4">
+		<div>
+			<h4>Latest notifications</h4>
+			<div class="personal-home-notification" ng-repeat="notification in notifications | dismissedFromHomepage | orderBy:'-date'">
+				<i class="fa fa-circle mnd-width-20" mnd-color-me="{{notification.category}}" fg="true"></i>
+				<span>
+					{{notification.subject}}
+				</span>
+				<span class="pull-right">
+					{{notification.date | relativeDate}}
+					&nbsp;
+					&nbsp;
+					<i class="fa fa-times mnd-clickable" ng-click="dismissNotification(notification)"></i>
+				</span>
+			</div>
+		</div>
+	</div>
+
 </div>

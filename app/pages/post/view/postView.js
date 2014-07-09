@@ -232,21 +232,6 @@ angular.module("mnd-web.pages")
 	$scope.saveCommentAt = function (index) {
 		$scope.comment.paragraph = index;
 		$scope.Ceres.call("addCommentToPost", $scope.post._id, $scope.comment);
-		var matches = $scope.comment.text.match(/#\w+/g);
-		if (matches) {
-			var entry = {
-				type: "comment",
-				content: {
-					postId: $scope.post._id,
-					postTitle: $scope.post.title,
-					text: $scope.comment.text,
-					anchor: $scope.comment.anchor
-				}
-			};
-			matches.forEach(function (channel) {
-				$scope.Ceres.call("addEntryToChannel", channel.slice(1), entry);
-			});
-		}
 		$scope.comment.text = "";
 		$scope.comment.anchor = "";
 	};
@@ -269,6 +254,6 @@ angular.module("mnd-web.pages")
 		var highlighted = "<span class=\"post-view-highlight\">" + comment.anchor + "</span>";
 		html = html.replace(highlighted, comment.anchor);
 		p.innerHTML = html;
-	}
+	};
 
 }]);

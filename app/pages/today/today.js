@@ -6,7 +6,7 @@ angular.module("mnd-web.pages")
 
 	$scope.DEFAULT_POMODORO_DURATION = 25 * 60 * 1000;
 
-	$scope.Tasks = $scope.Ceres.createCollection("tasks");
+	$scope.Tasks = $scope.Ceres.getCollection("tasks");
 	var tasksRQ = $scope.Tasks.reactiveQuery({});
 	tasksRQ.on("change", function () {
 		$scope.safeApply(function () {
