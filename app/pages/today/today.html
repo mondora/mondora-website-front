@@ -3,37 +3,34 @@
 	<div class="mnd-vsp-64"></div>
 
 	<div class="today-container col-sm-3 col-sm-offset-1">
-
-		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Add task" ng-model="newTask.name" mnd-enter="addTask()" />
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="button" ng-click="addTask()">
-					<i class="fa fa-plus"></i>
-				</button>
-			</span>
+		<div class="today-header-group">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Add task" ng-model="newTask.name" mnd-enter="addTask()" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" ng-click="addTask()">
+						<i class="fa fa-plus"></i>
+					</button>
+				</span>
+			</div>
+			<div class="task-tag-filter input-group">
+				<span class="input-group-addon"><i class="fa fa-search"></i></span>
+				<input type="text" class="form-control" placeholder="Filter by tag" ng-model="filters.tag" />
+			</div>
+			<div class="task-status-filter btn-group btn-group-justified">
+				<div class="btn-group">
+					<button type="button" class="btn btn-default" ng-click="filters.status = 'todo'">Todo</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default" ng-click="filters.status = 'progress'">Doing</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default" ng-click="filters.status = 'done'">Done</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default" ng-click="filters.status = null">All</button>
+				</div>
+			</div>
 		</div>
-
-		<br />
-		<div class="btn-group btn-group-justified">
-			<div class="btn-group">
-				<button type="button" class="btn btn-default" ng-click="filters.status = 'todo'">Todo</button>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-default" ng-click="filters.status = 'progress'">Doing</button>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-default" ng-click="filters.status = 'done'">Done</button>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-default" ng-click="filters.status = null">All</button>
-			</div>
-		</div>
-		<br />
-		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-filter"></i></span>
-			<input type="text" class="form-control" placeholder="Filter by tag" ng-model="filters.tag" />
-		</div>
-		<br />
 		<div class="tasks-container" ng-if="tasks.length !== 0" ui-tree>
 			<ol ui-tree-nodes="" ng-model="tasks">
 				<li ng-repeat="task in tasks | filter:filterTasks | orderBy:'-date'" ui-tree-node>
