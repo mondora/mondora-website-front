@@ -55,7 +55,7 @@
 						<h4>{{post.subtitle}}</h4>
 					</a>
 					<div class="post-author-topiclist">
-						<span class="reading-topiclist">Reading time {{post.readingLength}} min</span>
+						<span class="reading-topiclist">Reading time {{getEstimatedReadingTime(post.body)}} min</span>
 					</div>
 					<div class="topic-bottom"></div>
 				</div>

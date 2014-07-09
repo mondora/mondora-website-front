@@ -60,7 +60,7 @@
 							<span class="comment-author">{{comment.userScreenName}}</span>
 							{{comment.text}}
 						</p>
-						<a class="mnd-clickable" ng-if="ownsComment(comment)" ng-click="deleteComment(comment)">Elimina</a>
+						<a class="mnd-clickable" ng-if="ownsComment(comment) && commentIsNotTooOld(comment)" ng-click="deleteComment(comment)">Elimina</a>
 						<a class="mnd-clickable" ng-if="isAuthor() && !comment.approved" ng-click="publishComment(comment)">Rendi pubblico</a>
 						<hr />
 					</div>

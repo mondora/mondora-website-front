@@ -197,6 +197,12 @@ angular.module("mnd-web.pages")
 		}
 	};
 
+	$scope.commentIsNotTooOld = function (comment) {
+		var FIVE_MINUTES = 5 * 60 * 1000;
+		var age = Date.now() - comment.publishedOn;
+		return age < FIVE_MINUTES;
+	};
+
 	$scope.paragraphHasComments = function (index) {
 		var paragraphComments = $filter("filterCommentsByParagraph")($scope.post.comments, index);
 		if ($scope.isAuthor()) {

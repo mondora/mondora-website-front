@@ -304,13 +304,10 @@ angular.module("mnd-web")
 			userSub: ["$stateParams", function ($stateParams) {
 				return Ceres.subscribe("singleUser", $stateParams.userId);
 			}],
-			postsMeth: ["$stateParams", function ($stateParams) {
-				return Ceres.call("getPostsByAuthor", $stateParams.userId);
+			postsByAuthorSub: ["$stateParams", function ($stateParams) {
+				return Ceres.subscribe("postsByAuthor", $stateParams.userId);
 			}]
 		},
-		onExit: ["userSub", function (userSub) {
-			userSub.stop();
-		}],
 		public: true
 	});
 
@@ -324,9 +321,6 @@ angular.module("mnd-web")
 				return Ceres.subscribe("teamUsers");
 			}]
 		},
-		onExit: ["teamSub", function (teamSub) {
-			teamSub.stop();
-		}],
 		public: true
 	});
 
@@ -357,8 +351,7 @@ angular.module("mnd-web")
 				itemtype: "http://schema.org/Article"
 			});
 		}],
-		onExit: ["postSubId", function (postSubId) {
-			Ceres.subscriptions[postSubId].stop();
+		onExit: [function () {
 			resetSeoTags();
 		}],
 		public: true
@@ -374,10 +367,7 @@ angular.module("mnd-web")
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
-		},
-		onExit: ["postSubId", function (postSubId) {
-			Ceres.subscriptions[postSubId].stop();
-		}]
+		}
 	});
 
     $stateProvider.state("topic", {
@@ -411,9 +401,6 @@ angular.module("mnd-web")
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
-		onExit: ["channelSubId", function (channelSubId) {
-			Ceres.subscriptions[channelSubId].stop();
-		}],
 		public: true
 	});
 
@@ -427,10 +414,7 @@ angular.module("mnd-web")
 				var sub = Ceres.subscribe("singleChannel", $stateParams.channelId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
-		},
-		onExit: ["channelSubId", function (channelSubId) {
-			Ceres.subscriptions[channelSubId].stop();
-		}]
+		}
 	});
 
 
