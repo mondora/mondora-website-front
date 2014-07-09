@@ -94,10 +94,10 @@ angular.module("mnd-web.components")
 			var circle = $element.find("circle");
 			var div = $element.find("div");
 
-			$element.css({
-				width: CW + "px",
-				height: CW + "px"
-			});
+			//$element.css({
+			//	width: CW + "px",
+			//	height: CW + "px"
+			//});
 
 			svg.attr("width", CW);
 			svg.attr("height", CW);
@@ -108,11 +108,11 @@ angular.module("mnd-web.components")
 			circle.attr("r", HCW * 0.7);
 			circle.attr("transform", "translate(" + HCW + ", " + HCW + ")");
 
-			div.css({
-				"height": CW + "px",
-				"line-height": CW + "px",
-				"font-size": CW * 0.20 + "px"
-			});
+			//div.css({
+			//	"height": CW + "px",
+			//	"line-height": CW + "px",
+			//	"font-size": CW * 0.20 + "px"
+			//});
 
 			///////////////////////
 			// Drawing functions //

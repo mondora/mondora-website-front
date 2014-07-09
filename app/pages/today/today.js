@@ -119,11 +119,17 @@ angular.module("mnd-web.pages")
 			return status === "done" || status === "aborted";
 		});
 	};
+	$scope.donePomodoros = function() {
+		return $scope.completedPomodoros().length;
+	};
 	$scope.uncompletedPomodoros = function () {
 		return $scope.selectedTask.pomodoros.filter(function (pomodoro) {
 			var status = pomodoro.status;
 			return status !== "done" && status !== "aborted";
 		});
+	};
+	$scope.remainingPomodoros = function() {
+		return $scope.uncompletedPomodoros().length;
 	};
 	$scope.addPomodoro = function () {
 		$scope.selectedTask.pomodoros.push({
@@ -142,6 +148,7 @@ angular.module("mnd-web.pages")
 	$scope.abort = function () {
 		PomodoroService.abort($scope.selectedTask._id, $scope.selectedTask.pomodoros[0]._id, "No reason");
 	};
+
 
 	/////////////////////////////////////////
 	// Name and description editor options //

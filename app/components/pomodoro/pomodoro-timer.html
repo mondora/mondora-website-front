@@ -1,9 +1,6 @@
 <div class="mnd-pomodoro-timer">
-	<svg>
-		<path />
-		<circle />
-	</svg>
-	<div>
-		{{remaining | date: format}}
-	</div>
+	<progressbar class="progress-striped active" max="(25*60*1000)" value="remaining"></progressbar>
+	<span>{{remaining | date: format}}</span>
+	<br />
 </div>
+
