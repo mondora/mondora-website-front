@@ -3,7 +3,12 @@ var GIVE_UP_DELAY = 30000;
 (function () {
 	var config = {
 		dev: {
-			host: "localhost:3000"
+			host: "localhost:3000",
+			/*
+			interjectSocketFunction: function (e) {
+				console.log(e);
+			}
+			*/
 		},
 		test: {
 			host: "test.api.mondora.com"
@@ -23,7 +28,7 @@ var GIVE_UP_DELAY = 30000;
 	}
 	//TODO Use ng-asteroid, fool!
 	var deferred = Q.defer();
-	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.debug);
+	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.interjectSocketFunction);
 	Ceres.on("connected", function () {
 		deferred.resolve();
 	});
@@ -222,7 +227,13 @@ angular.module("mnd-web")
 		url: "/home",
 		parent: "root",
 		templateUrl: "pages/personalHome/personalHome.html",
-		controller: "PersonalHomeController"
+		controller: "PersonalHomeController",
+		resolve: {
+			notificationsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("notifications");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}]
+		}
 	});
 
 	$stateProvider.state("profile", {
@@ -265,6 +276,19 @@ angular.module("mnd-web")
 		}
 	});
 
+	$stateProvider.state("inbox", {
+		url: "/inbox",
+		parent: "root",
+		templateUrl: "pages/inbox/inbox.html",
+		controller: "InboxController",
+		resolve: {
+			notificationsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("notifications");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}]
+		}
+	});
+
 
 
 	////////////////////
@@ -280,13 +304,10 @@ angular.module("mnd-web")
 			userSub: ["$stateParams", function ($stateParams) {
 				return Ceres.subscribe("singleUser", $stateParams.userId);
 			}],
-			postsMeth: ["$stateParams", function ($stateParams) {
-				return Ceres.call("getPostsByAuthor", $stateParams.userId);
+			postsByAuthorSub: ["$stateParams", function ($stateParams) {
+				return Ceres.subscribe("postsByAuthor", $stateParams.userId);
 			}]
 		},
-		onExit: ["userSub", function (userSub) {
-			userSub.stop();
-		}],
 		public: true
 	});
 
@@ -300,9 +321,6 @@ angular.module("mnd-web")
 				return Ceres.subscribe("teamUsers");
 			}]
 		},
-		onExit: ["teamSub", function (teamSub) {
-			teamSub.stop();
-		}],
 		public: true
 	});
 
@@ -333,8 +351,7 @@ angular.module("mnd-web")
 				itemtype: "http://schema.org/Article"
 			});
 		}],
-		onExit: ["postSubId", function (postSubId) {
-			Ceres.subscriptions[postSubId].stop();
+		onExit: [function () {
 			resetSeoTags();
 		}],
 		public: true
@@ -350,10 +367,7 @@ angular.module("mnd-web")
 				var sub = Ceres.subscribe("singlePost", $stateParams.postId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
-		},
-		onExit: ["postSubId", function (postSubId) {
-			Ceres.subscriptions[postSubId].stop();
-		}]
+		}
 	});
 
     $stateProvider.state("topic", {
@@ -387,9 +401,6 @@ angular.module("mnd-web")
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
-		onExit: ["channelSubId", function (channelSubId) {
-			Ceres.subscriptions[channelSubId].stop();
-		}],
 		public: true
 	});
 
@@ -403,10 +414,7 @@ angular.module("mnd-web")
 				var sub = Ceres.subscribe("singleChannel", $stateParams.channelId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
-		},
-		onExit: ["channelSubId", function (channelSubId) {
-			Ceres.subscriptions[channelSubId].stop();
-		}]
+		}
 	});
 
 
@@ -438,10 +446,12 @@ angular.module("mnd-web")
 	$rootScope.Ceres = Ceres;
 	Ceres.subscribe("userAdditionalInfo");
 	Ceres.subscribe("allUsers");
-	$rootScope.Configurations = Ceres.createCollection("configurations");
-	$rootScope.Posts = Ceres.createCollection("posts");
-	$rootScope.Channels = Ceres.createCollection("channels");
-	$rootScope.Users = Ceres.createCollection("users");
+	Ceres.subscribe("notifications");
+	$rootScope.Configurations = Ceres.getCollection("configurations");
+	$rootScope.Posts = Ceres.getCollection("posts");
+	$rootScope.Channels = Ceres.getCollection("channels");
+	$rootScope.Notifications = Ceres.getCollection("notifications");
+	$rootScope.Users = Ceres.getCollection("users");
 
 	Ceres.on("login", function (userId) {
 		$rootScope.loggedInUserQuery = $rootScope.Users.reactiveQuery({_id: userId});
