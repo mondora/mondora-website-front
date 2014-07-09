@@ -1,59 +1,3 @@
-<!--
-<div mnd-modal header="Add task" open="modalStatus.addTask">
-	<div ng-controller="AddTaskModalController">
-		<div class="form-group">
-			<label>Name</label>
-			<input type="text" class="form-control" placeholder="Name" ng-model="task.name" />
-		</div>
-
-		<div class="form-group">
-			<label>Estimated pomodoros</label>
-			<input type="number" class="form-control" ng-model="task.pomodoros" />
-		</div>
-
-		<div>
-			<label>Description</label>
-			<textarea class="form-control" rows="4" placeholder="Description" ng-model="task.description"></textarea>
-		</div>
-
-		<br />
-		<label>Tags</label>
-		<div mnd-tags tags="task.tags" placeholder="Add tag"></div>
-		<br />
-
-		<div class="form-group">
-			<label>Day</label>
-			<input type="datetime" date-time max-view="date" min-view="date" format="yyyy-MM-dd" class="form-control" ng-model="task.date" />
-		</div>
-		
-		<label>Participants</label>
-		<div class="participant-list" ng-repeat="participant in task.participants">
-			<div class="mnd-inline-block mnd-valign-middle" mnd-cig-image source="participant.pictureUrl" size="30"></div>
-			<span>{{participant.name}}</span>
-		</div>
-
-		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Add participant" mnd-user-input user-model="participant.model" />
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="button" ng-click="addParticipant()">
-					<i class="fa fa-plus"></i>
-				</button>
-			</span>
-		</div>
-
-		<br />
-		<button type="button" class="btn btn-default" ng-click="addTask()">
-			Add
-		</button>
-		<button type="button" class="btn btn-default" ng-click="modalStatus.addTask = false">
-			Cancel
-		</button>
-	</div>
-</div>
--->
-
-
-
 <div class="today-page-container radial-background">
 
 	<div class="mnd-vsp-64"></div>
@@ -70,9 +14,29 @@
 		</div>
 
 		<br />
+		<div class="btn-group btn-group-justified">
+			<div class="btn-group">
+				<button type="button" class="btn btn-default" ng-click="filters.status = 'todo'">Todo</button>
+			</div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default" ng-click="filters.status = 'progress'">Doing</button>
+			</div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default" ng-click="filters.status = 'done'">Done</button>
+			</div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default" ng-click="filters.status = null">All</button>
+			</div>
+		</div>
+		<br />
+		<div class="input-group">
+			<span class="input-group-addon"><i class="fa fa-filter"></i></span>
+			<input type="text" class="form-control" placeholder="Filter by tag" ng-model="filters.tag" />
+		</div>
+		<br />
 		<div class="tasks-container" ng-if="tasks.length !== 0" ui-tree>
 			<ol ui-tree-nodes="" ng-model="tasks">
-				<li ng-repeat="task in tasks" ui-tree-node>
+				<li ng-repeat="task in tasks | filter:filterTasks | orderBy:'-date'" ui-tree-node>
 					<div ng-click="selectTask(task._id)" class="task-summary task-status-{{task.status}}">
 						<div ui-tree-handle class="left-border" mnd-color-me="{{getDayFromDate(task.date)}}"></div>
 						<div class="pomodoros-container">

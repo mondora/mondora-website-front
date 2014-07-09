@@ -17,6 +17,22 @@ angular.module("mnd-web.pages")
 
 	$scope.tasksOrderBy = "date";
 
+	$scope.filters = {};
+	$scope.filterTasks = function (task) {
+		if ($scope.filters.status && $scope.filters.status !== task.status) {
+			return false;
+		}
+		if ($scope.filters.tag) {
+			if (!task.tags) return false;
+			var tagMatches = task.tags.reduce(function (acc, cur) {
+				if (acc) return acc;
+				return cur.indexOf($scope.filters.tag) !== -1;
+			}, false);
+			if (!tagMatches) return false;
+		}
+		return true;
+	};
+
 	$scope.getDayFromDate = function (date) {
 		return new Date(date).toString().slice(4, 15);
 	};
