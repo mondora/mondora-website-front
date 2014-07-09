@@ -71,8 +71,8 @@
 			<div mnd-pomodoro-timer class="running-pomodoro mnd-inline-block" pomodoro="uncompletedPomodoros()[0]" task-id="{{selectedTask._id}}"></div>
 			<div class="task-info row">
 				<div class="col-sm-6">
-					<div ng-if="uncompletedPomodoros()[0]" class="task-controls col-sm-12 text-center">
-						<div class="btn-group mnd-inline-block">
+					<div class="task-controls col-sm-12 text-center">
+						<div ng-if="uncompletedPomodoros()[0]" class="btn-group mnd-inline-block">
 							<button type="button" ng-if="uncompletedPomodoros()[0].status !== 'running'" class="btn btn-default" ng-click="start()"><i class="fa fa-play"></i></button>
 							<button type="button" ng-if="uncompletedPomodoros()[0].status === 'running'" class="btn btn-default" ng-click="pause()"><i class="fa fa-pause"></i></button>
 							<button type="button" class="btn btn-default" ng-click="abort()"><i class="fa fa-times"></i></button>
