@@ -65,9 +65,14 @@
 }
 
 .tasks-container {
-	height: 100%;
+	height: 90%;
 	overflow-y: scroll;
-	padding-bottom: 50px;
+	padding-bottom: 60px;
+}
+
+.today-header-group {
+	height: 110px;
+	overflow: hidden;
 }
 
 .task-summary {
@@ -163,7 +168,7 @@
 
 .counted-pomodoros {
 	font-weight: 400;
-	font-size: 18px;
+	font-size: 15px;
 	line-height: 30px;
 	padding-right: 15px;
 	margin-top: 20px;
@@ -205,4 +210,18 @@
 
 .active.btn {
 	box-shadow: 1px 3px 10px 0px #333333 inset;
+}
+
+.task-tag-filter{
+	padding: 5px 0px;
+	input {
+		height: 28px;
+	}
+}
+
+.task-status-filter{
+	.btn {
+		padding: 0px;
+		text-transform: uppercase;
+	}
 }
