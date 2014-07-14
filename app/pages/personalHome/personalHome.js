@@ -16,6 +16,10 @@ angular.module("mnd-web.pages")
 		}
 	};
 
+	var channelName = "user:" + $scope.user._id;
+	Ceres.subscribe("notificationChannel", channelName);
+	Ceres.subscribe("notificationChannel", "post:newPublic");
+
 	var notificationsRQ = $scope.Notifications.reactiveQuery({});
 	notificationsRQ.on("change", function () {
 		$scope.safeApply(function () {

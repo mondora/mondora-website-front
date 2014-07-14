@@ -227,13 +227,7 @@ angular.module("mnd-web")
 		url: "/home",
 		parent: "root",
 		templateUrl: "pages/personalHome/personalHome.html",
-		controller: "PersonalHomeController",
-		resolve: {
-			notificationsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
-				var sub = Ceres.subscribe("notifications");
-				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}]
-		}
+		controller: "PersonalHomeController"
 	});
 
 	$stateProvider.state("profile", {
@@ -280,13 +274,7 @@ angular.module("mnd-web")
 		url: "/inbox",
 		parent: "root",
 		templateUrl: "pages/inbox/inbox.html",
-		controller: "InboxController",
-		resolve: {
-			notificationsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
-				var sub = Ceres.subscribe("notifications");
-				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}]
-		}
+		controller: "InboxController"
 	});
 
 

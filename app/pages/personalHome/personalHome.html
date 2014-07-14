@@ -27,17 +27,8 @@
 	<div class="col-sm-4">
 		<div>
 			<h4>Latest notifications</h4>
-			<div class="personal-home-notification" ng-repeat="notification in notifications | dismissedFromHomepage | orderBy:'-date'">
-				<i class="fa fa-circle mnd-width-20" mnd-color-me="{{notification.category}}" fg="true"></i>
-				<span>
-					{{notification.subject}}
-				</span>
-				<span class="pull-right">
-					{{notification.date | relativeDate}}
-					&nbsp;
-					&nbsp;
-					<i class="fa fa-times mnd-clickable" ng-click="dismissNotification(notification)"></i>
-				</span>
+			<div class="personal-home-notification" ng-repeat="notification in notifications | orderBy:'-date'">
+				<div mnd-notification></div>
 			</div>
 		</div>
 	</div>

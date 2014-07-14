@@ -60,8 +60,8 @@
 							<span class="comment-author">{{comment.userScreenName}}</span>
 							{{comment.text}}
 						</p>
-						<a class="mnd-clickable" ng-if="ownsComment(comment) && commentIsNotTooOld(comment)" ng-click="deleteComment(comment)">Elimina</a>
-						<a class="mnd-clickable" ng-if="isAuthor() && !comment.approved" ng-click="publishComment(comment)">Rendi pubblico</a>
+						<a class="mnd-clickable" ng-if="ownsComment(comment) && commentIsNotTooOld(comment)" ng-click="deleteComment(comment)">Delete</a>
+						<a class="mnd-clickable" ng-if="isAuthor() && !comment.approved" ng-click="publishComment(comment)">Publish</a>
 						<hr />
 					</div>
 
@@ -70,12 +70,11 @@
 					</div>
 					<div ng-if="user" class="col-sm-8 mnd-top-most">
 						<p><b>{{user.profile.screenName}}</b></p>
-						<textarea ng-model="comment.text" class="form-control" placeholder="Lascia un commento" rows="3"></textarea>
-						<a class="mnd-clickable" ng-click="saveCommentAt($index)">Salva</a>
+						<textarea ng-model="comment.text" class="form-control" placeholder="Leave a comment" rows="3"></textarea>
+						<a class="mnd-clickable" ng-click="saveCommentAt($index)">Comment</a>
 						<hr class="hr-comment"/>
 						<p class="comment-warning">
-							Questo commento è solo visibile da te e dall'autore,
-							a meno che l'autore decida di renderlo pubblico
+							This note is only visible to you and the author, unless the author chooses to make it public.
 						</p>
 					</div>
 					<div ng-if="!user" class="col-sm-8">

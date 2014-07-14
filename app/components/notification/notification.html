@@ -1,0 +1,29 @@
+<a ui-sref="postView({postId: notification.details.postId})" ng-if="notification.type === 'mentionInComment'" class="mnd-undecorated-a">
+	<div>
+		<i class="fa fa-circle mnd-width-20" mnd-color-me="{{notification.type}}" fg="true"></i>
+		@{{notification.details.from.screenName}} mentioned you in a comment
+		<span class="pull-right">
+			{{notification.date | relativeDate}}
+		</span>
+	</div>
+</a>
+
+<a ui-sref="postView({postId: notification.details.postId})" ng-if="notification.type === 'commentToPost'" class="mnd-undecorated-a">
+	<div>
+		<i class="fa fa-circle mnd-width-20" mnd-color-me="{{notification.type}}" fg="true"></i>
+		@{{notification.details.from.screenName}} commented on your post
+		<span class="pull-right">
+			{{notification.date | relativeDate}}
+		</span>
+	</div>
+</a>
+
+<a ui-sref="postView({postId: notification.details.postId})" ng-if="notification.type === 'newPost'" class="mnd-undecorated-a">
+	<div>
+		<i class="fa fa-circle mnd-width-20" mnd-color-me="{{notification.type}}" fg="true"></i>
+		@{{notification.details.from.screenName}} published a new post
+		<span class="pull-right">
+			{{notification.date | relativeDate}}
+		</span>
+	</div>
+</a>
