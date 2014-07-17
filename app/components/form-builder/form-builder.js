@@ -20,16 +20,16 @@ angular.module("mnd-web.components")
 				}
 			});
 
-			$scope.user = {};
-			$scope.addUser = function (index) {
+			$scope.recipient = {};
+			$scope.addRecipient = function (index) {
 				$scope.actionSettings.parameters[index] = $scope.actionSettings.parameters[index] || [];
 				$scope.actionSettings.parameters[index].push({
-					userId: $scope.user.model._id,
-					name: $scope.user.model.profile.name,
-					screenName: $scope.user.model.profile.screenName,
-					pictureUrl: $scope.user.model.profile.pictureUrl
+					userId: $scope.recipient.model._id,
+					name: $scope.recipient.model.profile.name,
+					screenName: $scope.recipient.model.profile.screenName,
+					pictureUrl: $scope.recipient.model.profile.pictureUrl
 				});
-				$scope.user = {};
+				$scope.recipient = {};
 			};
 
 		}
@@ -79,6 +79,31 @@ angular.module("mnd-web.components")
 				});
 				return actionSchema;
 			};
+		}
+	};
+}])
+
+
+
+.directive("mndFormInjector", ["$templateCache", "$compile", "$timeout", function ($templateCache, $compile, $timeout) {
+	return {
+		restrict: "A",
+		link: function ($scope, $element, $attrs) {
+			$timeout(function () {
+				var container = $element[0].querySelector(".mnd-form-placeholder");
+				if (container) {
+					var propName = $attrs.mndFormInjector;
+					var formSchema = propName.split(".").reduce(function (acc, part) {
+						return acc[part];
+					}, $scope);
+					var childScope = $scope.$new();
+					childScope.formSchema = formSchema;
+					var formTemplate = $templateCache.get("components/form-builder/form-template.html");
+					var form = $compile(formTemplate)(childScope);
+					container = angular.element(container);
+					container.replaceWith(form);
+				}
+			}, 0);
 		}
 	};
 }])

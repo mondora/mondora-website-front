@@ -42,7 +42,7 @@ angular.module("mnd-web.components")
 					alert("Incorrect file type");
 					return;
 				}
-				var fileName = md5(file.name);
+				var fileName = md5(file.name + file.size);
 				var uploadOptions = {
 					url: amazonS3Config.postUrl,
 					method: "POST",

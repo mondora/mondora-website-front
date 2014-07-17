@@ -1,5 +1,7 @@
 angular.module("mnd-web.pages")
 
+
+
 .controller("ChannelViewController", ["$scope", "$stateParams", "CheckMobileService", function (
 	$scope,
 	$stateParams,

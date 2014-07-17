@@ -1,89 +1,12 @@
+<div ng-include="'pages/channel/addEntryModal.html'"></div>
+
 <div class="channel-page-container">
-	<!-- Entry modal -->
-	<div class="modal-background" ng-if="showEntryModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-		    	<div class="modal-header">
-					Add an entry to this channel
-				</div>
-				<div class="modal-body">
 
-					<label>Entry type</label>
-					<select class="form-control" ng-init="entry.type = 'link'" ng-model="entry.type">
-						<option value="link">Link</option>
-						<option value="file">File</option>
-					</select>
-
-					<br />
-					<div ng-if="entry.type === 'link'">
-
-						<div class="form-group">
-							<label>Title</label>
-							<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.title" />
-						</div>
-
-						<div class="form-group">
-							<label>Link</label>
-							<input type="text" class="form-control" placeholder="Link" ng-model="entry.content.href" />
-						</div>
-
-						<label>Description</label>
-						<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
-
-					</div>
-
-					<div ng-if="entry.type === 'file'">
-
-						<div class="row">
-							<div class="col-sm-8">
-								<div class="form-group">
-									<label>File name</label>
-									<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.name" />
-								</div>
-
-								<label>Description</label>
-								<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
-							</div>
-
-							<div class="col-sm-4">
-								<br />
-								<br />
-								<div class="text-center">
-									<i
-										class="fa {{getFileFAClass(entry.content.type)}} file-upload-icon-lg"
-										mnd-s3-file-upload
-										before-upload="beforeUploadEntryFile"
-										after-upload="afterUploadEntryFile"
-										is-uploading="entryFileIsUploading"
-										upload-progress="entryFileUploadProgress">
-									</i>
-									<br />
-									<br />
-									<div class="entry-file-upload-progressbar" ng-if="entryFileIsUploading" progressbar value="entryFileUploadProgress"></div>
-									<p ng-if="!entryFileIsUploading">{{entry.content.name}}</p>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<br />
-					<button type="button" class="btn btn-default" ng-click="addEntry()">
-						Add
-					</button>
-					<button type="button" class="btn btn-default" ng-click="toggleEntryModal()">
-						Cancel
-					</button>
-
-				</div>
-			</div>
-		</div>
+	<div class="channel-top-buttons">
+		<button ng-if="isCurator()" ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default">Edit</button>
+		<button class="btn btn-default">Subscribe</button>
 	</div>
 
-
-	<div ng-if="isCurator()" class="channel-top-buttons">
-		<button ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default">Edit</button>
-	</div>
 
 
 	<div class="channel-main-image">
@@ -94,11 +17,12 @@
 	<div class="channel-page-content">
 		<div id="left-side" class="col-sm-6 channel-left-side">
 			<div class="col-sm-9 col-sm-offset-1 channel-title-group">
-				<h1 class="channel-title" ng-bind-html="channel.title" ng-class="{'color-me-white': mainImageIsDisplayed()}"></h1>
-				<h2 class="channel-subtitle" ng-bind-html="channel.subtitle" ng-class="{'color-me-white': mainImageIsDisplayed()}"></h2>
+				<h1 class="channel-title" ng-class="{'color-me-white': mainImageIsDisplayed()}">
+					#{{channel.name}}
+				</h1>
 			</div>
 			<div class="col-sm-9 col-sm-offset-1 channel-text-body" ng-class="{'color-me-white': mainImageIsDisplayed()}">
-				<div ng-bind-html="channel.body"></div>
+				<div ng-bind-html="channel.body" mnd-form-injector="channel.formSchema"></div>
 			</div>
 		</div>
 
@@ -112,7 +36,7 @@
 					<div class="row channel-entry-single" ng-repeat="entry in channel.entries">
 						<div ng-if="entry.type === 'link'">
 							<div class="col-sm-2 entry-icon">
-								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
+								<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
 								<a href="{{entry.content.href}}"><i class="fa fa-link"></i></a>
 							</div>
 							<div class="col-sm-9">
@@ -123,21 +47,21 @@
 
 						<div ng-if="entry.type === 'file'">
 							<div class="col-sm-2 entry-icon">
-								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
+								<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
 							<a href="{{entry.content.url}}" target="_blank">
 									<i class="fa {{getFileFAClass(entry.content.type)}}"></i>
 								</a>
 							</div>
 							<div class="col-sm-9">
 								<h4>{{entry.content.name}}</h4>
-								<img src="{{entry.content.url}}" ng-if="isImage(entry.content.type)" />
+								<img ng-src="{{entry.content.url}}" ng-if="isImage(entry.content.type)" />
 								<p>{{entry.content.description}}</p>
 							</div>
 						</div>
 
 						<div ng-if="entry.type === 'comment'">
 							<div class="col-sm-2 entry-icon">
-								<div mnd-cig-image class="channel-entry-avatar" source="entry.userPictureUrl" size="35"></div>
+								<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
 								<a ui-sref="postView({postId: entry.content.postId})"><i class="fa fa-comments"></i></a>
 							</div>
 							<div class="col-sm-9">

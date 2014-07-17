@@ -9,16 +9,11 @@ angular.module("mnd-web.pages")
 	DiffingService
 ) {
 
-	////////////////////////////////////////////////
-	// Retrieve and keep updated the channel to edit //
-	////////////////////////////////////////////////
+	//////////////////////////////////
+	// Retrieve the channel to edit //
+	//////////////////////////////////
 
 	var channelRQ = $scope.Channels.reactiveQuery({_id: $stateParams.channelId});
-	channelRQ.on("change", function () {
-		$scope.safeApply(function () {
-			$scope.channel = channelRQ.result[0];
-		});
-	});
 	$scope.channel = channelRQ.result[0];
 
 	/////////////////////////
@@ -53,7 +48,7 @@ angular.module("mnd-web.pages")
 	};
 
 	$scope.afterUploadEntryFile = function (url) {
-		$scope.toggleEntryModal();
+		$scope.entry.content.url = url;
 	};
 
 	$scope.addEntry = function () {
@@ -61,8 +56,8 @@ angular.module("mnd-web.pages")
 		$scope.modalStatus.entry = false;
 	};
 
-	$scope.deleteEntry = function () {
-		Ceres.call("deleteEntryFromChannel", $scope.channel._id, $scope.entry);
+	$scope.deleteEntry = function (entry) {
+		Ceres.call("deleteEntryFromChannel", $scope.channel._id, entry._id);
 	};
 
 
@@ -102,20 +97,6 @@ angular.module("mnd-web.pages")
 	////////////////////////////
 	// Medium editors options //
 	////////////////////////////
-
-	$scope.titleEditorOptions = {
-		placeholder: "Title",
-		disableToolbar: true,
-		forcePlainText: true,
-		disableReturn: true
-	};
-
-	$scope.subtitleEditorOptions = {
-		placeholder: "Subtitle",
-		disableToolbar: true,
-		forcePlainText: true,
-		disableReturn: true
-	};
 
 	$scope.bodyEditorOptions = {
 		placeholder: "Body",
