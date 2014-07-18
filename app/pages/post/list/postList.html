@@ -1,0 +1,64 @@
+<div id="mnd-postList-container">
+	<div class="mnd-postList-header">
+		<img ng-src="{{postListImageUrl}}" />
+		<div class="mnd-postList-topImageOverlay"></div>
+		<div class="col-sm-8 col-sm-offset-2 mnd-postList-title">Post List</div>
+		<div class="mnd-postList-searchBox" ng-model="searchText">
+			<input type="text" class="form-control ng-pristine ng-valid" placeholder="search in posts">
+		</div>
+	</div>
+	<div class="col-sm-6 col-sm-offset-3 mnd-postList-list">
+		<div class="mnd-postList-foundPosts">
+			<div class="mnd-postList-foundContent">	
+				<div class="mnd-postList-foundTitleGroup">
+					<h1>Titolo Post</h1>
+					<h3>Sottotitolo Post</h3>
+				</div>
+				<div class="mnd-postList-foundFooter">
+					<div class="col-sm-6 mnd-postList-footerLeftContent">
+						<div class="col-sm-4 mnd-postList-foundAuthor">
+							<div class="mnd-postList-authorImg">
+								<img ng-src="{{postAuthor}}" />
+							</div>
+						</div>
+						<div class="col-sm-7 mnd-postList-readingTime">
+							<span class="mnd-postList-authorName">{{authorName}}</span>
+							<span>{{readTime}} min read</span>
+						</div>
+					</div>
+					<div class="col-sm-6 mnd-postList-foundActions">
+						<i class="fa fa-bookmark mnd-postList-toRead"></i>
+						<i class="fa fa-share-alt mnd-postList-share"></i>
+						<i class="fa fa-thumbs-o-up mnd-postList-vote"></i><span>{{postVotes}} like</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mnd-postList-foundPosts">
+			<div class="mnd-postList-foundContent">	
+				<div class="mnd-postList-foundTitleGroup">
+					<h1>Titolo Post2</h1>
+					<h3>Sottotitolo Post34</h3>
+				</div>
+				<div class="mnd-postList-foundFooter">
+					<div class="col-sm-6 mnd-postList-footerLeftContent">
+						<div class="col-sm-4 mnd-postList-foundAuthor">
+							<div class="mnd-postList-authorImg">
+								<img ng-src="{{postAuthor}}" />
+							</div>
+						</div>
+						<div class="col-sm-7 mnd-postList-readingTime">
+							<span class="mnd-postList-authorName">{{authorName}}</span>
+							<span>{{readTime}} min read</span>
+						</div>
+					</div>
+					<div class="col-sm-6 mnd-postList-foundActions">
+						<i class="fa fa-bookmark mnd-postList-toRead"></i>
+						<i class="fa fa-share-alt mnd-postList-share"></i>
+						<i class="fa fa-thumbs-o-up mnd-postList-vote"></i><span>{{postVotes}} like</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

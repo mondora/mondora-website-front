@@ -217,7 +217,6 @@ angular.module("mnd-web")
     });
 
 
-
 	//////////
 	// Apps //
 	//////////
@@ -277,6 +276,13 @@ angular.module("mnd-web")
 		controller: "InboxController"
 	});
 
+
+    $stateProvider.state("list", {
+        url: "/list",
+		parent: "root",
+        templateUrl: "pages/post/list/postList.html",
+        controller: "PostListController"
+    });
 
 
 	////////////////////
