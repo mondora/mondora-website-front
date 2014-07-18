@@ -324,7 +324,7 @@ angular.module("mnd-web")
         controller: "PostListController",
 		resolve: {
 			latestPostsSub: ["TimeoutPromiseService", "$stateParams", function (TimeoutPromiseService, $stateParams) {
-				var sub = Ceres.subscribe("latestPosts", $stateParams.limit || 10);
+				var sub = Ceres.subscribe("latestPosts", $stateParams.limit);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
