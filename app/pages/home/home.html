@@ -1,7 +1,7 @@
 <div id="mnd-home-container">
 	<div id="mnd-sign-in">
-		<span ng-if="!signedIn" ng-click="login()"><i class="fa fa-twitter"></i> Sign In</span>
-		<span ng-if="signedIn" ng-click="logout()"><i class="fa fa-twitter"></i> Sign Out</span>
+		<span ng-if="!user" ng-click="login()"><i class="fa fa-twitter"></i> Sign In</span>
+		<span ng-if="user" ng-click="logout()"><i class="fa fa-twitter"></i> Sign Out</span>
 	</div>
 
 	<div id="mnd-hidden-payoff">

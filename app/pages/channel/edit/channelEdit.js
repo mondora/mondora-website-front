@@ -1,12 +1,15 @@
 angular.module("mnd-web.pages")
 
-.controller("ChannelEditController", ["$scope", "$interval", "$state", "$stateParams", "CheckMobileService", "DiffingService", function (
+
+
+.controller("ChannelEditController", ["$scope", "$interval", "$state", "$stateParams", "CheckMobileService", "DiffingService", "ChannelPermissionsService", function (
 	$scope,
 	$interval,
 	$state,
 	$stateParams,
 	CheckMobileService,
-	DiffingService
+	DiffingService,
+	ChannelPermissionsService
 ) {
 
 	//////////////////////////////////
@@ -15,6 +18,13 @@ angular.module("mnd-web.pages")
 
 	var channelRQ = $scope.Channels.reactiveQuery({_id: $stateParams.channelId});
 	$scope.channel = channelRQ.result[0];
+	channelRQ.on("change", function () {
+		$scope.safeApply(function () {
+			if (channelRQ.result[0]) {
+				$scope.channel.entries = channelRQ.result[0].entries;
+			}
+		});
+	});
 
 	/////////////////////////
 	// Modal status object //
@@ -22,81 +32,43 @@ angular.module("mnd-web.pages")
 
 	$scope.modalStatus = {};
 
+	/////////////////////////////
+	// Delete channel function //
+	/////////////////////////////
+
+	$scope.deleteChannel = function () {
+		$scope.Channels.remove($scope.channel._id).remote.then(function () {
+			$state.go("home");
+		}, function () {
+			// TODO - make a modal
+			alert("An error occurred.");
+		});
+	};
+
 	//////////////////
 	// Check mobile //
 	//////////////////
 
 	$scope.isMobile = CheckMobileService.isMobile();
 
-	/////////////////////
-	// Entry insertion //
-	/////////////////////
-
-	var emptyEntry = {
-		content: {}
-	};
-	$scope.entry = angular.copy(emptyEntry);
-
-	$scope.toggleEntryModal = function () {
-		$scope.modalStatus.entry = !$scope.modalStatus.entry;
-		$scope.entry = angular.copy(emptyEntry);
-	};
-
-	$scope.beforeUploadEntryFile = function (file) {
-		$scope.entry.content.name = file.name;
-		$scope.entry.content.type = file.type;
-	};
-
-	$scope.afterUploadEntryFile = function (url) {
-		$scope.entry.content.url = url;
-	};
-
-	$scope.addEntry = function () {
-		Ceres.call("addEntryToChannel", $scope.channel._id, $scope.entry);
-		$scope.modalStatus.entry = false;
-	};
-
-	$scope.deleteEntry = function (entry) {
-		Ceres.call("deleteEntryFromChannel", $scope.channel._id, entry._id);
-	};
-
-
-	$scope.getFileFAClass = function (type) {
-		var faClass;
-		if (!type) {
-			faClass = "fa-cloud-upload";
-		} else if (/pdf/.test(type)) {
-			faClass = "fa-file-pdf-o";
-		} else if (/image/.test(type)) {
-			faClass = "fa-file-image-o";
-		} else {
-			faClass = "fa-file-code-o";
-		}
-		return faClass;
-	};
-
 	/////////////////////////
-	// Channel publication //
+	// Channel permissions //
 	/////////////////////////
 
 	$scope.isOwner = function () {
-		return $scope.user && $scope.channel.userId === $scope.user._id;
-	};
-	$scope.isCurator = function () {
-		var isCurator = false;
-		if ($scope.user) {
-			$scope.channel.curators.forEach(function (curator) {
-				if (curator.userId === $scope.user._id) {
-					isCurator = true;
-				}
-			});
-		}
-		return isCurator;
+		return ChannelPermissionsService.isOwner($scope.user, $scope.channel);
 	};
 
 	////////////////////////////
 	// Medium editors options //
 	////////////////////////////
+
+	$scope.commonNameEditorOptions = {
+		placeholder: "Common name",
+		disableToolbar: true,
+		forcePlainText: true,
+		disableReturn: true
+	};
 
 	$scope.bodyEditorOptions = {
 		placeholder: "Body",

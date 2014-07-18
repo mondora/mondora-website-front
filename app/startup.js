@@ -442,20 +442,23 @@ angular.module("mnd-web")
 
 	Ceres.on("login", function (userId) {
 		$rootScope.loggedInUserQuery = $rootScope.Users.reactiveQuery({_id: userId});
-		$rootScope.safeApply(function () {
-			$rootScope.user = $rootScope.loggedInUserQuery.result[0];
-			$rootScope.signedIn = true;
-		});
-		$rootScope.loggedInUserQuery.on("change", function () {
+		var updateUser = function () {
 			$rootScope.safeApply(function () {
 				$rootScope.user = $rootScope.loggedInUserQuery.result[0];
+				var notificationSubs = $rootScope.user && $rootScope.user.notificationChannelSubscriptions;
+				if (Array.isArray(notificationSubs)) {
+					notificationSubs.forEach(function (notificationChannelName) {
+						Ceres.subscribe("notificationChannel", notificationChannelName);
+					});
+				}
 			});
-		});
+		};
+		$rootScope.loggedInUserQuery.on("change", updateUser);
+		updateUser();
 	});
 	Ceres.on("logout", function () {
 		$rootScope.safeApply(function () {
 			delete $rootScope.user;
-			$rootScope.signedIn = false;
 			if (!$state.current.public) {
 				$state.go("home");
 			}

@@ -1,59 +1,61 @@
-<!-- Entry modal -->
-<div mnd-modal header="Add an entry" open="modalStatus.entry">
-	<label>Entry type</label>
-	<select class="form-control" ng-init="entry.type = 'link'" ng-model="entry.type">
-		<option value="link">Link</option>
-		<option value="file">File</option>
-	</select>
-	<br />
-	<div ng-if="entry.type === 'link'">
-		<div class="form-group">
-			<label>Title</label>
-			<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.title" />
+<!-- Add entry modal -->
+<div mnd-modal header="Add an entry" open="modalStatus.addEntry">
+	<div ng-controller="AddEntryModalController">
+		<label>Entry type</label>
+		<select class="form-control" ng-init="entry.type = 'link'" ng-model="entry.type">
+			<option value="link">Link</option>
+			<option value="file">File</option>
+		</select>
+		<br />
+		<div ng-if="entry.type === 'link'">
+			<div class="form-group">
+				<label>Title</label>
+				<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.title" />
+			</div>
+			<div class="form-group">
+				<label>Link</label>
+				<input type="text" class="form-control" placeholder="Link" ng-model="entry.content.href" />
+			</div>
+			<label>Description</label>
+			<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
 		</div>
-		<div class="form-group">
-			<label>Link</label>
-			<input type="text" class="form-control" placeholder="Link" ng-model="entry.content.href" />
-		</div>
-		<label>Description</label>
-		<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
-	</div>
-	<div ng-if="entry.type === 'file'">
-		<div class="row">
-			<div class="col-sm-8">
-				<div class="form-group">
-					<label>File name</label>
-					<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.name" />
-				</div>
+		<div ng-if="entry.type === 'file'">
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group">
+						<label>File name</label>
+						<input type="text" class="form-control" placeholder="Title" ng-model="entry.content.name" />
+					</div>
 
-				<label>Description</label>
-				<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
-			</div>
-			<div class="col-sm-4">
-				<br />
-				<br />
-				<div class="text-center">
-					<i
-						class="fa {{getFileFAClass(entry.content.type)}} file-upload-icon-lg"
-						mnd-s3-file-upload
-						before-upload="beforeUploadEntryFile"
-						after-upload="afterUploadEntryFile"
-						is-uploading="entryFileIsUploading"
-						upload-progress="entryFileUploadProgress">
-					</i>
+					<label>Description</label>
+					<textarea class="form-control" rows="4" ng-model="entry.content.description"></textarea>
+				</div>
+				<div class="col-sm-4">
 					<br />
 					<br />
-					<div class="entry-file-upload-progressbar" ng-if="entryFileIsUploading" progressbar value="entryFileUploadProgress"></div>
-					<p ng-if="!entryFileIsUploading">{{entry.content.name}}</p>
+					<div class="text-center">
+						<i
+							class="fa {{getFileFAClass(entry.content.type)}} file-upload-icon-lg"
+							mnd-s3-file-upload
+							before-upload="beforeUploadEntryFile"
+							after-upload="afterUploadEntryFile"
+							is-uploading="entryFileIsUploading"
+							upload-progress="entryFileUploadProgress">
+						</i>
+						<br />
+						<br />
+						<div class="entry-file-upload-progressbar" ng-if="entryFileIsUploading" progressbar value="entryFileUploadProgress"></div>
+						<p ng-if="!entryFileIsUploading">{{entry.content.name}}</p>
+					</div>
 				</div>
 			</div>
 		</div>
+		<br />
+		<button type="button" class="btn btn-default" ng-click="addEntry()">
+			Add
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.addEntry = false">
+			Cancel
+		</button>
 	</div>
-	<br />
-	<button type="button" class="btn btn-default" ng-click="addEntry()">
-		Add
-	</button>
-	<button type="button" class="btn btn-default" ng-click="toggleEntryModal()">
-		Cancel
-	</button>
 </div>

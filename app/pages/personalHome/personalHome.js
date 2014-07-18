@@ -1,13 +1,5 @@
 angular.module("mnd-web.pages")
 
-.filter("dismissedFromHomepage", function () {
-	return function (notifications) {
-		return notifications.filter(function (notification) {
-			return !_.contains(notification.tags, "dismissedFromHomepage");
-		});
-	};
-})
-
 .controller("PersonalHomeController", ["$scope", "$interval", function ($scope, $interval) {
 
 	$scope.isAdmin = function () {
@@ -16,10 +8,6 @@ angular.module("mnd-web.pages")
 		}
 	};
 
-	var channelName = "user:" + $scope.user._id;
-	Ceres.subscribe("notificationChannel", channelName);
-	Ceres.subscribe("notificationChannel", "post:newPublic");
-
 	var notificationsRQ = $scope.Notifications.reactiveQuery({});
 	notificationsRQ.on("change", function () {
 		$scope.safeApply(function () {
@@ -27,10 +15,6 @@ angular.module("mnd-web.pages")
 		});
 	});
 	$scope.notifications = notificationsRQ.result;
-
-	$scope.dismissNotification = function (notification) {
-		Ceres.call("dismissNotificationFromHomepage", notification._id);
-	};
 
 	var timeUpdatingInterval = $interval(function () {
 		$scope.safeApply();
