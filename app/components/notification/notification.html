@@ -27,3 +27,13 @@
 		</span>
 	</div>
 </a>
+
+<a ui-sref="channelView({channelId: notification.details.channelId})" ng-if="notification.type === 'newEntryInChannel'" class="mnd-undecorated-a">
+	<div>
+		<i class="fa fa-circle mnd-width-20" mnd-color-me="{{notification.type}}" fg="true"></i>
+		New entry in #{{notification.details.channelName}}
+		<span class="pull-right">
+			{{notification.date | relativeDate}}
+		</span>
+	</div>
+</a>

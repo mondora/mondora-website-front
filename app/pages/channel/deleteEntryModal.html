@@ -1,0 +1,12 @@
+<!-- Delete entry modal -->
+<div mnd-modal header="Delete entry" open="modalStatus.deleteEntry">
+	<div ng-controller="DeleteEntryModalController">
+		<h4>Are you sure you want to delete this entry?</h4>
+		<button type="button" class="btn btn-default mnd-width-50" ng-click="deleteEntry(entry)">
+			Yes
+		</button>
+		<button type="button" class="btn btn-default mnd-width-50" ng-click="modalStatus.deleteEntry = false">
+			No
+		</button>
+	</div>
+</div>
