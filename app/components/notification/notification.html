@@ -37,3 +37,13 @@
 		</span>
 	</div>
 </a>
+
+<a ui-sref="today" ng-if="notification.type === 'taskAdded'" class="mnd-undecorated-a">
+	<div>
+		<i class="fa fa-circle mnd-width-20" mnd-color-me="{{notification.type}}" fg="true"></i>
+		{{notification.details.from.name}} added a task to your backlog
+		<span class="pull-right">
+			{{notification.date | relativeDate}}
+		</span>
+	</div>
+</a>

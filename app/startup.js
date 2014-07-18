@@ -277,13 +277,6 @@ angular.module("mnd-web")
 	});
 
 
-    $stateProvider.state("list", {
-        url: "/list",
-		parent: "root",
-        templateUrl: "pages/post/list/postList.html",
-        controller: "PostListController"
-    });
-
 
 	////////////////////
 	// Users and team //
@@ -323,6 +316,20 @@ angular.module("mnd-web")
 	//////////
 	// Post //
 	//////////
+
+    $stateProvider.state("postList", {
+        url: "/post/list?limit",
+		parent: "root",
+        templateUrl: "pages/post/list/postList.html",
+        controller: "PostListController",
+		resolve: {
+			latestPostsSub: ["TimeoutPromiseService", "$stateParams", function (TimeoutPromiseService, $stateParams) {
+				var sub = Ceres.subscribe("latestPosts", $stateParams.limit || 10);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}]
+		},
+		public: true
+    });
 
 	$stateProvider.state("postView", {
 		url: "/post/:postId",
