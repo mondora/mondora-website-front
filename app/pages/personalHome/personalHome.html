@@ -33,4 +33,13 @@
 		</div>
 	</div>
 
+	<div class="col-sm-2 col-sm-offset-1">
+		<div>
+			<h4>Drafts</h4>
+			<div ng-repeat="post in posts | orderBy:'-publishedOn'">
+				<div mnd-post-card type="draft"></div>
+			</div>
+		</div>
+	</div>
+
 </div>

@@ -11,37 +11,12 @@
 		-->
 	</div>
 
-	<div class="col-sm-6 col-sm-offset-3 mnd-postList-list">
-		<div class="mnd-postList-foundPosts" ng-repeat="post in posts">
-			<div class="mnd-postList-foundContent">	
-				<a ui-sref="postView({postId: post._id})" class="mnd-postList-foundTitleGroup mnd-undecorated-a">
-					<h1 ng-bind-html="post.title"></h1>
-					<h3 ng-bind-html="post.subtitle"></h3>
-				</a>
-				<div class="mnd-postList-foundFooter">
-					<div class="col-sm-6 mnd-postList-footerLeftContent">
-						<div class="col-sm-4 mnd-postList-foundAuthor">
-							<div class="mnd-postList-authorImg">
-								<img ng-src="{{post.authors[0].pictureUrl}}" />
-							</div>
-						</div>
-						<div class="col-sm-7 mnd-postList-readingTime">
-							<span class="mnd-postList-authorName">{{post.authors[0].name || post.authors[0].screenName}}</span>
-							<!--<span>{{readTime}} min read</span>-->
-						</div>
-					</div>
-					<!--
-					<div class="col-sm-6 mnd-postList-foundActions">
-						<i class="fa fa-bookmark mnd-postList-toRead"></i>
-						<i class="fa fa-share-alt mnd-postList-share"></i>
-						<i class="fa fa-thumbs-o-up mnd-postList-vote"></i><span>{{postVotes}} like</span>
-					</div>
-					-->
-				</div>
-			</div>
+	<div class="col-sm-6 col-sm-offset-3">
+		<div ng-repeat="post in posts | orderBy:'-publishedOn'">
+			<div mnd-post-card type="long"></div>
 		</div>
 
-		<a class="btn btn-default btn-block" ui-sref="postList({limit: currentLimit + 10})">Load more</a>
+		<button class="btn btn-default btn-block" ng-click="addMore()">Load more</button>
 
 	</div>
 

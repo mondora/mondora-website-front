@@ -1,0 +1,34 @@
+<div class="mnd-post-card-long" ng-if="type === 'long'">	
+	<div class="col-xs-12">
+		<a ui-sref="postView({postId: post._id})" class="mnd-undecorated-a">
+			<h1 ng-bind-html="post.title"></h1>
+			<h3 ng-bind-html="post.subtitle"></h3>
+		</a>
+	</div>
+	<!-- TODO: adjust to desidered behaviour -->
+	<div class="col-sm-12 col-sm-6 left" >
+		<div class="author-image mnd-inline-block">
+			<div mnd-cig-image source="post.authors[0].pictureUrl" size="45"></div>
+		</div>
+		<div class="author-details mnd-inline-block">
+			{{post.authors[0].name || post.authors[0].screenName}}
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 right">
+		<i class="fa fa-bookmark mnd-clickable"></i>
+		<i class="fa fa-share-alt mnd-clickable"></i>
+		<i class="fa fa-thumbs-o-up mnd-clickable"></i>
+		<span>{{postVotes}} like</span>
+	</div>
+	<div class="col-xs-12 shadow"></div>
+</div>
+
+<div class="mnd-post-card-short" ng-if="type === 'draft'">	
+	<div class="col-xs-12">
+		<a ui-sref="postEdit({postId: post._id})" class="mnd-undecorated-a">
+			<h4 ng-bind-html="post.title"></h4>
+			<h5 ng-bind-html="post.subtitle"></h5>
+		</a>
+	</div>
+	<div class="col-xs-12 shadow"></div>
+</div>

@@ -318,13 +318,13 @@ angular.module("mnd-web")
 	//////////
 
     $stateProvider.state("postList", {
-        url: "/post/list?limit",
+        url: "/post/list",
 		parent: "root",
         templateUrl: "pages/post/list/postList.html",
         controller: "PostListController",
 		resolve: {
-			latestPostsSub: ["TimeoutPromiseService", "$stateParams", function (TimeoutPromiseService, $stateParams) {
-				var sub = Ceres.subscribe("latestPosts", $stateParams.limit);
+			latestPostsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("latestPosts");
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
