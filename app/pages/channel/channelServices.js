@@ -40,6 +40,12 @@ angular.module("mnd-web.pages")
 			entry.addedBy.userId === user._id
 		);
 	};
+	var canMoveEntry = function (user, channel, entry) {
+		return (
+			isOwner(user, channel) ||
+			isCurator(user, channel)
+		);
+	};
 
 	return {
 		isOwner: isOwner,
@@ -47,7 +53,8 @@ angular.module("mnd-web.pages")
 		isMember: isMember,
 		isInGroup: isInGroup,
 		canAddEntry: canAddEntry,
-		canDeleteEntry: canDeleteEntry
+		canDeleteEntry: canDeleteEntry,
+		canMoveEntry: canMoveEntry
 	};
 
 }])

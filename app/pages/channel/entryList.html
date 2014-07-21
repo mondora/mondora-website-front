@@ -5,54 +5,67 @@
 		Add Entry
 	</div>
 
-	<div class="channel-entries-list">
-		<div class="row channel-entry-single" ng-repeat="entry in channel.entries">
-			<div class="remove-entry" ng-if="canDeleteEntry(entry)" ng-click="openDeleteEntryModal(entry)"><i class="fa fa-times-circle"></i></div>
+	<div class="channel-entries-list" ng-if="channel.entries.length !== 0" ui-tree>
+		<ol ui-tree-nodes="" ng-model="channel.entries">
+			<div class="row channel-entry-single" ng-repeat="entry in channel.entries" ui-tree-node>
 
 
-			<div ng-if="entry.type === 'link'">
-				<div class="col-sm-2 entry-icon">
-					<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
-					<a href="{{entry.content.href}}"><i class="fa fa-link"></i></a>
+
+				<div ng-if="entry.type === 'link'">
+					<div class="col-sm-2 entry-icon">
+						<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
+						<a href="{{entry.content.href}}"><i class="fa fa-link"></i></a>
+					</div>
+					<div class="col-sm-9">
+						<a class="h4" href="{{entry.content.href}}">{{entry.content.title}}</a>
+						<p>{{entry.content.description}}</p>
+					</div>
 				</div>
-				<div class="col-sm-9">
-					<a class="h4" href="{{entry.content.href}}">{{entry.content.title}}</a>
-					<p>{{entry.content.description}}</p>
+
+
+
+				<div ng-if="entry.type === 'file'">
+					<div class="col-sm-2 entry-icon">
+						<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
+						<a href="{{entry.content.url}}" target="_blank">
+							<i class="fa {{getFileFAClass(entry.content.type)}}"></i>
+						</a>
+					</div>
+					<div class="col-sm-9">
+						<h4>{{entry.content.name}}</h4>
+						<img ng-src="{{entry.content.url}}" ng-if="isImage(entry.content.type)" />
+						<p>{{entry.content.description}}</p>
+					</div>
 				</div>
+
+
+
+				<div ng-if="entry.type === 'comment'">
+					<div class="col-sm-2 entry-icon">
+						<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
+						<a ui-sref="postView({postId: entry.content.postId})"><i class="fa fa-comments"></i></a>
+					</div>
+					<div class="col-sm-9">
+						<h4>{{entry.content.postTitle}}</h4>
+						<p>{{entry.content.text}}</p>
+					</div>
+				</div>
+
+
+
+				<div class="entry-buttons">
+					<span class="mnd-width-20">
+						<i ng-if="canMoveEntry(entry)" ui-tree-handle class="fa fa-arrows"></i>
+					</span>
+					<span class="mnd-width-20">
+						<i ng-if="canDeleteEntry(entry)" ng-click="openDeleteEntryModal(entry)" class="fa fa-times"></i>
+					</span>
+				</div>
+
+
+
 			</div>
-
-
-
-			<div ng-if="entry.type === 'file'">
-				<div class="col-sm-2 entry-icon">
-					<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
-					<a href="{{entry.content.url}}" target="_blank">
-						<i class="fa {{getFileFAClass(entry.content.type)}}"></i>
-					</a>
-				</div>
-				<div class="col-sm-9">
-					<h4>{{entry.content.name}}</h4>
-					<img ng-src="{{entry.content.url}}" ng-if="isImage(entry.content.type)" />
-					<p>{{entry.content.description}}</p>
-				</div>
-			</div>
-
-
-
-			<div ng-if="entry.type === 'comment'">
-				<div class="col-sm-2 entry-icon">
-					<div mnd-cig-image class="channel-entry-avatar" source="entry.addedBy.pictureUrl" size="35"></div>
-					<a ui-sref="postView({postId: entry.content.postId})"><i class="fa fa-comments"></i></a>
-				</div>
-				<div class="col-sm-9">
-					<h4>{{entry.content.postTitle}}</h4>
-					<p>{{entry.content.text}}</p>
-				</div>
-			</div>
-
-
-
-		</div>
+		</ol>
 	</div>
 
 </div>

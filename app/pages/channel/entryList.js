@@ -18,6 +18,10 @@ angular.module("mnd-web.pages")
 		return ChannelPermissionsService.canDeleteEntry($scope.user, $scope.channel, entry);
 	};
 
+	$scope.canMoveEntry = function (entry) {
+		return ChannelPermissionsService.canMoveEntry($scope.user, $scope.channel, entry);
+	};
+
 	$scope.openDeleteEntryModal = function (entry) {
 		DeleteEntryService.selectEntry(entry._id, $scope.channel._id);
 		$scope.modalStatus.deleteEntry = true;
