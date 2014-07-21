@@ -55,10 +55,10 @@
 
 				<div class="entry-buttons">
 					<span class="mnd-width-20">
-						<i ng-if="canMoveEntry(entry)" ui-tree-handle class="fa fa-arrows"></i>
+						<i ng-show="canMoveEntry(entry) && editing()" ui-tree-handle class="fa fa-arrows"></i>
 					</span>
 					<span class="mnd-width-20">
-						<i ng-if="canDeleteEntry(entry)" ng-click="openDeleteEntryModal(entry)" class="fa fa-times"></i>
+						<i ng-show="canDeleteEntry(entry)" ng-click="openDeleteEntryModal(entry)" class="fa fa-times"></i>
 					</span>
 				</div>
 

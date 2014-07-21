@@ -1,7 +1,8 @@
 angular.module("mnd-web.pages")
 
-.controller("EntryListController", ["$scope", "EntryInspectionService", "ChannelPermissionsService", "DeleteEntryService", function (
+.controller("EntryListController", ["$scope", "$state", "EntryInspectionService", "ChannelPermissionsService", "DeleteEntryService", function (
 	$scope,
+	$state,
 	EntryInspectionService,
 	ChannelPermissionsService,
 	DeleteEntryService
@@ -25,6 +26,10 @@ angular.module("mnd-web.pages")
 	$scope.openDeleteEntryModal = function (entry) {
 		DeleteEntryService.selectEntry(entry._id, $scope.channel._id);
 		$scope.modalStatus.deleteEntry = true;
+	};
+
+	$scope.editing = function () {
+		return $state.current.name === "channelEdit";
 	};
 
 }]);
