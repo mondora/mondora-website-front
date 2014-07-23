@@ -37,6 +37,16 @@ angular.module("mnd-web.pages")
 		});
 	};
 
+	//////////
+	// Date //
+	//////////
+
+	$scope.publishedOn = {};
+	$scope.publishedOn.date = $scope.post.publishedOn ? new Date($scope.post.publishedOn) : new Date();
+	$scope.$watch("publishedOn.date", function () {
+		$scope.post.publishedOn = $scope.publishedOn.date.getTime();
+	});
+
 	////////////////////
 	// Post ownership //
 	////////////////////
