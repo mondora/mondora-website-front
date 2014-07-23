@@ -105,3 +105,13 @@ $mnd-light-grey: #abadad;
 	}
 }
 
+.notification-bell {
+	position: relative;
+	span.badge {
+		position: relative;
+		top: -10px;
+		left: -10px;
+		font-size: 10px;
+		background-color: #d9534f;
+	}
+}

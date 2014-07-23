@@ -14,7 +14,10 @@
 	<div class="row welcome">
 		<div class="col-sm-12 text-center">
 			<h2 class="mnd-inline-block">Hello {{user.profile.screenName}}!</h2>
-			<i class="fa fa-bell" ng-click="showNotifications = !showNotifications"></i>
+			<div class="notification-bell mnd-clickable mnd-inline-block" ng-click="showNotifications = !showNotifications">
+				<i class="fa fa-bell"></i>
+				<span ng-if="notifications.length" class="badge">{{notifications.length}}</span>
+			</div>
 		</div>
 	</div>
 
