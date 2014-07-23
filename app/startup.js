@@ -344,7 +344,7 @@ angular.module("mnd-web")
 		},
 		onEnter: ["$state", "$stateParams", "$rootScope", "MndTagStrippingService", function ($state, $stateParams, $rootScope, MndTagStrippingService) {
 			var post = $rootScope.Posts.reactiveQuery({_id: $stateParams.postId}).result[0];
-			if (post) {
+			if (!post) {
 				$state.go("notFound");
 			}
 			setSeoTags({
