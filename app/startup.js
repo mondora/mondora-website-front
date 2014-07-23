@@ -342,8 +342,11 @@ angular.module("mnd-web")
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
-		onEnter: ["$stateParams", "$rootScope", "MndTagStrippingService", function ($stateParams, $rootScope, MndTagStrippingService) {
+		onEnter: ["$state", "$stateParams", "$rootScope", "MndTagStrippingService", function ($state, $stateParams, $rootScope, MndTagStrippingService) {
 			var post = $rootScope.Posts.reactiveQuery({_id: $stateParams.postId}).result[0];
+			if (post) {
+				$state.go("notFound");
+			}
 			setSeoTags({
 				description: MndTagStrippingService(post.body).slice(0, 150),
 				title: "mondora :m - " + post.title,

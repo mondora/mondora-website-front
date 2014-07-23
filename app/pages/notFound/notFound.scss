@@ -1,0 +1,25 @@
+.not-found-page-container {
+	width: 100%;
+	height: 100%;
+	img {
+		height: 100%;
+	}
+	.overlay {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		background-color: #000000;
+		opacity: 0.3;
+	}
+	.not-found-info {
+		position: absolute;
+		top: 15%;
+		left: 60%;
+		color: #ffffff;
+		a {
+			color: #ffffff;
+		}
+	}
+}
