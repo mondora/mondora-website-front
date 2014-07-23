@@ -1,14 +1,26 @@
 <div class="personal-home-container radial-background">
-	<div class="mnd-vsp-32"></div>
-	<div class="row">
-		<div class="col-sm-12">
-			<h2 class="text-center">Hello {{user.profile.screenName}}!</h2>
+	<!--notifications-->
+	<div ng-if="showNotifications" class="notifications-container mnd-inline-block">
+		<div class="notifications">
+			<div class="list">
+				<h4>Latest notifications</h4>
+				<div class="personal-home-notification" ng-repeat="notification in notifications | orderBy:'-date'">
+					<div mnd-notification></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--end notifications-->
+	<div class="row welcome">
+		<div class="col-sm-12 text-center">
+			<h2 class="mnd-inline-block">Hello {{user.profile.screenName}}!</h2>
+			<i class="fa fa-bell" ng-click="showNotifications = !showNotifications"></i>
 		</div>
 	</div>
 
-	<div class="col-sm-4">
-		<div class="text-center">
-			<h4>Your apps</h4>
+	<div class="col-sm-3 col-sm-offset-1">
+		<div>
+			<h4 class="component-title">Your apps</h4>
 			<a class="app-box" ui-sref="profile()">
 				<i class="fa fa-user"></i>
 			</a>
@@ -24,18 +36,9 @@
 		</div>
 	</div>
 
-	<div class="col-sm-4">
+	<div class="col-sm-3">
 		<div>
-			<h4>Latest notifications</h4>
-			<div class="personal-home-notification" ng-repeat="notification in notifications | orderBy:'-date'">
-				<div mnd-notification></div>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-sm-2 col-sm-offset-1">
-		<div>
-			<h4>Drafts</h4>
+			<h4 class="component-title">Drafts</h4>
 			<div ng-repeat="post in posts | orderBy:'-publishedOn'">
 				<div mnd-post-card type="draft"></div>
 			</div>
