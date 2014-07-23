@@ -16,28 +16,28 @@ angular.module("mnd-web.components")
 		var n;
 
 		if (delta < minute) {
-			ret = "just now";
+			ret = "now";
 		} else if (delta < hour) {
 			n = Math.round(delta / minute);
-			ret = n + " minute";
+			ret = n + "min";
 		} else if (delta < day) {
 			n = Math.round(delta / hour);
-			ret = n + " hour";
+			ret = n + "hr";
 		} else if (delta < week) {
 			n = Math.round(delta / day);
-			ret = n + " day";
+			ret = n + "day";
 		} else if (delta < month) {
 			n = Math.round(delta / week);
-			ret = n + " week";
+			ret = n + "wk";
 		} else if (delta < year) {
 			n = Math.round(delta / month);
-			ret = n + " month";
+			ret = n + "mo";
 		} else {
 			n = Math.round(delta / year);
-			ret = n + " year";
+			ret = n + "yr";
 		}
 
-		if (ret !== "just now") {
+		if (ret !== "now") {
 			ret += n > 1 ? "s" : "";
 			ret += " ago";
 		}

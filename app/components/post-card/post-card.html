@@ -1,7 +1,7 @@
 <div class="mnd-post-card-long" ng-if="type === 'long'">	
 	<div class="col-xs-12">
 		<a ui-sref="postView({postId: post._id})" class="mnd-undecorated-a">
-			<h1 ng-bind-html="post.title"></h1>
+			<h1 ng-bind-html="getTitle()"></h1>
 			<h3 ng-bind-html="post.subtitle"></h3>
 		</a>
 	</div>
@@ -26,7 +26,7 @@
 <div class="mnd-post-card-short" ng-if="type === 'draft'">	
 	<div class="col-xs-12">
 		<a ui-sref="postEdit({postId: post._id})" class="mnd-undecorated-a">
-			<h4 ng-bind-html="post.title"></h4>
+			<h4 ng-bind-html="getTitle()"></h4>
 			<h5 ng-bind-html="post.subtitle"></h5>
 		</a>
 	</div>
