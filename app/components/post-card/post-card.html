@@ -30,5 +30,15 @@
 			<h5 ng-bind-html="post.subtitle"></h5>
 		</a>
 	</div>
+	<div class="col-xs-12 text-right" ng-controller="DeleteDraftController">
+		<i class="fa fa-trash-o mnd-clickable" ng-if="!displayConfirmMessage" ng-click="toggleConfirmMessage()"></i>
+		<span ng-if="displayConfirmMessage">
+			Confirm deletion?
+			&nbsp;
+			<button class="btn btn-default btn-xs mnd-width-30" ng-click="deleteDraft(post._id)">Yes</button>
+			&nbsp;
+			<button class="btn btn-default btn-xs mnd-width-30" ng-click="toggleConfirmMessage()">No</button>
+		</span>
+	</div>
 	<div class="col-xs-12 shadow"></div>
 </div>

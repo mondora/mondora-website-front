@@ -17,4 +17,13 @@ angular.module("mnd-web.components")
 
 		}
 	};
-});
+})
+
+.controller("DeleteDraftController", ["$scope", function ($scope) {
+	$scope.deleteDraft = function (postId) {
+		$scope.Posts.remove(postId);
+	};
+	$scope.toggleConfirmMessage = function () {
+		$scope.displayConfirmMessage = !$scope.displayConfirmMessage;
+	};
+}]);
