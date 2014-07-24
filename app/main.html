@@ -99,6 +99,9 @@
 			<script>
 				window.APP_VERSION = "v0.1.0";
 				window.prerenderReady = false;
+				window.setTimeout(function () {
+					window.prerenderReady = true;
+				}, 5000);
 			</script>
 			<script src="dist/js/app.templates.min.js"></script>
 			<script src="dist/js/app.min.js"></script>
