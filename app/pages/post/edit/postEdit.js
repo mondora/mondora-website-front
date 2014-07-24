@@ -47,6 +47,18 @@ angular.module("mnd-web.pages")
 		$scope.post.publishedOn = $scope.publishedOn.date.getTime();
 	});
 
+	//////////////////
+	// Notification //
+	//////////////////
+
+	$scope.notify = _.once(function () {
+		Ceres.call("notifyNewPost", $scope.post._id).result.then(function () {
+			$scope.safeApply(function () {
+				$scope.post.hasNotified = true;
+			});
+		});
+	});
+
 	////////////////////
 	// Post ownership //
 	////////////////////

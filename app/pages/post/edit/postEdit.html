@@ -16,6 +16,7 @@
 	<div tabset justified="true">
 
 		<div tab heading="General">
+			<br />
 			<div class="form-group">
 				<label>Publish date</label>
 				<input type="datetime" date-time max-view="date" min-view="date" format="yyyy-MM-dd" class="form-control" ng-model="publishedOn.date" />
@@ -39,10 +40,13 @@
 					</div>
 				</div>
 				<br />
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="post.notifyOnPublication" /> Notify users on publication
-					</label>
+				<div ng-if="isOwner() && post.published && post.permissions.public">
+					<div ng-if="!post.hasNotified">
+						<button class="btn btn-default" ng-click="notify()">Notify post publication</button>
+					</div>
+					<div ng-if="post.hasNotified">
+						<button class="btn btn-default btn-success" ng-click="notify()">Notify again</button>
+					</div>
 				</div>
 			</div>
 			<br />
