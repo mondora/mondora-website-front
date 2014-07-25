@@ -85,18 +85,6 @@
 
 <div class="channel-page-container">
 
-	<div class="channel-top-buttons">
-		<button ui-sref="channelView({channelId: channel._id})" class="btn btn-default">
-			Preview
-		</button>
-		<button type="button" class="btn btn-default" ng-click="modalStatus.settings = true">
-			Settings
-		</button>
-		<button type="button" class="btn btn-default" ng-click="modalStatus.deleteChannel = true" ng-if="isOwner()">
-			Delete
-		</button>
-	</div>
-
 	<div class="channel-main-image">
 		<div class="channel-overlay" ng-show="mainImageIsDisplayed()"></div>
 		<img ng-src="{{channel.mainImageUrl}}" />
@@ -104,6 +92,18 @@
 
 	<div class="channel-page-content">
 		<div class="col-sm-6 channel-left-side">
+			
+			<div class="channel-top-buttons">
+				<button ui-sref="channelView({channelId: channel._id})" class="btn btn-default" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">
+					Preview
+				</button>
+				<button type="button" class="btn btn-default" ng-click="modalStatus.settings = true" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">
+					Settings
+				</button>
+				<button type="button" class="btn btn-default" ng-click="modalStatus.deleteChannel = true" ng-if="isOwner()" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">
+					Delete
+				</button>
+			</div>
 			<div class="mnd-vsp-64"></div>
 			<div class="row">
 				<div class="col-sm-9 col-sm-offset-1 channel-title-group">

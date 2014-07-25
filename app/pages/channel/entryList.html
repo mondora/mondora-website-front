@@ -1,8 +1,8 @@
 <div id="channel-entries-box" class="col-sm-11" ng-controller="EntryListController">
 
 	<div class="channel-add-entry" ng-if="canAddEntry()">
-		<button type="button" class="btn btn-default" ng-click="modalStatus.addEntry = true"><i class="fa fa-plus"></i></button>
-		Add Entry
+		<button type="button" class="btn btn-default" ng-click="modalStatus.addEntry = true" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Add Entry</button>
+		
 	</div>
 
 	<div class="channel-entries-list" ng-if="channel.entries.length !== 0" ui-tree>
