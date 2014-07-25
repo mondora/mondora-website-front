@@ -3,12 +3,6 @@
 
 <div class="channel-page-container">
 
-	<div class="channel-top-buttons" ng-if="user">
-		<button ng-if="isCurator() || isOwner()" ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default">Edit</button>
-		<button class="btn btn-default" ng-click="subscribe()" ng-if="!isSubscribed()">Subscribe</button>
-		<button class="btn btn-default" ng-click="unsubscribe()" ng-if="isSubscribed()">Unsubscribe</button>
-	</div>
-
 	<div class="channel-main-image">
 		<div class="channel-overlay" ng-show="mainImageIsDisplayed()"></div>
 		<img ng-src="{{channel.mainImageUrl}}" />
@@ -17,9 +11,14 @@
 	<div class="channel-page-content">
 
 		<div id="left-side" class="col-sm-6 channel-left-side">
+			<div class="channel-top-buttons" ng-if="user">
+				<button ng-if="isCurator() || isOwner()" ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Edit</button>
+			</div>
 			<div class="col-sm-9 col-sm-offset-1 channel-title-group" ng-class="{'color-me-white': mainImageIsDisplayed()}">
 				<h1 class="channel-common-name" ng-bind-html="channel.commonName"></h1>
-				<h3><i>#{{channel.name}}</i></h3>
+				<h3><i>#{{channel.name}}</i></h3> 
+				<button class="btn btn-default" ng-click="subscribe()" ng-if="!isSubscribed()" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Subscribe</button>
+				<button class="btn btn-default" ng-click="unsubscribe()" ng-if="isSubscribed()" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Unsubscribe</button>
 			</div>
 			<div class="col-sm-9 col-sm-offset-1 channel-text-body" ng-class="{'color-me-white': mainImageIsDisplayed()}">
 				<div ng-bind-html="channel.body" mnd-form-injector="channel.formSchema"></div>

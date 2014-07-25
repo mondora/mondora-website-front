@@ -1,13 +1,16 @@
-<div class="personal-home-container radial-background">
+<div class="page-container radial-background" ng-class="{'mnd-overflow-hidden' : showNotifications}">
 	<!--notifications-->
 	<div ng-if="showNotifications" class="notifications-container mnd-inline-block">
+		<div class="notifications-ext">
 		<div class="notifications">
+		
 			<div class="list">
-				<h4>Latest notifications</h4>
 				<div class="personal-home-notification" ng-repeat="notification in notifications | orderBy:'-date'">
 					<div mnd-notification></div>
 				</div>
+				<div class="no-notifications" ng-if="!notifications.length"> Hey! There are no notifications here...</div>
 			</div>
+		</div>
 		</div>
 	</div>
 	<!--end notifications-->
@@ -16,7 +19,7 @@
 			<h2 class="mnd-inline-block">Hello {{user.profile.screenName}}!</h2>
 			<div class="notification-bell mnd-clickable mnd-inline-block" ng-click="showNotifications = !showNotifications">
 				<i class="fa fa-bell"></i>
-				<span ng-if="notifications.length" class="badge">{{notifications.length}}</span>
+				<span ng-if="notifications.length" ng-show="!showNotifications" class="badge">{{notifications.length}}</span>
 			</div>
 		</div>
 	</div>
