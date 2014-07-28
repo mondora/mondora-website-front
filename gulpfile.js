@@ -86,6 +86,14 @@ var buildAppFavicon = function (dest) {
 	return deferred.promise;
 };
 
+var buildAppVersion = function (dest) {
+	var deferred = Q.defer();
+	var step = gulp.src("app/VERSION").pipe(gulp.dest(dest));
+	step.on("end", function () {
+		deferred.resolve();
+	});
+	return deferred.promise;
+};
 
 
 /////////////////////////////////////
@@ -220,6 +228,8 @@ gulp.task("buildWeb", function () {
 		buildVendorStyles("builds/web/dist/css", true),
 		// Favicon
 		buildAppFavicon("builds/web"),
+		// Version
+		buildAppVersion("builds/web")
 	]);
 
 });
@@ -251,6 +261,8 @@ gulp.task("buildWebTest", function () {
 		buildVendorStyles("builds/web/dist/css", true),
 		// Favicon
 		buildAppFavicon("builds/web"),
+		// Version
+		buildAppVersion("builds/web")
 	]);
 
 });
@@ -300,12 +312,18 @@ var buildDevFavicon = function () {
 	return buildAppFavicon("builds/dev");
 };
 
+var buildDevVersion = function () {
+	console.log("Building version... ");
+	return buildAppVersion("builds/dev");
+};
+
 gulp.task("dev", function () {
 	buildDevJs();
 	buildDevCss();
 	buildDevHtml();
 	buildDevFonts();
 	buildDevFavicon();
+	buildDevVersion();
 
 	// Set up static file server
 	var file = new static.Server("./builds/dev/");
