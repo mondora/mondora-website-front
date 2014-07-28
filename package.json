@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/mondora/mnd-web",
   "devDependencies": {
+    "execSync": "^1.0.1-pre",
     "faye-websocket": "^0.7.2",
     "gulp": "^3.8.5",
     "gulp-autoprefixer": "0.0.8",

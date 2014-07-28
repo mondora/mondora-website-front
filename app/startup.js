@@ -36,6 +36,7 @@ var GIVE_UP_DELAY = 30000;
 		console.log("Closed");
 	});
 	window.CERES_CONNECTED = deferred.promise.timeout(GIVE_UP_DELAY);
+
 })();
 
 angular.module("mnd-web")
@@ -521,6 +522,20 @@ angular.module("mnd-web")
 		update();
 		$interval(update, 10000, 0, false);
 	});
+
+	/////////////////////
+	// Get app version //
+	/////////////////////
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "./VERSION", true);
+	xhr.onload = function () {
+		var APP_VERSION = this.response;
+		$rootScope.safeApply(function () {
+			$rootScope.APP_VERSION = APP_VERSION;
+		});
+	};
+	xhr.send();
 
 }])
 
