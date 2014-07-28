@@ -43,7 +43,7 @@ angular.module("mnd-web.pages")
 	};
 }])
 
-.directive("postViewReadonlyEditor", ["ClearWindowSelectionService", "$templateCache", "$compile", function (ClearWindowSelectionService, $templateCache, $compile) {
+.directive("postViewReadonlyEditor", ["ClearWindowSelectionService", "$templateCache", "$compile", "$sce", function (ClearWindowSelectionService, $templateCache, $compile, $sce) {
 
 	var Tweet = function (screenName) {
 		this.button = document.createElement("button");
@@ -95,7 +95,7 @@ angular.module("mnd-web.pages")
 					highlight: new Highlight($scope)
 				}
 			};
-			$element[0].innerHTML = $scope.child;
+			$element.html($scope.child);
 			new MediumEditor($element[0], readonlyEditorOptions);
 		}
 	};

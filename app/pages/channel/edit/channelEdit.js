@@ -18,6 +18,10 @@ angular.module("mnd-web.pages")
 
 	var channelRQ = $scope.Channels.reactiveQuery({_id: $stateParams.channelId});
 	$scope.channel = channelRQ.result[0];
+	if (!$scope.channel) {
+		$state.go("notFound");
+		return;
+	}
 	channelRQ.on("change", function () {
 		$scope.safeApply(function () {
 			if (channelRQ.result[0]) {

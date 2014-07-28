@@ -47,7 +47,7 @@ angular.module("mnd-web.components")
 			// Add support for media insertion //
 			/////////////////////////////////////
 
-			if ($scope.options.mediaInsertion) {
+			if ($scope.options && $scope.options.mediaInsertion) {
 
 				var targetParagraph;
 

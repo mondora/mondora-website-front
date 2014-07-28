@@ -15,6 +15,10 @@ angular.module("mnd-web.pages")
 
 	var postRQ = $scope.Posts.reactiveQuery({_id: $stateParams.postId});
 	$scope.post = postRQ.result[0];
+	if (!$scope.post) {
+		$state.go("notFound");
+		return;
+	}
 
 	//////////////////
 	// Check mobile //
@@ -133,8 +137,8 @@ angular.module("mnd-web.pages")
 		if (isChild) {
 			if (!map.href || map.href.slice(0, 10) === "/#!/topic/") {
 				map.href = "/#!/topic/" + map.text;
-			} else if (map.href.slice(0, 7) !== "http://") {
-				map.href = "http://" + map.href;
+			} else if (map.href.slice(0, 7) !== "https://") {
+				map.href = "https://" + map.href;
 			}
 		}
 		if (!map.children) return;

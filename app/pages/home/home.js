@@ -14,11 +14,11 @@ angular.module("mnd-web.pages")
 	};
 
 	// Video
-	var videoSource = "http://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4";
+	var videoSource = "https://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4";
 	$scope.videoSource = $sce.trustAsResourceUrl(videoSource);
 
 	// Video poster
-	var videoPoster = "http://s3.amazonaws.com/mnd-website/vd-back.jpg";
+	var videoPoster = "https://s3.amazonaws.com/mnd-website/vd-back.jpg";
 	$scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
 
 }]);

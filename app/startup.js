@@ -131,9 +131,9 @@ angular.module("mnd-web")
 		setSeoTags({
 			description: "mondora app",
 			title: "mondora :m",
-			image: "http://mnd-website.s3.amazonaws.com/img/mondora-logo.png",
+			image: "https://mnd-website.s3.amazonaws.com/img/mondora-logo.png",
 			type: "website",
-			itemtype: "http://schema.org/Organization"
+			itemtype: "https://schema.org/Organization"
 		});
 	};
 
@@ -353,7 +353,7 @@ angular.module("mnd-web")
 				title: "mondora :m - " + post.title,
 				image: post.titleImageUrl,
 				type: "article",
-				itemtype: "http://schema.org/Article"
+				itemtype: "https://schema.org/Article"
 			});
 		}],
 		onExit: [function () {
