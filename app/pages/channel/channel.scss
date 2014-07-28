@@ -10,16 +10,6 @@
 	overflow: hidden;
 }
 
-.channel-page-container button {
-	border: 2px solid #fff;
-	border-radius: 20px;
-	border-color: #fff;
-	background-color: rgba(0,0,0,0.3);
-	color: #fff;
-	font-size: 20px;
-}
-
-
 .channel-page-content {
 	position: absolute;
 	height: 100%;
@@ -158,6 +148,24 @@
 	padding-top: 5px;
 	height: 50px;
 	z-index: 100;
+	button {
+		border-radius: 20px;
+		margin-right: 5px;
+	}
+
+}
+
+.medium-button-white {
+	border-radius: 20px;
+	border: 2px solid #fff;
+	background: none;
+	color: #fff;
+}
+
+.medium-button-black {
+	border-radius: 20px;
+	border: 2px solid #000;
+	color: #000;
 }
 
 .entry-title {
@@ -190,6 +198,10 @@
 
 .padding-top-20 {
 	padding-top: 20px;
+}
+
+.blue {
+	background-color: red;
 }
 
 @media (max-width: 767px){

@@ -1,85 +1,87 @@
-<div class="col-sm-6 col-sm-offset-1">
-	<h1>User management</h1>
-</div>
+<div class="page-container">	
+	<div class="col-sm-6 col-sm-offset-1">
+		<h1>User management</h1>
+	</div>
 
 
 
-<div class="col-sm-6 col-sm-offset-1">
+	<div class="col-sm-6 col-sm-offset-1">
 
-	<div class="row">
-		<div class="col-sm-5 col-sm-offset-7">
-			<div class="input-group">
-				<span class="input-group-addon">
-					<i class="fa fa-filter"></i>
-				</span>
-				<input type="text" class="form-control" placeholder="Filter by" ng-model="searchText" />
+		<div class="row">
+			<div class="col-sm-5 col-sm-offset-7">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-filter"></i>
+					</span>
+					<input type="text" class="form-control" placeholder="Filter by" ng-model="searchText" />
+				</div>
 			</div>
 		</div>
+
+		<br />
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th class="mnd-clickable" ng-click="orderPredicate = 'profile.name'; orderReverse=!orderReverse">
+						Name
+						<span ng-if="orderPredicate === 'profile.name'" class="pull-right">
+							<i ng-if="!orderReverse" class="fa fa-caret-down"></i>
+							<i ng-if="orderReverse" class="fa fa-caret-up"></i>
+						</span>
+					</th>
+					<th class="mnd-clickable" ng-click="orderPredicate = 'services.twitter.screenName'; orderReverse=!orderReverse">
+						Twitter handle
+						<span ng-if="orderPredicate === 'services.twitter.screenName'" class="pull-right">
+							<i ng-if="!orderReverse" class="fa fa-caret-down"></i>
+							<i ng-if="orderReverse" class="fa fa-caret-up"></i>
+						</span>
+					</th>
+					<th class="mnd-clickable" ng-click="orderPredicate = 'profile.email'; orderReverse=!orderReverse">
+						Email
+						<span ng-if="orderPredicate === 'profile.email'" class="pull-right">
+							<i ng-if="!orderReverse" class="fa fa-caret-down"></i>
+							<i ng-if="orderReverse" class="fa fa-caret-up"></i>
+						</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="mnd-clickable" ng-repeat="user in users | filter:searchText | orderBy:orderPredicate:orderReverse" ng-click="setUser(user)">
+					<td class="text-center">
+						<div class="mnd-inline-block" mnd-cig-image source="user.profile.pictureUrl" size="20"></div>
+					</td>
+					<td>{{user.profile.name}}</td>
+					<td>{{user.services.twitter.screenName}}</td>
+					<td>{{user.profile.email}}</td>
+				</tr>
+			</tbody>
+		</table>
+
 	</div>
 
-	<br />
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th></th>
-				<th class="mnd-clickable" ng-click="orderPredicate = 'profile.name'; orderReverse=!orderReverse">
-					Name
-					<span ng-if="orderPredicate === 'profile.name'" class="pull-right">
-						<i ng-if="!orderReverse" class="fa fa-caret-down"></i>
-						<i ng-if="orderReverse" class="fa fa-caret-up"></i>
-					</span>
-				</th>
-				<th class="mnd-clickable" ng-click="orderPredicate = 'services.twitter.screenName'; orderReverse=!orderReverse">
-					Twitter handle
-					<span ng-if="orderPredicate === 'services.twitter.screenName'" class="pull-right">
-						<i ng-if="!orderReverse" class="fa fa-caret-down"></i>
-						<i ng-if="orderReverse" class="fa fa-caret-up"></i>
-					</span>
-				</th>
-				<th class="mnd-clickable" ng-click="orderPredicate = 'profile.email'; orderReverse=!orderReverse">
-					Email
-					<span ng-if="orderPredicate === 'profile.email'" class="pull-right">
-						<i ng-if="!orderReverse" class="fa fa-caret-down"></i>
-						<i ng-if="orderReverse" class="fa fa-caret-up"></i>
-					</span>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="mnd-clickable" ng-repeat="user in users | filter:searchText | orderBy:orderPredicate:orderReverse" ng-click="setUser(user)">
-				<td class="text-center">
-					<div class="mnd-inline-block" mnd-cig-image source="user.profile.pictureUrl" size="20"></div>
-				</td>
-				<td>{{user.profile.name}}</td>
-				<td>{{user.services.twitter.screenName}}</td>
-				<td>{{user.profile.email}}</td>
-			</tr>
-		</tbody>
-	</table>
-
-</div>
 
 
-
-<div class="col-sm-4" ng-controller="UserManagementController" ng-if="selectedUser">
-	<div class="row">
-		<div class="col-sm-6 text-center">
-			<div class="mnd-inline-block" mnd-cig-image source="selectedUser.profile.pictureUrl" size="130"></div>
+	<div class="col-sm-4" ng-controller="UserManagementController" ng-if="selectedUser">
+		<div class="row">
+			<div class="col-sm-6 text-center">
+				<div class="mnd-inline-block" mnd-cig-image source="selectedUser.profile.pictureUrl" size="130"></div>
+			</div>
+			<div class="col-sm-6">
+				<h3>{{selectedUser.profile.name}}</h3>
+				<h4><i>{{selectedUser.services.twitter.screenName}}</i></h4>
+				<h5>{{selectedUser.profile.email}}</h5>
+			</div>
 		</div>
-		<div class="col-sm-6">
-			<h3>{{selectedUser.profile.name}}</h3>
-			<h4><i>{{selectedUser.services.twitter.screenName}}</i></h4>
-			<h5>{{selectedUser.profile.email}}</h5>
-		</div>
+
+		<br />
+		<br />
+		<br />
+		<label>Roles</label>
+		<div mnd-tags tags="selectedUser.roles" placeholder="Add role" on-add="onRoleAdd" on-remove="onRoleRemove"></div>
+
+		<br />
+		<label>Groups</label>
+		<div mnd-tags tags="selectedUser.groups" placeholder="Add group" on-add="onGroupAdd" on-remove="onGroupRemove"></div>
 	</div>
-
-	<br />
-	<br />
-	<br />
-	<label>Roles</label>
-	<div mnd-tags tags="selectedUser.roles" placeholder="Add role" on-add="onRoleAdd" on-remove="onRoleRemove"></div>
-
-	<br />
-	<label>Groups</label>
-	<div mnd-tags tags="selectedUser.groups" placeholder="Add group" on-add="onGroupAdd" on-remove="onGroupRemove"></div>
 </div>
