@@ -15,6 +15,18 @@ angular.module("mnd-web.components")
 				return title || "Untitled post";
 			};
 
+			$scope.changeLikeStatus = function () {
+				console.log("HELLo");
+				if ($scope.userLikesPost()) {
+					Ceres.call("unlikePost", $scope.post._id);
+				} else {
+					Ceres.call("likePost", $scope.post._id);
+				}
+			};
+
+			$scope.userLikesPost = function () {
+				return _.contains($scope.post.likedBy, $scope.user._id);
+			};
 		}
 	};
 })
