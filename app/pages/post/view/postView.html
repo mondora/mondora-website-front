@@ -5,8 +5,19 @@
 		<div class="post-overlay" ng-if="titleImageIsDisplayed()"></div>
 	</div>
 
-	<div ng-if="isAuthor()" class="post-top-buttons">
-		<a ui-sref="postEdit({postId: post._id})" class="btn btn-default">Modifica</a>
+	<div class="post-top-buttons">
+		<div class="mnd-inline-block" ng-class="{'color-me-white': titleImageIsDisplayed()}">
+			<i class="fa fa-thumbs-up" ng-class="{'color-me-white': titleImageIsDisplayed()}"></i>
+		</div>
+		<div class="mnd-inline-block" ng-class="{'color-me-white': titleImageIsDisplayed()}">
+			<i class="fa fa-share-alt" ng-class="{'color-me-white': titleImageIsDisplayed()}"></i> 
+		</div>
+		<a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="btn btn-default mnd-inline-block">Modifica</a>
+		<div class="open-share-buttons">
+			<i class="fa fa-share-alt"></i>
+			<i class="fa fa-share-alt"></i> 
+			<i class="fa fa-share-alt"></i> 
+		</div>
 	</div>
 
 	<div id="mnd-post-sprinkle-container">
@@ -34,7 +45,7 @@
 		</div>
 	</div>
 
-	<div class="post-scroll-to-content" ng-show="isMobile"><i class="fa fa-chevron-down"></i></div>
+	<div class="post-scroll-to-content"><i class="fa fa-chevron-down"></i></div>
 
 	<div class="post-body">
 		<div class="first-level-html-container" ng-repeat="child in bodyChildren() track by $index">

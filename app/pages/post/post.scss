@@ -38,6 +38,16 @@
 	right: 20px;
 	top: 20px;
 	z-index: 200;
+	div i{
+		padding: 10px;
+		font-size: 25px;
+	}
+	a {
+		margin-bottom: 15px;
+	}
+	.color-me-white {
+		border-color: #fff!important;
+	}
 }
 
 .post-header {
@@ -86,13 +96,7 @@
 	height: 100px;
 }
 .post-scroll-to-content {
-	position: absolute;
-	bottom: 0px;
-	width: 100%;
-	padding-top: 30px;
-	color: #ffcc00;	
-	font-size: 60px;
-	text-align: center;
+	display: none;
 }
 
 //media queries
@@ -102,14 +106,14 @@
 	}
 	.mnd-mind-container {
 		top: 30%;
-		height: 20%;
+		height: 80px;
 		overflow-x: scroll;
 		overflow-y: hidden;
 		-webkit-overflow-scrolling: touch;
 	}
 	.post-header {
 		top: 0%;
-		height: 27%;
+		min-height: 100px;
 		overflow: hidden;
 		background-color: rgba(0,0,0,0.3);
 	}
@@ -123,5 +127,17 @@
 	}
 	.post-author {
 		display: none;
+	}
+}
+@media (max-width:767px) and (min-height:500px){
+	.post-scroll-to-content {
+		display: block;
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+		padding-top: 30px;
+		color: #ffcc00;	
+		font-size: 60px;
+		text-align: center;
 	}
 }
