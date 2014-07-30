@@ -1,16 +1,11 @@
 .profile-social-row {
-	line-height: 2em;
+	line-height: 1.5em;
 	font-size: 14px;
 }
 
 .profile-social-row .simplebox {
 	display: inline-block;
-	width: 50%;
-}
-
-.profile-social-row .icon {
-	display: inline-block;
-	width: 30px;
+	width: 80%;
 }
 
 #profile-picture-progressbar {
@@ -30,7 +25,7 @@
 }
 
 .profile-edit-picture {
-	min-width: 200px;
+	min-width: 180px;
 }
 
 #profile-picture-input {
@@ -41,4 +36,8 @@
 	width: 100%;
 	cursor: pointer;
 	z-index: 10;
+}
+
+#profile-name-input {
+	margin-top: -4px;
 }

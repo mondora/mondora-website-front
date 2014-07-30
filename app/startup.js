@@ -211,11 +211,6 @@ angular.module("mnd-web")
 		public: true
 	});
 
-    $stateProvider.state("approach", {
-        url: "/approach",
-		parent: "root",
-        templateUrl: "pages/approach/approach.html"
-    });
 
 
 	//////////
@@ -241,7 +236,13 @@ angular.module("mnd-web")
 		url: "/admin",
 		parent: "root",
 		templateUrl: "pages/admin/admin.html",
-		controller: "AdminController"
+		controller: "AdminController",
+		resolve: {
+			serverConfigurationsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("serverConfigurations");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}]
+		}
 	});
 
 	$stateProvider.state("users", {
@@ -276,6 +277,13 @@ angular.module("mnd-web")
 		templateUrl: "pages/inbox/inbox.html",
 		controller: "InboxController"
 	});
+
+    $stateProvider.state("verifyEmail", {
+        url: "/verifyEmail/:token",
+		parent: "root",
+        templateUrl: "pages/verifyEmail/verifyEmail.html",
+		controller: "VerifyEmailController"
+    });
 
 
 

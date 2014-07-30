@@ -1,70 +1,102 @@
 <div class="page-container">
-	<div class="post-top-buttons">
-		<a ui-sref="user({userId: user._id})" class="btn btn-default">
-			Anteprima
-		</a>
-	</div>
-
 	<br />
 	<br />
-	<div class="col-sm-10 col-sm-offset-1">
+	<div class="row">
 
-		<div tabset justified="true">
-
-			<div tab heading="Profile">
-				<br />
-				<br />
-				<div class="row">
-					<div class="col-sm-4 profile-edit-picture">
-						<div mnd-cig-image source="profile.pictureUrl" size="200"></div>
-						<div
-							id="profile-picture-input"
-							mnd-s3-file-upload file-type="image"
-							after-upload="afterUploadPicture"
-							is-uploading="isUploadingPicture"
-							upload-progress="uploadProgressPicture">
-						</div>
-						<div id="profile-picture-progressbar" ng-show="isUploadingPicture">
-							<div progressbar value="uploadProgressPicture"></div>
-						</div>
+		<div class="col-sm-5 col-sm-offset-1">
+			<div class="row">
+				<div class="col-sm-6 profile-edit-picture">
+					<div mnd-cig-image source="profile.pictureUrl" size="150"></div>
+					<div
+						id="profile-picture-input"
+						mnd-s3-file-upload file-type="image"
+						after-upload="afterUploadPicture"
+						is-uploading="isUploadingPicture"
+						upload-progress="uploadProgressPicture">
 					</div>
-					<div class="col-sm-8">
-						<input type="text" class="simplebox h2 mnd-block" ng-model="profile.name"/>
+					<div id="profile-picture-progressbar" ng-show="isUploadingPicture">
+						<div progressbar value="uploadProgressPicture"></div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<h3>
+						<input type="text" id="profile-name-input" class="simplebox" placeholder="Full name" ng-model="profile.name" />
+					</h3>
+					<h4>
 						<i>
-							<input type="text" class="simplebox h4 mnd-block" ng-model="profile.screenName"/>
+							<input type="text" class="simplebox" ng-model="profile.screenName" placeholder="Screen name" />
 						</i>
-					</div>
+					</h4>
 				</div>
-				<br />
-				<h3><b>Social links</b></h3>
-				<div class="profile-social-row">
-					<span class="icon"><i class="fa fa-facebook"></i></span>
-					<input type="text" class="simplebox" ng-model="profile.facebookUrl" ng-value="profile.facebookUrl" placeholder="Facebook Profile Url" />
-				</div>
-				<div class="profile-social-row">
-					<span class="icon"><i class="fa fa-twitter"></i></span>
-					<input type="text" class="simplebox" ng-model="profile.twitterUrl" ng-value="profile.twitterUrl" placeholder="Twitter Profile Url" />
-				</div>
-				<div class="profile-social-row">
-					<span class="icon"><i class="fa fa-linkedin"></i></span>
-					<input type="text" class="simplebox" ng-model="profile.linkedInUrl" ng-value="profile.linkedInUrl" placeholder="LinkedIn Profile Url" />
-				</div>
-				<div class="profile-social-row">
-					<span class="icon"><i class="fa fa-github"></i></span>
-					<input type="text" class="simplebox" ng-model="profile.githubUrl" ng-value="profile.githubUrl" placeholder="Github Profile Url" />
-				</div>
-				<br />
-				<h3><b>Bio</b></h3>
-				<div class="simplebox" mnd-medium-editor content="profile.bio" options="bioEditorOptions"></div>
 			</div>
-
-			<div tab heading="Email preferences">
-
-			</div>
-
 		</div>
 
-
+		<div class="col-sm-4 col-sm-offset-1">
+			<h3>Social links</h3>
+			<div class="profile-social-row">
+				<span class="mnd-width-20"><i class="fa fa-facebook"></i></span>
+				<input type="text" class="simplebox" ng-model="profile.facebookUrl" ng-value="profile.facebookUrl" placeholder="Facebook Profile Url" />
+			</div>
+			<div class="profile-social-row">
+				<span class="mnd-width-20"><i class="fa fa-twitter"></i></span>
+				<input type="text" class="simplebox" ng-model="profile.twitterUrl" ng-value="profile.twitterUrl" placeholder="Twitter Profile Url" />
+			</div>
+			<div class="profile-social-row">
+				<span class="mnd-width-20"><i class="fa fa-linkedin"></i></span>
+				<input type="text" class="simplebox" ng-model="profile.linkedInUrl" ng-value="profile.linkedInUrl" placeholder="LinkedIn Profile Url" />
+			</div>
+			<div class="profile-social-row">
+				<span class="mnd-width-20"><i class="fa fa-github"></i></span>
+				<input type="text" class="simplebox" ng-model="profile.githubUrl" ng-value="profile.githubUrl" placeholder="Github Profile Url" />
+			</div>
+		</div>
 
 	</div>
+
+	<br />
+	<div class="row">
+
+		<div class="col-sm-5 col-sm-offset-1">
+			<h3>Profile</h3>
+			<div class="simplebox" mnd-medium-editor content="profile.bio" options="bioEditorOptions"></div>
+		</div>
+
+		<div class="col-sm-4 col-sm-offset-1">
+
+			<div ng-if="!user.emails">
+				You don't have any email address. Add one!
+			</div>
+
+			<div accordion class="mnd-menu-accordion">
+				<div ng-repeat="email in user.emails">
+					<div accordion-group class="mnd-menu-accordion-heading">
+						<div accordion-heading>
+							{{email.address}}
+							<span class="label label-success pull-right" ng-if="email.verified">
+								verified
+							</span>
+							<span class="label label-danger pull-right" ng-if="!email.verified">
+								not verified
+							</span>
+						</div>
+						<button class="btn btn-default" ng-click="resendVerificationEmail(email)" ng-if="!email.verified">Re-send verification</button>
+						<button class="btn btn-default" ng-click="deleteEmail(email)">Delete</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="mnd-vsp-6"></div>
+
+			<div class="input-group">
+				<input type="email" class="form-control" placeholder="Add email" ng-model="email" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" ng-click="addEmail()" ng-disabled="!email">
+						<i class="fa fa-plus"></i>
+					</button>
+				</span>
+			</div>	
+		</div>
+
+	</div>
+
 </div>

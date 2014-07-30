@@ -30,7 +30,24 @@ angular.module("mnd-web.pages")
 
 	$scope.afterUploadPicture = function (url) {
 		$scope.profile.pictureUrl = url;
-	}; 
+	};
+
+	/////////////////////
+	// Email functions //
+	/////////////////////
+
+	$scope.addEmail = function () {
+		Ceres.call("addEmailToUser", $scope.email);
+		$scope.email = "";
+	};
+
+	$scope.deleteEmail = function (email) {
+		Ceres.call("removeEmailFromUser", email.address);
+	};
+
+	$scope.resendVerificationEmail = function (email) {
+		Ceres.call("resendVerificationEmail", email.address);
+	};
 
 	///////////////////
 	// Save function //
