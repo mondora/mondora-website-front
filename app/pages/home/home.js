@@ -6,19 +6,21 @@ angular.module("mnd-web.pages")
 	$scope.sprinkleText = homeConfig.sprinkleText;
 	$scope.banner = homeConfig.banner;
 	$scope.payoff = homeConfig.payoff;
+	var currentVideo = homeConfig.currentVideo || 0;
+	console.log(currentVideo);
+	console.log(homeConfig);
+	var videos = homeConfig.videoUrls && homeConfig.videoUrls[currentVideo];
+	$scope.videoUrls = _.reduce(videos, function (acc, url, key) {
+		acc[key] = $sce.trustAsResourceUrl(url);
+		return acc;
+	}, {});
+
+	console.log(videos);
 
 	$scope.login = function () {
 		$scope.Ceres.loginWithTwitter().then(function () {
 			$state.go("personalHome");
 		});
 	};
-
-	// Video
-	var videoSource = "https://mnd-website.s3.amazonaws.com/Mnd-Alps.mp4";
-	$scope.videoSource = $sce.trustAsResourceUrl(videoSource);
-
-	// Video poster
-	var videoPoster = "https://s3.amazonaws.com/mnd-website/vd-back.jpg";
-	$scope.videoPoster = $sce.trustAsResourceUrl(videoPoster);
 
 }]);

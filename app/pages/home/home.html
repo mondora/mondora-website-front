@@ -47,7 +47,9 @@
 
 <div id="mnd-video-background">
 	<div class="mnd-video-overlay"></div>
-	<video muted autoplay="1" loop="1" ng-src="{{videoSource}}" ng-attr-poster="{{videoPoster}}"> 
+	<video muted autoplay="1" loop="1" ng-attr-poster="{{videoUrls.poster}}"> 
+		<source ng-src="{{videoUrls.mp4}}" type="video/mp4" />
+		<source ng-src="{{videoUrls.webm}}" type="video/webm" />
 	</video>
-	<img ng-src="{{videoPoster}}" />
+	<img ng-src="{{videoUrls.poster}}" />
 </div>
