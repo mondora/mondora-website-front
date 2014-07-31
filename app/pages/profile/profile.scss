@@ -25,15 +25,23 @@
 }
 
 .profile-edit-picture {
-	min-width: 180px;
+	width: 180px;
+	height: 180px;
+	display: inline-block;
+	float: left;
+}
+.profile-edit-name {
+	height: 180px;
+	display: inline-block;
+	float: left;
 }
 
 #profile-picture-input {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	height: 100%;
-	width: 100%;
+	height: 180px;
+	width: 180px;
 	cursor: pointer;
 	z-index: 10;
 }

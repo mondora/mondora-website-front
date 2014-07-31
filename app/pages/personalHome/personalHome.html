@@ -1,36 +1,57 @@
-<div class="page-container radial-background" ng-class="{'mnd-overflow-hidden' : showNotifications}">
-	<!--notifications-->
+<!-- Email modal -->
+<div mnd-modal header="Add email address" open="email.modal">
+
+	<div ng-if="!verificationEmailSent">
+		<div class="form-group">
+			<label>You don't have any email address. Add one!</label>
+			<input type="email" class="form-control" placeholder="Email" ng-model="email.address" />
+		</div>
+		<button class="btn btn-default" type="button" ng-click="addEmail()" ng-disabled="!email.address">
+			Add
+		</button>
+	</div>
+
+	<div ng-if="verificationEmailSent">
+		Thank you. We've sent you averification email at {{email.address}}
+		<br />
+		<br />
+		<button type="button" class="btn btn-default" ng-click="email.modal = false">
+			Close
+		</button>
+	</div>
+
+</div>
+
+<div class="page-container radial-background" ng-class="{'mnd-overflow-hidden': showNotifications}">
+
 	<div ng-if="showNotifications" class="notifications-container mnd-inline-block">
 		<div class="notifications-ext">
-		<div class="notifications">
-		
-			<div class="list">
-				<div class="personal-home-notification" ng-repeat="notification in notifications | orderBy:'-date'">
-					<div mnd-notification></div>
+			<div class="notifications">
+				<div class="list">
+					<div class="personal-home-notification" ng-repeat="notification in notifications | orderBy:'-date'">
+						<div mnd-notification></div>
+					</div>
+					<div class="no-notifications" ng-if="!notifications.length">You have no notifications</div>
 				</div>
-				<div class="no-notifications" ng-if="!notifications.length"> Hey! There are no notifications here...</div>
-			</div>
-		</div>
-		</div>
-	</div>
-	<!--end notifications-->
-	<div class="row welcome">
-		<div class="col-sm-12 text-center">
-			<h2 class="mnd-inline-block">Hello {{user.profile.screenName}}!</h2>
-			<div class="notification-bell mnd-clickable mnd-inline-block" ng-click="showNotifications = !showNotifications">
-				<i class="fa fa-bell"></i>
-				<span ng-if="notifications.length" ng-show="!showNotifications" class="badge">{{notifications.length}}</span>
 			</div>
 		</div>
 	</div>
 
+	<div class="col-sm-12 text-center welcome">
+		<h2 class="mnd-inline-block">Hello {{user.profile.screenName}}!</h2>
+		<div class="notification-bell mnd-clickable mnd-inline-block" ng-click="showNotifications = !showNotifications">
+			<i class="fa fa-bell"></i>
+			<span ng-if="notifications.length" ng-show="!showNotifications" class="badge">{{notifications.length}}</span>
+		</div>
+	</div>
+
 	<div class="col-sm-3 col-sm-offset-1">
-		<div>
+		<div class="text-center">
 			<h4 class="component-title">Your apps</h4>
 			<a class="app-box" ui-sref="profile()">
 				<i class="fa fa-user"></i>
 			</a>
-			<a class="app-box" ui-sref="admin()" ng-if="isAdmin()">
+			<a class="app-box" ui-sref="admin()" ng-if="isInRole('admin')">
 				<i class="fa fa-dashboard"></i>
 			</a>
 			<a class="app-box" ui-sref="today()">
