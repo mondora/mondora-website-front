@@ -6,17 +6,17 @@
 	</div>
 
 	<div class="post-top-buttons">
-		<div class="mnd-inline-block" ng-class="{'color-me-white': titleImageIsDisplayed()}">
-			<i class="fa fa-thumbs-up" ng-class="{'color-me-white': titleImageIsDisplayed()}"></i>
-		</div>
-		<div class="mnd-inline-block" ng-class="{'color-me-white': titleImageIsDisplayed()}">
-			<i class="fa fa-share-alt" ng-class="{'color-me-white': titleImageIsDisplayed()}"></i> 
-		</div>
 		<a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="btn btn-default mnd-inline-block">Modifica</a>
-		<div class="open-share-buttons">
-			<i class="fa fa-share-alt"></i>
-			<i class="fa fa-share-alt"></i> 
-			<i class="fa fa-share-alt"></i> 
+		<div class="mnd-inline-block">
+			<i class="fa fa-thumbs-up mnd-clickable"></i>
+		</div>
+		<div class="mnd-inline-block">
+			<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
+		</div>
+		<div class="open-share-buttons" ng-if="openShareButtons">
+			<i class="fa fa-facebook mnd-clickable"></i>
+			<i class="fa fa-twitter mnd-clickable"></i> 
+			<i class="fa fa-envelope-o mnd-clickable"></i> 
 		</div>
 	</div>
 
