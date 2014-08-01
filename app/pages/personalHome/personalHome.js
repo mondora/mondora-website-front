@@ -2,14 +2,26 @@ angular.module("mnd-web.pages")
 
 .controller("PersonalHomeController", ["$scope", "$interval", function ($scope, $interval) {
 
+	///////////
+	// Email //
+	///////////
+
+	$scope.email = {};
+	$scope.addEmail = function () {
+		$scope.verificationEmailSent = true;
+		Ceres.call("addEmailToUser", $scope.email.address);
+	};
+	$scope.email.modal = (!$scope.user.emails || $scope.user.emails.length === 0);
+
 	//////////
 	// Apps //
 	//////////
 
-	$scope.isAdmin = function () {
+	$scope.isInRole = function (role) {
 		if ($scope.user && Array.isArray($scope.user.roles)) {
-			return $scope.user.roles.indexOf("configure") !== -1;
+			return $scope.user.roles.indexOf(role) !== -1;
 		}
+		return false;
 	};
 
 	///////////////////
