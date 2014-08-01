@@ -16,7 +16,6 @@ angular.module("mnd-web.components")
 			};
 
 			$scope.changeLikeStatus = function () {
-				console.log("HELLo");
 				if ($scope.userLikesPost()) {
 					Ceres.call("unlikePost", $scope.post._id);
 				} else {

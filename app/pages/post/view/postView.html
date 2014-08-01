@@ -7,16 +7,15 @@
 
 	<div class="post-top-buttons">
 		<a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="btn btn-default mnd-inline-block">Modifica</a>
-		<div class="mnd-inline-block">
-			<i class="fa fa-thumbs-up mnd-clickable"></i>
+		<div class="mnd-inline-block" ng-click="likePost()">
+			<i class="fa fa-thumbs-up mnd-clickable" ng-class="{'liked': numberOfLikes()}"></i>
+			<div class="post-likes" ng-show="numberOfLikes()"><span>{{post.likedBy.length}}</span></div>
 		</div>
 		<div class="mnd-inline-block">
 			<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
 		</div>
 		<div class="open-share-buttons" ng-if="openShareButtons">
-			<i class="fa fa-facebook mnd-clickable"></i>
-			<i class="fa fa-twitter mnd-clickable"></i> 
-			<i class="fa fa-envelope-o mnd-clickable"></i> 
+			<div mnd-share-buttons url=""></div>
 		</div>
 	</div>
 

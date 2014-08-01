@@ -149,6 +149,26 @@ angular.module("mnd-web.pages")
 
 	$scope.estimateReadingTime = 0;
 
+	/////////////////////
+	// Like the post   //
+	/////////////////////
+
+	$scope.numberOfLikes = function () {
+		return $scope.post.likedBy.length;
+	}
+
+	$scope.likePost = function () {
+		if ($scope.userLikesPost()) {
+			Ceres.call("unlikePost", $scope.post._id);
+		} else {
+			Ceres.call("likePost", $scope.post._id);
+		}
+	};
+
+	$scope.userLikesPost = function () {
+		return _.contains($scope.post.likedBy, $scope.user._id);
+	};
+
 	////////////////////////////////////////////////
 	// Set various properties that shape the html //
 	////////////////////////////////////////////////
