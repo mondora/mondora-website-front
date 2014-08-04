@@ -3,10 +3,11 @@
 	<br />
 	<br />
 	<div class="col-sm-6 col-sm-offset-3">
-		<input type="text" class="form-control" placeholder="Search channels" ng-model="key" ng-keyup="search(key)" />
-		<div ng-repeat="channel in channels">
+		<input type="text" class="form-control" placeholder="Search channels" ng-model="key" ng-keyup="search()" />
+		<div ng-repeat="channel in channels | filter:{name:key} | orderBy:'name' | limitTo:limit">
 			{{channel.name}}
 		</div>
+		<button class="btn btn-default btn-block" ng-click="loadMore()">More</button>
 	</div>
 
 </div>
