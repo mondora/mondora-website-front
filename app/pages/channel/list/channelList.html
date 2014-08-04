@@ -1,0 +1,12 @@
+<div class="page-container">
+
+	<br />
+	<br />
+	<div class="col-sm-6 col-sm-offset-3">
+		<input type="text" class="form-control" placeholder="Search channels" ng-model="key" ng-keyup="search(key)" />
+		<div ng-repeat="channel in channels">
+			{{channel.name}}
+		</div>
+	</div>
+
+</div>
