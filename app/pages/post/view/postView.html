@@ -1,3 +1,19 @@
+<!-- Post recommend modal -->
+<div mnd-modal header="Recommend this post" open="modalStatus.recommend">
+	<div ng-controller="RecommendModalController">
+		<input type="text" class="form-control" placeholder="Recommend to" mnd-user-input user-model="to.user" />
+		<br />
+		<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
+		<br />
+		<button type="button" class="btn btn-default" ng-click="recommend()">
+			Recommend
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.recommend = false">
+			Close
+		</button>
+	</div>
+</div>
+
 <div class="post-page-container">	
 
 	<div class="post-title-image">
@@ -15,7 +31,9 @@
 			<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
 		</div>
 		<div class="open-share-buttons" ng-if="openShareButtons">
-			<div mnd-share-buttons url=""></div>
+			<i class="fa fa-facebook mnd-clickable" ng-click="shareOnFacebook()"></i>
+			<i class="fa fa-twitter mnd-clickable" ng-click="shareOnTwitter()"></i> 
+			<i class="fa fa-users mnd-clickable" ng-click="recommend()"></i> 
 		</div>
 	</div>
 
