@@ -6,6 +6,7 @@ angular.module("mnd-web.pages")
 	$scope.amazonS3Config = $scope.Configurations.reactiveQuery({name: "amazonS3"}).result[0];
 	$scope.homeConfig = $scope.Configurations.reactiveQuery({name: "home"}).result[0];
 	$scope.menuConfig = $scope.Configurations.reactiveQuery({name: "menu"}).result[0];
+	$scope.signupEmailTemplatesConfig = $scope.Configurations.reactiveQuery({name: "signupEmailTemplates"}).result[0];
 
 	///////////////////
 	// Save function //
@@ -17,6 +18,8 @@ angular.module("mnd-web.pages")
 	delete homeConfigCache._id;
 	var amazonS3ConfigCache = angular.copy($scope.amazonS3Config);
 	delete amazonS3ConfigCache._id;
+	var signupEmailTemplatesConfigCache = angular.copy($scope.signupEmailTemplatesConfig);
+	delete signupEmailTemplatesConfigCache._id;
 
 	$scope.save = function () {
 
@@ -42,13 +45,24 @@ angular.module("mnd-web.pages")
 			});
 		}
 
-		// AmazonS3 configuration
+		// Amazon S3 configuration
 		var amazonS3Config = angular.copy($scope.amazonS3Config);
 		delete amazonS3Config._id;
 		// Only perform the update if there were modifications
 		if (!angular.equals(amazonS3Config, amazonS3ConfigCache)) {
 			amazonS3ConfigCache = amazonS3Config;
 			$scope.Configurations.update($scope.amazonS3Config._id, amazonS3Config).remote.fail(function (err) {
+				console.log(err);
+			});
+		}
+
+		// Signup email templates configuration
+		var signupEmailTemplatesConfig = angular.copy($scope.signupEmailTemplatesConfig);
+		delete signupEmailTemplatesConfig._id;
+		// Only perform the update if there were modifications
+		if (!angular.equals(signupEmailTemplatesConfig, signupEmailTemplatesConfigCache)) {
+			signupEmailTemplatesConfigCache = signupEmailTemplatesConfig;
+			$scope.Configurations.update($scope.signupEmailTemplatesConfig._id, signupEmailTemplatesConfig).remote.fail(function (err) {
 				console.log(err);
 			});
 		}

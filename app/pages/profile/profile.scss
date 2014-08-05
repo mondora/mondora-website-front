@@ -1,19 +1,14 @@
-.profileSocialRow {
+.profile-social-row {
 	line-height: 1.5em;
 	font-size: 14px;
 }
 
-.profileSocialRow .simplebox {
+.profile-social-row .simplebox {
 	display: inline-block;
-	width: 50%;
+	width: 80%;
 }
 
-.profileSocialRow .icon {
-	display: inline-block;
-	width: 30px;
-}
-
-#profilePictureProgressbar {
+#profile-picture-progressbar {
 	position: absolute;
 	top: 100px;
 	left: 15px;
@@ -21,23 +16,36 @@
 	z-index: 10;
 }
 
-#profilePictureProgressbar * {
+#profile-picture-progressbar * {
 	height: 5px;
 }
 
-#profilePictureProgressbar .progress-bar {
+#profile-picture-progressbar .progress-bar {
 	background-color: #aeaeac;
 }
 
-.dullProfilePicture {
-	opacity: 0.5;
+.profile-edit-picture {
+	width: 180px;
+	height: 180px;
+	display: inline-block;
+	float: left;
+}
+.profile-edit-name {
+	height: 180px;
+	display: inline-block;
+	float: left;
 }
 
-#profileMottoEditor,
-#profileBioEditor {
-	font-size: 16px;
+#profile-picture-input {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 180px;
+	width: 180px;
+	cursor: pointer;
+	z-index: 10;
 }
 
-.profileEdit-picture {
-	min-width: 200px;
+#profile-name-input {
+	margin-top: -4px;
 }

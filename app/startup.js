@@ -211,11 +211,6 @@ angular.module("mnd-web")
 		public: true
 	});
 
-    $stateProvider.state("approach", {
-        url: "/approach",
-		parent: "root",
-        templateUrl: "pages/approach/approach.html"
-    });
 
 
 	//////////
@@ -241,7 +236,13 @@ angular.module("mnd-web")
 		url: "/admin",
 		parent: "root",
 		templateUrl: "pages/admin/admin.html",
-		controller: "AdminController"
+		controller: "AdminController",
+		resolve: {
+			serverConfigurationsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("serverConfigurations");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}]
+		}
 	});
 
 	$stateProvider.state("users", {
@@ -275,6 +276,13 @@ angular.module("mnd-web")
 		parent: "root",
 		templateUrl: "pages/inbox/inbox.html",
 		controller: "InboxController"
+	});
+
+	$stateProvider.state("verifyEmail", {
+		url: "/verifyEmail/:token",
+		parent: "root",
+		templateUrl: "pages/verifyEmail/verifyEmail.html",
+		controller: "VerifyEmailController"
 	});
 
 
@@ -318,11 +326,11 @@ angular.module("mnd-web")
 	// Post //
 	//////////
 
-    $stateProvider.state("postList", {
-        url: "/post/list",
+	$stateProvider.state("postList", {
+		url: "/post/list",
 		parent: "root",
-        templateUrl: "pages/post/list/postList.html",
-        controller: "PostListController",
+		templateUrl: "pages/post/list/postList.html",
+		controller: "PostListController",
 		resolve: {
 			latestPostsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("latestPosts");
@@ -330,7 +338,7 @@ angular.module("mnd-web")
 			}]
 		},
 		public: true
-    });
+	});
 
 	$stateProvider.state("postView", {
 		url: "/post/:postId",
@@ -376,10 +384,10 @@ angular.module("mnd-web")
 		}
 	});
 
-    $stateProvider.state("topic", {
-        url: "/topic/:name",
+	$stateProvider.state("topic", {
+		url: "/topic/:name",
 		parent: "root",
-        templateUrl: "pages/topic/topic.html",
+		templateUrl: "pages/topic/topic.html",
 		controller: "TopicController",
 		resolve: {
 			topic: ["TimeoutPromiseService", "$stateParams", function (TimeoutPromiseService, $stateParams) {
@@ -388,13 +396,21 @@ angular.module("mnd-web")
 			}]
 		},
 		public: true
-    });
+	});
 
 
 
 	/////////////
 	// Channel //
 	/////////////
+
+	$stateProvider.state("channelList", {
+		url: "/channel/list",
+		parent: "root",
+		templateUrl: "pages/channel/list/channelList.html",
+		controller: "ChannelListController",
+		public: true
+	});
 
 	$stateProvider.state("channelView", {
 		url: "/channel/:channelId",
