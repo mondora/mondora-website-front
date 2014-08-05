@@ -322,6 +322,10 @@ angular.module("mnd-web.pages")
 		$scope.modalStatus.recommend = true;
 		$scope.openShareButtons = false;
 	};
+	$scope.shareToChannel = function () {
+		$scope.modalStatus.shareToChannel = true;
+		$scope.openShareButtons = false;
+	};
 
 }])
 
@@ -330,5 +334,21 @@ angular.module("mnd-web.pages")
 	$scope.recommend = function () {
 		Ceres.call("recommendPost", $scope.post._id, $scope.to.user._id, $scope.message);
 		$scope.modalStatus.recommend = false;
+	};
+}])
+
+.controller("ShareToChannelModalController", ["$scope", function ($scope) {
+	$scope.to = {};
+	$scope.shareToChannel = function () {
+		var entry = {
+			type: "post",
+			content: {
+				message: $scope.message,
+				postId: $scope.post._id,
+				postTitle: $scope.post.title
+			}
+		};
+		Ceres.call("addEntryToChannel", $scope.channelName, entry);
+		$scope.modalStatus.shareToChannel = false;
 	};
 }]);

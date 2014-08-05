@@ -14,6 +14,22 @@
 	</div>
 </div>
 
+<!-- Share to channel modal -->
+<div mnd-modal header="Share this post" open="modalStatus.shareToChannel">
+	<div ng-controller="ShareToChannelModalController">
+		<input type="text" class="form-control" placeholder="Share to" ng-model="channelName" />
+		<br />
+		<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
+		<br />
+		<button type="button" class="btn btn-default" ng-click="shareToChannel()">
+			Share
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.shareToChannel = false">
+			Close
+		</button>
+	</div>
+</div>
+
 <div class="post-page-container">	
 
 	<div class="post-title-image">
@@ -34,6 +50,7 @@
 			<i class="fa fa-facebook mnd-clickable" ng-click="shareOnFacebook()"></i>
 			<i class="fa fa-twitter mnd-clickable" ng-click="shareOnTwitter()"></i> 
 			<i class="fa fa-users mnd-clickable" ng-click="recommend()"></i> 
+			<i class="fa fa-slack mnd-clickable" ng-click="shareToChannel()"></i> 
 		</div>
 	</div>
 
