@@ -40,13 +40,13 @@
 	z-index: 200;
 	div i{
 		border-radius: 50%;
-		background-color: rgba(255,255,255,0.4);
+		background-color: rgba(255,255,255,0.5);
 		padding: 10px;
 		margin-left: 5px;
 		font-size: 25px;
 	}
-	a, .btn {
-		margin-bottom: 15px;
+	a {
+		margin-right: 15px;
 	}
 	.liked {
 		border: 2px solid #008000;
@@ -87,7 +87,7 @@
 		position: absolute;
 		right:0px;
 		top: 40px;
-		width: 100px;
+		width: 150px;
 		padding-left: 10px;
 		margin-top: 20px;
 		border-radius: 5px;
