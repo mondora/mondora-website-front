@@ -3,6 +3,7 @@ $mnd-yellow: #ffcc00;
 $mnd-grey: #5e5f5f;
 $mnd-light-grey: #abadad;
 $mnd-green: #5cb85c;
+$mnd-red: #d9534f;
 
 // Misc
 .mnd-clickable {
@@ -158,4 +159,11 @@ span.mnd-width-10 {
 }
 .bg-green {
 	background-color: $mnd-green;
+}
+
+.fg-red {
+	color: $mnd-red;
+}
+.bg-red {
+	background-color: $mnd-red;
 }

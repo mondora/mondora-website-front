@@ -15,8 +15,8 @@
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-6 right">
-		<i class="fa fa-bookmark mnd-clickable"></i>
-		<i class="fa fa-share-alt mnd-clickable"></i>
+		<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-if="!userBookmarkedPost()"></i>
+		<i class="fa fa-bookmark mnd-clickable fg-red" ng-if="userBookmarkedPost()"></i>
 		<i class="fa fa-thumbs-o-up mnd-clickable" ng-click="changeLikeStatus()" ng-class="{'fg-green': userLikesPost()}"></i>
 		<span>{{post.likedBy.length || 0}} likes</span>
 	</div>

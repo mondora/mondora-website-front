@@ -11,6 +11,10 @@
 			<i class="fa fa-thumbs-up mnd-clickable"></i>
 		</div>
 		<div class="mnd-inline-block">
+			<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-if="!userBookmarkedPost()"></i> 
+			<i class="fa fa-bookmark fg-red mnd-clickable" ng-if="userBookmarkedPost()"></i> 
+		</div>
+		<div class="mnd-inline-block">
 			<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
 		</div>
 		<div class="open-share-buttons" ng-if="openShareButtons">

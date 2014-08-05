@@ -468,6 +468,7 @@ angular.module("mnd-web")
 	$rootScope.Ceres = Ceres;
 	Ceres.subscribe("userAdditionalInfo");
 	Ceres.subscribe("allUsers");
+	Ceres.subscribe("bookmarks");
 	$rootScope.Configurations = Ceres.getCollection("configurations");
 	$rootScope.Posts = Ceres.getCollection("posts");
 	$rootScope.Channels = Ceres.getCollection("channels");
