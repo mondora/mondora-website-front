@@ -155,26 +155,6 @@ angular.module("mnd-web.pages")
 
 	$scope.estimateReadingTime = 0;
 
-	/////////////////////
-	// Like the post   //
-	/////////////////////
-
-	$scope.numberOfLikes = function () {
-		return $scope.post.likedBy.length;
-	};
-
-	$scope.likePost = function () {
-		if ($scope.userLikesPost()) {
-			Ceres.call("unlikePost", $scope.post._id);
-		} else {
-			Ceres.call("likePost", $scope.post._id);
-		}
-	};
-
-	$scope.userLikesPost = function () {
-		return _.contains($scope.post.likedBy, $scope.user._id);
-	};
-
 	////////////////////////////////////////////////
 	// Set various properties that shape the html //
 	////////////////////////////////////////////////
@@ -282,6 +262,37 @@ angular.module("mnd-web.pages")
 		p.innerHTML = html;
 	};
 
+
+	/////////////
+	// Likeing //
+	/////////////
+
+	$scope.numberOfLikes = function () {
+		return $scope.post.likedBy.length;
+	};
+
+	$scope.likePost = function () {
+		if ($scope.userLikesPost()) {
+			Ceres.call("unlikePost", $scope.post._id);
+			Ceres.call("addUserLog", {
+				type: "unlikePost",
+				location: window.location.href,
+				postId: $scope.post._id
+			});
+		} else {
+			Ceres.call("likePost", $scope.post._id);
+			Ceres.call("addUserLog", {
+				type: "likePost",
+				location: window.location.href,
+				postId: $scope.post._id
+			});
+		}
+	};
+
+	$scope.userLikesPost = function () {
+		return _.contains($scope.post.likedBy, $scope.user._id);
+	};
+
 	/////////////
 	// Sharing //
 	/////////////
@@ -313,10 +324,20 @@ angular.module("mnd-web.pages")
 	$scope.shareOnFacebook = function () {
 		window.open(url.facebook, "sharer", popupFeatures);
 		$scope.openShareButtons = false;
+		Ceres.call("addUserLog", {
+			type: "clickSharePostToFacebook",
+			location: window.location.href,
+			postId: $scope.post._id
+		});
 	};
 	$scope.shareOnTwitter = function () {
 		window.open(url.twitter, "sharer", popupFeatures);
 		$scope.openShareButtons = false;
+		Ceres.call("addUserLog", {
+			type: "clickSharePostToTwitter",
+			location: window.location.href,
+			postId: $scope.post._id
+		});
 	};
 	$scope.recommend = function () {
 		$scope.modalStatus.recommend = true;
@@ -334,6 +355,12 @@ angular.module("mnd-web.pages")
 	$scope.recommend = function () {
 		Ceres.call("recommendPost", $scope.post._id, $scope.to.user._id, $scope.message);
 		$scope.modalStatus.recommend = false;
+		Ceres.call("addUserLog", {
+			type: "recommendPostToUser",
+			location: window.location.href,
+			postId: $scope.post._id,
+			targetUser: $scope.to.user._id
+		});
 	};
 }])
 
@@ -350,5 +377,11 @@ angular.module("mnd-web.pages")
 		};
 		Ceres.call("addEntryToChannel", $scope.channelName, entry);
 		$scope.modalStatus.shareToChannel = false;
+		Ceres.call("addUserLog", {
+			type: "sharePostToChannel",
+			location: window.location.href,
+			postId: $scope.post._id,
+			channelName: $scope.channelName
+		});
 	};
 }]);

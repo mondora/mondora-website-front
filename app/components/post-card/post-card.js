@@ -18,8 +18,18 @@ angular.module("mnd-web.components")
 			$scope.changeLikeStatus = function () {
 				if ($scope.userLikesPost()) {
 					Ceres.call("unlikePost", $scope.post._id);
+					Ceres.call("addUserLog", {
+						type: "unlikePost",
+						location: window.location.href,
+						postId: $scope.post._id
+					});
 				} else {
 					Ceres.call("likePost", $scope.post._id);
+					Ceres.call("addUserLog", {
+						type: "likePost",
+						location: window.location.href,
+						postId: $scope.post._id
+					});
 				}
 			};
 
