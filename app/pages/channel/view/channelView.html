@@ -3,32 +3,30 @@
 
 <div class="channel-page-container">
 
-	<div class="channel-main-image">
-		<div class="channel-overlay" ng-show="mainImageIsDisplayed()"></div>
+	<div class="mnd-full-image">
 		<img ng-src="{{channel.mainImageUrl}}" />
+		<div class="mnd-image-overlay" ng-show="mainImageIsDisplayed()"></div>
 	</div>
 
-	<div class="channel-page-content">
+	<div class="channel-wrap-content">
 
-		<div id="left-side" class="col-sm-6 channel-left-side">
+		<div class="channel-content">
 			<div class="channel-top-buttons" ng-if="user">
 				<button ng-if="isCurator() || isOwner()" ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Edit</button>
 			</div>
-			<div class="col-sm-9 col-sm-offset-1 channel-title-group" ng-class="{'color-me-white': mainImageIsDisplayed()}">
+			<div class="channel-title-group" ng-class="{'color-me-white': mainImageIsDisplayed()}">
 				<h1 class="channel-common-name" ng-bind-html="channel.commonName"></h1>
 				<h3><i>#{{channel.name}}</i></h3> 
 				<button class="btn btn-default" ng-click="subscribe()" ng-if="!isSubscribed()" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Subscribe</button>
 				<button class="btn btn-default" ng-click="unsubscribe()" ng-if="isSubscribed()" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Unsubscribe</button>
 			</div>
-			<div class="col-sm-9 col-sm-offset-1 channel-text-body" ng-class="{'color-me-white': mainImageIsDisplayed()}">
+			<div class="col-sm-6 channel-right-side maring-left-20">
+				<div ng-include="'pages/channel/entryList.html'"></div>
+			</div>
+			<div class="channel-text-body" ng-class="{'color-me-white': mainImageIsDisplayed()}">
 				<div ng-bind-html="channel.body" mnd-form-injector="channel.formSchema"></div>
 			</div>
 		</div>
-
-		<div class="col-sm-6 channel-right-side">
-			<div ng-include="'pages/channel/entryList.html'"></div>
-		</div>
-
 	</div>
 
 </div>
