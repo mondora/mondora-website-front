@@ -13,45 +13,13 @@
 	z-index: 200;
 	div i{
 		border-radius: 50%;
-		background-color: rgba(255,255,255,0.4);
+		background-color: rgba(255,255,255,0.5);
 		padding: 10px;
 		margin-left: 5px;
 		font-size: 25px;
 	}
-	a, .btn {
-		margin-bottom: 15px;
-	}
-	.liked {
-		border: 2px solid #008000;
-		color: #008000;
-	}
-	.post-likes {
-		position: absolute;
-		top: -12px;
-		right: 42px;
-		height: 27px;
-		width: 27px;
-		padding-bottom: 3px;
-		background: #fc8600; /* Old browsers */
-		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmM4NjAwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNDglIiBzdG9wLWNvbG9yPSIjZjI2NDAwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2FmMzcwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-		background: -ms-linear-gradient(-45deg,  #fc8600 0%,#f26400 48%,#af3700 100%); /* IE10+ */
-		background: linear-gradient(135deg,  #fc8600 0%,#f26400 48%,#af3700 100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8600', endColorstr='#af3700',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
-		border-radius: 50%;
-		border: 2px solid #fff;
-		box-shadow:2px 2px 4px #414141;
-		font-size: 15px;
-		color: #fff;
-
-
-		span {
-			position: absolute;
-			top: 0px;
-			left: 0px;
-			width: 100%;
-			text-align: center;
-		}
+	a {
+		margin-right: 15px;
 	}
 	.color-me-white {
 		border-color: #fff!important;
@@ -60,7 +28,7 @@
 		position: absolute;
 		right:0px;
 		top: 40px;
-		width: 100px;
+		width: 150px;
 		padding-left: 10px;
 		margin-top: 20px;
 		border-radius: 5px;
@@ -78,7 +46,7 @@
 			content: '';
 			display: block;
 			height: 0;
-			right: 12px;
+			right: 15px;
 			position: absolute;
 			top: -20px;
 			width: 0;
