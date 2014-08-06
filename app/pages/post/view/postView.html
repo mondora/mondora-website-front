@@ -1,22 +1,60 @@
+<!-- Post recommend modal -->
+<div mnd-modal header="Recommend this post" open="modalStatus.recommend">
+	<div ng-controller="RecommendModalController">
+		<input type="text" class="form-control" placeholder="Recommend to" mnd-user-input user-model="to.user" />
+		<br />
+		<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
+		<br />
+		<button type="button" class="btn btn-default" ng-click="recommend()">
+			Recommend
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.recommend = false">
+			Close
+		</button>
+	</div>
+</div>
+
+<!-- Share to channel modal -->
+<div mnd-modal header="Share this post" open="modalStatus.shareToChannel">
+	<div ng-controller="ShareToChannelModalController">
+		<input type="text" class="form-control" placeholder="Share to" ng-model="channelName" />
+		<br />
+		<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
+		<br />
+		<button type="button" class="btn btn-default" ng-click="shareToChannel()">
+			Share
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.shareToChannel = false">
+			Close
+		</button>
+	</div>
+</div>
+
 <div class="post-page-container">	
 
-	<div class="post-title-image">
+	<div class="mnd-full-image">
 		<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
-		<div class="post-overlay" ng-if="titleImageIsDisplayed()"></div>
+		<div class="mnd-image-overlay" ng-if="titleImageIsDisplayed()"></div>
 	</div>
 
 	<div class="post-top-buttons">
 		<a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="btn btn-default mnd-inline-block">Modifica</a>
+		<div class="mnd-inline-block" ng-click="likePost()">
+			<i class="fa fa-thumbs-up mnd-clickable" ng-class="{'liked': numberOfLikes()}"></i>
+			<div class="post-likes" ng-show="numberOfLikes()"><span>{{post.likedBy.length}}</span></div>
+		</div>
 		<div class="mnd-inline-block">
-			<i class="fa fa-thumbs-up mnd-clickable"></i>
+			<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-if="!userBookmarkedPost()"></i> 
+			<i class="fa fa-bookmark fg-red mnd-clickable" ng-if="userBookmarkedPost()"></i> 
 		</div>
 		<div class="mnd-inline-block">
 			<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
 		</div>
 		<div class="open-share-buttons" ng-if="openShareButtons">
-			<i class="fa fa-facebook mnd-clickable"></i>
-			<i class="fa fa-twitter mnd-clickable"></i> 
-			<i class="fa fa-envelope-o mnd-clickable"></i> 
+			<i class="fa fa-facebook mnd-clickable" ng-click="shareOnFacebook()"></i>
+			<i class="fa fa-twitter mnd-clickable" ng-click="shareOnTwitter()"></i> 
+			<i class="fa fa-users mnd-clickable" ng-click="recommend()"></i> 
+			<i class="fa fa-slack mnd-clickable" ng-click="shareToChannel()"></i> 
 		</div>
 	</div>
 

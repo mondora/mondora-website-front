@@ -135,6 +135,12 @@ angular.module("mnd-web.pages")
 
 	$scope.isMobile = CheckMobileService.isMobile();
 
+	////////////
+	// Modals //
+	////////////
+
+	$scope.modalStatus = {};
+
 	////////////////////////////////////////////////////
 	// Parse post.body into first generation children //
 	////////////////////////////////////////////////////
@@ -256,4 +262,139 @@ angular.module("mnd-web.pages")
 		p.innerHTML = html;
 	};
 
+	///////////////
+	// Bookmarks //
+	///////////////
+
+	var Tasks = Ceres.getCollection("tasks");
+	$scope.bookmark = function () {
+		Ceres.call("bookmarkPost", $scope.post._id);
+	};
+
+	$scope.userBookmarkedPost = function () {
+		var bookmarksByPost = Tasks.reactiveQuery({"details.post._id": $scope.post._id}).result;
+		return bookmarksByPost.length > 0;
+	};
+
+	/////////////
+	// Likeing //
+	/////////////
+
+	$scope.numberOfLikes = function () {
+		return $scope.post.likedBy.length;
+	};
+
+	$scope.likePost = function () {
+		if ($scope.userLikesPost()) {
+			Ceres.call("unlikePost", $scope.post._id);
+			Ceres.call("addUserLog", {
+				type: "unlikePost",
+				location: window.location.href,
+				postId: $scope.post._id
+			});
+		} else {
+			Ceres.call("likePost", $scope.post._id);
+			Ceres.call("addUserLog", {
+				type: "likePost",
+				location: window.location.href,
+				postId: $scope.post._id
+			});
+		}
+	};
+
+	$scope.userLikesPost = function () {
+		return _.contains($scope.post.likedBy, $scope.user._id);
+	};
+
+	/////////////
+	// Sharing //
+	/////////////
+
+	var popupHeight = 500;
+	var popupWidth= 750;
+	var popupTop = (screen.height / 2) - (popupHeight / 2);
+	var popupLeft = (screen.width / 2) - (popupWidth / 2);
+	var popupFeatures = [
+		"top=" + popupTop,
+		",left=" + popupLeft,
+		",toolbar=0",
+		",status=0",
+		",width=" + popupWidth,
+		",height=" + popupHeight
+	].join("");
+
+	var postUrl = encodeURIComponent(window.location.origin + "/#!/post/" + $scope.post._id);
+	var url = {};
+	url.facebook = [
+		"https://www.facebook.com/sharer.php?s=100",
+		"&p[title]=" + $scope.post.title,
+		"&p[url]=" + postUrl,
+		"&p[images][0]=" + $scope.post.titleImageUrl
+
+	].join("");
+	url.twitter = "https:/twitter.com/share?url=" + postUrl;
+
+	$scope.shareOnFacebook = function () {
+		window.open(url.facebook, "sharer", popupFeatures);
+		$scope.openShareButtons = false;
+		Ceres.call("addUserLog", {
+			type: "clickSharePostToFacebook",
+			location: window.location.href,
+			postId: $scope.post._id
+		});
+	};
+	$scope.shareOnTwitter = function () {
+		window.open(url.twitter, "sharer", popupFeatures);
+		$scope.openShareButtons = false;
+		Ceres.call("addUserLog", {
+			type: "clickSharePostToTwitter",
+			location: window.location.href,
+			postId: $scope.post._id
+		});
+	};
+	$scope.recommend = function () {
+		$scope.modalStatus.recommend = true;
+		$scope.openShareButtons = false;
+	};
+	$scope.shareToChannel = function () {
+		$scope.modalStatus.shareToChannel = true;
+		$scope.openShareButtons = false;
+	};
+
+}])
+
+.controller("RecommendModalController", ["$scope", function ($scope) {
+	$scope.to = {};
+	$scope.recommend = function () {
+		Ceres.call("recommendPost", $scope.post._id, $scope.to.user._id, $scope.message);
+		$scope.modalStatus.recommend = false;
+		Ceres.call("addUserLog", {
+			type: "recommendPostToUser",
+			location: window.location.href,
+			postId: $scope.post._id,
+			targetUser: $scope.to.user._id
+		});
+	};
+}])
+
+.controller("ShareToChannelModalController", ["$scope", function ($scope) {
+	$scope.to = {};
+	$scope.shareToChannel = function () {
+		var entry = {
+			type: "post",
+			content: {
+				message: $scope.message,
+				postId: $scope.post._id,
+				postTitle: $scope.post.title
+			}
+		};
+		Ceres.call("addEntryToChannel", $scope.channelName, entry);
+		$scope.modalStatus.shareToChannel = false;
+		Ceres.call("addUserLog", {
+			type: "sharePostToChannel",
+			location: window.location.href,
+			postId: $scope.post._id,
+			channelName: $scope.channelName
+		});
+	};
 }]);

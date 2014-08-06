@@ -28,8 +28,4 @@ angular.module("mnd-web.pages")
 		$scope.modalStatus.deleteEntry = true;
 	};
 
-	$scope.editing = function () {
-		return $state.current.name === "channelEdit";
-	};
-
 }]);
