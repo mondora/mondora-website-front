@@ -1,30 +1,3 @@
-.post-title-image {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-}
-.post-title-image img{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	min-width: 100%;
-	min-height: 100%; 
-}
-.post-overlay{
-	box-sizing: border-box;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	min-width: 100%;
-	min-height: 100%;
-	background-color: #000;
-	opacity: 0.2;
-}
-
 .mnd-mind-container {
 	position: absolute;
 	width: 100%;

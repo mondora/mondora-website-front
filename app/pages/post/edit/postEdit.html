@@ -128,8 +128,9 @@
 
 <div class="post-page-container">
 	<div class="post-cant-edit" ng-show="isMobile">Content not accessible from mobile devices.</div> 
-	<div class="post-title-image" ng-show="!isMobile">
+	<div class="mnd-full-image" ng-show="!isMobile">
 		<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
+		<div class="mnd-image-overlay" ng-if="titleImageIsDisplayed()"></div>
 	</div>
 
 	<div class="post-top-buttons" ng-if="isAuthor()" ng-show="!isMobile">
