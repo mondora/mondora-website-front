@@ -262,6 +262,19 @@ angular.module("mnd-web.pages")
 		p.innerHTML = html;
 	};
 
+	///////////////
+	// Bookmarks //
+	///////////////
+
+	var Tasks = Ceres.getCollection("tasks");
+	$scope.bookmark = function () {
+		Ceres.call("bookmarkPost", $scope.post._id);
+	};
+
+	$scope.userBookmarkedPost = function () {
+		var bookmarksByPost = Tasks.reactiveQuery({"details.post._id": $scope.post._id}).result;
+		return bookmarksByPost.length > 0;
+	};
 
 	/////////////
 	// Likeing //

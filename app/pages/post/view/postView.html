@@ -32,9 +32,9 @@
 
 <div class="post-page-container">	
 
-	<div class="post-title-image">
+	<div class="mnd-full-image">
 		<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
-		<div class="post-overlay" ng-if="titleImageIsDisplayed()"></div>
+		<div class="mnd-image-overlay" ng-if="titleImageIsDisplayed()"></div>
 	</div>
 
 	<div class="post-top-buttons">
@@ -42,6 +42,10 @@
 		<div class="mnd-inline-block" ng-click="likePost()">
 			<i class="fa fa-thumbs-up mnd-clickable" ng-class="{'liked': numberOfLikes()}"></i>
 			<div class="post-likes" ng-show="numberOfLikes()"><span>{{post.likedBy.length}}</span></div>
+		</div>
+		<div class="mnd-inline-block">
+			<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-if="!userBookmarkedPost()"></i> 
+			<i class="fa fa-bookmark fg-red mnd-clickable" ng-if="userBookmarkedPost()"></i> 
 		</div>
 		<div class="mnd-inline-block">
 			<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
