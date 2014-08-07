@@ -17,13 +17,16 @@ angular.module("mnd-web.components")
 						var parent = $scope.$parent.$parent.map.children;
 						var index = parent.indexOf($scope.map);
 						parent.splice(index, 1);
+						console.log(parent);
 					}
 				};
 				$scope.addChild = function () {
 					if (!$scope.map) $scope.map = {};
 					if (!$scope.map.children) $scope.map.children = [];
 					$scope.map.children.push({});
+					console.log($scope.map.children.length);
 				};
+
 			});
 		}
 	};

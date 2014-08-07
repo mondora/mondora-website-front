@@ -1,5 +1,5 @@
 <li>
-	<a ng-if="!edit" href="{{map.href}}">{{map.text}}</a>
+	<a ng-if="!edit" href="{{map.href}}" ng-show="map.text">{{map.text}}</a>
 	<input ng-if="edit" type="text" ng-model="map.text" placeholder="Text" />
 	<input ng-if="edit" type="text" ng-model="map.href" placeholder="Url" />
 	<i ng-if="edit && child" class="fa fa-times mnd-clickable" ng-click="autodestroy()"></i>
