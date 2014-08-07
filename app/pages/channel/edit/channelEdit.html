@@ -86,12 +86,12 @@
 <div class="channel-page-container">
 
 	<div class="mnd-full-image">
-		<div class="mnd-image-overlay" ng-show="mainImageIsDisplayed()"></div>
 		<img ng-src="{{channel.mainImageUrl}}" />
+		<div class="mnd-image-overlay" ng-show="mainImageIsDisplayed()"></div>
 	</div>
 
-	<div class="channel-page-content">
-		<div class="col-sm-6 channel-left-side">
+	<div class="channel-wrap-content">
+		<div class="channel-content">
 			
 			<div class="channel-top-buttons">
 				<button ui-sref="channelView({channelId: channel._id})" class="btn btn-default" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">
@@ -104,23 +104,20 @@
 					Delete
 				</button>
 			</div>
-			<div class="mnd-vsp-64"></div>
-			<div class="row">
-				<div class="col-sm-9 col-sm-offset-1 channel-title-group">
-					<i
-						class="fa fa-picture-o file-upload-icon-lg"
-						ng-class="{'color-me-white': mainImageIsDisplayed()}"
-						mnd-s3-file-upload
-						file-type="image"
-						after-upload="afterUploadMainImage"
-						is-uploading="mainImageIsUploading"
-						upload-progress="mainImageUploadProgress">
-					</i>
-					<div class="channel-image-upload-progressbar" ng-if="mainImageIsUploading" progressbar value="mainImageUploadProgress"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-9 col-sm-offset-1" ng-class="{'color-me-white': mainImageIsDisplayed()}">
+			
+			<div class="channel-title-group">
+				<i
+					class="fa fa-picture-o file-upload-icon-lg"
+					ng-class="{'color-me-white': mainImageIsDisplayed()}"
+					mnd-s3-file-upload
+					file-type="image"
+					after-upload="afterUploadMainImage"
+					is-uploading="mainImageIsUploading"
+					upload-progress="mainImageUploadProgress">
+				</i>
+				<div class="channel-image-upload-progressbar" ng-if="mainImageIsUploading" progressbar value="mainImageUploadProgress"></div>
+			
+				<div ng-class="{'color-me-white': mainImageIsDisplayed()}">
 					<h1
 						class="simplebox channel-common-name"
 						mnd-medium-editor
@@ -130,17 +127,16 @@
 					<h3><i>#{{channel.name}}</i></h3>
 				</div>
 			</div>
-			<div class="mnd-vsp-64"></div>
-			<div class="row">
-				<div class="col-sm-9 col-sm-offset-1 channel-text-body" ng-class="{'color-me-white': mainImageIsDisplayed()}">
-					<div class="simplebox" mnd-medium-editor content="channel.body" options="bodyEditorOptions"></div>
-					<div class="mnd-vsp-64"></div>
-				</div>
-			</div>
-		</div>
 
-		<div class="col-sm-6 channel-right-side">
-			<div ng-include="'pages/channel/entryList.html'"></div>
+			<div class="col-sm-6 channel-right-side maring-left-20">
+				<div ng-include="'pages/channel/entryList.html'"></div>
+			</div>
+
+			<div class="channel-text-body" ng-class="{'color-me-white': mainImageIsDisplayed()}">
+				<div class="simplebox" mnd-medium-editor content="channel.body" options="bodyEditorOptions"></div>
+				<div class="mnd-vsp-64"></div>
+			</div>
+
 		</div>
 	</div>
 </div>
