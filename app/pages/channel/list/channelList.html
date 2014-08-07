@@ -1,11 +1,21 @@
 <div class="page-container">
 
-	<br />
-	<br />
+	<div class="mnd-postList-header">
+		<img ng-src="{{channelListImageUrl}}" />
+		<div class="mnd-postList-topImageOverlay"></div>
+		<div class="col-sm-8 col-sm-offset-2 mnd-postList-title">Channel List</div>
+		<div class="mnd-postList-searchBox" ng-model="searchText">
+			<input type="text" class="form-control ng-pristine ng-valid" placeholder="Search channels" ng-model="key" ng-keyup="search()" />
+		</div>
+	</div>
+
 	<div class="col-sm-6 col-sm-offset-3">
-		<input type="text" class="form-control" placeholder="Search channels" ng-model="key" ng-keyup="search()" />
-		<div ng-repeat="channel in channels | filter:{name:key} | orderBy:'name' | limitTo:limit">
-			{{channel.name}}
+		<div class="entry-in-channel" ng-repeat="channel in channels | filter:key | orderBy:'name' | limitTo:limit">
+			<a ui-sref="channelView({channelId: channel._id})" class="mnd-undecorated-a">
+				<h1>{{channel.commonName}}</h1>
+				<h2>#{{channel.name}}</h2>	
+			</a>
+			<div class="shadow"></div>
 		</div>
 		<button class="btn btn-default btn-block" ng-click="loadMore()">More</button>
 	</div>
