@@ -39,13 +39,12 @@
 
 	<div class="post-top-buttons">
 		<a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="btn btn-default mnd-inline-block">Modifica</a>
+		<div class="mnd-inline-block">
+			<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-class="{'bookmarked' : userBookmarkedPost()}"></i>
+		</div>
 		<div class="mnd-inline-block" ng-click="likePost()">
 			<i class="fa fa-thumbs-up mnd-clickable" ng-class="{'liked': numberOfLikes()}"></i>
 			<div class="post-likes" ng-show="numberOfLikes()"><span>{{post.likedBy.length}}</span></div>
-		</div>
-		<div class="mnd-inline-block">
-			<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-if="!userBookmarkedPost()"></i> 
-			<i class="fa fa-bookmark fg-red mnd-clickable" ng-if="userBookmarkedPost()"></i> 
 		</div>
 		<div class="mnd-inline-block">
 			<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 

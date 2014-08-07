@@ -2,7 +2,7 @@
 	<div id="teamMembersList" >
 		<div class="col-sm-8 col-sm-offset-2">
 		<br />
-		<a ng-repeat="member in team" ui-sref="user({userId: member._id})" class="teamMember">
+		<a ng-repeat="member in team | orderBy:filter" ui-sref="user({userId: member._id})" class="teamMember">
 			<div mnd-cig-image source="member.profile.pictureUrl" size="100" class="mnd-inline-block"></div>
 			<p class="teamMemberText">
 				<b ng-bind-html="member.profile.name"></b>

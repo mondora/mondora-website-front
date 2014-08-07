@@ -12,23 +12,32 @@
 	top: 20px;
 	z-index: 200;
 	div i{
+		box-sizing: border-box;
+		width: 45px;
+		height: 45px;
 		border-radius: 50%;
+		border: 2px solid rgba(255,255,255,0.1);
 		background-color: rgba(255,255,255,0.5);
 		padding: 10px;
 		margin-left: 5px;
 		font-size: 25px;
+		text-align: center;
 	}
 	a {
 		margin-right: 15px;
 	}
 	.liked {
-		border: 2px solid #008000;
+		border-color: #008000;
 		color: #008000;
+	}
+	.bookmarked {
+		border-color: #d9534f;
+		color: #d9534f;
 	}
 	.post-likes {
 		position: absolute;
-		top: -12px;
-		right: 42px;
+		top: -14px;
+		right: 46px;
 		height: 27px;
 		width: 27px;
 		padding-bottom: 3px;
@@ -60,7 +69,7 @@
 		position: absolute;
 		right:0px;
 		top: 40px;
-		width: 150px;
+		width: 210px;
 		padding-left: 10px;
 		margin-top: 20px;
 		border-radius: 5px;
