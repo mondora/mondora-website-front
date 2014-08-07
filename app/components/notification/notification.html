@@ -2,6 +2,7 @@
 	<div class="notification-image mnd-inline-block">
 		<span ng-if="notification.type === 'mentionInComment' || notification.type === 'commentToPost'"><i class="fa fa-comment"></i></span>
 		<span ng-if="notification.type === 'newPost'"><i class="fa fa-file-text-o"></i></span>
+		<span ng-if="notification.type === 'postRecommendation'"><i class="fa fa-file-text-o"></i></span>
 		<span ng-if="notification.type === 'newEntryInChannel'"><i class="fa fa-slack"></i></span>
 		<span ng-if="notification.type === 'taskAdded'"><i class="fa fa-tasks"></i></span>
 	</div>
@@ -17,6 +18,10 @@
 
 		<a ui-sref="postView({postId: notification.details.postId})" ng-if="notification.type === 'newPost'" class="mnd-undecorated-a">
 			<span class="notification-text">{{notification.details.from.name}} published a new post</span>
+		</a>
+
+		<a ui-sref="postView({postId: notification.details.postId})" ng-if="notification.type === 'postRecommendation'" class="mnd-undecorated-a">
+			<span class="notification-text">{{notification.details.from.name}} recommended you a post</span>
 		</a>
 
 		<a ui-sref="channelView({channelId: notification.details.channelId})" ng-if="notification.type === 'newEntryInChannel'" class="mnd-undecorated-a">

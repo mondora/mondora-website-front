@@ -41,10 +41,7 @@ angular.module("mnd-web.pages")
 		);
 	};
 	var canMoveEntry = function (user, channel, entry) {
-		return (
-			isOwner(user, channel) ||
-			isCurator(user, channel)
-		);
+		return isCurator(user, channel);
 	};
 
 	return {
@@ -96,13 +93,10 @@ angular.module("mnd-web.pages")
 	var currentChannelId;
 
 	var deleteEntry = function () {
-		console.log("DELETED");
 		Ceres.call("deleteEntryFromChannel", currentChannelId, toBeDeletedEntryId);
 	};
 
 	var selectEntry = function (entryId, channelId) {
-		console.log("SELECTED");
-		console.log(entryId);
 		toBeDeletedEntryId = entryId;
 		currentChannelId = channelId;
 	};

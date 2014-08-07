@@ -52,6 +52,7 @@ h4.component-title {
 
 .notifications-container {
 	position: absolute;
+	left: 0px;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
@@ -67,14 +68,13 @@ h4.component-title {
 		height: calc(90% - 70px);
 		padding-bottom: 30px;
 		border-radius: 5px;
-		background-color: #FCFBEF;
+		background-color: rgba(250,250,250,1);
 		z-index: 500;
 		box-shadow: 2px 2px 20px $mnd-light-grey;
-		z-index: 500;
 
 		&:before {
     		border: 10px solid transparent;
-			border-bottom-color: #FCFBEF;
+			border-bottom-color: rgba(250,250,250,1);
 			content: '';
 			display: block;
 			height: 0;
@@ -92,17 +92,32 @@ h4.component-title {
 		}
 
 	}
+
+	.notifications-wrap {
+		position: absolute;
+		height: 100%;
+		width: 450px;
+		overflow: hidden;
+		
+		@media (max-width: 767px){
+			width: 380px;
+		}
+	}
 	
 	.notifications {
 		position: absolute;
 		height: 100%;
-		width: 100%;
-		overflow-y: scroll;
+		width: 465px;
+		padding-right: 15px;
+		overflow-y: auto;
 
     	.list {
     		margin: 5px 10px;
-    		overflow-y: scroll;
     	}
+
+    	@media (max-width: 767px){
+			width: 395px;
+		}
     	
 	}
 
