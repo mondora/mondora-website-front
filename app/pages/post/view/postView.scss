@@ -78,6 +78,11 @@
 	margin-top: -20px;
 	@media (max-width: 767px) {
 		position: relative;
+		margin-top: 0px;
+		margin-bottom: 20px;
+		padding: 0 10px;
+		border-radius: 10px;
+		box-shadow:4px -4px 12px rgba(0,0,0,0.6);
 	}
 }
 
