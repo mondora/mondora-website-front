@@ -1,13 +1,6 @@
-.post-page-container {
-	position: relative;
-	top: 0px;
-	left: 0px;
-	height: 100%;
-	width: 100%;
-	overflow: auto;
-	overflow-x: hidden;
-	-webkit-overflow-scrolling: touch;
-}
+//////////////
+// Sprinkle //
+//////////////
 
 #mnd-post-sprinkle-container {
 	position: absolute;
@@ -16,19 +9,45 @@
 	top: 40%;
 	margin-left: -260px;
 	z-index: 1;
+	@media (max-width: 767px) {
+	    width: 98%;
+	    top: 60%;
+	    margin-left: -49%; 
+	}
 }
+
+.read-time {
+	position: absolute;
+	right: 10px;
+	font-size: 25px;
+	font-weight: 600;
+	color: #fff;
+	line-height: 25px;
+	@media (max-width: 767px) {
+		font-size: 15px;
+		font-weight: normal;
+	}
+}
+
+/////////////////////////////
+// Paragraphs and comments //
+/////////////////////////////
 
 .first-level-html-container {
 	box-sizing: border-box;
-}
 
-.first-level-html-container .comment-bubble {
-	color: #aeaeac;
-	opacity: 0;
-}
+	.comment-bubble {
+		color: #aeaeac;
+		opacity: 0;
+	}
 
-.first-level-html-container:hover .comment-bubble {
-	opacity: 1;
+	&:hover .comment-bubble {
+		opacity: 1;
+	}
+
+	.col-xs-1 {
+		padding: 0px;
+	}
 }
 
 .comment-bubble {
@@ -39,40 +58,35 @@
 	cursor: pointer;
 	color: #5cb85c;
 }
-.badge {
-	font-size: 20px;
-}
 
 .close-comment-bar {
 	text-align: right;
 	font-size: 25px;
-}
+	cursor: pointer;
 
-.close-comment-bar i {
-	color: #F78181;
-}
+	i {
+		color: #F78181;
+	}
 
-.close-comment-bar i:hover{
-	color: #FE2E2E;
+	i:hover {
+		color: #FE2E2E;
+	}
 }
 
 .side-comment-container {
 	position: absolute;
 	margin-top: -20px;
+	@media (max-width: 767px) {
+		position: relative;
+	}
 }
 
+.comment-badge {
+	font-size: 20px;
+}
 .comment-badge:hover {
 	cursor: pointer;
 	background: #5cb85c;
-}
-
-.read-time {
-	position: absolute;
-	right: 10px;
-	font-size: 25px;
-	font-weight: 600;
-	color: #fff;
-	line-height: 25px;
 }
 
 .hr-comment {
@@ -88,45 +102,6 @@
 	background: #5cb85c;
 }
 
-.simplebox {
-	text-align: justify;
-}
-
-.simplebox b{
-	font-weight: 600;
-}
-
-.mnd-top-most p{
+.comment-text {
 	word-wrap: break-word;
-}
-
-
-//media queries
-@media (max-width: 767px) {
-	.read-time {
-		font-size: 15px;
-		font-weight: normal;
-	}
-	#mnd-post-sprinkle-container {
-	    width: 98%;
-	    top: 60%;
-	    margin-left: -49%; 
-	}
-	.p-mobile {
-		width: 88%;
-	}
-	.p-mobile, .comment-pop {
-		display: inline-block;
-	}
-	.comment-pop {
-		width: 11%;
-		vertical-align: top;
-		padding-top: 20px;
-		padding-right: 10px;
-	}
-	.mobile-comment {
-		position: absolute;
-		top: 0px;
-		z-index: 2000;
-	}
 }
