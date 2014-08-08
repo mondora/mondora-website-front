@@ -281,7 +281,7 @@ angular.module("mnd-web.pages")
 	/////////////
 
 	$scope.numberOfLikes = function () {
-		return $scope.post.likedBy.length;
+		return $scope.post.likedBy && $scope.post.likedBy.length;
 	};
 
 	$scope.likePost = function () {
