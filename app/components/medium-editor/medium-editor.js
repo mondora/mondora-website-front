@@ -229,6 +229,12 @@ angular.module("mnd-web.components")
 					updateContent();
 				};
 
+				var inlineCommentFormTemplate = $templateCache.get("components/medium-editor/inline-comment-form.html");
+				$scope.addInlineCommentFormAfterCurrentParagraph = function () {
+					var inlineCommentForm = $compile(inlineCommentFormTemplate)($scope.$root);
+					targetParagraph.after(inlineCommentForm);
+				};
+
 			}
 
 		}
