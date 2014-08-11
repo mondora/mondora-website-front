@@ -32,59 +32,63 @@
 
 <div class="page-container">	
 
-	<div class="mnd-full-image">
-		<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
-		<div class="mnd-image-overlay" ng-if="titleImageIsDisplayed()"></div>
-	</div>
-
-	<div class="post-top-buttons">
-		<a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="mnd-undecorated-a mnd-inline-block">
-			<i class="fa fa-edit"></i>
-		</a>
-		<div class="mnd-inline-block">
-			<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-class="{'bookmarked' : userBookmarkedPost()}"></i>
+	<div class="post-top">
+		<div class="mnd-full-image">
+			<img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
+			<div class="mnd-image-overlay" ng-if="titleImageIsDisplayed()"></div>
 		</div>
-		<div class="mnd-inline-block" ng-click="likePost()">
-			<i class="fa fa-thumbs-up mnd-clickable" ng-class="{'liked': numberOfLikes()}"></i>
-			<div class="post-likes" ng-show="numberOfLikes()"><span>{{post.likedBy.length}}</span></div>
-		</div>
-		<div class="mnd-inline-block">
-			<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
-		</div>
-		<div class="open-share-buttons" ng-if="openShareButtons">
-			<i class="fa fa-facebook mnd-clickable" ng-click="shareOnFacebook()"></i>
-			<i class="fa fa-twitter mnd-clickable" ng-click="shareOnTwitter()"></i> 
-			<i class="fa fa-users mnd-clickable" ng-click="recommend()"></i> 
-			<i class="fa fa-slack mnd-clickable" ng-click="shareToChannel()"></i> 
-		</div>
-	</div>
 
-	<div id="mnd-post-sprinkle-container">
-		<div mnd-sprinkle html="{{post.body}}" time="estimateReadingTime"></div>
-		<div class="pull-right read-time">Reading time {{estimateReadingTime}} min</div>
-	</div>
-
-	<div class="mnd-mind-container">
-		<div mnd-mind-map map="post.map" mnd-center></div>
-	</div>
-
-	<div class="post-header">
-		<div class="col-sm-8 col-sm-offset-2">
-			<h1 ng-bind-html="post.title" class="post-title" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h1>
-			<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h2>
-			<a class="post-author" ng-if="!post.repost" ng-repeat="author in post.authors" ui-sref="user({userId: author.userId})">
-				<div mnd-cig-image source="author.pictureUrl" size="40" class="mnd-inline-block mnd-valign-middle"></div>
-				&nbsp;&nbsp;Author {{author.name || author.screenName}}
-				<br />
-				<div class="mnd-vsp-4"></div>
+		<div class="post-top-buttons">
+			<a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="mnd-undecorated-a mnd-inline-block">
+				<i class="fa fa-edit"></i>
 			</a>
-			<a class="post-author" ng-if="post.repost" href="{{post.original.url}}">
-				By {{post.original.author}}, reposted by {{post.authors.0.name || post.author.0.screenName}} 
-			</a>
+			<div class="mnd-inline-block">
+				<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-class="{'bookmarked' : userBookmarkedPost()}"></i>
+			</div>
+			<div class="mnd-inline-block" ng-click="likePost()">
+				<i class="fa fa-thumbs-up mnd-clickable" ng-class="{'liked': numberOfLikes()}"></i>
+				<div class="post-likes" ng-show="numberOfLikes()"><span>{{post.likedBy.length}}</span></div>
+			</div>
+			<div class="mnd-inline-block">
+				<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
+			</div>
+			<div class="open-share-buttons" ng-if="openShareButtons">
+				<i class="fa fa-facebook mnd-clickable" ng-click="shareOnFacebook()"></i>
+				<i class="fa fa-twitter mnd-clickable" ng-click="shareOnTwitter()"></i> 
+				<i class="fa fa-users mnd-clickable" ng-click="recommend()"></i> 
+				<i class="fa fa-slack mnd-clickable" ng-click="shareToChannel()"></i> 
+			</div>
 		</div>
-	</div>
 
-	<div class="post-scroll-to-content"><i class="fa fa-chevron-down"></i></div>
+		<div id="mnd-post-sprinkle-container">
+			<div mnd-sprinkle html="{{post.body}}" time="estimateReadingTime"></div>
+			<div class="pull-right read-time">Reading time {{estimateReadingTime}} min</div>
+		</div>
+
+		<div class="wrap-mindmap">
+			<div class="mnd-mind-container">
+				<div mnd-mind-map map="post.map" mnd-center></div>
+			</div>
+		</div>
+
+		<div class="post-header">
+			<div class="col-sm-8 col-sm-offset-2">
+				<h1 ng-bind-html="post.title" class="post-title" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h1>
+				<h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'color-me-white': titleImageIsDisplayed()}"></h2>
+				<a class="post-author" ng-if="!post.repost" ng-repeat="author in post.authors" ui-sref="user({userId: author.userId})">
+					<div mnd-cig-image source="author.pictureUrl" size="40" class="mnd-inline-block mnd-valign-middle"></div>
+					&nbsp;&nbsp;Author {{author.name || author.screenName}}
+					<br />
+					<div class="mnd-vsp-4"></div>
+				</a>
+				<a class="post-author" ng-if="post.repost" href="{{post.original.url}}">
+					By {{post.original.author}}, reposted by {{post.authors.0.name || post.author.0.screenName}} 
+				</a>
+			</div>
+		</div>
+
+		<div class="post-scroll-to-content" ng-click="gotoCategory('post-body')"><i class="fa fa-chevron-down"></i></div>
+	</div>
 
 	<div class="post-body">
 		<div class="first-level-html-container" ng-repeat="child in bodyChildren() track by $index">
@@ -97,7 +101,7 @@
 					{{paragraphCommentsLength($index)}}
 				</span>
 			</div>
-			<div ng-class="{'hidden': !commentBarIsOpen}" class="col-sm-4 col-xs-11">
+			<div ng-class="{'hidden': !commentBarIsOpen}" class="col-sm-4 col-xs-12">
 				<div ng-class="{hidden: !commentBarIsOpenAt($index)}" class="side-comment-container">
 
 					<div class="row">
@@ -160,7 +164,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-12">
+		<div class="col-sm-12 col-xs-12">
 			<br />
 			<br />
 			<br />
