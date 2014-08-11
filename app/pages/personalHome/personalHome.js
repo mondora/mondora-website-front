@@ -24,6 +24,12 @@ angular.module("mnd-web.pages")
 		return false;
 	};
 
+	$scope.openDoor = _.throttle(function () {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "http://door.mondora.com/open");
+		xhr.send();
+	}, 1000);
+
 	///////////////////
 	// Notifications //
 	///////////////////

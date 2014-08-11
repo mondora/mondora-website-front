@@ -62,6 +62,9 @@
 			<a class="app-box" ui-sref="inbox()">
 				<i class="fa fa-inbox"></i>
 			</a>
+			<a class="app-box" ng-click="openDoor()" ng-if="isInRole('admin')">
+				<i class="fa fa-key"></i>
+			</a>
 		</div>
 	</div>
 
