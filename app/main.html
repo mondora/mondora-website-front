@@ -63,6 +63,50 @@
 
 
 
+		<!-- @if TARGET=='mobile.dev' -->
+
+			<!-- CSS from Bower Components and Google Fonts -->
+			<link href="dist/css/vendor.css" type="text/css" rel="stylesheet" />
+			<link href="dist/css/google_fonts.css" type="text/css" rel="stylesheet" />
+			<!-- Main App CSS -->
+			<link href="dist/css/app.css" type="text/css" rel="stylesheet" />
+
+			<!-- JS from Bower Components -->
+			<script src="dist/js/vendor.js"></script>
+			<script src="cordova.js"></script>
+			<!-- Main App JS -->
+			<script>
+				window.APP_VERSION = "v0.1.0b";
+			</script>
+			<script src="dist/js/app.js"></script>
+			<script src="dist/js/app.templates.js"></script>
+
+		<!-- @endif -->
+
+
+
+		<!-- @if TARGET=='mobile.prod' -->
+
+			<!-- CSS from Bower Components and Google Fonts -->
+			<link href="dist/css/vendor.min.css" type="text/css" rel="stylesheet" />
+			<link href="dist/css/google_fonts.min.css" type="text/css" rel="stylesheet" />
+			<!-- Main App CSS -->
+			<link href="dist/css/app.min.css" type="text/css" rel="stylesheet" />
+
+			<!-- JS from Bower Components -->
+			<script src="dist/js/vendor.min.js"></script>
+			<script src="cordova.js"></script>
+			<!-- Main App JS -->
+			<script>
+				window.APP_VERSION = "v0.1.0";
+			</script>
+			<script src="dist/js/app.templates.min.js"></script>
+			<script src="dist/js/app.min.js"></script>
+
+		<!-- @endif -->
+
+
+
 		<!-- @if TARGET=='web.test' -->
 
 			<!-- CSS from Bower Components and Google Fonts -->
