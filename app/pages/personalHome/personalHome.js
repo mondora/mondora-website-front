@@ -1,6 +1,6 @@
 angular.module("mnd-web.pages")
 
-.controller("PersonalHomeController", ["$scope", "$interval", function ($scope, $interval) {
+.controller("PersonalHomeController", ["$scope", "$interval", "AppMethods", function ($scope, $interval, AppMethods) {
 
 	///////////
 	// Email //
@@ -25,9 +25,15 @@ angular.module("mnd-web.pages")
 	};
 
 	$scope.openDoor = _.throttle(function () {
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "http://door.mondora.com/open");
-		xhr.send();
+		Ceres.call("openOfficeDoor");
+	}, 1000);
+
+	$scope.newPost = _.throttle(function () {
+		AppMethods.addPost();
+	}, 1000);
+
+	$scope.newChannel = _.throttle(function () {
+		AppMethods.addChannel();
 	}, 1000);
 
 	///////////////////

@@ -43,9 +43,7 @@ angular.module("mnd-web.methods")
 				screenName: user.profile.screenName,
 				name: user.profile.name,
 				pictureUrl: user.profile.pictureUrl
-			}],
-			groups: [],
-			members: []
+			}]
 		};
 		$rootScope.Channels.insert(channel).remote.then(function (id) {
 			$state.go("channelEdit", {channelId: id});

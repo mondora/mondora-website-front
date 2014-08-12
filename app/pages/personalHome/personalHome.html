@@ -59,11 +59,14 @@
 			<a class="app-box" ui-sref="today()">
 				<i class="fa fa-tasks"></i>
 			</a>
-			<a class="app-box" ui-sref="inbox()">
-				<i class="fa fa-inbox"></i>
-			</a>
-			<a class="app-box" ng-click="openDoor()" ng-if="isInRole('admin')">
+			<a class="app-box mnd-clickable" ng-click="openDoor()" ng-if="isInRole('consierge')">
 				<i class="fa fa-key"></i>
+			</a>
+			<a class="app-box mnd-clickable" ng-click="newPost()" ng-if="isInRole('blog')">
+				<i class="fa fa-file-text-o"></i>
+			</a>
+			<a class="app-box mnd-clickable" ng-click="newChannel()" ng-if="isInRole('channels')">
+				<i class="fa fa-slack"></i>
 			</a>
 		</div>
 	</div>
