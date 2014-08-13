@@ -7,16 +7,11 @@ angular.module("mnd-web.pages")
 	$scope.banner = homeConfig.banner;
 	$scope.payoff = homeConfig.payoff;
 	var currentVideo = homeConfig.currentVideo || 0;
-	console.log(currentVideo);
-	console.log(homeConfig);
 	var videos = homeConfig.videoUrls && homeConfig.videoUrls[currentVideo];
 	$scope.videoUrls = _.reduce(videos, function (acc, url, key) {
 		acc[key] = $sce.trustAsResourceUrl(url);
 		return acc;
 	}, {});
-
-	console.log(videos);
-
 	$scope.login = function () {
 		$scope.Ceres.loginWithTwitter().then(function () {
 			$state.go("personalHome");

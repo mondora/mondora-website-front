@@ -153,7 +153,8 @@ angular.module("mnd-web")
 					.then(function () {
 						var resProm = Ceres.resumeLoginPromise;
 						if (resProm.isPending()) {
-							return TimeoutPromiseService.timeoutPromise(resProm, GIVE_UP_DELAY)
+							return resProm
+								.timeout(GIVE_UP_DELAY)
 								.finally(function () {
 									return true;
 								});
@@ -164,7 +165,7 @@ angular.module("mnd-web")
 						var sub = Ceres.subscribe("configurations");
 						return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 					})
-					.fail(function () {
+					.fail(function (e) {
 						$state.go("staticHome");
 					});
 			}]
