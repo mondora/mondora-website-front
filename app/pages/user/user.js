@@ -24,7 +24,7 @@ function (
 	$scope.user = userRQ.result[0];
 
 	// Posts
-	var postsRQ = $scope.Posts.reactiveQuery(function (postId, post) {
+	var postsRQ = $scope.Posts.reactiveQuery(function (post) {
 		return post.authors.reduce(function (acc, cur) {
 			if (acc) return acc;
 			return cur.userId === $stateParams.userId;
