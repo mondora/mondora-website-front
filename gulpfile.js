@@ -118,7 +118,7 @@ var buildVendorScripts = function (dest, minify) {
 		"bower_components/bower-sockjs-client/sockjs.js",
 		"bower_components/q/q.js",
 		"bower_components/ddp.js/src/ddp.js",
-		"bower_components/asteroid/dist/asteroid.js",
+		"bower_components/asteroid/dist/asteroid.browser.js",
 		"bower_components/medium-editor/dist/js/medium-editor.js",
 		"bower_components/angular-datepicker/dist/index.min.js",
 		"bower_components/angular-ui-tree/dist/angular-ui-tree.js"

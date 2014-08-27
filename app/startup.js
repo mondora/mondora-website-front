@@ -155,8 +155,8 @@ angular.module("mnd-web")
 						if (resProm.isPending()) {
 							return resProm
 								.timeout(GIVE_UP_DELAY)
-								.finally(function () {
-									return true;
+								.fail(function () {
+									return Q(true);
 								});
 						}
 						return true;
