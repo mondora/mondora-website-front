@@ -11,7 +11,7 @@ var _			= require("lodash");
 var mkdirp		= require("mkdirp");
 var pp			= require("preprocess");
 var Q			= require("q");
-var spawn		= require("child_process").spawn;
+var exec		= require("child_process").exec;
 var static		= require("node-static");
 var util		= require("util");
 var WebSocket	= require("faye-websocket");
@@ -88,8 +88,12 @@ var buildAppFavicon = function (dest) {
 
 var buildAppVersion = function (dest) {
 	var deferred = Q.defer();
-	var step = gulp.src("app/VERSION").pipe(gulp.dest(dest));
-	step.on("end", function () {
+	exec("git rev-parse HEAD", function (err, out) {
+		if (err) {
+			deferred.reject(err);
+		}
+		var version = out.slice(0, 6);
+		fs.writeFileSync(dest + "/VERSION", version, "utf8");
 		deferred.resolve();
 	});
 	return deferred.promise;
