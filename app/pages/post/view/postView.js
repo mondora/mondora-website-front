@@ -332,7 +332,7 @@ angular.module("mnd-web.pages")
 		"&p[images][0]=" + $scope.post.titleImageUrl
 
 	].join("");
-	url.twitter = "https:/twitter.com/share?url=" + postUrl;
+	url.twitter = "https://twitter.com/share?url=" + postUrl;
 
 	$scope.shareOnFacebook = function () {
 		window.open(url.facebook, "sharer", popupFeatures);
@@ -363,7 +363,7 @@ angular.module("mnd-web.pages")
 
 }])
 
-.controller("RecommendModalController", ["$scope", function ($scope) {
+.controller("PostRecommendModalController", ["$scope", function ($scope) {
 	$scope.to = {};
 	$scope.recommend = function () {
 		Ceres.call("recommendPost", $scope.post._id, $scope.to.user._id, $scope.message);
