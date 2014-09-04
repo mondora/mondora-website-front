@@ -13,7 +13,16 @@ angular.module("mnd-web.pages")
 	// Retrieve and keep updated the channel to view //
 	///////////////////////////////////////////////////
 
-	var channelRQ = $scope.Channels.reactiveQuery({_id: $stateParams.channelId});
+	var channelRQ = $scope.Channels.reactiveQuery({
+		$or: [
+			{
+				_id: $stateParams.channelNameOrId
+			},
+			{
+				name: $stateParams.channelNameOrId
+			}
+		]
+	});
 	channelRQ.on("change", function () {
 		$scope.safeApply(function () {
 			$scope.channel = channelRQ.result[0];

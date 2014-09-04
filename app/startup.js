@@ -414,13 +414,13 @@ angular.module("mnd-web")
 	});
 
 	$stateProvider.state("channelView", {
-		url: "/channel/:channelId",
+		url: "/channel/:channelNameOrId",
 		parent: "root",
 		templateUrl: "pages/channel/view/channelView.html",
 		controller: "ChannelViewController",
 		resolve: {
 			channelSubId: ["$stateParams", "TimeoutPromiseService", "resumingLogin", function ($stateParams, TimeoutPromiseService, resumingLogin) {
-				var sub = Ceres.subscribe("singleChannel", $stateParams.channelId);
+				var sub = Ceres.subscribe("singleChannel", $stateParams.channelNameOrId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
@@ -428,13 +428,13 @@ angular.module("mnd-web")
 	});
 
 	$stateProvider.state("channelEdit", {
-		url: "/channel/:channelId/edit",
+		url: "/channel/:channelNameOrId/edit",
 		parent: "root",
 		templateUrl: "pages/channel/edit/channelEdit.html",
 		controller: "ChannelEditController",
 		resolve: {
 			channelSubId: ["$stateParams", "TimeoutPromiseService", "resumingLogin", function ($stateParams, TimeoutPromiseService, resumingLogin) {
-				var sub = Ceres.subscribe("singleChannel", $stateParams.channelId);
+				var sub = Ceres.subscribe("singleChannel", $stateParams.channelNameOrId);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		}

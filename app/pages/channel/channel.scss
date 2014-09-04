@@ -51,6 +51,11 @@
 	text-align: justify;
 
 	.mnd-generated-form {
+		@media (min-width: 768px) {
+			width: 50%;
+			position: relative;
+			left: 25%;
+		}
 		color: #000;
 		button {
 			margin-top: 10px;

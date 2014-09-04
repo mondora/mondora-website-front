@@ -12,7 +12,7 @@
 
 		<div class="channel-content">
 			<div class="channel-top-buttons" ng-if="user">
-				<button ng-if="isCurator() || isOwner()" ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Edit</button>
+				<button ng-if="isCurator() || isOwner()" ui-sref="channelEdit({channelNameOrId: channel.name})" class="btn btn-default" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Edit</button>
 			</div>
 			<div class="channel-title-group" ng-class="{'color-me-white': mainImageIsDisplayed()}">
 				<h1 class="channel-common-name" ng-bind-html="channel.commonName"></h1>

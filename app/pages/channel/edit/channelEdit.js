@@ -16,7 +16,16 @@ angular.module("mnd-web.pages")
 	// Retrieve the channel to edit //
 	//////////////////////////////////
 
-	var channelRQ = $scope.Channels.reactiveQuery({_id: $stateParams.channelId});
+	var channelRQ = $scope.Channels.reactiveQuery({
+		$or: [
+			{
+				_id: $stateParams.channelNameOrId
+			},
+			{
+				name: $stateParams.channelNameOrId
+			}
+		]
+	});
 	$scope.channel = channelRQ.result[0];
 	if (!$scope.channel) {
 		$state.go("notFound");
