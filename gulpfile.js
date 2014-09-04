@@ -21,6 +21,23 @@ var WebSocket	= require("faye-websocket");
 // App files building functions //
 //////////////////////////////////
 
+var buildAppHtml = function (dest, target) {
+	var deferred = Q.defer();
+
+	// index.html
+	var rawIndex = fs.readFileSync("app/main.html", "utf8");
+	var htmlIndex = pp.preprocess(rawIndex, {TARGET: target});
+	fs.writeFileSync(dest + "/index.html", htmlIndex);
+
+	// courtesy.html
+	var rawCourtesy = fs.readFileSync("app/courtesy.html", "utf8");
+	var htmlCourtesy = pp.preprocess(rawCourtesy, {TARGET: target});
+	fs.writeFileSync(dest + "/courtesy.html", htmlCourtesy);
+
+	deferred.resolve();
+	return deferred.promise;
+};
+
 var buildAppStyles = function (dest, minify) {
 	var deferred = Q.defer();
 	var step = gulp.src("app/**/*.scss")
@@ -59,7 +76,7 @@ var buildAppScripts = function (dest, minify) {
 
 var buildAppTemplates = function (dest, minify) {
 	var deferred = Q.defer();
-	var step = gulp.src(["app/**/*.html", "!app/main.html"])
+	var step = gulp.src(["app/**/*.html", "!app/main.html", "!app/courtesy.html"])
 		.pipe(plugins.ngHtml2js({
 			moduleName: "mnd-web.templates"
 		}))
@@ -214,12 +231,9 @@ gulp.task("buildWeb", function () {
 	mkdirp.sync("builds/web/dist/js");
 	mkdirp.sync("builds/web/dist/css");
 
-	// index.html
-	var html = fs.readFileSync("app/main.html", "utf8");
-	var webHtml = pp.preprocess(html, {TARGET: "web.prod"});
-	fs.writeFileSync("builds/web/index.html", webHtml);
-
 	return Q.all([
+		// Html
+		buildAppHtml("builds/web", "web.prod"),
 		// Fonts
 		buildVendorFontsGlyphs("builds/web/dist/fonts"),
 		buildVendorFontsCss("builds/web/dist/css", true),
@@ -247,12 +261,9 @@ gulp.task("buildWebTest", function () {
 	mkdirp.sync("builds/web/dist/js");
 	mkdirp.sync("builds/web/dist/css");
 
-	// index.html
-	var html = fs.readFileSync("app/main.html", "utf8");
-	var webHtml = pp.preprocess(html, {TARGET: "web.test"});
-	fs.writeFileSync("builds/web/index.html", webHtml);
-
 	return Q.all([
+		// Html
+		buildAppHtml("builds/web", "web.test"),
 		// Fonts
 		buildVendorFontsGlyphs("builds/web/dist/fonts"),
 		buildVendorFontsCss("builds/web/dist/css", true),
@@ -280,12 +291,9 @@ gulp.task("buildMobileDev", function () {
 	mkdirp.sync("builds/app/www/dist/js");
 	mkdirp.sync("builds/app/www/dist/css");
 
-	// index.html
-	var html = fs.readFileSync("app/main.html", "utf8");
-	var mobileHtml = pp.preprocess(html, {TARGET: "mobile.dev"});
-	fs.writeFileSync("builds/app/www/index.html", mobileHtml);
-
 	return Q.all([
+		// Html
+		buildAppHtml("builds/app/www", "mobile.dev"),
 		// Fonts
 		buildVendorFontsGlyphs("builds/app/www/dist/fonts"),
 		buildVendorFontsCss("builds/app/www/dist/css"),
@@ -309,12 +317,9 @@ gulp.task("buildMobile", function () {
 	mkdirp.sync("builds/app/www/dist/js");
 	mkdirp.sync("builds/app/www/dist/css");
 
-	// index.html
-	var html = fs.readFileSync("app/main.html", "utf8");
-	var mobileHtml = pp.preprocess(html, {TARGET: "mobile.prod"});
-	fs.writeFileSync("builds/app/www/index.html", mobileHtml);
-
 	return Q.all([
+		// Html
+		buildAppHtml("builds/app/www", "mobile.prod"),
 		// Fonts
 		buildVendorFontsGlyphs("builds/app/www/dist/fonts"),
 		buildVendorFontsCss("builds/app/www/dist/css", true),
@@ -365,10 +370,7 @@ var buildDevJs = function () {
 
 var buildDevHtml = function () {
 	console.log("Building html... ");
-	var html = fs.readFileSync("app/main.html", "utf8");
-	var devHtml = pp.preprocess(html, {TARGET: "dev"});
-	fs.writeFileSync("builds/dev/index.html", devHtml);
-	return Q();
+	return buildAppHtml("builds/dev", "dev");
 };
 
 var buildDevFavicon = function () {
@@ -424,7 +426,7 @@ gulp.task("dev", function () {
 	}, 1000);
 	scssWatcher.on("change", scssHandler);
 
-	var jsWatcher = gulp.watch(["app/**/*.html", "!app/main.html", "app/**/*.js"]);
+	var jsWatcher = gulp.watch(["app/**/*.html", "!app/main.html", "!app/courtesy.html", "app/**/*.js"]);
 	var jsHandler = _.throttle(function () {
 		buildDevJs()
 			.then(function () {
@@ -433,7 +435,7 @@ gulp.task("dev", function () {
 	}, 1000);
 	jsWatcher.on("change", jsHandler);
 
-	var htmlWatcher = gulp.watch("app/main.html");
+	var htmlWatcher = gulp.watch(["app/main.html", "app/courtesy.html"]);
 	var htmlHandler = _.throttle(function () {
 		buildDevHtml()
 			.then(function () {

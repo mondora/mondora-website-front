@@ -35,6 +35,12 @@
 
 		<!-- @if TARGET=='dev' -->
 
+			<script>
+				if (!document.addEventListener) {
+					window.location = "/courtesy.html";
+				}
+			</script>
+
 			<!-- CSS from Bower Components and Google Fonts -->
 			<link href="dist/css/vendor.css" type="text/css" rel="stylesheet" />
 			<link href="dist/css/google_fonts.css" type="text/css" rel="stylesheet" />
@@ -109,6 +115,12 @@
 
 		<!-- @if TARGET=='web.test' -->
 
+			<script>
+				if (!document.addEventListener) {
+					window.location = "/courtesy.html";
+				}
+			</script>
+
 			<!-- CSS from Bower Components and Google Fonts -->
 			<link href="dist/css/vendor.min.css" type="text/css" rel="stylesheet" />
 			<link href="dist/css/google_fonts.min.css" type="text/css" rel="stylesheet" />
@@ -141,6 +153,12 @@
 
 
 		<!-- @if TARGET=='web.prod' -->
+
+			<script>
+				if (!document.addEventListener) {
+					window.location = "/courtesy.html";
+				}
+			</script>
 
 			<!-- CSS from Bower Components and Google Fonts -->
 			<link href="dist/css/vendor.min.css" type="text/css" rel="stylesheet" />

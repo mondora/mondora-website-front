@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>mondora</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<!-- @if TARGET=='dev' -->
+			<script>
+				var formPostUrl = "http://localhost:3000/courtesyForm";
+			</script>
+			<script>
+				(function () {
+					var ws = new WebSocket("ws://localhost:8000");
+					ws.onmessage = function (e) {
+						location.reload(true);
+					};
+				})();
+			</script>
+		<!-- @endif -->
+		<!-- @if TARGET=='web.test' -->
+			<script>
+				var formPostUrl = "http://demo.api.mondora.com/courtesyForm";
+			</script>
+		<!-- @endif -->
+		<!-- @if TARGET=='web.prod' -->
+			<script>
+				var formPostUrl = "https://api.mondora.com/courtesyForm";
+			</script>
+		<!-- @endif -->
+	</head>
+	<body>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<div id="background">
+			<img src="https://s3-eu-west-1.amazonaws.com/ngtest/4a0c9661226e772586d22662b25de06a" />
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<h1>Hello time traveller! Welcome to 2014!</h1>
+				</div>
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<div class="col-sm-6 col-sm-offset-3">
+					<form role="form">
+						<div class="form-group">
+							<label>Email address</label>
+							<input type="email" class="form-control" name="email" placeholder="Email">
+						</div>
+						<div class="form-group">
+							<label>Full name</label>
+							<input type="text" class="form-control" name="name" placeholder="Full name">
+						</div>
+						<button type="button" class="btn btn-block btn-default">Enter the contest</button>
+					</form>
+					<div id="confirmation" style="display: none">
+						You entered the contest! We'll let you know!
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$("button").click(function () {
+				$.post(formPostUrl, $("form").serialize());
+				$("form").hide();
+				$("#confirmation").show();
+			});
+		</script>
+		<style>
+			#background {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				height: 100%;
+				width: 100%;
+				opacity: 0.5;
+				text-align: center;
+			}
+			#background img {
+				min-height: 100%;
+			}
+		</style>
+	</body>
+</html>
