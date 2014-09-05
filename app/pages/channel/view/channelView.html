@@ -24,7 +24,7 @@
 				<div ng-include="'pages/channel/entryList.html'"></div>
 			</div>
 			<div class="channel-text-body" ng-class="{'color-me-white': mainImageIsDisplayed()}">
-				<div ng-bind-html="channel.body" mnd-form-injector="channel.formSchema"></div>
+				<div class="simplebox" channel-view-readonly-editor mnd-form-injector="channel.formSchema"></div>
 			</div>
 		</div>
 	</div>
