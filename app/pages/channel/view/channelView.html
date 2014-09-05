@@ -1,3 +1,19 @@
+<!-- Channel recommend modal -->
+<div mnd-modal header="Recommend this channel" open="modalStatus.recommend">
+	<div ng-controller="ChannelRecommendModalController">
+		<input type="text" class="form-control" placeholder="Recommend to" mnd-user-input user-model="to.user" />
+		<br />
+		<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
+		<br />
+		<button type="button" class="btn btn-default" ng-click="recommend()">
+			Recommend
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalStatus.recommend = false">
+			Close
+		</button>
+	</div>
+</div>
+
 <div ng-include="'pages/channel/addEntryModal.html'"></div>
 <div ng-include="'pages/channel/deleteEntryModal.html'"></div>
 
@@ -11,9 +27,19 @@
 	<div class="channel-wrap-content">
 
 		<div class="channel-content">
+
 			<div class="channel-top-buttons" ng-if="user">
-				<button ng-if="isCurator() || isOwner()" ui-sref="channelEdit({channelNameOrId: channel.name})" class="btn btn-default" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Edit</button>
+				<button ng-if="isCurator() || isOwner()" ui-sref="channelEdit({channelId: channel._id})" class="btn btn-default" ng-class="{'medium-button-white': mainImageIsDisplayed(), 'medium-button-black': !mainImageIsDisplayed()}">Edit</button>
+				<div class="mnd-inline-block">
+					<i class="fa fa-share-alt mnd-clickable" ng-click="shareButtons.open = !shareButtons.open"></i> 
+				</div>
+				<div class="open-share-buttons" ng-if="shareButtons.open">
+					<i class="fa fa-facebook mnd-clickable" ng-click="shareOnFacebook()"></i>
+					<i class="fa fa-twitter mnd-clickable" ng-click="shareOnTwitter()"></i> 
+					<i class="fa fa-users mnd-clickable" ng-click="recommend()"></i> 
+				</div>
 			</div>
+
 			<div class="channel-title-group" ng-class="{'color-me-white': mainImageIsDisplayed()}">
 				<h1 class="channel-common-name" ng-bind-html="channel.commonName"></h1>
 				<h3><i>#{{channel.name}}</i></h3> 

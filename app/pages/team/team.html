@@ -11,12 +11,12 @@
 			</p>
 		</a>
 		<!-- Add some space at the bottom to allow full scrolling -->
-		<br /><br /><br /><br /><br />
-		<br /><br />
+		<br /><br /><br /><br />
+		<br /><br /><br /><br />
 		</div>
 	</div>
 
-	<div ng-if="!user.mondoraTeamMember" id="workWithUsBannerStripe">
+	<div ng-if="!isTeamMember()" id="workWithUsBannerStripe">
 	<div class="col-sm-8 col-sm-offset-2" ng-if="!user || !user.mondoraTeamMember">
 		<div id="joinUsUserPicture">
 			<div mnd-cig-image source="user.profile.pictureUrl" size="80" ng-if="user"></div>

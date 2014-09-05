@@ -305,6 +305,23 @@ angular.module("mnd-web")
 				return Ceres.subscribe("postsByAuthor", $stateParams.userId);
 			}]
 		},
+		onEnter: ["$state", "$stateParams", "$rootScope", "MndTagStrippingService", function ($state, $stateParams, $rootScope, MndTagStrippingService) {
+			var user = $rootScope.Users.reactiveQuery({_id: $stateParams.userId}).result[0];
+			if (!user) {
+				$state.go("notFound");
+				return;
+			}
+			setSeoTags({
+				description: MndTagStrippingService(user.profile.bio).slice(0, 150),
+				title: "mondora :m - " + user.profile.name,
+				image: user.profile.pictureUrl,
+				type: "person",
+				itemtype: "https://schema.org/Person"
+			});
+		}],
+		onExit: [function () {
+			resetSeoTags();
+		}],
 		public: true
 	});
 
