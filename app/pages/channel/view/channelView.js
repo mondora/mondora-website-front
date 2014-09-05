@@ -2,6 +2,47 @@ angular.module("mnd-web.pages")
 
 
 
+.directive("channelViewReadonlyEditor", ["ClearWindowSelectionService", "$templateCache", "$compile", "$sce", function (ClearWindowSelectionService, $templateCache, $compile, $sce) {
+
+	var Tweet = function (screenName) {
+		this.button = document.createElement("button");
+		this.button.className = "medium-editor-action";
+		this.button.innerHTML = "<i class=\"fa fa-twitter\"></i>";
+		this.button.onclick = function () {
+			var tweetBaseUrl = "https://twitter.com/intent/tweet?text=";
+			var tweetText = "\"" + window.getSelection().toString() + "\" - @";
+			tweetText += screenName + " " + window.encodeURIComponent(window.location.href);
+			var url = tweetBaseUrl + tweetText;
+			var popup = window.open(url, "popup", "height=420,width=550");
+			ClearWindowSelectionService.clear();
+			if (!popup.focus) {
+				popup.focus();
+			}
+		};
+	};
+	Tweet.prototype.constructor = Tweet;
+	Tweet.prototype.getButton = function() {
+		return this.button;
+	};
+
+	return {
+		link: function ($scope, $element) {
+			var readonlyEditorOptions = {
+				placeholder: "",
+				disableEditing: true,
+				buttons: ["tweet", "highlight"],
+				extensions: {
+					tweet: new Tweet($scope.channel.curators[0].screenName)
+				}
+			};
+			$element.html($scope.channel.body);
+			new MediumEditor($element[0], readonlyEditorOptions);
+		}
+	};
+}])
+
+
+
 .controller("ChannelViewController", ["$scope", "$stateParams", "CheckMobileService", "ChannelPermissionsService", function (
 	$scope,
 	$stateParams,
