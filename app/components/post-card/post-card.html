@@ -23,7 +23,7 @@
 			tooltip-html-unsafe="{{bookmarkHtml()}}">
 		</i>
 		<i class="fa fa-thumbs-o-up mnd-clickable" ng-click="changeLikeStatus()" ng-class="{'fg-green': userLikesPost()}"></i>
-		<span>{{post.likedBy.length || 0}} likes</span>
+		<span>{{post.likedBy.length || 0}} {{post.likedBy.length === 1 ? 'like' : 'likes'}}</span>
 	</div>
 	<div class="col-xs-12 shadow"></div>
 </div>
