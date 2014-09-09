@@ -1,0 +1,21 @@
+$mnd-blue: #428bca;
+$mnd-white: #ffffff;
+.users-mentio-menu {
+	li {
+		background: $mnd-white;
+		color: $mnd-blue;
+		div {
+			vertical-align: middle;
+			&.user-picture {
+				width: 35px;
+			}
+		}
+		&.active {
+			background: $mnd-blue;
+			color: $mnd-white;
+		}
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}

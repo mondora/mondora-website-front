@@ -1,5 +1,5 @@
 .post-top {
-	position: relative;
+	position: absolute;
 	top: 0px;
 	left: 0px;
 	width: 100%;
@@ -115,9 +115,9 @@
 }
 
 .post-body {
-	position: relative;
-	margin-top: 20px;
-	padding-top: 10px;
+	position: absolute;
+	top: 100%;
+	padding-top: 30px;
 	box-sizing: border-box;
 	font-size: 18px;}
 

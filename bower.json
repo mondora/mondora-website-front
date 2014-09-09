@@ -37,7 +37,8 @@
     "lodash": "~2.4.1",
     "blueimp-md5": "~1.1.0",
     "angular-ui-tree": "~2.1.4",
-    "angular-datepicker": "https://github.com/mondora/angular-datepicker.git#1.0.4"
+    "angular-datepicker": "https://github.com/mondora/angular-datepicker.git#1.0.4",
+    "ment.io": "https://github.com/mondora/ment.io.git#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.16"
