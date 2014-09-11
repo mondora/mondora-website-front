@@ -1,0 +1,10 @@
+<ul class="list-group users-mentio-menu">
+	<li mentio-menu-item="user" ng-repeat="user in items" class="list-group-item">
+		<div class="mnd-inline-block user-picture">
+			<div class="mnd-inline-block" mnd-cig-image source="user.profile.pictureUrl" size="25"></div>
+		</div>
+		<div class="mnd-inline-block user-name">
+			<b>{{user.profile.screenName}}</b>
+		</div>
+	</li>
+</ul>

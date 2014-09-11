@@ -43,6 +43,7 @@ angular.module("mnd-web", [
 	"ngSanitize",
 	"RecursionHelper",
 	"datePicker",
+	"mentio",
 
 	// App modules
 	"mnd-web.templates",

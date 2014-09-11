@@ -226,6 +226,7 @@ angular.module("mnd-web.pages")
 	/////////////////////////////////////
 
 	$scope.comment = {};
+	$scope.commentsText = [];
 
 	$scope.deleteComment = function (comment) {
 		$scope.Ceres.call("deleteCommentFromPost", $scope.post._id, comment._id);
@@ -237,8 +238,9 @@ angular.module("mnd-web.pages")
 
 	$scope.saveCommentAt = function (index) {
 		$scope.comment.paragraph = index;
+		$scope.comment.text = $scope.commentsText[index];
 		$scope.Ceres.call("addCommentToPost", $scope.post._id, $scope.comment);
-		$scope.comment.text = "";
+		$scope.commentsText[index] = "";
 		$scope.comment.anchor = "";
 	};
 
@@ -262,6 +264,39 @@ angular.module("mnd-web.pages")
 		p.innerHTML = html;
 	};
 
+	//////////////////////
+	// Comment mentions //
+	//////////////////////
+
+	// Users
+	var userListRQ = $scope.Users.reactiveQuery({});
+	$scope.searchUsers = function (term) {
+		$scope.userList = userListRQ.result.filter(function (user) {
+			var termRegExp = new RegExp(term, "i");
+			return termRegExp.test(user.profile.name) || termRegExp.test(user.profile.screenName);
+		});
+	};
+	$scope.getUserLabel = function (user) {
+		return "@" + user.profile.screenName;
+	};
+	// Channels
+	var channelListRQ = $scope.Channels.reactiveQuery({});
+	var channelSearchLimit = 10;
+	$scope.searchChannels = function (term) {
+		return Ceres.subscribe("channelsByFuzzyName", term, channelSearchLimit, true).ready
+			.then(function () {
+				$scope.safeApply(function () {
+					$scope.channelList = channelListRQ.result.filter(function (channel) {
+						var termRegExp = new RegExp(term, "i");
+						return termRegExp.test(channel.name) || termRegExp.test(channel.commonName);
+					});
+				});
+			});
+	};
+	$scope.getChannelLabel = function (channel) {
+		return "#" + channel.name;
+	};
+
 	///////////////
 	// Bookmarks //
 	///////////////
@@ -276,9 +311,9 @@ angular.module("mnd-web.pages")
 		return bookmarksByPost.length > 0;
 	};
 
-	/////////////
-	// Likeing //
-	/////////////
+	////////////
+	// Liking //
+	////////////
 
 	$scope.numberOfLikes = function () {
 		return $scope.post.likedBy && $scope.post.likedBy.length;

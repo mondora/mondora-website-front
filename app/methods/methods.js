@@ -1,10 +1,11 @@
 // This module defines application-wide methods
 angular.module("mnd-web.methods")
 
-.factory("AppMethods", ["$rootScope", "$state", "$stateParams", function (
+.factory("AppMethods", ["$rootScope", "$state", "$stateParams", "MndGenerateGUID", function (
 	$rootScope,
 	$state,
-	$stateParams
+	$stateParams,
+	MndGenerateGUID
 ) {
 
 	var addPost = function () {
@@ -36,7 +37,10 @@ angular.module("mnd-web.methods")
 		if (!user) {
 			return;
 		}
+		var randomId = MndGenerateGUID();
 		var channel = {
+			_id: randomId,
+			name: randomId,
 			userId: user._id,
 			curators: [{
 				userId: user._id,
@@ -46,7 +50,7 @@ angular.module("mnd-web.methods")
 			}]
 		};
 		$rootScope.Channels.insert(channel).remote.then(function (id) {
-			$state.go("channelEdit", {channelId: id});
+			$state.go("channelEdit", {channelNameOrId: id});
 		}, function (err) {
 			console.log(err);
 		});
