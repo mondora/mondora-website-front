@@ -14,8 +14,26 @@
 					</span>
 				</div>
 			</div>
-			<div ng-if="!user" ng-click="login()" class="login">
-				<i class="fa fa-twitter"></i> Sign in with twitter
+			<div ng-if="!user" class="login">
+				<a href class="mnd-undecorated-a" ng-click="loginPopupOpen = !loginPopupOpen">
+					Sign in
+				</a>
+				<ul collapse="!loginPopupOpen" class="list-unstyled">
+					<li>
+						<a href class="mnd-undecorated-a" ng-click="loginWithTwitter()">
+							<i class="fa fa-twitter"></i>
+							&nbsp;
+							with Twitter
+						</a>
+					</li>
+					<li>
+						<a href class="mnd-undecorated-a" ng-click="loginWithGoogle()">
+							<i class="fa fa-google-plus"></i>
+							&nbsp;
+							with Google Plus
+						</a>
+					</li>
+				</ul>
 			</div>
 		</div>	
 	</div>
@@ -25,7 +43,7 @@
 				MONDORA Srl
 			</span>
 			<br />
-			<span class="mnd-sidebar-footer-address">
+			<span class="address">
 				Milano, Morbegno, Novara, St. Moritz (CH)<br />
 				Via Cornalia 7 - 20154, Milano <br />
 				PIVA 03680680968 <br />

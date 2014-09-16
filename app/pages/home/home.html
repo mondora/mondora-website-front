@@ -1,7 +1,29 @@
 <div id="mnd-home-container">
 	<div id="mnd-sign-in">
-		<span ng-if="!user" ng-click="login()"><i class="fa fa-twitter"></i> Sign In</span>
-		<span ng-if="user" ng-click="logout()"><i class="fa fa-twitter"></i> Sign Out</span>
+		<span ng-if="!user" class="dropdown" on-toggle="toggled(open)">
+			<a href class="dropdown-toggle">
+				Sign in
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li>
+					<a href ng-click="loginWithTwitter()">
+						<i class="fa fa-twitter"></i>
+						&nbsp;
+						&nbsp;
+						with Twitter
+					</a>
+				</li>
+				<li>
+					<a href ng-click="loginWithGoogle()">
+						<i class="fa fa-google-plus"></i>
+						&nbsp;
+						&nbsp;
+						with Google Plus
+					</a>
+				</li>
+			</ul>
+		</span>
+		<span ng-if="user" ng-click="logout()">Sign Out</span>
 	</div>
 
 	<div id="mnd-hidden-payoff">

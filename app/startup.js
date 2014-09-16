@@ -578,8 +578,11 @@ angular.module("mnd-web")
 
 
 .controller("MainController", ["$scope", function ($scope) {
-	$scope.login = function () {
+	$scope.login = $scope.loginWithTwitter = function () {
 		$scope.Ceres.loginWithTwitter();
+	};
+	$scope.loginWithGoogle = function () {
+		$scope.Ceres.loginWithGoogle();
 	};
 	$scope.logout = function () {
 		$scope.Ceres.logout();

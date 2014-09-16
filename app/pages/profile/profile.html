@@ -44,8 +44,17 @@
 			<span class="mnd-width-20"><i class="fa fa-github"></i></span>
 			<input type="text" class="simplebox" ng-model="profile.githubUrl" ng-value="profile.githubUrl" placeholder="Github Profile Url" />
 		</div>
+		<br />
+		<a class="btn btn-block btn-social btn-twitter" ng-if="!connectedWith.twitter" ng-click="connectWithTwitter()">
+			<i class="fa fa-twitter"></i> Connect with Twitter
+		</a>
+		<div class="mnd-vsp-4"></div>
+		<a class="btn btn-block btn-social btn-google-plus" ng-if="!connectedWith.google" ng-click="connectWithGoogle()">
+			<i class="fa fa-google-plus"></i> Connect with Google Plus
+		</a>
 	</div>
 
+	<br />
 	<br />
 	<div class="col-sm-5 col-sm-offset-1">
 		<h3>Profile</h3>
