@@ -124,29 +124,29 @@ var buildAppVersion = function (dest) {
 var buildVendorScripts = function (dest, minify) {
 	var deferred = Q.defer();
 	var sources = [
-		"bower_components/blueimp-md5/js/md5.js",
-		"bower_components/lodash/dist/lodash.js",
 		"bower_components/angular/angular.js",
 		"bower_components/angular-ui-router/release/angular-ui-router.js",
 		"bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+		"bower_components/angular-datepicker/dist/index.min.js",
 		"bower_components/angular-recursion/angular-recursion.js",
 		"bower_components/angular-sanitize/angular-sanitize.js",
-		"bower_components/ng-file-upload/angular-file-upload.js",
-		"bower_components/ng-file-upload/angular-file-upload-shim.js",
+		"bower_components/angular-ui-tree/dist/angular-ui-tree.js",
+		"bower_components/asteroid/dist/asteroid.browser.js",
+		"bower_components/asteroid/dist/plugins/google-login.js",
+		"bower_components/asteroid/dist/plugins/twitter-login.js",
+		"bower_components/blueimp-md5/js/md5.js",
+		"bower_components/bower-sockjs-client/sockjs.js",
+		"bower_components/ddp.js/src/ddp.js",
+		"bower_components/lodash/dist/lodash.js",
+		"bower_components/medium-editor/dist/js/medium-editor.js",
+		"bower_components/ment.io/dist/mentio.js",
+		"bower_components/ment.io/dist/templates.js",
 		"bower_components/mnd.multi-transclude/multi-transclude.js",
 		"bower_components/mnd-dashboard/dist/dashboard-tpls.js",
 		"bower_components/mnd-sprinkle/dist/sprinkle-tpls.js",
-		"bower_components/bower-sockjs-client/sockjs.js",
-		"bower_components/q/q.js",
-		"bower_components/ddp.js/src/ddp.js",
-		"bower_components/asteroid/dist/asteroid.browser.js",
-		"bower_components/asteroid/dist/plugins/twitter-login.js",
-		"bower_components/asteroid/dist/plugins/google-login.js",
-		"bower_components/medium-editor/dist/js/medium-editor.js",
-		"bower_components/angular-datepicker/dist/index.min.js",
-		"bower_components/angular-ui-tree/dist/angular-ui-tree.js",
-		"bower_components/ment.io/dist/mentio.js",
-		"bower_components/ment.io/dist/templates.js"
+		"bower_components/ng-file-upload/angular-file-upload.js",
+		"bower_components/ng-file-upload/angular-file-upload-shim.js",
+		"bower_components/q/q.js"
 	];
 	var step = gulp.src(sources)
 		.pipe(plugins.concat("vendor.js"))
@@ -166,13 +166,13 @@ var buildVendorScripts = function (dest, minify) {
 var buildVendorStyles = function (dest, minify) {
 	var deferred = Q.defer();
 	var sources = [
-		"bower_components/fontawesome/css/font-awesome.css",
+		"bower_components/angular-datepicker/dist/index.css",
+		"bower_components/angular-ui-tree/source/angular-ui-tree.css",
 		"bower_components/bootstrap/dist/css/bootstrap.css",
 		"bower_components/bootstrap-social/bootstrap-social.css",
+		"bower_components/fontawesome/css/font-awesome.css",
 		"bower_components/medium-editor/dist/css/medium-editor.css",
-		"bower_components/medium-editor/dist/css/themes/default.css",
-		"bower_components/angular-ui-tree/source/angular-ui-tree.css",
-		"bower_components/angular-datepicker/dist/index.css"
+		"bower_components/medium-editor/dist/css/themes/default.css"
 	];
 	var step = gulp.src(sources)
 		.pipe(plugins.concat("vendor.css"))
