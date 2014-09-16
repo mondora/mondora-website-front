@@ -1,4 +1,5 @@
 $mnd-yellow: #ffcc00;
+$mnd-black: #000000;
 $mnd-grey: #5e5f5f;
 $mnd-light-grey: #abadad;
 $mnd-font: "Source Sans Pro", sans-serif;
@@ -6,20 +7,20 @@ $mnd-font: "Source Sans Pro", sans-serif;
 // Sidebar user
 #mnd-sidebar-user {
 	padding: 30px 10px 10px 15px; 
-	color: $mnd-grey;
+	color: $mnd-black;
 	font-size: 20px;
 	font-weight: 400;
-}
-#mnd-sidebar-user .login {
-	cursor: pointer;
-}
-#mnd-sidebar-user .login:hover {
-	cursor: pointer;
-	color: $mnd-light-grey;
-	transition:color 1s ease,padding .5s ease;
-}
-@media (max-height: 580px) {
-	#mnd-sidebar-user {
+	a {
+		transition: color 0.3s ease;
+		&:hover{
+			color: $mnd-light-grey;
+		}
+	}
+	li {
+		font-size: 16px;
+		padding-left: 15px;
+	}
+	@media (max-height: 580px) {
 		padding: 15px 10px 10px 15px;
 	}
 }
@@ -30,20 +31,18 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	bottom: 0px;
 	padding: 0 10px 10px 15px; 
 	color: $mnd-grey;
-}
-#mnd-sidebar-footer span{
-	font-size: 25px;
-	line-height: 2px;
-}
-.mnd-sidebar-footer-address {
-	font-size: 15px !important;
-}
-@media (max-height: 580px) {
-	#mnd-sidebar-footer span {
-		padding-bottom: 15px;
+	span {
+		font-size: 25px;
+		line-height: 2px;
+		@media (max-height: 580px) {
+			padding-bottom: 15px;
+		}
 	}
-	.mnd-sidebar-footer-address {
-		display: none;
+	.address {
+		font-size: 15px !important;
+		@media (max-height: 580px) {
+			display: none;
+		}
 	}
 }
 
@@ -56,36 +55,34 @@ $mnd-font: "Source Sans Pro", sans-serif;
 			size: 25px;
 			weight: normal;
 		}
-		color: #000;
+		color: $mnd-black;
 		line-height: 30px;
-	}
-	.nav li a{
-		padding: 0 15px;
-		color: #000;
-		font-weight: normal;
-		font-weight: 400;
-		transition:color 1s ease,padding .5s ease;
-		border-top: 1px solid lighten($mnd-yellow, 1%);
-		border-bottom: 1px solid darken($mnd-yellow, 1%);
-		&:nth-child(1){
-		 border-top: 0; 
+		li a {
+			padding: 0 15px;
+			color: $mnd-black;
+			font-weight: normal;
+			font-weight: 400;
+			transition: color 0.3s ease, padding 0.3s ease;
+			border-top: 1px solid lighten($mnd-yellow, 1%);
+			border-bottom: 1px solid darken($mnd-yellow, 1%);
+			&:nth-child(1){
+			 border-top: 0; 
+			}
+			&:hover{
+				padding: 0 15px 0 20px;
+				color: $mnd-light-grey;
+				background-color: initial;
+			}
 		}
-	}
-	.nav li a:hover{
-		padding: 0 15px 0 20px;
-		color: $mnd-light-grey;
-		background-color: initial;
+		@media (max-height: 580px) {
+			margin-top: 30px;
+		}
 	}
 	.nav-second-level {
 		margin-top: 0px;
-	}
-	.nav-second-level li a{
-		font-weight: 200;
-		font-size: 20px;
-	}
-	@media (max-height: 580px) {
-		.nav {
-			margin-top: 30px;
+		li a {
+			font-weight: 200;
+			font-size: 20px;
 		}
 	}
 }

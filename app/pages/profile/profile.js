@@ -24,6 +24,33 @@ angular.module("mnd-web.pages")
 		]
 	};
 
+	//////////////////////////
+	// Connect with helpers //
+	//////////////////////////
+
+	var getConnectedServices = function () {
+		Ceres.call("listLoginServices").result.then(function (res) {
+			$scope.safeApply(function () {
+				$scope.connectedWith = {};
+				res.forEach(function (service) {
+					$scope.connectedWith[service] = true;
+				});
+			});
+		});
+	};
+	getConnectedServices();
+
+	$scope.connectWithGoogle = function () {
+		Ceres.connectWithGoogle().then(function () {
+			getConnectedServices();
+		});
+	};
+	$scope.connectWithTwitter = function () {
+		Ceres.connectWithTwitter().then(function () {
+			getConnectedServices();
+		});
+	};
+
 	/////////////////////
 	// Profile picture //
 	/////////////////////

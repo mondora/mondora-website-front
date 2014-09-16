@@ -55,9 +55,11 @@
 	position: fixed;
 	right: 20px;
 	top: 20px;
-	color: #fff;
-	font-size: 20px;
 	z-index: 20;
+	.dropdown-toggle {
+		color: #fff;
+		font-size: 20px;
+	}
 }
 #mnd-sign-in:hover {
 	cursor: pointer;
