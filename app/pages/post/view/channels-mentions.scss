@@ -1,0 +1,15 @@
+$mnd-blue: #428bca;
+$mnd-white: #ffffff;
+.channels-mentio-menu {
+	li {
+		background: $mnd-white;
+		color: $mnd-blue;
+		&.active {
+			background: $mnd-blue;
+			color: $mnd-white;
+		}
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}

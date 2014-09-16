@@ -136,7 +136,30 @@
 							<p>
 								<b>{{user.profile.screenName}}</b>
 							</p>
-							<textarea ng-model="comment.text" class="form-control" placeholder="Leave a comment" rows="3"></textarea>
+							<textarea
+								class="form-control"
+								placeholder="Leave a comment"
+								rows="3"
+								ng-model="commentsText[$index]"
+								mentio
+								mentio-id="'comment-textarea-' + $index">
+							</textarea>
+							<mentio-menu
+								mentio-for="'comment-textarea-' + $index"
+								mentio-items="userList"
+								mentio-trigger-char="'@'"
+								mentio-search="searchUsers(term)"
+								mentio-select="getUserLabel(item)"
+								mentio-template-url="pages/post/view/users-mentions.html">
+							</mentio-menu>
+							<mentio-menu
+								mentio-for="'comment-textarea-' + $index"
+								mentio-items="channelList"
+								mentio-trigger-char="'#'"
+								mentio-search="searchChannels(term)"
+								mentio-select="getChannelLabel(item)"
+								mentio-template-url="pages/post/view/channels-mentions.html">
+							</mentio-menu>
 							<p class="text-right">
 								<small>
 									<a class="mnd-clickable" ng-click="saveCommentAt($index)">Comment</a>

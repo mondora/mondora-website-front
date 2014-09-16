@@ -144,7 +144,9 @@ var buildVendorScripts = function (dest, minify) {
 		"bower_components/asteroid/dist/plugins/google-login.js",
 		"bower_components/medium-editor/dist/js/medium-editor.js",
 		"bower_components/angular-datepicker/dist/index.min.js",
-		"bower_components/angular-ui-tree/dist/angular-ui-tree.js"
+		"bower_components/angular-ui-tree/dist/angular-ui-tree.js",
+		"bower_components/ment.io/dist/mentio.js",
+		"bower_components/ment.io/dist/templates.js"
 	];
 	var step = gulp.src(sources)
 		.pipe(plugins.concat("vendor.js"))

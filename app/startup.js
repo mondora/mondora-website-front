@@ -452,6 +452,7 @@ angular.module("mnd-web")
 		resolve: {
 			channelSubId: ["$stateParams", "TimeoutPromiseService", "resumingLogin", function ($stateParams, TimeoutPromiseService, resumingLogin) {
 				var sub = Ceres.subscribe("singleChannel", $stateParams.channelNameOrId);
+				sub.ready.fail(function (e) {console.log(e);});
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		}

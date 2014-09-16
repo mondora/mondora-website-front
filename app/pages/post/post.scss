@@ -1,5 +1,5 @@
 .post-top {
-	position: relative;
+	position: absolute;
 	top: 0px;
 	left: 0px;
 	width: 100%;
@@ -115,11 +115,15 @@
 }
 
 .post-body {
-	position: relative;
-	margin-top: 20px;
-	padding-top: 10px;
+	position: absolute;
+	top: 100%;
+	padding-top: 30px;
 	box-sizing: border-box;
-	font-size: 18px;}
+	font-size: 18px;
+			img {
+			max-width: 100%;
+		}
+}
 
 .post-title {
 	font-family: "Source Sans Pro", sans-serif;
@@ -202,6 +206,9 @@
 	}
 	.post-author {
 		display: none;
+	}
+	.post-body {
+		max-width: 100%;
 	}
 }
 @media (max-width:767px) and (min-height:500px){
