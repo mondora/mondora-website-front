@@ -331,8 +331,11 @@ angular.module("mnd-web")
 		templateUrl: "pages/team/team.html",
 		controller: "TeamController",
 		resolve: {
-			teamSub: [function () {
+			teamSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
 				var sub = Ceres.subscribe("teamUsers");
+				sub.ready.then(function () {
+					console.log(sub);
+				});
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
@@ -510,6 +513,9 @@ angular.module("mnd-web")
 		};
 		$rootScope.loggedInUserQuery.on("change", updateUser);
 		updateUser();
+		if ($state.current.name === "home") {
+			$state.go("personalHome");
+		}
 	});
 	Ceres.on("logout", function () {
 		$rootScope.safeApply(function () {

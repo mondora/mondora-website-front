@@ -39,7 +39,7 @@ angular.module("mnd-web.components")
 			};
 
 			$scope.userLikesPost = function () {
-				return _.contains($scope.post.likedBy, $scope.user._id);
+				return $scope.user && _.contains($scope.post.likedBy, $scope.user._id);
 			};
 
 			///////////////

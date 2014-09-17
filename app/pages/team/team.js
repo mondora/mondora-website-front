@@ -2,6 +2,8 @@ angular.module("mnd-web.pages")
 
 .controller("TeamController", ["$scope", function ($scope) {
 
+	console.log("INVOKED");
+
 	var teamQuery = $scope.Users.reactiveQuery({mondoraTeamMember: true});
 	teamQuery.on("change", function () {
 		$scope.safeApply(function () {
@@ -11,7 +13,7 @@ angular.module("mnd-web.pages")
 	$scope.team = teamQuery.result;
 
 	$scope.isTeamMember = function () {
-		return $scope.user.mondoraTeamMember;
+		return $scope.user && $scope.user.mondoraTeamMember;
 	};
 
 	$scope.sendLinkedInProfile = function (url) {
