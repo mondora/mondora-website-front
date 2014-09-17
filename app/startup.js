@@ -332,7 +332,8 @@ angular.module("mnd-web")
 		controller: "TeamController",
 		resolve: {
 			teamSub: [function () {
-				return Ceres.subscribe("teamUsers");
+				var sub = Ceres.subscribe("teamUsers");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
 		},
 		public: true
