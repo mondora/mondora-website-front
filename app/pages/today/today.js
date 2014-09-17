@@ -18,6 +18,7 @@ angular.module("mnd-web.pages")
 	$scope.tasksOrderBy = "date";
 
 	$scope.filters = {};
+	$scope.filters.status = "todo";
 	$scope.filterTasks = function (task) {
 		if ($scope.filters.status && $scope.filters.status !== task.status) {
 			return false;
