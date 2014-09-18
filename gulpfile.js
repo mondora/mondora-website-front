@@ -130,6 +130,7 @@ var buildVendorScripts = function (dest, minify) {
 		"bower_components/angular-datepicker/dist/index.min.js",
 		"bower_components/angular-recursion/angular-recursion.js",
 		"bower_components/angular-sanitize/angular-sanitize.js",
+		"bower_components/angular-ui-select/dist/select.js",
 		"bower_components/angular-ui-tree/dist/angular-ui-tree.js",
 		"bower_components/asteroid/dist/asteroid.browser.js",
 		"bower_components/asteroid/dist/plugins/google-login.js",
@@ -144,6 +145,7 @@ var buildVendorScripts = function (dest, minify) {
 		"bower_components/mnd.multi-transclude/multi-transclude.js",
 		"bower_components/mnd-dashboard/dist/dashboard-tpls.js",
 		"bower_components/mnd-sprinkle/dist/sprinkle-tpls.js",
+		"bower_components/moment/moment.js",
 		"bower_components/ng-file-upload/angular-file-upload.js",
 		"bower_components/ng-file-upload/angular-file-upload-shim.js",
 		"bower_components/q/q.js"
@@ -167,6 +169,7 @@ var buildVendorStyles = function (dest, minify) {
 	var deferred = Q.defer();
 	var sources = [
 		"bower_components/angular-datepicker/dist/index.css",
+		"bower_components/angular-ui-select/dist/select.css",
 		"bower_components/angular-ui-tree/source/angular-ui-tree.css",
 		"bower_components/bootstrap/dist/css/bootstrap.css",
 		"bower_components/bootstrap-social/bootstrap-social.css",

@@ -67,6 +67,10 @@ angular.module("mnd-web")
 	$locationProvider.hashPrefix("!");
 }])
 
+.config(["uiSelectConfig", function (uiSelectConfig) {
+	uiSelectConfig.theme = "bootstrap";
+}])
+
 .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
 
 
@@ -156,7 +160,7 @@ angular.module("mnd-web")
 							return resProm
 								.timeout(GIVE_UP_DELAY)
 								.fail(function () {
-									return Q(true);
+									return true;
 								});
 						}
 						return true;

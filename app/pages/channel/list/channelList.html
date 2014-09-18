@@ -11,7 +11,7 @@
 
 	<div class="col-sm-6 col-sm-offset-3">
 		<div class="entry-in-channel" ng-repeat="channel in channels | filter:key | orderBy:'name' | limitTo:limit">
-			<a ui-sref="channelView({channelId: channel._id})" class="mnd-undecorated-a">
+			<a ui-sref="channelView({channelNameOrId: channel.name})" class="mnd-undecorated-a">
 				<h1>{{channel.commonName}}</h1>
 				<h2>#{{channel.name}}</h2>	
 			</a>

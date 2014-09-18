@@ -37,6 +37,7 @@ angular.module("mnd-web", [
 	"ui.bootstrap",
 	"ui.router",
 	"ui.tree",
+	"ui.select",
 	"mnd.sprinkle",
 	"mnd.dashboard",
 	"angularFileUpload",

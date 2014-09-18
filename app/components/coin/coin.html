@@ -1,0 +1,18 @@
+<div class="row" ng-repeat="activity in coin.activities" mnd-disable-inputs="frozen || coin.frozen">
+	<div class="col-xs-9">
+		<ui-select ng-model="activity.projectId" theme="bootstrap">
+			<ui-select-match placeholder="Search projects">
+				{{$select.selected.name}}
+			</ui-select-match>
+			<ui-select-choices repeat="project._id as project in projects | filter:{name: $select.search}">
+				<span ng-bind-html="project.name | highlight: $select.search"></span>
+			</ui-select-choices>
+		</ui-select>
+	</div>
+	<div class="col-xs-3">
+		<input type="number" ng-model="activity.timeSpent" class="form-control" />
+	</div>
+</div>
+<div ng-if="!frozen && !coin.frozen">
+	<i class="fa fa-plus mnd-clickable pull-right" ng-click="coin.activities.push({})"></i>
+</div>
