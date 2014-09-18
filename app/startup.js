@@ -578,6 +578,10 @@ angular.module("mnd-web")
 	xhr.open("GET", "./VERSION", true);
 	xhr.onload = function () {
 		var APP_VERSION = this.response;
+		if (localStorage.APP_VERSION !== APP_VERSION) {
+			localStorage.APP_VERSION = APP_VERSION;
+			window.location.reload(true);
+		}
 		$rootScope.safeApply(function () {
 			$rootScope.APP_VERSION = APP_VERSION;
 		});
