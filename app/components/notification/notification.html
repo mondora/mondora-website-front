@@ -25,11 +25,11 @@
 			<span class="notification-text">{{notification.details.from.name}} recommended you a post</span>
 		</a>
 
-		<a ui-sref="channelView({channelId: notification.details.channelId})" ng-if="notification.type === 'newEntryInChannel'" class="mnd-undecorated-a">
+		<a ui-sref="channelView({channelNameOrId: notification.details.channelId})" ng-if="notification.type === 'newEntryInChannel'" class="mnd-undecorated-a">
 			<span class="notification-text">New entry in #{{notification.details.channelName}}</span>
 		</a>
 
-		<a ui-sref="channelView({channelId: notification.details.channelId})" ng-if="notification.type === 'channelRecommendation'" class="mnd-undecorated-a">
+		<a ui-sref="channelView({channelNameOrId: notification.details.channelId})" ng-if="notification.type === 'channelRecommendation'" class="mnd-undecorated-a">
 			<span class="notification-text">{{notification.details.from.name}} recommended you a channel</span>
 		</a>
 
