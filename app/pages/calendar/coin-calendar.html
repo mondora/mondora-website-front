@@ -1,0 +1,37 @@
+<table class="table table-calendar">
+	<thead>
+		<tr>
+			<th>
+				Monday
+			</th>
+			<th>
+				Tuesday
+			</th>
+			<th>
+				Wednesday
+			</th>
+			<th>
+				Thursday
+			</th>
+			<th>
+				Friday
+			</th>
+			<th>
+				Saturday
+			</th>
+			<th>
+				Sunday
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="week in calendar.weeks">
+			<td ng-repeat="day in week.days" ng-click="openDayModal(day)">
+				<div class="h4 mnd-clickable" ng-class="getDayBoxClass(day)">
+					{{daySummary(day)}}
+					<i ng-if="day.coin" class="fa fa-paw fg-white"></i>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
