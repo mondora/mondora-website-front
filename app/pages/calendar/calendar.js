@@ -175,7 +175,9 @@ angular.module("mnd-web.pages")
 	} else {
 		$scope.coin = {
 			day: $scope.day.moment.valueOf(),
-			activities: []
+			activities: [{
+				// XXX prefill with the latest activity
+			}]
 		};
 	}
 	$scope.insertCoin = function () {

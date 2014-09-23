@@ -1,5 +1,5 @@
 <div class="row" ng-repeat="activity in coin.activities" mnd-disable-inputs="frozen || coin.frozen">
-	<div class="col-xs-9">
+	<div class="col-xs-6">
 		<ui-select ng-model="activity.projectId" theme="bootstrap">
 			<ui-select-match placeholder="Search projects">
 				{{$select.selected.name}}
@@ -9,10 +9,17 @@
 			</ui-select-choices>
 		</ui-select>
 	</div>
-	<div class="col-xs-3">
-		<input type="number" ng-model="activity.timeSpent" class="form-control" />
+	<div class="col-xs-4">
+		<input type="number" ng-model="activity.timeSpent" class="form-control" placeholder="Time spent" />
 	</div>
+	<div class="col-xs-2">
+		<i class="fa fa-minus mnd-clickable" ng-click="coin.activities.splice($index, 1)"></i>
+	</div>
+	<br />
+	<br />
 </div>
-<div ng-if="!frozen && !coin.frozen">
-	<i class="fa fa-plus mnd-clickable pull-right" ng-click="coin.activities.push({})"></i>
+<div class="row" ng-if="!frozen && !coin.frozen">
+	<div class="col-xs-2 col-xs-offset-10">
+		<i class="fa fa-plus mnd-clickable" ng-click="coin.activities.push({})"></i>
+	</div>
 </div>
