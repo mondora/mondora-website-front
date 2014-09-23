@@ -6,7 +6,7 @@ angular.module("mnd-web.components")
 		templateUrl: "components/clock-in/clock-in.html",
 		controller: ["$scope", function ($scope) {
 			Ceres.subscribe("myCoins");
-			var today = moment().startOf("day").valueOf();
+			var today = moment().utc().startOf("day").valueOf();
 			var coinsRQ = Ceres.getCollection("coins").reactiveQuery({
 				day: today
 			});

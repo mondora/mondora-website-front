@@ -21,7 +21,7 @@ angular.module("mnd-web.pages")
 	};
 
 	var daysInFirstWeek = function (dayInMonth) {
-		var firstDayOfMonth = moment(dayInMonth).startOf("month");
+		var firstDayOfMonth = moment(dayInMonth).utc().startOf("month");
 		var weekDay = (firstDayOfMonth.day() + 6) % 7;
 		return (7 - weekDay);
 	};
@@ -63,11 +63,11 @@ angular.module("mnd-web.pages")
 			//Reset the calendar
 			self.weeks = [];
 			// Build the calendar object
-			var firstDayOfMonth = moment(day).startOf("month");
+			var firstDayOfMonth = moment(day).utc().startOf("month");
 			var daysInMonth = firstDayOfMonth.daysInMonth();
 			var currentDate;
 			for (var i=0; i<daysInMonth; i++) {
-				currentDate = moment(firstDayOfMonth).add(i, "d").startOf("day");
+				currentDate = moment(firstDayOfMonth).add(i, "d").utc().startOf("day");
 				currentWeek = MndCalendarUtils.weekOfSelectedDay(currentDate) - 1;
 				currentDay = (currentDate.day() + 6) % 7;
 				if (!self.weeks[currentWeek]) {
