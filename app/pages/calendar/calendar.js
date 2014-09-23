@@ -184,7 +184,7 @@ angular.module("mnd-web.pages")
 	};
 	$scope.updateCoin = function () {
 		Ceres.getCollection("coins").update($scope.coin._id, {
-			activities: $scope.coin.activities
+			activities: angular.copy($scope.coin.activities)
 		});
 		$scope.modalStatus.day = false;
 	};
