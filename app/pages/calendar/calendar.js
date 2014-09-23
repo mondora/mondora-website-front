@@ -2,7 +2,7 @@ angular.module("mnd-web.pages")
 
 
 
-.factory("MndCalendarUtils", function () {
+.factory("MndCalendarUtils", [function () {
 
 	var weekOfSelectedDay = function (selectedDay) {
 		selectedDay = moment(selectedDay);
@@ -50,7 +50,7 @@ angular.module("mnd-web.pages")
 		weeksInMonth: weeksInMonth
 	};
 
-})
+}])
 
 
 
