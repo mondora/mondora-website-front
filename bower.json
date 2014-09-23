@@ -41,7 +41,8 @@
     "ng-file-upload": "~1.3.2",
     "ng-file-upload-shim": "~1.3.2",
     "moment": "~2.8.3",
-    "angular-ui-select": "~0.7.0"
+    "angular-ui-select": "~0.7.0",
+    "FileSaver": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.16"

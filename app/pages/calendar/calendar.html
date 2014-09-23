@@ -21,26 +21,35 @@
 </div>
 
 <div class="page-container">
-	<br />
-	<br />
-	<div>
-		<div class="col-xs-1 col-xs-offset-2">
-			<i class="fa fa-angle-left fa-32 pull-left mnd-clickable" ng-click="previousMonth()"></i>
+	<div class="container-fluid">
+		<br />
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2 text-right">
+				<button type="button" class="btn btn-default" ng-click="export()">
+					Export CSV
+				</button>
+			</div>
 		</div>
-		<div class="col-xs-6">
-			<h3 class="text-center">
-				{{monthAndYear()}}
-			</h3>
+		<br />
+		<div class="row">
+			<div class="col-xs-1 col-xs-offset-2">
+				<i class="fa fa-angle-left fa-32 pull-left mnd-clickable" ng-click="previousMonth()"></i>
+			</div>
+			<div class="col-xs-6">
+				<h3 class="text-center">
+					{{monthAndYear()}}
+				</h3>
+			</div>
+			<div class="col-xs-1">
+				<i class="fa fa-angle-right fa-32 pull-right mnd-clickable" ng-click="nextMonth()"></i>
+			</div>
 		</div>
-		<div class="col-xs-1">
-			<i class="fa fa-angle-right fa-32 pull-right mnd-clickable" ng-click="nextMonth()"></i>
-		</div>
-	</div>
-	<br />
-	<br />
-	<div>
-		<div class="col-xs-8 col-xs-offset-2">
-			<div mnd-coin-calendar day="day">
+		<br />
+		<br />
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2">
+				<div mnd-coin-calendar day="day">
+				</div>
 			</div>
 		</div>
 	</div>

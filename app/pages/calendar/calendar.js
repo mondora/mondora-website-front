@@ -198,7 +198,7 @@ angular.module("mnd-web.pages")
 
 
 
-.controller("CalendarController", ["$scope", function ($scope) {
+.controller("CalendarController", ["$scope", "SaveTextFileService", function ($scope, SaveTextFileService) {
 	$scope.day = moment();
 	$scope.monthAndYear = function () {
 		return $scope.day.format("MMMM YYYY");
@@ -211,4 +211,7 @@ angular.module("mnd-web.pages")
 	};
 	$scope.modalStatus = {};
 	$scope.selectedDay = {};
+	$scope.export = function () {
+		SaveTextFileService("test.txt", "Hello world!");
+	};
 }]);
