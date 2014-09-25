@@ -5,6 +5,7 @@ $mnd-light-grey: #abadad;
 $mnd-green: #5cb85c;
 $mnd-red: #d9534f;
 $mnd-blue: #428bca;
+$mnd-white: #ffffff;
 
 // Misc
 .mnd-clickable {
@@ -36,6 +37,9 @@ $mnd-blue: #428bca;
 // Text decoration
 .mnd-underlined {
 	text-decoration: underline;
+}
+.mnd-bold {
+	font-weight: bold;
 }
 
 // Vertical spaces
@@ -165,19 +169,29 @@ span.mnd-width-10 {
 .bg-green {
 	background-color: $mnd-green;
 }
-
 .fg-red {
 	color: $mnd-red;
 }
 .bg-red {
 	background-color: $mnd-red;
 }
-
 .fg-blue {
 	color: $mnd-blue;
 }
 .bg-blue {
 	background-color: $mnd-blue;
+}
+.fg-light-grey {
+	color: $mnd-light-grey;
+}
+.bg-light-grey {
+	background-color: $mnd-light-grey;
+}
+.fg-white {
+	color: $mnd-white;
+}
+.bg-white {
+	background-color: $mnd-white;
 }
 
 // Full width image

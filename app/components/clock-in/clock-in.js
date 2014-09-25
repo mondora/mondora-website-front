@@ -6,7 +6,7 @@ angular.module("mnd-web.components")
 		templateUrl: "components/clock-in/clock-in.html",
 		controller: ["$scope", function ($scope) {
 			Ceres.subscribe("myCoins");
-			var today = moment().startOf("day").valueOf();
+			var today = moment().utc().startOf("day").valueOf();
 			var coinsRQ = Ceres.getCollection("coins").reactiveQuery({
 				day: today
 			});
@@ -20,7 +20,9 @@ angular.module("mnd-web.components")
 				if (!$scope.coin) {
 					$scope.coin = {
 						day: today,
-						activities: []
+						activities: [{
+							// XXX prefill with previous activity
+						}]
 					};
 				}
 			};
@@ -29,7 +31,13 @@ angular.module("mnd-web.components")
 				return $scope.coin && $scope.coin._id;
 			};
 			$scope.clockIn = function () {
-				Ceres.call("insertCoin", angular.copy($scope.coin));
+				Ceres.call("insertCoin", angular.copy($scope.coin)).result
+				.then(function () {
+					console.log("SUCCESS");
+				})
+				.fail(function (err) {
+					console.log(err);
+				});
 			};
 		}]
 	};

@@ -276,6 +276,32 @@ angular.module("mnd-web")
 		}
 	});
 
+	$stateProvider.state("calendar", {
+		url: "/calendar",
+		parent: "root",
+		templateUrl: "pages/calendar/calendar.html",
+		controller: "CalendarController",
+		resolve: {
+			coinsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("myCoins");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}]
+		}
+	});
+
+	$stateProvider.state("projects", {
+		url: "/projects",
+		parent: "root",
+		templateUrl: "pages/projects/projects.html",
+		controller: "ProjectsController",
+		resolve: {
+			projectsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("allProjects");
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}]
+		}
+	});
+
 	$stateProvider.state("inbox", {
 		url: "/inbox",
 		parent: "root",

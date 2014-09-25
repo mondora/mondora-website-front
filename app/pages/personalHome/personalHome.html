@@ -68,6 +68,12 @@
 			<a class="app-box mnd-clickable" ng-click="newChannel()" ng-if="isInRole('channels')">
 				<i class="fa fa-slack"></i>
 			</a>
+			<a class="app-box mnd-clickable" ui-sref="calendar()" ng-if="isInRole('coins')">
+				<i class="fa fa-calendar"></i>
+			</a>
+			<a class="app-box mnd-clickable" ui-sref="projects()" ng-if="isInRole('projects')">
+				<i class="fa fa-folder-open"></i>
+			</a>
 		</div>
 	</div>
 

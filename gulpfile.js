@@ -138,6 +138,7 @@ var buildVendorScripts = function (dest, minify) {
 		"bower_components/blueimp-md5/js/md5.js",
 		"bower_components/bower-sockjs-client/sockjs.js",
 		"bower_components/ddp.js/src/ddp.js",
+		"bower_components/FileSaver/FileSaver.js",
 		"bower_components/lodash/dist/lodash.js",
 		"bower_components/medium-editor/dist/js/medium-editor.js",
 		"bower_components/ment.io/dist/mentio.js",
