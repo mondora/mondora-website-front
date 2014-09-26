@@ -23,8 +23,18 @@
 <div class="page-container">
 	<div class="container-fluid">
 		<br />
-		<div class="row">
-			<div class="col-xs-8 col-xs-offset-2 text-right">
+		<div class="row" ng-if="isInRole('coin-manager')">
+			<div class="col-xs-4 col-xs-offset-2">
+				<ui-select ng-model="userId" on-select="setSelectedUser($item)" theme="bootstrap">
+					<ui-select-match placeholder="User">
+						{{$select.selected.profile.name}}
+					</ui-select-match>
+					<ui-select-choices repeat="user._id as user in users | filter:$select.search">
+						<span ng-bind-html="user.profile.name | highlight: $select.search"></span>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+			<div class="col-xs-2 col-xs-offset-2 text-right">
 				<button type="button" class="btn btn-default" ng-click="export()">
 					Export CSV
 				</button>
@@ -48,8 +58,7 @@
 		<br />
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-2">
-				<div mnd-coin-calendar day="day">
-				</div>
+				<div mnd-coin-calendar user="selectedUser" day="day" on-day-click="openDayModal(day)"></div>
 			</div>
 		</div>
 	</div>

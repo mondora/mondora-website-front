@@ -48,4 +48,36 @@ angular.module("mnd-web.pages")
 	$scope.export = function () {
 		SaveTextFileService("test.txt", "Hello world!");
 	};
+
+	$scope.openDayModal = function (day) {
+		$scope.selectedDay.day = day;
+		$scope.modalStatus.day = true;
+	};
+
+	$scope.userId = $scope.user && $scope.user._id;
+	$scope.selectedUser = {
+		_id: $scope.user && $scope.user._id
+	};
+	var Users = Ceres.getCollection("users");
+	var usersRQ = Users.reactiveQuery({});
+	usersRQ.on("change", function () {
+		$scope.safeApply(updateUsers);
+	});
+	var updateUsers = function () {
+		$scope.users = usersRQ.result;
+	};
+	updateUsers();
+	$scope.setSelectedUser = function (user) {
+		$scope.selectedUser = {
+			_id: user._id
+		};
+	};
+
+	$scope.isInRole = function (role) {
+		if ($scope.user && Array.isArray($scope.user.roles)) {
+			return $scope.user.roles.indexOf(role) !== -1;
+		}
+		return false;
+	};
+
 }]);

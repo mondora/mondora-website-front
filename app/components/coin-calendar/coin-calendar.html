@@ -26,7 +26,7 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="week in calendar.weeks">
-			<td ng-repeat="day in week.days" ng-click="openDayModal(day)">
+			<td ng-repeat="day in week.days" ng-click="onDayClick({day: day})">
 				<div class="h4 mnd-clickable" ng-class="getDayBoxClass(day)">
 					{{daySummary(day)}}
 					<i ng-if="day.coin" class="fa fa-paw fg-white"></i>
