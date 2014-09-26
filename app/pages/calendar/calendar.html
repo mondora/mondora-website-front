@@ -5,18 +5,32 @@
 		<br />
 		<div mnd-coin coin="coin" frozen="coin.frozen"></div>
 		<br />
-		<button type="button" class="btn btn-default" ng-if="!isUpdate && !coin.frozen" ng-click="insertCoin()">
-			Save
+		<button type="button" class="btn btn-default" ng-if="isInRole('coin-manager') && isUpdate && !coin.frozen" ng-click="freezeCoin()">
+			Freeze
 		</button>
-		<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="updateCoin()">
-			Save
+		<button type="button" class="btn btn-default" ng-if="isInRole('coin-manager') && isUpdate && coin.frozen" ng-click="unfreezeCoin()">
+			Unfreeze
 		</button>
-		<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="removeCoin()">
-			Delete
-		</button>
-		<button type="button" class="btn btn-default pull-right" ng-click="modalStatus.day = false">
-			Close
-		</button>
+		<br />
+		<br />
+		<div class="row">
+			<div class="col-xs-10">
+				<button type="button" class="btn btn-default" ng-if="!isUpdate && !coin.frozen" ng-click="insertCoin()">
+					Save
+				</button>
+				<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="updateCoin()">
+					Save
+				</button>
+				<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="removeCoin()">
+					Delete
+				</button>
+			</div>
+			<div class="col-xs-2">
+				<button type="button" class="btn btn-default pull-right" ng-click="modalStatus.day = false">
+					Close
+				</button>
+			</div>
+		</div>
 	</div>
 </div>
 
