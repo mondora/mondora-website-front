@@ -4,13 +4,13 @@
 			<ui-select-match placeholder="Search projects">
 				{{$select.selected.name}}
 			</ui-select-match>
-			<ui-select-choices repeat="project._id as project in projects | filter:{name: $select.search}">
+			<ui-select-choices repeat="project._id as project in getProjects(activity.projectId) | filter:{name: $select.search}">
 				<span ng-bind-html="project.name | highlight: $select.search"></span>
 			</ui-select-choices>
 		</ui-select>
 	</div>
 	<div class="col-xs-4">
-		<input type="number" ng-model="activity.timeSpent" class="form-control" placeholder="Time spent" />
+		<input type="number" ng-model="activity.timeSpent" class="form-control" min="0" max="24" placeholder="Time spent" />
 	</div>
 	<div class="col-xs-2">
 		<i class="fa fa-minus mnd-clickable" ng-click="coin.activities.splice($index, 1)"></i>

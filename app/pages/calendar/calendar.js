@@ -1,5 +1,7 @@
 angular.module("mnd-web.pages")
 
+
+
 .controller("CoinModalController", ["$scope", function ($scope) {
 	var Coins = Ceres.getCollection("coins");
 	var day = $scope.selectedDay.day;
@@ -18,6 +20,7 @@ angular.module("mnd-web.pages")
 		updateCoin();
 	} else {
 		$scope.coin = {
+			userId: $scope.user && $scope.user._id,
 			day: day.moment.valueOf(),
 			activities: [{
 				// XXX prefill with the latest activity
@@ -25,10 +28,14 @@ angular.module("mnd-web.pages")
 		};
 	}
 	$scope.insertCoin = function () {
-		Ceres.call("insertCoin", angular.copy($scope.coin));
+		Coins.insert(angular.copy($scope.coin));
 		$scope.modalStatus.day = false;
 	};
 	$scope.updateCoin = function () {
+		if ($scope.coin.activities.length === 0) {
+			$scope.removeCoin();
+			return;
+		}
 		Coins.update($scope.coin._id, {
 			activities: angular.copy($scope.coin.activities)
 		});
@@ -49,6 +56,101 @@ angular.module("mnd-web.pages")
 		});
 	};
 }])
+
+
+
+.controller("HolidayImportingModalController", ["$scope", "$http", function ($scope, $http) {
+
+	var apiUrl = "http://kayaposoft.com/enrico/json/v1.0/index.php";
+
+	// Get country list
+	var countryListRequestConfig = {
+		params: {
+			action: "getSupportedCountries",
+			jsonp: "JSON_CALLBACK"
+		}
+	};
+	$http.jsonp(apiUrl, countryListRequestConfig).then(function (result) {
+		$scope.countries = result.data;
+	});
+
+	// Container objects
+	$scope.selected = {};
+	$scope.holidaysCache = {};
+
+	// Get years
+	$scope.years = (function () {
+		var years = [];
+		var first = moment().year() - 3;
+		for (var i=0; i<7; i++) {
+			years.push({
+				year: first + i
+			});
+		}
+		return years;
+	})();
+	$scope.selected.year = $scope.years[3];
+	$scope.$watch("selected.year", function () {
+		$scope.getHolidays();
+	});
+
+	$scope.getHolidays = function (country) {
+
+		var selectedCountry = $scope.selected.country || country;
+		var selectedYear = $scope.selected.year;
+
+		if (!selectedCountry) {
+			return;
+		}
+
+		// Prevent multiple requests from being made
+		var hash = selectedYear.year + selectedCountry.countryCode;
+		if ($scope.holidaysCache[hash]) {
+			$scope.holidays = $scope.holidaysCache[hash];
+			return;
+		}
+		$scope.holidaysCache[hash] = true;
+
+		var holidayRequestConfig = {
+			params: {
+				action: "getPublicHolidaysForYear",
+				year: selectedYear.year,
+				country: selectedCountry.countryCode,
+				jsonp: "JSON_CALLBACK"
+			}
+		};
+		$http.jsonp(apiUrl, holidayRequestConfig).then(function (result) {
+			$scope.holidaysCache[hash] = {
+				year: selectedYear.year,
+				country: selectedCountry.countryCode,
+				holidays: result.data
+			};
+			$scope.holidays = $scope.holidaysCache[hash];
+		});
+
+	};
+
+	$scope.importHolidays = function () {
+		var events = $scope.holidays.holidays.map(function (holiday) {
+			var day = moment({
+				day: holiday.date.day,
+				month: holiday.date.month - 1,
+				year: holiday.date.year
+			}).utc().startOf("day").valueOf();
+			return {
+				day: day,
+				country: $scope.holidays.country,
+				name: holiday.localName,
+				denyWorking: $scope.denyWorking,
+				tags: $scope.tags
+			};
+		});
+		console.log(events);
+	};
+
+}])
+
+
 
 .controller("CalendarController", ["$scope", "SaveTextFileService", function ($scope, SaveTextFileService) {
 	$scope.day = moment();

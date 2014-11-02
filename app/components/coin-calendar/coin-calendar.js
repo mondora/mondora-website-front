@@ -84,15 +84,24 @@ angular.module("mnd-web.components")
 				week.days[i] = week.days[i] || {};
 			}
 		});
-		// Get the coins
+		// Get coins and events
 		var coinsSub = Ceres.subscribe("coinsByUserAndMonth", self.userId, self.month.valueOf());
-		coinsSub.ready.then(function () {
+		var eventsSub = Ceres.subscribe("eventsByMonth", self.month.valueOf());
+		Q.all([
+			coinsSub.ready,
+			eventsSub.ready
+		]).then(function () {
 			var Coins = Ceres.getCollection("coins");
+			var Events = Ceres.getCollection("events");
 			self.weeks.forEach(function (week) {
 				week.days.forEach(function (day) {
+
+					// If the day has no moment, it's just "padding" to fill the blanks
 					if (!day.moment) {
 						return;
 					}
+
+					// Attach the coin
 					day.coinRQ = Coins.reactiveQuery({
 						userId: self.userId,
 						day: day.moment.valueOf()
@@ -104,6 +113,18 @@ angular.module("mnd-web.components")
 						}
 					});
 					day.coin = day.coinRQ.result[0];
+
+					// Attach the event
+					day.eventRQ = Events.reactiveQuery({
+						day: day.moment.valueOf()
+					});
+					day.eventRQ.on("change", function () {
+						day.event = day.eventRQ.result[0];
+						if (self.onChange) {
+							self.onChange();
+						}
+					});
+					day.event = day.eventRQ.result[0];
 				});
 			});
 			if (self.onChange) {
@@ -142,17 +163,21 @@ angular.module("mnd-web.components")
 			$scope.hasCoin = function (day) {
 				return !!(day && day.coin);
 			};
+			$scope.hasEvent = function (day) {
+				return !!(day && day.event);
+			};
 			$scope.isToday = function (day) {
 				return day.moment && moment().isSame(day.moment, "day");
 			};
 			$scope.getDayBoxClass = function (day) {
 				var hasCoin = $scope.hasCoin(day);
+				var hasEvent = $scope.hasEvent(day);
 				var isToday = $scope.isToday(day);
 				return {
-					"bg-blue": hasCoin && !isToday,
+					"bg-red": hasEvent && !isToday,
 					"bg-green": isToday,
-					"fg-white": hasCoin || isToday,
-					"mnd-bold": hasCoin || isToday
+					"fg-white": hasEvent || isToday,
+					"mnd-bold": hasEvent || isToday
 				};
 			};
 		}],

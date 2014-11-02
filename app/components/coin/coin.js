@@ -25,6 +25,20 @@ angular.module("mnd-web.components")
 			});
 			$scope.projects = projectsRQ.result;
 
+			$scope.getProjects = function (projectId) {
+				return $scope.projects.filter(function (project) {
+					if (project._id === projectId) {
+						return true;
+					}
+					return $scope.coin.activities.reduce(function (acc, activity) {
+						if (!acc) {
+							return acc;
+						}
+						return activity.projectId !== project._id;
+					}, true);
+				});
+			};
+
 		}]
 	};
 });

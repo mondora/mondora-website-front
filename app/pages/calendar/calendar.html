@@ -5,14 +5,16 @@
 		<br />
 		<div mnd-coin coin="coin" frozen="coin.frozen"></div>
 		<br />
-		<button type="button" class="btn btn-default" ng-if="isInRole('coin-manager') && isUpdate && !coin.frozen" ng-click="freezeCoin()">
-			Freeze
-		</button>
-		<button type="button" class="btn btn-default" ng-if="isInRole('coin-manager') && isUpdate && coin.frozen" ng-click="unfreezeCoin()">
-			Unfreeze
-		</button>
-		<br />
-		<br />
+		<div ng-if="isInRole('coin-manager')">
+			<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="freezeCoin()">
+				Freeze
+			</button>
+			<button type="button" class="btn btn-default" ng-if="isUpdate && coin.frozen" ng-click="unfreezeCoin()">
+				Unfreeze
+			</button>
+			<br />
+			<br />
+		</div>
 		<div class="row">
 			<div class="col-xs-10">
 				<button type="button" class="btn btn-default" ng-if="!isUpdate && !coin.frozen" ng-click="insertCoin()">
@@ -34,6 +36,56 @@
 	</div>
 </div>
 
+
+
+<!-- Holiday importing modal -->
+<div mnd-modal header="Import holidays" open="modalStatus.holiday">
+	<div ng-controller="HolidayImportingModalController">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<label>
+					Country
+				</label>
+				<ui-select ng-model="selected.country" on-select="getHolidays($item)" theme="bootstrap">
+					<ui-select-match placeholder="Select country">
+						{{$select.selected.fullName}}
+					</ui-select-match>
+					<ui-select-choices repeat="country in countries | filter:{fullName: $select.search}">
+						<span ng-bind-html="country.fullName | highlight: $select.search"></span>
+					</ui-select-choices>
+				</ui-select>
+				<br />
+				<label>
+					Year
+				</label>
+				<select class="form-control" ng-model="selected.year" ng-options="year.year for year in years"></select>
+				<br />
+				<label>
+					Tags
+				</label>
+				<label>
+					Deny working
+				</label>
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn-default" ng-click="importHolidays()">
+					Import
+				</button>
+				<button type="button" class="btn btn-default pull-right" ng-click="modalStatus.holiday = false">
+					Close
+				</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
 <div class="page-container">
 	<div class="container-fluid">
 		<br />
@@ -48,7 +100,12 @@
 					</ui-select-choices>
 				</ui-select>
 			</div>
-			<div class="col-xs-2 col-xs-offset-2 text-right">
+			<div class="col-xs-2 text-right">
+				<button type="button" class="btn btn-default" ng-click="modalStatus.holiday = true">
+					Import holidays
+				</button>
+			</div>
+			<div class="col-xs-2 text-right">
 				<button type="button" class="btn btn-default" ng-click="export()">
 					Export CSV
 				</button>
