@@ -5,26 +5,110 @@
 		<br />
 		<div mnd-coin coin="coin" frozen="coin.frozen"></div>
 		<br />
-		<button type="button" class="btn btn-default" ng-if="!isUpdate && !coin.frozen" ng-click="insertCoin()">
-			Save
-		</button>
-		<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="updateCoin()">
-			Save
-		</button>
-		<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="removeCoin()">
-			Delete
-		</button>
-		<button type="button" class="btn btn-default pull-right" ng-click="modalStatus.day = false">
-			Close
-		</button>
+		<div ng-if="isInRole('coin-manager')">
+			<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="freezeCoin()">
+				Freeze
+			</button>
+			<button type="button" class="btn btn-default" ng-if="isUpdate && coin.frozen" ng-click="unfreezeCoin()">
+				Unfreeze
+			</button>
+			<br />
+			<br />
+		</div>
+		<div class="row">
+			<div class="col-xs-10">
+				<button type="button" class="btn btn-default" ng-if="!isUpdate && !coin.frozen" ng-click="insertCoin()">
+					Save
+				</button>
+				<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="updateCoin()">
+					Save
+				</button>
+				<button type="button" class="btn btn-default" ng-if="isUpdate && !coin.frozen" ng-click="removeCoin()">
+					Delete
+				</button>
+			</div>
+			<div class="col-xs-2">
+				<button type="button" class="btn btn-default pull-right" ng-click="modalStatus.day = false">
+					Close
+				</button>
+			</div>
+		</div>
 	</div>
 </div>
+
+
+
+<!-- Holiday importing modal -->
+<div mnd-modal header="Import holidays" open="modalStatus.holiday">
+	<div ng-controller="HolidayImportingModalController">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<label>
+					Country
+				</label>
+				<ui-select ng-model="selected.country" on-select="getHolidays($item)" theme="bootstrap">
+					<ui-select-match placeholder="Select country">
+						{{$select.selected.fullName}}
+					</ui-select-match>
+					<ui-select-choices repeat="country in countries | filter:{fullName: $select.search}">
+						<span ng-bind-html="country.fullName | highlight: $select.search"></span>
+					</ui-select-choices>
+				</ui-select>
+				<br />
+				<label>
+					Year
+				</label>
+				<select class="form-control" ng-model="selected.year" ng-options="year.year for year in years"></select>
+				<br />
+				<label>
+					Tags
+				</label>
+				<div mnd-tags tags="tags" placeholder="Add tag"></div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="denyWorking" /> Deny working
+					</label>
+				</div>
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn-default" ng-click="importHolidays()">
+					Import
+				</button>
+				<button type="button" class="btn btn-default pull-right" ng-click="modalStatus.holiday = false">
+					Close
+				</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
 
 <div class="page-container">
 	<div class="container-fluid">
 		<br />
-		<div class="row">
-			<div class="col-xs-8 col-xs-offset-2 text-right">
+		<div class="row" ng-if="isInRole('coin-manager')">
+			<div class="col-xs-4 col-xs-offset-2">
+				<ui-select ng-model="userId" on-select="setSelectedUser($item)" theme="bootstrap">
+					<ui-select-match placeholder="User">
+						{{$select.selected.profile.name}}
+					</ui-select-match>
+					<ui-select-choices repeat="user._id as user in users | filter:$select.search">
+						<span ng-bind-html="user.profile.name | highlight: $select.search"></span>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+			<div class="col-xs-2 text-right">
+				<button type="button" class="btn btn-default" ng-click="modalStatus.holiday = true">
+					Import holidays
+				</button>
+			</div>
+			<div class="col-xs-2 text-right">
 				<button type="button" class="btn btn-default" ng-click="export()">
 					Export CSV
 				</button>
@@ -48,8 +132,7 @@
 		<br />
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-2">
-				<div mnd-coin-calendar day="day">
-				</div>
+				<div mnd-coin-calendar user="selectedUser" day="day" on-day-click="openDayModal(day)"></div>
 			</div>
 		</div>
 	</div>

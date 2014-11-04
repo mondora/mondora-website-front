@@ -280,13 +280,7 @@ angular.module("mnd-web")
 		url: "/calendar",
 		parent: "root",
 		templateUrl: "pages/calendar/calendar.html",
-		controller: "CalendarController",
-		resolve: {
-			coinsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
-				var sub = Ceres.subscribe("myCoins");
-				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-			}]
-		}
+		controller: "CalendarController"
 	});
 
 	$stateProvider.state("projects", {
