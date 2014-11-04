@@ -77,6 +77,7 @@ angular.module("mnd-web.pages")
 	// Container objects
 	$scope.selected = {};
 	$scope.holidaysCache = {};
+	$scope.tags = [];
 
 	// Get years
 	$scope.years = (function () {
@@ -132,11 +133,11 @@ angular.module("mnd-web.pages")
 
 	$scope.importHolidays = function () {
 		var events = $scope.holidays.holidays.map(function (holiday) {
-			var day = moment({
+			var day = moment.utc({
 				day: holiday.date.day,
 				month: holiday.date.month - 1,
 				year: holiday.date.year
-			}).utc().startOf("day").valueOf();
+			}).startOf("day").valueOf();
 			return {
 				day: day,
 				country: $scope.holidays.country,
@@ -145,7 +146,8 @@ angular.module("mnd-web.pages")
 				tags: $scope.tags
 			};
 		});
-		console.log(events);
+		Ceres.call("insertEvent", events);
+		$scope.modalStatus.holiday = false;
 	};
 
 }])
