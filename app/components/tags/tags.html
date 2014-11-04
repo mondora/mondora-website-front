@@ -1,5 +1,5 @@
 <div ng-if="!noTags()">
-	<span class="mnd-pomodoro-tag label label-default mnd-tag" ng-repeat="tag in tags">
+	<span class="label label-default mnd-tag mnd-inline-block" ng-repeat="tag in tags">
 		{{tag}}
 		<i class="fa fa-times mnd-clickable" ng-click="delTag($index)"></i>
 	</span>
