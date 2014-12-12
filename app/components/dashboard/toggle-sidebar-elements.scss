@@ -1,6 +1,7 @@
 $mnd-yellow: #ffcc00;
 $mnd-grey: #5e5f5f;
 $mnd-light-grey: #abadad;
+$xmas-red: #AE2816;
 $mnd-font: "Fira Sans", sans-serif;
 
 // Toggle button
@@ -11,8 +12,8 @@ $mnd-font: "Fira Sans", sans-serif;
 	border: none;
 	font-size: 40px;
 	cursor: pointer;
-	background-color: $mnd-yellow;
-	color: $mnd-grey;
+	background-color: $xmas-red;
+	color: #fff; //original $mnd-grey
 	text-align: center;
 }
 @media (max-width: 767px) {

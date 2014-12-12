@@ -2,12 +2,13 @@ $mnd-yellow: #ffcc00;
 $mnd-black: #000000;
 $mnd-grey: #5e5f5f;
 $mnd-light-grey: #abadad;
+$xmas-red: #AE2816;
 $mnd-font: "Source Sans Pro", sans-serif;
 
 // Sidebar user
 #mnd-sidebar-user {
 	padding: 30px 10px 10px 15px; 
-	color: $mnd-black;
+	color: #fff; //original $mnd-black
 	font-size: 20px;
 	font-weight: 400;
 	a {
@@ -30,7 +31,8 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	position: absolute;
 	bottom: 0px;
 	padding: 0 10px 10px 15px; 
-	color: $mnd-grey;
+	color: #fff; //original $mnd-grey
+	height: 150px;
 	span {
 		font-size: 25px;
 		line-height: 2px;
@@ -44,12 +46,18 @@ $mnd-font: "Source Sans Pro", sans-serif;
 			display: none;
 		}
 	}
+	@media (max-height: 580px) {
+		height: 35px;
+	}
 }
 
 // Menu
 #mnd-sidebar {
 	.nav {
 		margin-top: 50px;
+		height: calc(100% - 330px);
+		overflow-y: scroll;
+		overflow: auto;
 		font: {
 			family: $mnd-font;
 			size: 25px;
@@ -57,14 +65,25 @@ $mnd-font: "Source Sans Pro", sans-serif;
 		}
 		color: $mnd-black;
 		line-height: 30px;
+		&::-webkit-scrollbar {
+			width: 10px;
+			display: block !important;
+		}
+		&::-webkit-scrollbar-track {
+		    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+		}
+		&::-webkit-scrollbar-thumb {
+		    background: rgba(255,150,0,0.6); 
+			-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+		}
 		li a {
 			padding: 0 15px;
-			color: $mnd-black;
+			color: #fff; //original $mnd-black
 			font-weight: normal;
 			font-weight: 400;
 			transition: color 0.3s ease, padding 0.3s ease;
-			border-top: 1px solid lighten($mnd-yellow, 1%);
-			border-bottom: 1px solid darken($mnd-yellow, 1%);
+			border-top: 1px solid lighten($xmas-red, 1%);
+			border-bottom: 1px solid darken($xmas-red, 1%);
 			&:nth-child(1){
 			 border-top: 0; 
 			}
@@ -74,8 +93,11 @@ $mnd-font: "Source Sans Pro", sans-serif;
 				background-color: initial;
 			}
 		}
+		@media (max-width: 768px) {
+			margin-top: 20px;
+		}
 		@media (max-height: 580px) {
-			margin-top: 30px;
+			height: calc(100% - 190px);
 		}
 	}
 	.nav-second-level {

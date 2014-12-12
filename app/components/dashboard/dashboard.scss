@@ -2,6 +2,7 @@ $mnd-yellow: #ffcc00;
 $mnd-grey: #5e5f5f;
 $mnd-light-grey: #abadad;
 $mnd-font: "Source Sans Pro", sans-serif;
+$xmas-red: #AE2816;
 
 // Sidebar
 #mnd-sidebar {
@@ -14,8 +15,8 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	width: 300px;
 	overflow: hidden;
 	z-index: 1;
-	background: $mnd-yellow;
-	border-right: 2px solid $mnd-grey;
+	background: $xmas-red;
+	border-right: 2px solid #900; //original $mnd-grey
 	transform: translate3d(0, 0, 0);
 	transform: translateX(0px);
 	transition: transform 0.4s ease 0s;
@@ -43,8 +44,8 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	width: 100px;
 	z-index: 100;
 	margin: 0px;
-	background-color: $mnd-yellow;
-	border-right: 2px solid $mnd-grey;
+	background-color: $xmas-red;
+	border-right: 2px solid #900; //original $mnd-grey
 	text-align: center;
 	transform: translate3d(0, 0, 0);
 	transform: translateX(0px);
@@ -57,7 +58,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 		min-height: 0px;
 		width: 100%;
 		text-align: left;
-		border-bottom: 2px solid $mnd-grey;
+		border-bottom: 2px solid #900; //original $mnd-grey
 		border-right: 0px;
 		&.sidebar-open{
 			transform: translateX(240px);
