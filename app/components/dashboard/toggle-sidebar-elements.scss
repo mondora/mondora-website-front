@@ -12,8 +12,8 @@ $mnd-font: "Fira Sans", sans-serif;
 	border: none;
 	font-size: 40px;
 	cursor: pointer;
-	background-color: $xmas-red;
-	color: #fff; //original $mnd-grey
+	background-color: $mnd-yellow;
+	color: $mnd-grey;
 	text-align: center;
 }
 @media (max-width: 767px) {

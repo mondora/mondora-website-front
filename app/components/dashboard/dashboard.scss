@@ -15,8 +15,8 @@ $xmas-red: #AE2816;
 	width: 300px;
 	overflow: hidden;
 	z-index: 1;
-	background: $xmas-red;
-	border-right: 2px solid #900; //original $mnd-grey
+	background: $mnd-yellow;
+	border-right: 2px solid $mnd-grey;
 	transform: translate3d(0, 0, 0);
 	transform: translateX(0px);
 	transition: transform 0.4s ease 0s;
@@ -44,8 +44,8 @@ $xmas-red: #AE2816;
 	width: 100px;
 	z-index: 100;
 	margin: 0px;
-	background-color: $xmas-red;
-	border-right: 2px solid #900; //original $mnd-grey
+	background-color: $mnd-yellow;
+	border-right: 2px solid $mnd-grey;
 	text-align: center;
 	transform: translate3d(0, 0, 0);
 	transform: translateX(0px);

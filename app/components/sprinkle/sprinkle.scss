@@ -22,8 +22,8 @@ $mnd-grey: #5e5f5f;
     font-size: 50px;
     font-family: "Cutive Mono", monospace;
     background: rgba(0,0,0,0.4);
-    border-top: 3px solid #AE2816;
-    border-bottom: 3px solid #AE2816;
+    border-top: 3px solid $mnd-yellow;
+    border-bottom: 3px solid $mnd-yellow;
     z-index: 0;
 }
 .sprinkle-result span {
@@ -43,7 +43,7 @@ $mnd-grey: #5e5f5f;
 .sprinkle-pivot {
 	position: relative;
 	float: left;
-    color: #AE2816;
+    color: $mnd-yellow;
 }
 .sprinkle-right {
 	float: left;
@@ -100,7 +100,7 @@ $mnd-grey: #5e5f5f;
 .sprinkle-control-bar {
 	position: relative;
 	left: 0px;
-	background-color: #AE2816;
+	background-color: $mnd-yellow;
 	height: 40px;
 	width: 100%;
 }
@@ -117,7 +117,7 @@ $mnd-grey: #5e5f5f;
 	display: inline-block;
 }
 .sprinkle-control-btn {
-	color: #fff;
+	color: $mnd-grey;
 	padding-left: 5px;
 	display: inline-block;
 	font-size: 32px;
@@ -125,7 +125,7 @@ $mnd-grey: #5e5f5f;
 	text-align: center;
 }
 .sprinkle-control-wpm {
-	color: #fff;
+	color: $mnd-grey;
 	position: relative;
 	top: -3px;
 	padding-left: 15px;

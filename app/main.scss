@@ -50,7 +50,7 @@ body {
 	left: 0px;
 	height: 100%;
 	width: 100px;
-	background: #AE2816;
+	background: $mnd-yellow;
 	border-width: 0px;
 	border-right-width: 2px;
 	border-color: #900;
@@ -78,13 +78,16 @@ body {
 	color: $mnd-grey;
 	font-size: 40px;
 }
+.color-me-white {
+	color: #fff!important;
+}
 @media (max-width: 767px) {
 	#init-placeholder-sidebar {
 		box-sizing: border-box;
 		position: relative;
 		height: 80px;
 		width: 100%;
-		background: #AE2816;
+		background: $mnd-yellow;
 		border-width: 0px;
 		border-bottom-width: 2px;
 		border-color: #900;
@@ -110,12 +113,3 @@ body {
 	}
 }
 
-//xmas
-canvas{
-    position:absolute;
-    top:0;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-	pointer-events: none;
-}

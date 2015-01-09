@@ -8,7 +8,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 // Sidebar user
 #mnd-sidebar-user {
 	padding: 30px 10px 10px 15px; 
-	color: #fff; //original $mnd-black
+	color: $mnd-black;
 	font-size: 20px;
 	font-weight: 400;
 	a {
@@ -31,7 +31,7 @@ $mnd-font: "Source Sans Pro", sans-serif;
 	position: absolute;
 	bottom: 0px;
 	padding: 0 10px 10px 15px; 
-	color: #fff; //original $mnd-grey
+	color: $mnd-grey;
 	height: 150px;
 	span {
 		font-size: 25px;
@@ -78,12 +78,12 @@ $mnd-font: "Source Sans Pro", sans-serif;
 		}
 		li a {
 			padding: 0 15px;
-			color: #fff; //original $mnd-black
+			color: $mnd-black;
 			font-weight: normal;
 			font-weight: 400;
 			transition: color 0.3s ease, padding 0.3s ease;
-			border-top: 1px solid lighten($xmas-red, 1%);
-			border-bottom: 1px solid darken($xmas-red, 1%);
+			border-top: 1px solid lighten($mnd-yellow, 1%);
+			border-bottom: 1px solid darken($mnd-yellow, 1%);
 			&:nth-child(1){
 			 border-top: 0; 
 			}
