@@ -17,13 +17,13 @@ This is the repository of of the mondora website frontend. The mondora repositor
 For local development only.
 
 ### Clone and launch the backend
-Clone the git repo - `git clone https://github.com/mondora/meteor-website.git`
-Launch meteor - `meteor`
-Backend started! YEAH!
+* Clone the git repo - `git clone https://github.com/mondora/meteor-website.git`
+* Launch meteor - `meteor`
+* Backend started! YEAH!
 
 ### Clone and launch the forntend
 
 Clone the git repo - `git clone https://github.com/mondora/mnd-website.git`
-`bower install`
-`gulp dev`
-Click [http://127.0.0.1:8080](http://127.0.0.1:8080)
+* `bower install`
+* `gulp dev`
+* Click [http://127.0.0.1:8080](http://127.0.0.1:8080)
