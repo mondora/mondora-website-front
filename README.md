@@ -26,4 +26,4 @@ Backend started! YEAH!
 Clone the git repo - `git clone https://github.com/mondora/mnd-website.git`
 `bower install`
 `gulp dev`
-Click `http://127.0.0.1:8080`
+Click [http://127.0.0.1:8080](http://127.0.0.1:8080)
