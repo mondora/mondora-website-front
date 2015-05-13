@@ -1,3 +1,3 @@
 #!/bin/bash
-npm run $BUILD_TARGET
+npm run build
 npm start

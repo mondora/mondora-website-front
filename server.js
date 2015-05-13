@@ -12,7 +12,7 @@ var requestHandler = connect()
         next();
     })
     .use(compression())
-    .use(serveStatic("builds/" + process.env.BUILD_TARGET, {
+    .use(serveStatic("builds/" + process.env.BACKEND_HOST, {
         maxAge: 24 * 60 * 60 * 1000
     }));
 var listeningHandler = function () {

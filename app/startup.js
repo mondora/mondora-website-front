@@ -4,21 +4,10 @@ var GIVE_UP_DELAY = 30000;
 
 	var deferred = Q.defer();
 
-	var targets = {
-		"web.dev": {
-			domain: "localhost:3000"
-		},
-		"web.test": {
-			domain: "test.api.mondora.com"
-		},
-		"web.prod": {
-			domain: "api.mondora.com",
-			ssl: true
-		}
-	};
-	var target = targets[window.APP_TARGET];
-
-	window.Ceres = new Asteroid(target.domain, target.ssl);
+	window.Ceres = new Asteroid(
+		window.BACKEND_HOST,
+		window.BACKEND_USE_SSL
+	);
 	Ceres.on("connected", function () {
 		deferred.resolve();
 	});

@@ -28,55 +28,34 @@
         <meta id="meta-fb-description" property="og:description"  content="mondora app" />
         <meta id="meta-fb-name"        property="og:site_name"    content="mondora" />
 
-        <!-- @if TARGET=='web.dev' -->
-            <link href="/assets/css/vendor.css" type="text/css" rel="stylesheet" />
-            <link href="/assets/css/app.css" type="text/css" rel="stylesheet" />
-            <script src="/assets/js/vendor.js"></script>
-            <script>
-                window.APP_TARGET = "web.dev";
-            </script>
-            <script src="/assets/js/app.js"></script>
-            <script src="/assets/js/templates.js"></script>
-        <!-- @endif -->
+        <!-- Backend configuration -->
+        <script>
+            window.BACKEND_HOST = "<!-- @echo BACKEND_HOST -->";
+            window.BACKEND_USE_SSL = ("<!-- @echo BACKEND_USE_SSL -->" === "true");
+        </script>
 
-        <!-- @if TARGET=='web.test' -->
-            <link href="/assets/css/vendor.css" type="text/css" rel="stylesheet" />
-            <link href="/assets/css/app.css" type="text/css" rel="stylesheet" />
-            <script src="/assets/js/vendor.js"></script>
-            <script>
-                window.APP_TARGET = "web.test";
-                window.prerenderReady = false;
-                window.setTimeout(function () {
-                    window.prerenderReady = true;
-                }, 5000);
-            </script>
-            <script src="/assets/js/templates.js"></script>
-            <script src="/assets/js/app.js"></script>
-        <!-- @endif -->
+        <link href="/assets/css/vendor.css" type="text/css" rel="stylesheet" />
+        <link href="/assets/css/app.css" type="text/css" rel="stylesheet" />
+        <script src="/assets/js/vendor.js"></script>
+        <script src="/assets/js/app.js"></script>
+        <script src="/assets/js/templates.js"></script>
 
-        <!-- @if TARGET=='web.prod' -->
-            <link href="/assets/css/vendor.css" type="text/css" rel="stylesheet" />
-            <link href="/assets/css/app.css" type="text/css" rel="stylesheet" />
-            <script src="/assets/js/vendor.js"></script>
-            <script>
-                window.APP_TARGET = "web.prod";
-                window.prerenderReady = false;
-                window.setTimeout(function () {
-                    window.prerenderReady = true;
-                }, 5000);
-            </script>
-            <script src="/assets/js/templates.js"></script>
-            <script src="/assets/js/app.js"></script>
-            <!-- Google analitycs -->
-            <script>
-                (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,"script","//www.google-analytics.com/analytics.js","ga");
-                ga("create", "UA-53305866-1", "auto");
-                ga("send", "pageview");
-            </script>
-        <!-- @endif -->
+        <!-- Prerender -->
+        <script>
+            window.prerenderReady = false;
+            window.setTimeout(function () {
+                window.prerenderReady = true;
+            }, 5000);
+        </script>
+        <!-- Google analitycs -->
+        <script>
+            (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,"script","//www.google-analytics.com/analytics.js","ga");
+            ga("create", "UA-53305866-1", "auto");
+            ga("send", "pageview");
+        </script>
 
         <!--[if lt IE 9]>
             <style>
