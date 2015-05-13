@@ -1,40 +1,31 @@
 var GIVE_UP_DELAY = 30000;
 
 (function () {
-	var config = {
-		dev: {
-			host: "localhost:3000",
-			/*
-			interjectSocketFunction: function (e) {
-				console.log(e);
-			}
-			*/
+
+	var deferred = Q.defer();
+
+	var targets = {
+		"web.dev": {
+			domain: "localhost:3000"
 		},
-		test: {
-			host: "test.api.mondora.com"
+		"web.test": {
+			domain: "test.api.mondora.com"
 		},
-		prod: {
-			host: "api.mondora.com",
+		"web.prod": {
+			domain: "api.mondora.com",
 			ssl: true
 		}
 	};
-	var cfg;
-	if (/b/.test(APP_VERSION)) {
-		cfg = config.dev;
-	} else if (/t/.test(APP_VERSION)) {
-		cfg = config.test;
-	} else {
-		cfg = config.prod;
-	}
-	//TODO Use ng-asteroid, fool!
-	var deferred = Q.defer();
-	window.Ceres = new Asteroid(cfg.host, cfg.ssl, cfg.interjectSocketFunction);
+	var target = targets[window.APP_TARGET];
+
+	window.Ceres = new Asteroid(target.domain, target.ssl);
 	Ceres.on("connected", function () {
 		deferred.resolve();
 	});
 	Ceres.ddp.on("socket_close", function () {
 		console.log("Closed");
 	});
+
 	window.CERES_CONNECTED = deferred.promise.timeout(GIVE_UP_DELAY);
 
 })();
@@ -550,13 +541,13 @@ angular.module("mnd-web")
 		});
 	});
 
-	$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) { 
+	$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
 		if (MndSidebarService.getSidebarStatus()) {
 			MndSidebarService.toggleSidebarStatus();
 		}
 		$rootScope.$broadcast("sidebarStatusChanged");
 		if (toState.name === "home" && $rootScope.user) {
-			event.preventDefault(); 
+			event.preventDefault();
 			$state.go("personalHome");
 		}
 	});
@@ -590,23 +581,24 @@ angular.module("mnd-web")
 		$interval(update, 10000, 0, false);
 	});
 
+}])
+
+
+
+.run(["$rootScope", "$http", function ($rootScope, $http) {
+
 	/////////////////////
 	// Get app version //
 	/////////////////////
 
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "./VERSION", true);
-	xhr.onload = function () {
-		var APP_VERSION = this.response;
-		if (localStorage.APP_VERSION !== APP_VERSION) {
-			localStorage.APP_VERSION = APP_VERSION;
-			window.location.reload(true);
-		}
-		$rootScope.safeApply(function () {
-			$rootScope.APP_VERSION = APP_VERSION;
+	$http.get("/VERSION")
+		.success(function (version) {
+			if (localStorage.APP_VERSION !== version) {
+				localStorage.APP_VERSION = version;
+				window.location.reload(true);
+			}
+			$rootScope.APP_VERSION = version;
 		});
-	};
-	xhr.send();
 
 }])
 

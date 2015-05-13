@@ -1,7 +1,4 @@
-.DS_Store
 node_modules/
 bower_components/
-*.swp
-.idea/
 builds/
-sonar-project.properties
+npm-debug.log
