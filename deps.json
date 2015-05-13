@@ -36,10 +36,10 @@
         "bower_components/fontawesome/css/font-awesome.css",
         "bower_components/medium-editor/dist/css/medium-editor.css",
         "bower_components/medium-editor/dist/css/themes/default.css",
-        "google_fonts/css/*"
+        "app/assets/css/*"
     ],
     "fonts": [
         "bower_components/fontawesome/fonts/*",
-        "google_fonts/fonts/*"
+        "app/assets/fonts/*"
     ]
 }

@@ -138,6 +138,7 @@ gulp.task("watch", function () {
     gulp.watch("app/**/*.js", ["buildAppScripts"]);
     gulp.watch("app/**/*.css",  ["buildAppStyles"]);
     gulp.watch("app/**/*.html", ["buildAppTemplates"]);
+    gulp.watch("app/assets/images/*", ["buildAppImages"]);
     gulp.watch("deps.json", [
         "buildVendorScripts",
         "buildVendorStyles",
