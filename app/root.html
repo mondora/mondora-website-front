@@ -3,7 +3,7 @@
 		<div id="mnd-sidebar-user">
 			<div ng-if="user" class="row">
 				<a class="col-xs-4 mnd-undecorated-a" ui-sref="profile()">
-					<div mnd-cig-image source="user.profile.pictureUrl" size="70"></div>
+					<div mnd-cig-image source="user.profile.pictureUrl" size="60"></div>
 				</a>
 				<div class="col-xs-8">
 					<div class="mnd-vsp-6"></div>
@@ -46,8 +46,14 @@
 				<a class="mnd-undecorated-a" href="https://twitter.com/mondora" target="_blank">
 					<i class="fa fa-twitter-square"></i>
 				</a>
+				<a class="mnd-undecorated-a" href="https://instagram.com/mondoracom" target="_blank">
+					<i class="fa fa-instagram"></i>
+				</a>
 				<a class="mnd-undecorated-a" href="http://www.pinterest.com/mondoracom/" target="_blank">
 					<i class="fa fa-pinterest-square"></i>
+				</a>
+				<a class="mnd-undecorated-a" href="http://mondora-com.tumblr.com" target="_blank">
+					<i class="fa fa-tumblr-square"></i>
 				</a>
 				<a class="mnd-undecorated-a" href="https://www.linkedin.com/company/mondora-s.p.a." target="_blank">
 					<i class="fa fa-linkedin-square"></i>
@@ -60,32 +66,74 @@
 				mondora srl
 			</span>
 			<br />
-			<span class="address">
-				via cornalia 7, 20124, milano<br />
-				<a class="mnd-undecorated-a" href="mailto:info@mondora.com">email info@mondora.com</a><br />
-				<a class="mnd-undecorated-a" href="tel:+3903421856264">tel +39 0342 1856 264</a><br />
-				piva 03680680968 <br />
+			<div class="address">
+				<a
+					class="mnd-undecorated-a"
+					href="https://www.google.it/maps/place/Via+Emilio+Cornalia,+7,+20124+Milano/@45.4825205,9.196851,17z"
+					target="_blank"
+				>
+					via cornalia 7, 20124, milano
+				</a>
+				<br />
+				<a
+					class="mnd-undecorated-a"
+					href="mailto:info@mondora.com"
+				>
+					email info@mondora.com
+				</a>
+				<br />
+				<a
+					class="mnd-undecorated-a"
+					href="tel:+3903421856264"
+				>
+					tel +39 0342 1856 264
+				</a>
+				<br />
+				piva 03680680968
+				<br />
 				<small>
 					<small>
 						<i>
-							mondora app {{APP_VERSION}}
+							<a
+								class="mnd-undecorated-a"
+								href="https://github.com/mondora/mondora-website-front/tree/{{APP_VERSION}}"
+								target="_blank"
+							>
+								version {{APP_VERSION}}
+							</a>
 						</i>
-						<br />
+						&nbsp;&nbsp;|&nbsp;&nbsp;
 						<i>
-							<a href="http://archive.mondora.com" class="mnd-undecorated-a">visit the old website</a>
+							<a
+								class="mnd-undecorated-a"
+								href="http://archive.mondora.com"
+								target="_blank"
+							>
+								visit the old website
+							</a>
 						</i>
 					</small>
 				</small>
-			</span>
+			</div>
 		</div>
 	</div>
 </div>
 <div mnd-toggle-sidebar>
 	<div name="center">
-		<div id="mnd-sidebar-logo">
-			<div class="mnd-mondora-logo">
-				<img src="https://s3.amazonaws.com/mnd-website/img/mondora-logo.png" />
-			</div>
+		<div id="mnd-menu-label">
+			MENU
+		</div>
+		<div id="mnd-mondora-logo">
+			<img src="https://s3.amazonaws.com/mnd-website/img/mondora-logo.png" />
+		</div>
+		<div id="mnd-b-corp-logo">
+			<a
+				class="mnd-undecorated-a"
+				href="https://www.bcorporation.net/community/mondora-srl"
+				target="_blank"
+			>
+				<img src="https://s3.amazonaws.com/mnd-website/img/b-corp-logo.png" />
+			</a>
 		</div>
 	</div>
 </div>

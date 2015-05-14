@@ -19,7 +19,7 @@ $mnd-white: #ffffff;
 	color: inherit;
 }
 .mnd-ignore-mouse-input {
-	pointer-events:none;
+	pointer-events: none;
 }
 .mnd-top-most {
 	z-index: 1000;
@@ -213,14 +213,14 @@ span.mnd-width-10 {
 }
 
 // Overlay for images and pages
-.mnd-image-overlay{
+.mnd-image-overlay {
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	width: 100%;
 	height: 100%;
 	opacity: 0.8;
-	background-image: url(https://s3-eu-west-1.amazonaws.com/ngtest/83dcaef6901c14cfcac2f8f87f49256e);
+	background-image: url("https://s3-eu-west-1.amazonaws.com/ngtest/83dcaef6901c14cfcac2f8f87f49256e");
 	background-repeat: repeat;
 }
 

@@ -8,6 +8,7 @@ var fs          = require("fs");
 var gulp        = require("gulp");
 var gp          = require("gulp-load-plugins")();
 var mkdirp      = require("mkdirp");
+var devip       = require("dev-ip");
 
 
 
@@ -15,7 +16,7 @@ var mkdirp      = require("mkdirp");
 // Constants //
 ///////////////
 
-var BACKEND_HOST    = process.env.BACKEND_HOST    || "localhost:3000";
+var BACKEND_HOST    = process.env.BACKEND_HOST    || devip()[0] + ":3000";
 var BACKEND_USE_SSL = process.env.BACKEND_USE_SSL || false;
 var MINIFY_FILES    = process.env.MINIFY_FILES    || false;
 
@@ -136,7 +137,7 @@ gulp.task("build", [
 gulp.task("watch", function () {
     gulp.watch("app/main.html", ["buildMainHtml"]);
     gulp.watch("app/**/*.js", ["buildAppScripts"]);
-    gulp.watch("app/**/*.css",  ["buildAppStyles"]);
+    gulp.watch("app/**/*.scss",  ["buildAppStyles"]);
     gulp.watch("app/**/*.html", ["buildAppTemplates"]);
     gulp.watch("app/assets/images/*", ["buildAppImages"]);
     gulp.watch("deps.json", [

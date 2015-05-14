@@ -19,8 +19,3 @@
 	background: radial-gradient(ellipse at center,  #ffffff 0%,#bfbfbf 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#bfbfbf',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
 }
-@media (max-width:767px){
-	.radial-background{
-		top:80px;
-	}
-}
