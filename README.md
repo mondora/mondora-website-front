@@ -9,6 +9,8 @@ the backend can be found at
 
 ## Development environment setup
 
+First, make sure to have `node >0.12.0` or `iojs >2.0.0` installed.
+
 ```sh
 git clone https://github.com/mondora/mondora-website-front.git
 cd mondora-website-front
