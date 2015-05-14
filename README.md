@@ -7,7 +7,7 @@ the backend can be found at
 [mondora/mondora-website-back](https://github.com/mondora/mondora-website-back).
 
 
-## Setup development environment
+## Development environment setup
 
 ```sh
 git clone https://github.com/mondora/mondora-website-front.git
