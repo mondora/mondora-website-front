@@ -27,50 +27,103 @@
 		<span ng-if="user" ng-click="logout()">Sign Out</span>
 	</div>
 
-	<div id="mnd-hidden-payoff">
-		{{payoff.firstLine}}
-		<br />
-		{{payoff.secondLine}}
+	<div id="mnd-home-top">
+		<div class="hidden-xs mnd-vsp-32"></div>
+		<h1 class="text-center">
+			{{homeConfig.header}}
+		</h1>
 	</div>
-
-	<div id="mnd-sprinkle-container">
-		<div mnd-sprinkle autoplay="true" autoplay-delay="3" text="{{sprinkleText}}"></div>
-	</div>
-
-	<div id="mnd-home-bottom">
-		<div id="mnd-home-logo">
-			<div class="mnd-mondora-logo">
-				<img src="https://mnd-website.s3.amazonaws.com/img/mondora-logo.png" alt="logo" />
-			</div>
-		</div>
-		<div id="mnd-home-banner">
-			<div id="mnd-home-banner-content" class="home-shadow">
-				<h1 ng-bind-html="banner.title"></h1>
-				<h4 ng-bind-html="banner.text"></h4>
-				<!--
-				<div class="guest-notify">
-					<div class="guest-notify-icon">
-						<i class="fa fa-envelope-o"></i><br />inbox
-						<div class="guest-notification">9+</div>
-					</div>
-					<div class="guest-notify-icon">
-						<i class="fa fa-book"></i><br />new posts
-						<div class="guest-notification">36</div>
-					</div>
-					<div class="guest-notify-icon">
-						<i class="fa fa-calendar"></i><br />events
-					</div>
+	<div id="mnd-home-center">
+		<div class="container-fluid">
+			<br />
+			<br />
+			<div class="row">
+				<div class="col-xs-4 col-sm-2 text-center">
+					<img class="mnd-width-60" src="/assets/images/clients-logo.png" />
+					<div class="mnd-vsp-6"></div>
+					<p>
+						<span class="h1">
+							{{homeConfig.activeClients}}
+						</span>
+						<br />
+						active clients
+					</p>
 				</div>
-				-->
+				<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">
+					<img class="mnd-width-60" src="/assets/images/git-logo.png" />
+					<div class="mnd-vsp-6"></div>
+					<p>
+						<span class="h1">
+							{{homeConfig.weeksCommits}}
+						</span>
+						<br />
+						commits this week
+					</p>
+				</div>
+				<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">
+					<img class="mnd-width-60" src="/assets/images/jenkins-logo.png" />
+					<div class="mnd-vsp-6"></div>
+					<p>
+						<span class="h1">
+							{{homeConfig.todaysDeploys}}
+						</span>
+						<br />
+						deploys today
+					</p>
+				</div>
 			</div>
-			<div id="mnd-home-banner-arrow"></div>
+			<br />
+			<br />
+			<div class="row">
+				<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">
+					<img class="mnd-width-60" src="/assets/images/github-logo.png" />
+					<div class="mnd-vsp-6"></div>
+					<p>
+						<span class="h1">
+							{{homeConfig.openSourceProjects}}
+						</span>
+						<br />
+						open source projects
+					</p>
+				</div>
+				<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">
+					<img class="mnd-width-60" src="/assets/images/carbon-footprint-logo.png" />
+					<div class="mnd-vsp-6"></div>
+					<p>
+						<span class="h1">
+							{{homeConfig.co2Reduction}}
+						</span>
+						<br />
+						% of CO2 reduction
+					</p>
+				</div>
+				<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">
+					<img class="mnd-width-60" src="/assets/images/volunteer-logo.png" />
+					<div class="mnd-vsp-6"></div>
+					<p>
+						<span class="h1">
+							{{homeConfig.volunteeringWorkDays}}
+						</span>
+						<br />
+						volunteering work days
+					</p>
+				</div>
+			</div>
 		</div>
 	</div>
+	<div id="mnd-home-bottom">
+		<div class="col-sm-8 col-sm-offset-2 hidden-xs">
+			<h3 class="text-center">
+				{{homeConfig.footer}}
+			</h3>
+		</div>
+	</div>
+
 </div>
 
 <div id="mnd-video-background">
 	<div class="mnd-video-overlay"></div>
-	<video muted autoplay="1" loop="1" ng-attr-poster="{{videoUrls.poster}}"> 
+	<video muted autoplay="1" loop="1" ng-attr-poster="{{videoUrls.poster}}">
 		<source ng-src="{{videoUrls.mp4}}" type="video/mp4" />
 		<source ng-src="{{videoUrls.webm}}" type="video/webm" />
 	</video>

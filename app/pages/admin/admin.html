@@ -25,25 +25,38 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-6">
-				<h4>Sprinkle text</h4>
-				<textarea class="form-control" rows="4" ng-model="homeConfig.sprinkleText"></textarea>
+				<h4>Header</h4>
+				<textarea class="form-control" rows="4" ng-model="homeConfig.header"></textarea>
 			</div>
 			<div class="col-sm-6">
-				<h4>Banner</h4>
-				<div class="mnd-input-vertical-group">
-					<input type="text" class="form-control" ng-model="homeConfig.banner.title" placeholder="Title" />
-					<input type="text" class="form-control" ng-model="homeConfig.banner.date" placeholder="Date" />
-					<input type="text" class="form-control" ng-model="homeConfig.banner.text" placeholder="Text" />
-				</div>
+				<h4>Footer</h4>
+				<textarea class="form-control" rows="4" ng-model="homeConfig.footer"></textarea>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6">
-				<h4>Payoff</h4>
-				<div class="mnd-input-vertical-group">
-					<input type="text" class="form-control" ng-model="homeConfig.payoff.firstLine" placeholder="First line" />
-					<input type="text" class="form-control" ng-model="homeConfig.payoff.secondLine" placeholder="Second line" />
-				</div>
+			<div class="col-sm-4">
+				<h4>Active clients</h4>
+				<input class="form-control" type="number" ng-model="homeConfig.activeClients"></textarea>
+			</div>
+			<div class="col-sm-4">
+				<h4>This week's commits</h4>
+				<input class="form-control" type="number" ng-model="homeConfig.weeksCommits"></textarea>
+			</div>
+			<div class="col-sm-4">
+				<h4>Today's deploys</h4>
+				<input class="form-control" type="number" ng-model="homeConfig.todaysDeploys"></textarea>
+			</div>
+			<div class="col-sm-4">
+				<h4>Open source projects</h4>
+				<input class="form-control" type="number" ng-model="homeConfig.openSourceProjects"></textarea>
+			</div>
+			<div class="col-sm-4">
+				<h4>CO2 reduction</h4>
+				<input class="form-control" type="number" ng-model="homeConfig.co2Reduction"></textarea>
+			</div>
+			<div class="col-sm-4">
+				<h4>Voluntary work (days)</h4>
+				<input class="form-control" type="number" ng-model="homeConfig.volunteeringWorkDays"></textarea>
 			</div>
 		</div>
 

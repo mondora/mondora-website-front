@@ -1,3 +1,6 @@
+$mnd-white: #ffffff;
+$mnd-black: #000000;
+
 // Video
 #mnd-video-background {
 	position: absolute;
@@ -12,7 +15,7 @@
 	background-image: url('')
 }
 .mnd-video-overlay{
-	background-color: #000;
+	background-color: $mnd-black;
 	opacity: 0.2;
 	min-width: 100%;
 	min-height: 100%;
@@ -54,202 +57,33 @@
 // Sign in
 #mnd-sign-in {
 	position: fixed;
-	right: 20px;
 	top: 20px;
+	right: 20px;
 	z-index: 20;
+	cursor: pointer;
 	.dropdown-toggle {
-		color: #fff;
+		color: $mnd-white;
 		font-size: 20px;
 	}
-}
-#mnd-sign-in:hover {
-	cursor: pointer;
-}
-@media (max-width: 767px) {
-  #mnd-sign-in {
-    display: none;
-  }
-}
-
-// Payoff
-#mnd-hidden-payoff {
-	color: #fff;
-	padding-top: 30px;
-	padding-left: 100px;
-	font-size: 80px;
-	font-style: bold;
-	text-align: center;
-	text-transform: uppercase;
-	opacity: 0.5;
-	animation-name: payoff;
-	animation-duration: 16s;
-	z-index: 10;
-}
-@keyframes payoff {
-	0% {
-		opacity: 0;
-	}
-	55% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 0.5;
+	@media (max-width: 767px) {
+		display: none;
 	}
 }
-@media (max-width: 767px) {
-  #mnd-hidden-payoff{
-    display: none;
-  }
+
+#mnd-home-top {
+	width: 100%;
+	height: 20%;
+	color: $mnd-white;
 }
 
-// Sprinkle
-#mnd-sprinkle-container {
-	position: absolute;
-	width: 620px;
-	left: 50%;
-	top: 50%;
-	margin-left: -260px;
-	margin-top: -50px;
-	z-index: 1;
-}
-@media (max-width: 767px) {
-  #mnd-sprinkle-container {
-    width: 98%;
-    top: 35%;
-    margin-left: -49%;
-  }
+#mnd-home-center {
+	width: 100%;
+	height: 60%;
+	color: $mnd-white;
 }
 
-// Footer
 #mnd-home-bottom {
-	position: absolute;
-	bottom: 0px;
-	height: 150px;
 	width: 100%;
-}
-
-// Logo
-#mnd-home-logo {
-	width: 150px;
-	height: 150px;
-	float: right;
-	padding-right: 20px;
-	overflow: hidden;
-	opacity: 0.5;
-}
-.mnd-mondora-logo img {
-	width: 100%;
-	height: 100%;
-}
-
-.home-shadow {
-	box-shadow:4px -4px 6px rgba(0,0,0,0.6);
-}
-
-@media (max-width: 767px) {
-  #mnd-home-logo {
-    display: none;
-  }
-  .home-shadow {
-  	box-shadow: none;
-  }
-}
-
-// Banner
-#mnd-home-banner {
-	float:right;
-	width: 300px;
-	height: 150px;
-	margin-right: 10px;
-}
-#mnd-home-banner-content {
-	height: 130px;
-	width: 300px;
-	padding: 0 10px;
-	background-color: rgba(0, 0, 0, 0.5);
-	overflow: auto;
-	color: #fff;
-	border-radius: 10px;
-	line-height: 5px;
-	text-align: center;
-}
-#mnd-home-banner-content h1{
-	text-transform: uppercase;
-	font-size: 25px;
-	margin: 8px 0;
-}
-#mnd-home-banner-content h4{
-	font-size: 15px;
-	margin-top: 0px;
-}
-
-#mnd-home-banner-arrow {
-	position: relative;
-	left: 50%;
-	margin-left: -20px;
-	width: 40px;
-	height: 0px;
-	border-top: solid 18px #000;
-	border-bottom: 0px;
-	border-left: solid 20px transparent;
-	border-right: solid 20px transparent;
-	opacity: 0.5;
-}
-
-.guest-notify {
-	text-align: center;
-	font-size: 12px;
-}
-
-.guest-notify-icon{
-	position: relative;
-	display: inline-block;
-	width: 80px;
-	height: 40px;
-}
-
-.guest-notify-icon i {
-	font-size: 30px;
-	padding-bottom: 3px;
-}
-
-.guest-notification {
-	position: absolute;
-	top: 0px;
-	right: 10px;
-	width: 23px;
-	height: 23px;
-	padding-top: 7px;
-	background: #fc8600; /* Old browsers */
-	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmM4NjAwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNDglIiBzdG9wLWNvbG9yPSIjZjI2NDAwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2FmMzcwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-	background: -ms-linear-gradient(-45deg,  #fc8600 0%,#f26400 48%,#af3700 100%); /* IE10+ */
-	background: linear-gradient(135deg,  #fc8600 0%,#f26400 48%,#af3700 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8600', endColorstr='#af3700',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
-	border-radius: 50%;
-	border: 2px solid #fff;
-	box-shadow:2px 2px 4px #414141;
-	font-size: 17px;
-	color: #fff;
-	text-align: center;
-}
-
-@media (max-width: 767px) {
-  #mnd-home-banner {
-    width: 100%;
-    height: 150px;
-    margin-right: 0px;
-  }
-  #mnd-home-banner-content {
-    height: 150px;
-    width: 100%;
-    border-radius: 0px;
-  }
-  #mnd-home-banner-content h1{
-    text-transform: uppercase;
-    font-size: 25px;
-  }
-  #mnd-home-banner-arrow {
-    display: none;
-  }
+	height: 20%;
+	color: $mnd-white;
 }

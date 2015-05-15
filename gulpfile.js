@@ -10,13 +10,19 @@ var gp          = require("gulp-load-plugins")();
 var mkdirp      = require("mkdirp");
 var devip       = require("dev-ip");
 
+var getIp = function () {
+    var ips = devip().filter(function (ip) {
+        return ip.slice(0, 3) === "192";
+    });
+    return ips[0];
+};
 
 
 ///////////////
 // Constants //
 ///////////////
 
-var BACKEND_HOST    = process.env.BACKEND_HOST    || devip()[0] + ":3000";
+var BACKEND_HOST    = process.env.BACKEND_HOST    || getIp() + ":3000";
 var BACKEND_USE_SSL = process.env.BACKEND_USE_SSL || false;
 var MINIFY_FILES    = process.env.MINIFY_FILES    || false;
 
@@ -160,6 +166,7 @@ gulp.task("dev", ["watch", "build"], function() {
             }
         },
         port: 8080,
+        host: getIp(),
         ghostMode: false,
         injectChanges: false,
         notify: false
