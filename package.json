@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Mondora website frontend",
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install --allow-root",
+    "postinstall": "node_modules/.bin/bower install --allow-root --config.interactive=false",
     "dev": "node_modules/.bin/gulp dev",
     "build": "node_modules/.bin/gulp build",
     "start": "node server.js"
