@@ -5,4 +5,4 @@ ADD ./ /mondora-website-front/
 WORKDIR /mondora-website-front
 RUN npm install
 EXPOSE 8080
-ENTRYPOINT ["start.sh"]
+ENTRYPOINT ["./start.sh"]
