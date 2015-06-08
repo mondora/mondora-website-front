@@ -78,6 +78,12 @@ gulp.task("buildAppImages", function () {
         .pipe(browserSync.reload({stream: true}));
 });
 
+gulp.task("buildAppStaticPages", function () {
+    return gulp.src("app/assets/static/*")
+        .pipe(gulp.dest("builds/" + BACKEND_HOST + "/assets/static/"))
+        .pipe(browserSync.reload({stream: true}));
+});
+
 gulp.task("buildAppVersion", function () {
     mkdirp.sync("builds/" + BACKEND_HOST);
     var ret = spawnSync("git", ["rev-parse", "HEAD"]);
@@ -128,6 +134,7 @@ gulp.task("build", [
     "buildAppTemplates",
     "buildAppStyles",
     "buildAppImages",
+    "buildAppStaticPages",
     "buildAppVersion",
     "buildVendorScripts",
     "buildVendorStyles",
@@ -146,6 +153,7 @@ gulp.task("watch", function () {
     gulp.watch("app/**/*.scss",  ["buildAppStyles"]);
     gulp.watch("app/**/*.html", ["buildAppTemplates"]);
     gulp.watch("app/assets/images/*", ["buildAppImages"]);
+    gulp.watch("app/assets/static/*", ["buildAppStaticPages"]);
     gulp.watch("deps.json", [
         "buildVendorScripts",
         "buildVendorStyles",
