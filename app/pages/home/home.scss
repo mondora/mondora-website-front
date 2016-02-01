@@ -3,39 +3,25 @@ $mnd-black: #000000;
 
 // Video
 #mnd-video-background {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-	padding: 0px;
-	margin: 0px;
-	overflow: hidden;
-	z-index: -1;
-	background-image: url('')
+    width: 100%;
+    height: 80%;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
 }
 .mnd-video-overlay{
-	background-color: $mnd-black;
-	opacity: 0.2;
+	background-color: rgba(0, 0, 0, 0.6);
 	min-width: 100%;
 	min-height: 100%;
+    position: absolute;
 }
 #mnd-video-background video {
-	background-color: transparent;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	min-width: 100%;
-	min-height: 100%;
 	z-index: -10;
-}
-#mnd-video-background img {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: -20;
+    min-height: 100%;
+    min-width: 100%;
 }
 @media (max-width: 767px) {
   #mnd-video-background video {
@@ -51,9 +37,36 @@ $mnd-black: #000000;
 	height: 100%;
 	width: 100%;
 	z-index: 1;
-	background-color: rgba(0,0,0,0.7);
+	background-color: #f2f2f2;
+    overflow: scroll;
 }
-
+.bcorp-logo {
+    text-align: center;
+}
+#bcorp-image {
+  width: 165px;
+  height: 250px;
+}
+#bcorp-text {
+  margin-top: 5px;
+  font-size: 35px;
+  font-weight: 200;
+}
+#header-double-points {
+  display: inline-block;
+  font-size: 50px;
+  font-weight: bold;
+  color: #ffd600;
+}
+#header-text {
+  display: inline-block;
+  font-weight: 400;
+}
+#header-subtitle {
+  font-size: 25px;
+  font-weight: 100;
+  width: 50%;
+}
 // Sign in
 #mnd-sign-in {
 	position: fixed;
@@ -72,8 +85,10 @@ $mnd-black: #000000;
 
 #mnd-home-top {
 	width: 100%;
-	height: 20%;
 	color: $mnd-white;
+	text-align: -webkit-center;
+    position: absolute;
+    z-index: 1;
 }
 
 #mnd-home-center {
@@ -86,4 +101,89 @@ $mnd-black: #000000;
 	width: 100%;
 	height: 20%;
 	color: $mnd-white;
+}
+.numbers-container {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.business-numbers {
+    width: 115px;
+    display: inline-block;
+}
+.m-numbers {
+    color: #ffd600;
+    font-size: 30px;
+}
+.introduction-container {
+    background-color: #ffffff;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 25px;
+}
+.introduction-image {
+    width: 80px;
+    height: 65px;
+}
+.introduction-text {
+    font-weight: 200;
+}
+.introduction-title {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+.introduction-sets {
+    width: 25%;
+    margin-top: 10px;
+    padding-right: 35px;
+    padding-left: 35px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+.news-container {
+    padding-left: 15%;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+.news-card {
+    display: inline-block;
+    margin-right: 20px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    width: 300px;
+    height: 520px;
+}
+.double-points {
+    display: inline-block;
+    font-size: 27px;
+    font-weight: bold;
+    color: #ffd600;
+}
+.sections-titles {
+    font-size: 23px;
+}
+.post-image {
+    width: 300px;
+    height: 350px;
+}
+.post-content {
+    display: table;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 15px;
+}
+.posts-title {
+    font-size: 16px;
+}
+.post-text {
+    font-size: 13px;
+    font-weight: 200;
+}
+.post-author {
+    font-size: 9px;
+    color: #BBB;
+    font-weight: 200;
+    margin-bottom: 10px;
 }

@@ -22,7 +22,8 @@ var getIp = function () {
 // Constants //
 ///////////////
 
-var BACKEND_HOST    = process.env.BACKEND_HOST            || getIp() + ":3000";
+// var BACKEND_HOST    = process.env.BACKEND_HOST            || getIp() + ":3000";
+var BACKEND_HOST    = process.env.BACKEND_HOST            || "localhost:3000";
 var BACKEND_USE_SSL = process.env.BACKEND_USE_SSL         || false;
 var MINIFY_FILES    = process.env.MINIFY_FILES === "true" || false;
 
