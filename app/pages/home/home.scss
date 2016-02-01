@@ -120,6 +120,7 @@ $mnd-black: #000000;
     text-align: center;
     padding-top: 20px;
     padding-bottom: 25px;
+    padding-left: 15%;
 }
 .introduction-image {
     width: 80px;
@@ -134,10 +135,10 @@ $mnd-black: #000000;
     font-size: 18px;
 }
 .introduction-sets {
-    width: 25%;
+    width: 320px;
     margin-top: 10px;
     padding-right: 35px;
-    padding-left: 35px;
+    padding-left: 0px;
     text-align: center;
     display: inline-block;
     vertical-align: middle;
@@ -146,6 +147,7 @@ $mnd-black: #000000;
     padding-left: 15%;
     padding-top: 20px;
     padding-bottom: 40px;
+    background-color: #EEEEEE;
 }
 .news-card {
     display: inline-block;
@@ -154,6 +156,7 @@ $mnd-black: #000000;
     background-color: #ffffff;
     width: 300px;
     height: 520px;
+    padding: 0px;
 }
 .double-points {
     display: inline-block;
@@ -187,6 +190,9 @@ $mnd-black: #000000;
     font-weight: 200;
     margin-bottom: 10px;
 }
+.footer {
+    padding: 0px;
+}
 .twitter-footer {
     background-color: #FFF;
     padding-left: 15%;
@@ -208,6 +214,9 @@ $mnd-black: #000000;
     font-size: 20px;
     line-height: 0px;
     color: #ffd600;
+    @media (max-width: 1050px) {
+        display: none;
+    }
 }
 .twitter-infos {
     display: inline-block;
