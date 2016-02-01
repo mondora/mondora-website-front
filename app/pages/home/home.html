@@ -1,31 +1,31 @@
 <canvas id="canvas"></canvas>
 <div id="mnd-home-container">
-	<div id="mnd-sign-in">
-		<span ng-if="!user" class="dropdown" on-toggle="toggled(open)">
-			<a href class="dropdown-toggle">
-				Sign in
-			</a>
-			<ul class="dropdown-menu dropdown-menu-right">
-				<li>
-					<a href ng-click="loginWithTwitter()">
-						<i class="fa fa-twitter"></i>
-						&nbsp;
-						&nbsp;
-						with Twitter
-					</a>
-				</li>
-				<li>
-					<a href ng-click="loginWithGoogle()">
-						<i class="fa fa-google-plus"></i>
-						&nbsp;
-						&nbsp;
-						with Google Plus
-					</a>
-				</li>
-			</ul>
-		</span>
-		<span ng-if="user" ng-click="logout()">Sign Out</span>
-	</div>
+	<!--<div id="mnd-sign-in">-->
+		<!--<span ng-if="!user" class="dropdown" on-toggle="toggled(open)">-->
+			<!--<a href class="dropdown-toggle">-->
+				<!--Sign in-->
+			<!--</a>-->
+			<!--<ul class="dropdown-menu dropdown-menu-right">-->
+				<!--<li>-->
+					<!--<a href ng-click="loginWithTwitter()">-->
+						<!--<i class="fa fa-twitter"></i>-->
+						<!--&nbsp;-->
+						<!--&nbsp;-->
+						<!--with Twitter-->
+					<!--</a>-->
+				<!--</li>-->
+				<!--<li>-->
+					<!--<a href ng-click="loginWithGoogle()">-->
+						<!--<i class="fa fa-google-plus"></i>-->
+						<!--&nbsp;-->
+						<!--&nbsp;-->
+						<!--with Google Plus-->
+					<!--</a>-->
+				<!--</li>-->
+			<!--</ul>-->
+		<!--</span>-->
+		<!--<span ng-if="user" ng-click="logout()">Sign Out</span>-->
+	<!--</div>-->
 
     <div id="mnd-home-top">
         <div class="hidden-xs mnd-vsp-32"></div>
@@ -162,106 +162,65 @@
             </div>
         </div>
     </div>
+    <div class="footer">
+        <div class="twitter-footer">
+            <img src="/assets/images/twitter.png" class="twitter-logo">
+            <div class="twitter-infos">
+                <div id="twitter-date">
+                    @mondora 25 ago
+                </div>
+                <br>
+                <div id="twitter-post-name">
+                    Some news from other B Corps: 4 Benefits That 4 B Corps Didn't See Coming
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 info-footer">
+            <div class="col-sm-4 col-xs-4 info-container">
+                <div>
+                   CONTACT
+                </div>
+                <div class="info-content">
+                    mondora srl about us
+                    <br>
+                    via cornalia 7, 20124, milano
+                    <br>
+                    email info@mondora.com
+                    <br>
+                    tel +39 0342 1856 264
+                    <br>
+                    piva 03680680968
+                </div>
+                <div id="site-version">
+                    version 03ba16 | visit the old website
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <div>
+                    INFO
+                </div>
+                <div class="info-content">
+                    about us
+                    <br>
+                    meet the team
+                    <br>
+                    work with mondora
+                    <br>
+                    Privacy
+                </div>
+                <div id="bcorp-certification">
+                    Bcorp certification
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <div>
+                    FOLLOW US
+                </div>
+                <div>
+                    <img src="/assets/images/facebooklogo.png" class="twitter-logo">
+                    <img src="/assets/images/twitter.png" class="twitter-logo">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-	<!--<div id="mnd-home-top">-->
-		<!--<div class="hidden-xs mnd-vsp-32"></div>-->
-		<!--<h1 class="text-center">-->
-			<!--{{homeConfig.header}}-->
-		<!--</h1>-->
-	<!--</div>-->
-	<!--<div id="mnd-home-center">-->
-		<!--<div class="container-fluid">-->
-			<!--<br />-->
-			<!--<br />-->
-			<!--<div class="row">-->
-				<!--<div class="col-xs-4 col-sm-2 text-center">-->
-					<!--<img class="mnd-width-60" src="/assets/images/clients-logo.png" />-->
-					<!--<div class="mnd-vsp-6"></div>-->
-					<!--<p>-->
-						<!--<span class="h1">-->
-							<!--{{homeConfig.activeClients}}-->
-						<!--</span>-->
-						<!--<br />-->
-						<!--active clients-->
-					<!--</p>-->
-				<!--</div>-->
-				<!--<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">-->
-					<!--<img class="mnd-width-60" src="/assets/images/git-logo.png" />-->
-					<!--<div class="mnd-vsp-6"></div>-->
-					<!--<p>-->
-						<!--<span class="h1">-->
-							<!--{{homeConfig.weeksCommits}}-->
-						<!--</span>-->
-						<!--<br />-->
-						<!--commits this week-->
-					<!--</p>-->
-				<!--</div>-->
-				<!--<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">-->
-					<!--<img class="mnd-width-60" src="/assets/images/jenkins-logo.png" />-->
-					<!--<div class="mnd-vsp-6"></div>-->
-					<!--<p>-->
-						<!--<span class="h1">-->
-							<!--{{homeConfig.todaysDeploys}}-->
-						<!--</span>-->
-						<!--<br />-->
-						<!--deploys today-->
-					<!--</p>-->
-				<!--</div>-->
-			<!--</div>-->
-			<!--<br />-->
-			<!--<br />-->
-			<!--<div class="row">-->
-				<!--<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">-->
-					<!--<img class="mnd-width-60" src="/assets/images/github-logo.png" />-->
-					<!--<div class="mnd-vsp-6"></div>-->
-					<!--<p>-->
-						<!--<span class="h1">-->
-							<!--{{homeConfig.openSourceProjects}}-->
-						<!--</span>-->
-						<!--<br />-->
-						<!--open source projects-->
-					<!--</p>-->
-				<!--</div>-->
-				<!--<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">-->
-					<!--<img class="mnd-width-60" src="/assets/images/carbon-footprint-logo.png" />-->
-					<!--<div class="mnd-vsp-6"></div>-->
-					<!--<p>-->
-						<!--<span class="h1">-->
-							<!--{{homeConfig.co2Reduction}}-->
-						<!--</span>-->
-						<!--<br />-->
-						<!--% of CO2 reduction-->
-					<!--</p>-->
-				<!--</div>-->
-				<!--<div class="col-xs-4 col-sm-2 col-sm-offset-2 text-center">-->
-					<!--<img class="mnd-width-60" src="/assets/images/volunteer-logo.png" />-->
-					<!--<div class="mnd-vsp-6"></div>-->
-					<!--<p>-->
-						<!--<span class="h1">-->
-							<!--{{homeConfig.volunteeringWorkDays}}-->
-						<!--</span>-->
-						<!--<br />-->
-						<!--volunteering work days-->
-					<!--</p>-->
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
-	<!--<div id="mnd-home-bottom">-->
-		<!--<div class="col-sm-8 col-sm-offset-2 hidden-xs">-->
-			<!--<h3 class="text-center">-->
-				<!--{{homeConfig.footer}}-->
-			<!--</h3>-->
-		<!--</div>-->
-	<!--</div>-->
-
-<!--</div>-->
-
-<!--<div id="mnd-video-background">-->
-	<!--<div class="mnd-video-overlay"></div>-->
-	<!--<video muted autoplay="1" loop="1" ng-attr-poster="{{videoUrls.poster}}">-->
-		<!--<source ng-src="{{videoUrls.mp4}}" type="video/mp4" />-->
-		<!--<source ng-src="{{videoUrls.webm}}" type="video/webm" />-->
-	<!--</video>-->
-	<!--<img ng-src="{{videoUrls.poster}}" />-->
-<!--</div>-->

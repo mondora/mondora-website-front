@@ -187,3 +187,55 @@ $mnd-black: #000000;
     font-weight: 200;
     margin-bottom: 10px;
 }
+.twitter-footer {
+    background-color: #FFF;
+    padding-left: 15%;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+.twitter-logo {
+    width: 45px;
+    display: inline-block;
+}
+#twitter-date {
+    display: inline-block;
+    color: #BBB;
+    font-size: 10px;
+    font-weight: 200;
+}
+#twitter-post-name {
+    display: inline-block;
+    font-size: 20px;
+    line-height: 0px;
+    color: #ffd600;
+}
+.twitter-infos {
+    display: inline-block;
+    position: absolute;
+    padding-left: 15px;
+}
+.info-footer {
+    background-color: #000000;
+    color: #ffffff;
+    padding-left: 15%;
+    padding-top: 20px;
+    padding-bottom: 25px;
+}
+.info-container {
+    padding: 0px;
+}
+.info-content {
+    font-size: 12px;
+    font-weight: 200;
+    padding-top: 10px;
+}
+#site-version {
+    font-size: 12px;
+    font-weight: 200;
+    color: #BBB;
+}
+#bcorp-certification {
+    font-size: 12px;
+    font-weight: 200;
+    color: #ffd600;
+}
