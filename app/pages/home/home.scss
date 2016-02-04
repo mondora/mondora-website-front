@@ -11,25 +11,32 @@ $mnd-black: #000000;
     justify-content: center;
     overflow: hidden;
     position: relative;
+    background-color: #000000;
+    @media (max-width: 767px) {
+        height: 100%;
+        background-image: url("https://s3.amazonaws.com/mnd-website/videos/mnd-11-poster.jpg");
+    }
 }
 .mnd-video-overlay{
 	background-color: rgba(0, 0, 0, 0.6);
 	min-width: 100%;
 	min-height: 100%;
     position: absolute;
+    @media (max-width: 767px) {
+        position: relative;
+    }
 }
 #mnd-video-background video {
 	z-index: -10;
     min-height: 100%;
     min-width: 100%;
-}
-@media (max-width: 767px) {
-  #mnd-video-background video {
-    display: none;
-  }
+    @media (max-width: 767px) {
+        display: none;
+    }
 }
 
 // Home contents
+
 #mnd-home-container {
 	position: absolute;
 	top: 0px;
@@ -65,7 +72,7 @@ $mnd-black: #000000;
 #header-subtitle {
   font-size: 25px;
   font-weight: 100;
-  width: 50%;
+  width: 100%;
 }
 // Sign in
 #mnd-sign-in {
@@ -83,12 +90,13 @@ $mnd-black: #000000;
 	}
 }
 
-#mnd-home-top {
+.mnd-home-top {
 	width: 100%;
 	color: $mnd-white;
 	text-align: -webkit-center;
     position: absolute;
     z-index: 1;
+    padding-top: 50px;
 }
 
 #mnd-home-center {
@@ -120,7 +128,8 @@ $mnd-black: #000000;
     text-align: center;
     padding-top: 20px;
     padding-bottom: 25px;
-    padding-left: 15%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 .introduction-image {
     width: 80px;
@@ -135,7 +144,6 @@ $mnd-black: #000000;
     font-size: 18px;
 }
 .introduction-sets {
-    width: 320px;
     margin-top: 10px;
     padding-right: 35px;
     padding-left: 0px;
@@ -144,32 +152,30 @@ $mnd-black: #000000;
     vertical-align: middle;
 }
 .news-container {
-    padding-left: 15%;
     padding-top: 20px;
     padding-bottom: 40px;
     background-color: #EEEEEE;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 .news-card {
-    display: inline-block;
-    margin-right: 20px;
-    margin-top: 20px;
-    background-color: #ffffff;
-    width: 300px;
-    height: 520px;
-    padding: 0px;
+    background-color: #FFFFFF;
+    height: 515px;
 }
 .double-points {
     display: inline-block;
     font-size: 27px;
     font-weight: bold;
     color: #ffd600;
+    margin-bottom: 20px;
 }
 .sections-titles {
     font-size: 23px;
+    margin-bottom: 20px;
 }
 .post-image {
-    width: 300px;
-    height: 350px;
+    width: 100%;
+    height: 325px;
 }
 .post-content {
     display: table;
@@ -178,11 +184,14 @@ $mnd-black: #000000;
     padding-bottom: 15px;
 }
 .posts-title {
+    margin-top: 20px;
     font-size: 16px;
 }
 .post-text {
     font-size: 13px;
     font-weight: 200;
+    height: 110px;
+    overflow: hidden;
 }
 .post-author {
     font-size: 9px;
@@ -195,7 +204,7 @@ $mnd-black: #000000;
 }
 .twitter-footer {
     background-color: #FFF;
-    padding-left: 15%;
+    padding-left: 5%;
     padding-top: 5px;
     padding-bottom: 10px;
 }
@@ -226,7 +235,7 @@ $mnd-black: #000000;
 .info-footer {
     background-color: #000000;
     color: #ffffff;
-    padding-left: 15%;
+    padding-left: 5%;
     padding-top: 20px;
     padding-bottom: 25px;
 }

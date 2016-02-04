@@ -27,8 +27,7 @@
 		<!--<span ng-if="user" ng-click="logout()">Sign Out</span>-->
 	<!--</div>-->
 
-    <div id="mnd-home-top">
-        <div class="hidden-xs mnd-vsp-32"></div>
+    <div class="col-sm-12 col-xs-12 mnd-home-top">
         <div class="bcorp-logo">
             <img id="bcorp-image" src="/assets/images/mondorabcorp.png">
             <div id="bcorp-text">
@@ -81,8 +80,8 @@
                 DEPLOYS TODAY
         </div>
     </div>
-    <div class="col-sm-12 col-xs-12 introduction-container">
-        <div class="col-sm-4 col-xs-4 introduction-sets">
+    <div class="row row-centered introduction-container">
+        <div class="col-sm-4 introduction-sets">
             <img class="introduction-image" src="/assets/images/cloudgovernance.png"/>
             <div class="introduction-title">
                 CLOUD GOVERNANCE
@@ -91,7 +90,7 @@
                 Reduce your costs while increasing the reliability and quality of your cloud computing experience
             </div>
         </div>
-        <div class="col-sm-4 col-xs-4 introduction-sets">
+        <div class="col-sm-4 introduction-sets">
             <img class="introduction-image" src="/assets/images/services.png"/>
             <div class="introduction-title">
                 SERVICES
@@ -100,7 +99,7 @@
                 Shaping new ideas, using open tecnologies, and contributing opensource in our spare time
             </div>
         </div>
-        <div class="col-sm-4 col-xs-4 introduction-sets">
+        <div class="col-sm-4 introduction-sets">
             <img class="introduction-image" src="/assets/images/training.png"/>
             <div class="introduction-title">
                 TRAINING
@@ -110,7 +109,7 @@
             </div>
         </div>
     </div>
-	<div class="col-sm-12 col-xs-12 news-container">
+	<div class="col-sm-12 news-container">
         <div>
             <span class="double-points">
                 :
@@ -119,48 +118,36 @@
                 LATEST NEWS
             </span>
         </div>
-        <div class="col-sm-4 col-xs-4 news-card">
-            <img src="/assets/images/posts-image.png" class="post-image">
-            <div class="post-content">
-                <div class="posts-title">
-                    4 Ways To Make Your Brain Work Better
-                </div>
-                <div class="post-author">
-                    By Dustin Moskovitz, reposted by Michele Mondora 15.08.15
-                </div>
-                <div class="post-text">
-                    The New Yorker’s Maria Konnikova explains the science behind why we need to sleep more, waste less time on the in- ternet, and stop multitasking.
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-xs-4 news-card">
-            <img src="/assets/images/posts-image.png" class="post-image">
-            <div class="post-content">
-                <div class="posts-title">
-                    4 Ways To Make Your Brain Work Better
-                </div>
-                <div class="post-author">
-                    By Dustin Moskovitz, reposted by Michele Mondora 15.08.15
-                </div>
-                <div class="post-text">
-                    The New Yorker’s Maria Konnikova explains the science behind why we need to sleep more, waste less time on the in- ternet, and stop multitasking.
+        <div ng-repeat="post in posts | orderBy:'-publishedOn' | limitTo: 3" class="col-sm-4">
+            <div class="news-card">
+                <img src="{{post.titleImageUrl}}" class="post-image">
+                <div class="post-content">
+                    <div class="posts-title">
+                        {{post.title}}
+                    </div>
+                    <div class="post-author">
+                        By {{post.authors.0.name || post.author.0.screenName}}
+                    </div>
+                    <div ng-bind-html="post.body" class="post-text">
+                         ...<!--{{post.body}}-->
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-xs-4 news-card">
-            <img src="/assets/images/posts-image.png" class="post-image">
-            <div class="post-content">
-                <div class="posts-title">
-                    4 Ways To Make Your Brain Work Better
-                </div>
-                <div class="post-author">
-                    By Dustin Moskovitz, reposted by Michele Mondora 15.08.15
-                </div>
-                <div class="post-text">
-                    The New Yorker’s Maria Konnikova explains the science behind why we need to sleep more, waste less time on the in- ternet, and stop multitasking.
-                </div>
-            </div>
-        </div>
+        <!--<div class="col-sm-4 col-xs-4 news-card">-->
+            <!--<img src="/assets/images/posts-image.png" class="post-image">-->
+            <!--<div class="post-content">-->
+                <!--<div class="posts-title">-->
+                    <!--4 Ways To Make Your Brain Work Better-->
+                <!--</div>-->
+                <!--<div class="post-author">-->
+                    <!--By Dustin Moskovitz, reposted by Michele Mondora 15.08.15-->
+                <!--</div>-->
+                <!--<div class="post-text">-->
+                    <!--The New Yorker’s Maria Konnikova explains the science behind why we need to sleep more, waste less time on the in- ternet, and stop multitasking.-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <div class="col-sm-12 col-xs-12 footer">
         <div class="twitter-footer">
@@ -242,8 +229,12 @@
                     FOLLOW US
                 </div>
                 <div>
-                    <img src="/assets/images/facebooklogo.png" class="twitter-logo">
-                    <img src="/assets/images/twitter.png" class="twitter-logo">
+                    <a class="mnd-undecorated-a" href="https://www.facebook.com/mondoracom" target="_blank">
+                        <img src="/assets/images/facebooklogo.png" class="twitter-logo">
+                    </a>
+                    <a class="mnd-undecorated-a" href="https://twitter.com/mondora" target="_blank">
+                        <img src="/assets/images/twitter.png" class="twitter-logo">
+                    </a>
                 </div>
             </div>
         </div>

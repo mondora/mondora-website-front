@@ -172,6 +172,12 @@ angular.module("mnd-web")
 				$state.go("personalHome");
 			}
 		}],
+        resolve: {
+            homepagePostsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+                var sub = Ceres.subscribe("latestPosts", 3, true);
+                return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+            }]
+        },
 		public: true
 	});
 

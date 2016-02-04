@@ -14,5 +14,12 @@ angular.module("mnd-web.pages")
 			$state.go("personalHome");
 		});
 	};
+    var postsRQ = $scope.Posts.reactiveQuery({published: true});
+    postsRQ.on("change", function () {
+        $scope.safeApply(function () {
+            $scope.posts = postsRQ.result;
+        });
+    });
+    $scope.posts = postsRQ.result;
 
 }]);
