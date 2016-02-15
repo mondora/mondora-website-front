@@ -6,7 +6,7 @@
 	position: absolute;
 	width: 620px;
 	left: 50%;
-	top: 40%;
+	top: 15%;
 	margin-left: -260px;
 	z-index: 1;
 	@media (max-width: 767px) {
@@ -109,4 +109,7 @@
 
 .comment-text {
 	word-wrap: break-word;
+}
+.post-padding-bottom {
+	padding-bottom: 5px;
 }

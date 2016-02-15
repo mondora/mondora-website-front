@@ -1,34 +1,34 @@
 <!-- Post recommend modal -->
-<div mnd-modal header="Recommend this post" open="modalStatus.recommend">
-	<div ng-controller="PostRecommendModalController">
-		<input type="text" class="form-control" placeholder="Recommend to" mnd-user-input user-model="to.user" />
-		<br />
-		<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
-		<br />
-		<button type="button" class="btn btn-default" ng-click="recommend()">
-			Recommend
-		</button>
-		<button type="button" class="btn btn-default" ng-click="modalStatus.recommend = false">
-			Close
-		</button>
-	</div>
-</div>
+<!--<div mnd-modal header="Recommend this post" open="modalStatus.recommend">-->
+	<!--<div ng-controller="PostRecommendModalController">-->
+		<!--<input type="text" class="form-control" placeholder="Recommend to" mnd-user-input user-model="to.user" />-->
+		<!--<br />-->
+		<!--<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>-->
+		<!--<br />-->
+		<!--<button type="button" class="btn btn-default" ng-click="recommend()">-->
+			<!--Recommend-->
+		<!--</button>-->
+		<!--<button type="button" class="btn btn-default" ng-click="modalStatus.recommend = false">-->
+			<!--Close-->
+		<!--</button>-->
+	<!--</div>-->
+<!--</div>-->
 
 <!-- Share to channel modal -->
-<div mnd-modal header="Share this post" open="modalStatus.shareToChannel">
-	<div ng-controller="ShareToChannelModalController">
-		<input type="text" class="form-control" placeholder="Share to" ng-model="channelName" />
-		<br />
-		<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
-		<br />
-		<button type="button" class="btn btn-default" ng-click="shareToChannel()">
-			Share
-		</button>
-		<button type="button" class="btn btn-default" ng-click="modalStatus.shareToChannel = false">
-			Close
-		</button>
-	</div>
-</div>
+<!--<div mnd-modal header="Share this post" open="modalStatus.shareToChannel">-->
+	<!--<div ng-controller="ShareToChannelModalController">-->
+		<!--<input type="text" class="form-control" placeholder="Share to" ng-model="channelName" />-->
+		<!--<br />-->
+		<!--<textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>-->
+		<!--<br />-->
+		<!--<button type="button" class="btn btn-default" ng-click="shareToChannel()">-->
+			<!--Share-->
+		<!--</button>-->
+		<!--<button type="button" class="btn btn-default" ng-click="modalStatus.shareToChannel = false">-->
+			<!--Close-->
+		<!--</button>-->
+	<!--</div>-->
+<!--</div>-->
 
 <div class="page-container">	
 
@@ -42,14 +42,14 @@
 			<a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="mnd-undecorated-a mnd-inline-block">
 				<i class="fa fa-edit"></i>
 			</a>
-			<div class="mnd-inline-block">
+			<div class="post-padding-bottom">
 				<i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-class="{'bookmarked' : userBookmarkedPost()}"></i>
 			</div>
-			<div class="mnd-inline-block" ng-click="likePost()">
+			<div class="post-padding-bottom" ng-click="likePost()">
 				<i class="fa fa-thumbs-up mnd-clickable" ng-class="{'liked': numberOfLikes()}"></i>
 				<div class="post-likes" ng-show="numberOfLikes()"><span>{{post.likedBy.length}}</span></div>
 			</div>
-			<div class="mnd-inline-block">
+			<div class="post-padding-bottom">
 				<i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i> 
 			</div>
 			<div class="open-share-buttons" ng-if="openShareButtons">

@@ -352,6 +352,12 @@ angular.module("mnd-web")
 		public: true
 	});
 
+    $stateProvider.state("aboutUs", {
+       url: "/aboutUs",
+        parent: "root",
+        templateUrl: "pages/aboutUs/aboutUs.html",
+        controller: "AboutUsController"
+    });
 
 
 	//////////

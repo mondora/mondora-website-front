@@ -1,4 +1,4 @@
-$mnd-yellow: #ffd600;
+$mnd-yellow: #ffcc00;
 $mnd-grey: #5e5f5f;
 $mnd-light-grey: #abadad;
 $mnd-white: #ffffff;
@@ -75,6 +75,7 @@ $toggle-sidebar-border-size: 2px;
 	box-sizing: border-box;
 	&.sidebar-open {
 		transform: translateX($sidebar-width);
+		width: calc(100% - #{$toggle-sidebar-size} - #{$sidebar-width});
 	}
 	@media (max-width: 767px) {
 		top: $toggle-sidebar-size;

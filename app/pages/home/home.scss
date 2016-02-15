@@ -4,7 +4,7 @@ $mnd-black: #000000;
 // Video
 #mnd-video-background {
     width: 100%;
-    height: 80%;
+    height: 65%;
     z-index: -1;
     display: flex;
     align-items: center;
@@ -51,8 +51,8 @@ $mnd-black: #000000;
     text-align: center;
 }
 #bcorp-image {
-  width: 165px;
-  height: 250px;
+  width: 240px;
+  height: 240px;
 }
 #bcorp-text {
   margin-top: 5px;
@@ -63,7 +63,7 @@ $mnd-black: #000000;
   display: inline-block;
   font-size: 50px;
   font-weight: bold;
-  color: #ffd600;
+  color: #ffcc00;
 }
 #header-text {
   display: inline-block;
@@ -73,6 +73,9 @@ $mnd-black: #000000;
   font-size: 25px;
   font-weight: 100;
   width: 100%;
+}
+.header-logos {
+    padding-top: 10px;
 }
 // Sign in
 #mnd-sign-in {
@@ -118,9 +121,10 @@ $mnd-black: #000000;
 .business-numbers {
     width: 115px;
     display: inline-block;
+    margin-right: 5px;
 }
 .m-numbers {
-    color: #ffd600;
+    color: #ffcc00;
     font-size: 30px;
 }
 .introduction-container {
@@ -134,6 +138,10 @@ $mnd-black: #000000;
 .introduction-image {
     width: 80px;
     height: 65px;
+}
+.introduction-icon {
+    font-size: 60px;
+    color: #ffcc00;
 }
 .introduction-text {
     font-weight: 200;
@@ -160,13 +168,20 @@ $mnd-black: #000000;
 }
 .news-card {
     background-color: #FFFFFF;
-    height: 515px;
+    height: 545px;
+}
+.read-more-button {
+    margin-top: 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    background-color: #ffcc00;
+    border-color: #ffcc00;
 }
 .double-points {
     display: inline-block;
     font-size: 27px;
     font-weight: bold;
-    color: #ffd600;
+    color: #ffcc00;
     margin-bottom: 20px;
 }
 .sections-titles {
@@ -208,9 +223,11 @@ $mnd-black: #000000;
     padding-top: 5px;
     padding-bottom: 10px;
 }
-.twitter-logo {
-    width: 45px;
+.social-logos {
+    font-size: 30px;
     display: inline-block;
+    color: #ffcc00;
+    margin: 2px;
 }
 #twitter-date {
     display: inline-block;
@@ -222,7 +239,7 @@ $mnd-black: #000000;
     display: inline-block;
     font-size: 20px;
     line-height: 0px;
-    color: #ffd600;
+    color: #ffcc00;
     @media (max-width: 1050px) {
         display: none;
     }
@@ -230,7 +247,7 @@ $mnd-black: #000000;
 .twitter-infos {
     display: inline-block;
     position: absolute;
-    padding-left: 15px;
+    padding-left: 5px;
 }
 .info-footer {
     background-color: #000000;
@@ -255,5 +272,5 @@ $mnd-black: #000000;
 #bcorp-certification {
     font-size: 12px;
     font-weight: 200;
-    color: #ffd600;
+    color: #ffcc00;
 }
