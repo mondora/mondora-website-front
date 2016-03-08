@@ -1,197 +1,175 @@
-<!-- Post recommend modal -->
-<div mnd-modal header="Recommend this post" open="modalStatus.recommend">
-    <div ng-controller="PostRecommendModalController">
-        <input type="text" class="form-control" placeholder="Recommend to" mnd-user-input user-model="to.user" />
-        <br />
-        <textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
-        <br />
-        <button type="button" class="btn btn-default" ng-click="recommend()">
-            Recommend
-        </button>
-        <button type="button" class="btn btn-default" ng-click="modalStatus.recommend = false">
-            Close
-        </button>
-    </div>
-</div>
-
-<!-- Share to channel modal -->
-<div mnd-modal header="Share this post" open="modalStatus.shareToChannel">
-    <div ng-controller="ShareToChannelModalController">
-        <input type="text" class="form-control" placeholder="Share to" ng-model="channelName" />
-        <br />
-        <textarea class="form-control" rows="5" placeholder="Message" ng-model="message"></textarea>
-        <br />
-        <button type="button" class="btn btn-default" ng-click="shareToChannel()">
-            Share
-        </button>
-        <button type="button" class="btn btn-default" ng-click="modalStatus.shareToChannel = false">
-            Close
-        </button>
-    </div>
-</div>
-
 <div class="page-container">
 
     <div class="post-top">
         <div class="mnd-full-image">
-            <img ng-src="{{post.titleImageUrl}}" ng-if="titleImageIsDisplayed()" alt="Immagine principale" />
-            <div class="mnd-image-overlay" ng-if="titleImageIsDisplayed()"></div>
-        </div>
-
-        <div class="post-top-buttons">
-            <a ng-if="isAuthor()" ui-sref="postEdit({postId: post._id})" class="mnd-undecorated-a mnd-inline-block">
-                <i class="fa fa-edit"></i>
-            </a>
-            <div class="post-padding-bottom">
-                <i class="fa fa-bookmark mnd-clickable" ng-click="bookmark()" ng-class="{'bookmarked' : userBookmarkedPost()}"></i>
-            </div>
-            <div class="post-padding-bottom" ng-click="likePost()">
-                <i class="fa fa-thumbs-up mnd-clickable" ng-class="{'liked': numberOfLikes()}"></i>
-                <div class="post-likes" ng-show="numberOfLikes()"><span>{{post.likedBy.length}}</span></div>
-            </div>
-            <div class="post-padding-bottom">
-                <i class="fa fa-share-alt mnd-clickable" ng-click="openShareButtons = !openShareButtons"></i>
-            </div>
-            <div class="open-share-buttons" ng-if="openShareButtons">
-                <i class="fa fa-facebook mnd-clickable" ng-click="shareOnFacebook()"></i>
-                <i class="fa fa-twitter mnd-clickable" ng-click="shareOnTwitter()"></i>
-                <i class="fa fa-users mnd-clickable" ng-click="recommend()"></i>
-                <i class="fa fa-slack mnd-clickable" ng-click="shareToChannel()"></i>
-            </div>
-        </div>
-
-        <div id="mnd-post-sprinkle-container">
-            <div mnd-sprinkle html="{{post.body}}" time="estimateReadingTime"></div>
-            <div class="pull-right read-time">Reading time {{estimateReadingTime}} min</div>
-        </div>
-
-        <div class="wrap-mindmap">
-            <div class="mnd-mind-container">
-                <div mnd-mind-map map="post.map" mnd-center></div>
-            </div>
+            <img src="../../assets/images/about-us.jpg" alt="Immagine principale" />
+            <div class="mnd-image-overlay" ></div>
         </div>
 
         <div class="post-header">
             <div class="col-sm-8 col-sm-offset-2">
-                <h1 ng-bind-html="post.title" class="post-title" ng-class="{'fg-white': titleImageIsDisplayed()}"></h1>
-                <h2 ng-bind-html="post.subtitle" class="post-subtitle" ng-class="{'fg-white': titleImageIsDisplayed()}"></h2>
-                <a class="post-author" ng-if="!post.repost" ng-repeat="author in post.authors" ui-sref="user({userId: author.userId})">
-                    <div mnd-cig-image source="author.pictureUrl" size="40" class="mnd-inline-block mnd-valign-middle"></div>
-                    &nbsp;&nbsp;Author {{author.name || author.screenName}}
-                    <br />
-                    <div class="mnd-vsp-4"></div>
-                </a>
-                <a class="post-author" ng-if="post.repost" href="{{post.original.url}}">
-                    By {{post.original.author}}, reposted by {{post.authors.0.name || post.author.0.screenName}}
-                </a>
+                <h1 class="post-title fg-white"> About us</h1>
+                <h2 class="post-subtitle fg-white">About mondora.com</h2>
             </div>
         </div>
-
-        <div class="post-scroll-to-content"><i class="fa fa-chevron-down"></i></div>
     </div>
 
     <div class="post-body">
-        <div class="first-level-html-container" ng-repeat="child in bodyChildren() track by $index">
-            <div class="col-sm-6 col-xs-11" ng-class="{'col-sm-offset-2': !commentBarIsOpen, 'col-sm-offset-1': commentBarIsOpen}">
-                <div class="simplebox" post-view-readonly-editor mnd-form-injector="post.formSchema"></div>
-            </div>
-            <div class="col-sm-1 col-xs-1">
-                <i class="fa fa-comment comment-bubble" ng-if="!paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index, $event)"></i>
-				<span class="badge comment-badge" ng-if="paragraphHasComments($index)" ng-click="closeCommentBar(); openCommentBarAt($index, $event)">
-					{{paragraphCommentsLength($index)}}
-				</span>
-            </div>
-            <div ng-class="{'hidden': !commentBarIsOpen}" class="col-sm-4 col-xs-12">
-                <div ng-class="{hidden: !commentBarIsOpenAt($index)}" class="side-comment-container">
-
-                    <div class="row">
-                        <div class="col-sm-10 col-xs-12 close-comment-bar">
-                            <i class="fa fa-times-circle" ng-click="closeCommentBar()"></i>
+        <div class="first-level-html-container">
+            <div class="col-sm-6 col-xs-11 col-sm-offset-2">
+                <div class="simplebox">
+                    <div class="article-subtitle">
+                        <span class="double-points">:</span>
+                        <span class="sections-titles">Who is mondora?</span>
+                    </div>
+                    <div class="article-body">
+                        <div class="article-paragraph">
+                            mondora is an Italian software and advisory company which was founded in 2002 by Francesco and Michele Mondora. In 2015, mondora also became a Certified B Corporation.
+                        </div>
+                        <div class="article-paragraph">
+                            The company is growing fast and currently has 35 employees who work from multiple locations. Offices are located in Valtellina and Milano, whilst some people prefer to work remotely from Bergamo, Pavia, Novara, Switzerland and Japan.
                         </div>
                     </div>
-
-                    <div class="row" ng-repeat="comment in post.comments | filterCommentsByParagraph:$index | filterCommentsByUser:user:isAuthor()">
-                        <div class="col-sm-1 col-xs-2">
-                            <div mnd-cig-image source="comment.userPictureUrl" size="36" class="pull-right"></div>
+                </div>
+                <div class="simplebox">
+                    <div class="article-subtitle">
+                        <span class="double-points">:</span>
+                        <span class="sections-titles">Services and Technologies</span>
+                    </div>
+                    <div class="article-body">
+                        <div class="article-paragraph">
+                            mondora specialises in cloud governance and innovative software solutions, as well as providing development, design and technical training. The company works with a large range of businesses across multiple industries, from banking to education to non-profit. The aim is to support customers with the design, implementation, and operation of a variety of IT environments, with associated teams and governance structures. When working, there is a strong focus on the implementation and management of emerging technological paradigms, such as cloud computing, Agile Methodologies, and DevOps.
                         </div>
-                        <div class="col-xs-9 mnd-top-most" ng-mouseenter="setHighlight(comment)" ng-mouseleave="clearHighlight(comment)">
-                            <p class="comment-text">
-                                <b>{{comment.userScreenName}}</b>
-                                <br />
-                                {{comment.text}}
-                                <small class="mnd-block text-right">
-                                    <a class="mnd-clickable" ng-if="ownsComment(comment) && commentIsNotTooOld(comment)" ng-click="deleteComment(comment)">Delete</a>
-                                    <a class="mnd-clickable" ng-if="isAuthor() && !comment.approved" ng-click="publishComment(comment)">Publish</a>
-                                </small>
-                            </p>
-                            <hr />
+                        <div class="article-paragraph">
+                            Over the years mondora has developed significant experience assessing and evolving complex architectures, and driving IT and business alignment. Among other projects, mondora has brought to market the product ControlMyCloud, a platform for managing SLAs on the cloud, that has been the baseline for industry standards and commercial research.
+                        </div>
+                        <div class="article-paragraph">
+                            mondora’s developers are required to have a horizontal knowledge: there are no vertical specializations, everyone must be a full-stack developer. In this way, developers are able to be more flexible and meet customer needs more quickly and effectively.
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div ng-if="user" class="col-sm-1 col-xs-2">
-                            <div mnd-cig-image source="user.profile.pictureUrl" size="36" class="pull-right"></div>
+                </div>
+                <div class="simplebox">
+                    <div class="article-subtitle">
+                        <span class="double-points">:</span>
+                        <span class="sections-titles">How we work</span>
+                    </div>
+                    <div class="article-body">
+                        <div class="article-paragraph">
+                            mondora is a self-organized company with a flat structure. This means that everyone is on the same level, including the CEO. Only the customer is above, as the company has a “customer centered” work approach in which customer happiness is key. Self-organization implies that every employee within the company takes responsibility for his or her own work. There are no managers, only “team players”. Each person, or player, agrees on work with his/her team, makes autonomous decisions and consults colleagues for complex issues.
                         </div>
-                        <div ng-if="user" class="col-xs-9 mnd-top-most">
-                            <p>
-                                <b>{{user.profile.screenName}}</b>
-                            </p>
-							<textarea
-                                    class="form-control"
-                                    placeholder="Leave a comment"
-                                    rows="3"
-                                    ng-model="commentsText[$index]"
-                                    mentio
-                                    mentio-id="'comment-textarea-' + $index">
-							</textarea>
-                            <mentio-menu
-                                    mentio-for="'comment-textarea-' + $index"
-                                    mentio-items="userList"
-                                    mentio-trigger-char="'@'"
-                                    mentio-search="searchUsers(term)"
-                                    mentio-select="getUserLabel(item)"
-                                    mentio-template-url="pages/post/view/users-mentions.html">
-                            </mentio-menu>
-                            <mentio-menu
-                                    mentio-for="'comment-textarea-' + $index"
-                                    mentio-items="channelList"
-                                    mentio-trigger-char="'#'"
-                                    mentio-search="searchChannels(term)"
-                                    mentio-select="getChannelLabel(item)"
-                                    mentio-template-url="pages/post/view/channels-mentions.html">
-                            </mentio-menu>
-                            <p class="text-right">
-                                <small>
-                                    <a class="mnd-clickable" ng-click="saveCommentAt($index)">Comment</a>
-                                </small>
-                            </p>
-                            <hr class="hr-comment"/>
-                            <p class="comment-warning">
-                                <small>
-                                    <i>
-                                        This note is only visible to you and the author,
-                                        unless they choose to make it public.
-                                    </i>
-                                </small>
-                            </p>
+                        <div class="article-paragraph">
+                            Most work within mondora is done in teams. Teams work together to create solutions and solve issues. Within a team, junior members can learn from more senior ones. Often team members work in pairs, either in the office or remotely. This is a great way for people to acquire new skills and see how others work. One important aspect of this organization is that teams are not fixed for the whole duration of a project. Team rotation is encouraged and all players are expected to take part in different projects and learn to use various technologies during their time in mondora.
                         </div>
-                        <div ng-if="!user" class="col-sm-8">
-                            <a class="mnd-undecorated-a mnd-clickable" ng-click="login()">
-                                <i class="fa fa-question-circle fa-32"></i>
-                                <br />
-                                Login to leave a comment
-                            </a>
+                        <div class="article-paragraph">
+                            Everyone in mondora uses Scrum, Kanban, DDD and embraces Agile methodologies. Work is done in sprints of two weeks each, in which something useful is delivered to the customer right from the start, every two weeks. Teams and customers get together for sprint planning/review meetings and Daily Scrum meetings. mondora helps customers identify the issues they need to solve and provides an Empathy Map, Value Proposition Canvas and a Business Model Canvas to them. The aim is to help customers reach understanding of the Minimum Viable Product required, and work towards reaching this goal first.
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-xs-12">
-            <br />
-            <br />
-            <br />
-            <br />
+        <div class="col-sm-12 col-xs-12 footer">
+            <div class="twitter-footer">
+                <i class="fa fa-twitter social-logos"></i>
+                <div class="twitter-infos">
+                    <!--<div id="twitter-date">-->
+                    <!--@mondora 25 ago-->
+                    <!--</div>-->
+                    <!--<br>-->
+                    <!--<div id="twitter-post-name">-->
+                    <!--Some news from other B Corps: 4 Benefits That 4 B Corps Didn't See Coming-->
+                    <!--</div>-->
+                    <div id="twitter_update_list">
+                        <script type="text/javascript" src="http://twitter.com/javascripts/blogger.js">
+                        </script>
+                        <script type="text/javascript" src="https://api.twitter.com/1.1/statuses/user_timeline.json?count=1&screen_name=mondora">
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xs-12 info-footer">
+                <div class="col-sm-4 col-xs-4 info-container">
+                    <div>
+                        CONTACT
+                    </div>
+                    <div class="info-content">
+                        mondora srl
+                        <br>
+                        <a class="mnd-undecorated-a"
+                           href="https://www.google.it/maps/place/Via+Emilio+Cornalia,+7,+20124+Milano/@45.4825205,9.196851,17z"
+                           target="_blank"
+                        >
+                            via cornalia 7, 20124, milano
+                        </a>
+                        <br>
+                        <a class="mnd-undecorated-a"
+                           href="mailto:info@mondora.com"
+                        >
+                            email info@mondora.com
+                        </a>
+                        <br>
+                        <a class="mnd-undecorated-a"
+                           href="tel:+3903421856264"
+                        >
+                            tel +39 0342 1856 264
+                        </a>
+                        <br>
+                        piva 03680680968
+                    </div>
+                    <div id="site-version">
+                        <a class="mnd-undecorated-a"
+                           href="https://github.com/mondora/mondora-website-front/tree/{{APP_VERSION}}"
+                           target="_blank"
+                        >
+                            version {{APP_VERSION}}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-4">
+                    <div>
+                        INFO
+                    </div>
+                    <div class="info-content">
+                        <a class="ng-mnd-undecorated-a" href="/#!/aboutUs">
+                            about us
+                        </a>
+                        <br>
+                        <a class="ng-mnd-undecorated-a" href="/#!/team">
+                            meet the team
+                        </a>
+                        <br>
+                        work with mondora
+                        <br>
+                        Privacy
+                    </div>
+                    <div id="bcorp-certification">
+                        <a class="mnd-undecorated-a" href="https://bcalmbcorp.com/" target="_blank">
+                            B calm b corp
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-4">
+                    <div style="padding-bottom: 10px">
+                        FOLLOW US
+                    </div>
+                    <div>
+                        <a class="mnd-undecorated-a" href="https://twitter.com/mondora" target="_blank">
+                            <i class="fa fa-twitter social-logos"></i>
+                        </a>
+                        <a class="mnd-undecorated-a" href="https://www.facebook.com/mondoracom" target="_blank">
+                            <i class="fa fa-facebook social-logos"></i>
+                        </a>
+                        <a class="mnd-undecorated-a" href="https://www.linkedin.com/company/mondora-s-p-a-" target="_blank">
+                            <i class="fa fa-linkedin-square social-logos"></i>
+                        </a>
+                        <a class="mnd-undecorated-a" href="http://www.pinterest.com/mondoracom/" target="_blank">
+                            <i class="fa fa-pinterest social-logos"></i>
+                        </a>
+                        <a class="mnd-undecorated-a" href="https://instagram.com/mondoracom" target="_blank">
+                            <i class="fa fa-instagram social-logos"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

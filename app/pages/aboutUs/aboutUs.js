@@ -1,3 +1,1 @@
-angular.module("mnd-web.pages")
-
-.controller("AboutUsController");
+angular.module("mnd-web.pages");

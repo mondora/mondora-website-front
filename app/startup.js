@@ -355,8 +355,7 @@ angular.module("mnd-web")
     $stateProvider.state("aboutUs", {
        url: "/aboutUs",
         parent: "root",
-        templateUrl: "pages/aboutUs/aboutUs.html",
-        controller: "AboutUsController"
+        templateUrl: "pages/aboutUs/aboutUs.html"
     });
 
 
