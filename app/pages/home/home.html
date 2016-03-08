@@ -42,10 +42,10 @@
                 SMASH YOUR COMFORT ZONE
             </h1>
         </div>
-		<div class="header-subtitle">
+		<div class="header-subtitle text-center">
             Value software by valued people.
         </div>
-        <div class="header-logos">
+        <div class="header-logos text-center">
             <a class="mnd-undecorated-a" href="https://twitter.com/mondora" target="_blank">
                 <i class="fa fa-twitter social-logos"></i>
             </a>
@@ -139,21 +139,15 @@
         </div>
         <div ng-repeat="post in posts | orderBy:'-publishedOn' | limitTo: 3" class="col-sm-4">
             <div class="news-card">
-                <img src="{{post.titleImageUrl}}" class="post-image">
+                <img ng-src="{{post.titleImageUrl || 'https://s3.amazonaws.com/mnd-website/img/mondora-logo.png'}}" class="post-image">
                 <div class="post-content">
-                    <div class="posts-title">
-                        {{post.title}}
-                    </div>
+                    <div class="posts-title" ng-bind-html="post.title"></div>
                     <div class="post-author">
                         By {{post.authors.0.name || post.author.0.screenName}}
                     </div>
                     <div ng-bind-html="post.body" class="post-text">
                     </div>
-                    <button class="read-more-button">
-                        <a class="mnd-undecorated-a" ui-sref="postView({postId: post._id})">
-                            Read more
-                        </a>
-                    </button>
+                    <button class="read-more-button" ui-sref="postView({postId: post._id})">Read more</button>
                 </div>
             </div>
         </div>
