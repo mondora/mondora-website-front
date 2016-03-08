@@ -36,10 +36,11 @@
         "bower_components/fontawesome/css/font-awesome.css",
         "bower_components/medium-editor/dist/css/medium-editor.css",
         "bower_components/medium-editor/dist/css/themes/default.css",
+        "bower_components/montserrat-webfont/css/montserrat-webfont.css",
         "app/assets/css/*"
     ],
     "fonts": [
         "bower_components/fontawesome/fonts/*",
-        "app/assets/fonts/*"
+        "bower_components/montserrat-webfont/fonts/*"
     ]
 }
