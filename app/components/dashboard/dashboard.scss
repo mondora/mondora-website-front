@@ -74,6 +74,7 @@ $toggle-sidebar-border-size: 2px;
 	overflow: hidden;
 	box-sizing: border-box;
 	&.sidebar-open {
+		transition: 0.4s;
 		transform: translateX($sidebar-width);
 		width: calc(100% - #{$toggle-sidebar-size} - #{$sidebar-width});
 	}

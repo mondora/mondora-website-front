@@ -147,10 +147,6 @@
 			</a>
 		</div>
 
-		<div class="mnd-mind-container grey-border" ng-class="{'black-connections': !titleImageIsDisplayed()}" ng-show="!isMobile" ng-keyup="processMap($event)">
-			<div mnd-mind-map map="post.map" edit="true"></div>
-		</div>
-
 		<div class="post-header" ng-show="!isMobile">
 			<div class="col-sm-2 col-sm-offset-2" id="post-edit-image-upload">
 				<i class="fa fa-picture-o" mnd-s3-file-upload file-type="image" after-upload="afterUploadTitleImage" is-uploading="isUploadingTitleImage" upload-progress="uploadProgressTitleImage"></i>
