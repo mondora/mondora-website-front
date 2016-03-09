@@ -113,7 +113,7 @@
         </div>
         <div ng-repeat="post in posts | orderBy:'-publishedOn' | limitTo: 3" class="col-sm-4">
             <div class="news-card">
-                <img ng-src="{{post.titleImageUrl || 'https://s3.amazonaws.com/mnd-website/img/mondora-logo.png'}}" class="post-image">
+                <img ng-src="{{post.titleImageUrl || '/assets/images/mondora-bcorp.png'}}" class="post-image">
                 <div class="post-content">
                     <div class="posts-title" ng-bind-html="post.title"></div>
                     <div class="post-author">
