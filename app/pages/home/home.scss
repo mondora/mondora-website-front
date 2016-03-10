@@ -84,7 +84,7 @@ $mnd-black: #000000;
     display: inline-block;
     font-size: 50px;
     font-weight: bold;
-    color: #ffcc00;
+    color: #FFE921;
     @media (max-height: 570px) {
         font-size: 35px;
     }
@@ -151,7 +151,7 @@ $mnd-black: #000000;
     margin-right: 5px;
 }
 .m-numbers {
-    color: #ffcc00;
+    color: #FFE921;
     font-size: 30px;
 }
 .introduction-container {
@@ -168,7 +168,7 @@ $mnd-black: #000000;
 }
 .introduction-icon {
     font-size: 60px;
-    color: #ffcc00;
+    color: #FFE921;
 }
 .introduction-text {
     font-weight: 200;
@@ -201,8 +201,8 @@ $mnd-black: #000000;
     margin-top: 10px;
     font-size: 12px;
     border-radius: 5px;
-    background-color: #ffcc00;
-    border-color: #ffcc00;
+    background-color: #FFE921;
+    border-color: #FFE921;
     bottom: 10px;
     position: absolute;
 }
@@ -210,7 +210,7 @@ $mnd-black: #000000;
     display: inline-block;
     font-size: 27px;
     font-weight: bold;
-    color: #ffcc00;
+    color: #FFE921;
     margin-bottom: 20px;
 }
 .sections-titles {
@@ -235,8 +235,9 @@ $mnd-black: #000000;
 .post-text {
     font-size: 13px;
     font-weight: 200;
-    height: 90px;
+    height: 105px;
     overflow: hidden;
+    max-width: 360px;
 }
 .post-author {
     font-size: 9px;
@@ -256,7 +257,7 @@ $mnd-black: #000000;
 .social-logos {
     font-size: 30px;
     display: inline-block;
-    color: #ffcc00;
+    color: #FFE921;
     margin: 2px;
 }
 #twitter-date {
@@ -269,7 +270,7 @@ $mnd-black: #000000;
     display: inline-block;
     font-size: 20px;
     line-height: 0px;
-    color: #ffcc00;
+    color: #FFE921;
     @media (max-width: 1050px) {
         display: none;
     }
@@ -302,5 +303,5 @@ $mnd-black: #000000;
 #bcorp-certification {
     font-size: 12px;
     font-weight: 200;
-    color: #ffcc00;
+    color: #FFE921;
 }
