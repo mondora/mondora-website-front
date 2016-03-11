@@ -39,6 +39,7 @@
         "app/assets/css/*"
     ],
     "fonts": [
-        "bower_components/fontawesome/fonts/*"
+        "bower_components/fontawesome/fonts/*",
+        "app/assets/fonts/*"
     ]
 }
