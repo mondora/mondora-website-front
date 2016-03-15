@@ -6,13 +6,16 @@
 	position: absolute;
 	width: 620px;
 	left: 50%;
-	top: 15%;
+	top: 80px;
 	margin-left: -260px;
 	z-index: 1;
 	@media (max-width: 767px) {
 	    width: 98%;
 	    top: 60%;
 	    margin-left: -49%; 
+	}
+	@media (max-height: 535px) {
+		top: 40px;
 	}
 }
 

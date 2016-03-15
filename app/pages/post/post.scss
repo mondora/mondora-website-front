@@ -101,6 +101,9 @@
 	.post-header {
 		position: relative;
 		top: 60%;
+		@media (max-height: 535px) {
+			top: 54%;
+		}
 		.post-title {
 			font-family: "Montserrat", sans-serif;
 			font-size: 40px;
@@ -165,6 +168,7 @@
 	padding-top: 30px;
 	box-sizing: border-box;
 	font-size: 18px;
+	font-weight: 100;
 	img {
 		max-width: 100%;
 	}
