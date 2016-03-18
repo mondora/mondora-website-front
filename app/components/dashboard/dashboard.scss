@@ -76,7 +76,7 @@ $toggle-sidebar-border-size: 2px;
 	&.sidebar-open {
 		transition: 0.4s;
 		transform: translateX($sidebar-width);
-		width: calc(100% - #{$toggle-sidebar-size} - #{$sidebar-width});
+		width: calc(100% - #{$sidebar-width});
 	}
 	@media (max-width: 767px) {
 		top: $toggle-sidebar-size;
