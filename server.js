@@ -7,7 +7,6 @@ var BACKEND_HOST          = process.env.BACKEND_HOST;
 var PRERENDER_SERVICE_URL = process.env.PRERENDER_SERVICE_URL;
 
 express()
-    .use(prerender.set("prerenderServiceUrl", PRERENDER_SERVICE_URL))
     .use(function (req, res, next) {
         /*
         *   Support push state urls
