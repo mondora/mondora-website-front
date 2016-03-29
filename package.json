@@ -38,7 +38,7 @@
   "dependencies": {
     "compression": "^1.4.4",
     "express": "^4.12.3",
-    "prerender-node": "^1.2.1",
+    "prerender-node": "^2.2.1",
     "serve-static": "^1.9.2"
   }
 }
