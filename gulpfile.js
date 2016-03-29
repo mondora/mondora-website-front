@@ -137,10 +137,10 @@ gulp.task("build", [
 
 gulp.task("config", () => {
     mkdirp.sync("build/assets/js/");
-    const prefix = "__APP_CONFIG__";
+    const prefix = /^__APP_CONFIG__/;
     const config = _(process.env)
-        .omitBy(key => _.startsWith(key, prefix))
-        .mapKeys(key => _.trimStart(key, prefix))
+        .pickBy((value, key) => prefix.test(key))
+        .mapKeys((value, key) => key.replace(prefix, ""))
         .value();
     const code = `window.APP_CONFIG = ${JSON.stringify(config, null, 4)};`;
     fs.writeFileSync(`build/assets/js/app-config.js`, code);
@@ -179,6 +179,7 @@ gulp.task("dev", ["watch", "build", "config"], () => {
             }
         },
         port: 8080,
+        open: false,
         ghostMode: false,
         injectChanges: false,
         notify: false
