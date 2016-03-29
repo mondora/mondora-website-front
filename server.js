@@ -1,10 +1,12 @@
 const compression = require("compression");
 const express     = require("express");
+const prerender   = require("prerender-node");
 const serveStatic = require("serve-static");
 
 const pushStateRegexp = new RegExp("/assets/|/VERSION");
 
 express()
+    .use(prerender)
     .use((req, res, next) => {
         /*
         *   Support push state urls
