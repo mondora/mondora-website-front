@@ -136,6 +136,7 @@ gulp.task("build", [
 /////////////////
 
 gulp.task("config", () => {
+    mkdirp.sync("build/assets/js/");
     const prefix = "__APP_CONFIG__";
     const config = _(process.env)
         .omitBy(key => _.startsWith(key, prefix))
@@ -165,7 +166,7 @@ gulp.task("watch", () => {
     ]);
 });
 
-gulp.task("dev", ["watch", "build"], () => {
+gulp.task("dev", ["watch", "build", "config"], () => {
     const reg = new RegExp("/assets/|/VERSION");
     browserSync({
         server: {
