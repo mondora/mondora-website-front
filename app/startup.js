@@ -5,8 +5,8 @@ var GIVE_UP_DELAY = 30000;
 	var deferred = Q.defer();
 
 	window.Ceres = new Asteroid(
-		window.BACKEND_HOST,
-		window.BACKEND_USE_SSL
+		window.APP_CONFIG.BACKEND_HOST,
+		window.APP_CONFIG.BACKEND_USE_SSL
 	);
 	Ceres.on("connected", function () {
 		deferred.resolve();
