@@ -178,7 +178,7 @@ angular.module("mnd-web")
                 return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
             }],
 			stravaActivitiesSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
-				var sub = Ceres.subscribe("weeklyActivities", 7);
+				var sub = Ceres.subscribe("stravaLastActivities", 7);
 				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
 			}]
         },
