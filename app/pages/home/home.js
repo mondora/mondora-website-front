@@ -1,5 +1,13 @@
 angular.module("mnd-web.pages")
-
+.filter("secondsToDuration", [function () {
+    return function (seconds) {
+        var duration = moment.duration(seconds, "seconds");
+        return (duration.hours() > 0 ? duration.hours() + ":" : "")
+            + ("0" + duration.minutes()).slice(-2)
+            + ":"
+            + ("0" + duration.seconds()).slice(-2);
+    };
+}])
 .controller("HomeController", ["$scope", "$sce", "$state", function ($scope, $sce, $state) {
 
 	$scope.homeConfig = $scope.Configurations.reactiveQuery({name: "home"}).result[0];
@@ -21,5 +29,11 @@ angular.module("mnd-web.pages")
         });
     });
     $scope.posts = postsRQ.result;
+
+    var stravaRQ = $scope.StravaActivities.reactiveQuery({});
+    stravaRQ.on("change", function () {
+        $scope.stravaActivities = stravaRQ.result;
+    });
+    $scope.stravaActivities = stravaRQ.result;
 
 }]);
