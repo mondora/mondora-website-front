@@ -176,7 +176,11 @@ angular.module("mnd-web")
             homepagePostsSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
                 var sub = Ceres.subscribe("latestPosts", 3, true);
                 return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
-            }]
+            }],
+			stravaActivitiesSub: ["TimeoutPromiseService", function (TimeoutPromiseService) {
+				var sub = Ceres.subscribe("stravaLatestActivities", 7);
+				return TimeoutPromiseService.timeoutPromise(sub.ready, GIVE_UP_DELAY);
+			}]
         },
 		public: true
 	});
@@ -512,6 +516,7 @@ angular.module("mnd-web")
 	$rootScope.Channels = Ceres.getCollection("channels");
 	$rootScope.Notifications = Ceres.getCollection("notifications");
 	$rootScope.Users = Ceres.getCollection("users");
+	$rootScope.StravaActivities = Ceres.getCollection("stravaActivities");
 
 	Ceres.on("login", function (userId) {
 		$rootScope.loggedInUserQuery = $rootScope.Users.reactiveQuery({_id: userId});
