@@ -131,7 +131,7 @@
                     <a href="https://www.strava.com/clubs/mondora-148440">:m Team on <span></span></a>
                 </div>
                 <ul class="activities">
-                    <li ng-repeat="activity in stravaActivities | limitTo: 7" class="activity">
+                    <li ng-repeat="activity in stravaActivities | orderBy: '-dateUTC' | limitTo: 7" class="activity">
                         <a ng-href="https://www.strava.com/athletes/{{activity.athlete.id}}" class="athlete"
                            target="_blank">
                             <img ng-src="{{activity.athlete.profile}}"
@@ -150,7 +150,7 @@
                                 <li>{{activity.elapsedTime | secondsToDuration}}</li>
                                 <li>{{activity.elevation}} m</li>
                             </ul>
-                            <p class="timestamp">{{activity.date.$date | date:'EEEE dd MMMM y'}}</p>
+                            <p class="timestamp">{{activity.dateUTC | epochToLocal:activity.timezone}}</p>
                         </div>
                     </li>
                 </ul>
