@@ -132,7 +132,7 @@
                 </div>
                 <ul class="activities">
                     <li ng-repeat="activity in stravaActivities | orderBy: '-dateUTC' | limitTo: 7" class="activity">
-                        <a ng-href="https://www.strava.com/athletes/{{activity.athlete.id}}" class="athlete"
+                        <a ng-href="https://www.strava.com/athletes/{{activity.athlete._id}}" class="athlete"
                            target="_blank">
                             <img ng-src="{{activity.athlete.profile}}"
                                  alt="{{activity.athlete.firstname}} {{activity.athlete.lastname}}"
@@ -141,7 +141,7 @@
                         <div class="details">
                             <p class="athlete-name">{{activity.athlete.firstname}} {{activity.athlete.lastname}}</p>
                             <h3>
-                                <a ng-href="https://www.strava.com/activities/{{activity.stravaId}}"
+                                <a ng-href="https://www.strava.com/activities/{{activity._id}}"
                                    target="_blank"
                                    title="{{activity.name}}" class="activity-link">{{activity.name}}</a>
                             </h3>
