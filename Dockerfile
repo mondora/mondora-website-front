@@ -1,4 +1,4 @@
-FROM node:6
+FROM node
 MAINTAINER Paolo Scanferla <paolo.scanferla@mondora.com>
 RUN mkdir /mondora-website-front
 ADD ./ /mondora-website-front/
