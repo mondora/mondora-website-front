@@ -243,6 +243,108 @@ $mnd-black: #000000;
     font-weight: 200;
     margin-bottom: 10px;
 }
+.strava {
+  background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #fff 55%, #eee 100%) repeat scroll 0 0;
+  border: 1px solid #ccc;
+  border-radius: 3px 3px 0;
+  height: 545px;
+  padding: 10px;
+  .header {
+    text-align: center;
+    a {
+      color: #333;
+      height: 19px;
+      line-height: 18px;
+      display: inline-block;
+      font-size: 16px;
+      span {
+        background: rgba(0, 0, 0, 0) url("/assets/images/strava-sprites.png") no-repeat scroll 0 0;
+        display: block;
+        float: right;
+        margin-left: 5px;
+        height: 19px;
+        width: 87px;
+      }
+    }
+  }
+  ul, li, p, h3 {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .activities {
+    .activity {
+      border-bottom: 1px solid #e5e5e5;
+      clear: both;
+      display: block;
+      line-height: 1.3em;
+      list-style: outside none none;
+      min-height: 56px;
+      margin-bottom: 2px;
+      padding-bottom: 2px;
+      position: relative;
+      &:first-child {
+        border-top: 1px solid #e5e5e5;
+        margin-top: 2px;
+        padding-top: 2px;
+      }
+      &:last-child {
+        border: medium none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      .athlete {
+        display: inline-block;
+        position: relative;
+        float: left;
+        margin: 9px 0 0 4px;
+        img {
+          width: 50px;
+          height: 50px;
+        }
+      }
+      .details {
+        margin-left: 60px;
+        h3 {
+          padding: 0;
+          margin: 0;
+          font-size: 12px;
+          .activity-link {
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
+            padding: 1px 0;
+          }
+        }
+        .athlete-name {
+          color: #666;
+        }
+        .athlete-name, .timestamp {
+          font-size: 11px;
+          color: #999
+        }
+        .stats {
+          line-height: 1em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          li {
+            border: medium none;
+            display: inline-block;
+            height: auto;
+            line-height: 1em;
+            margin: 0 1em 0 0;
+            padding: 0;
+            font-size: 11px;
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+}
 .footer {
     padding: 0px;
 }

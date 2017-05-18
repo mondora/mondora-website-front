@@ -111,7 +111,7 @@
                 LATEST NEWS
             </span>
         </div>
-        <div ng-repeat="post in posts | orderBy:'-publishedOn' | limitTo: 3" class="col-sm-4">
+        <div ng-repeat="post in posts | orderBy:'-publishedOn' | limitTo: 2" class="col-xs-12 col-md-4">
             <div class="news-card">
                 <img ng-src="{{post.titleImageUrl || '/assets/images/mondora-bcorp.png'}}" class="post-image">
                 <div class="post-content">
@@ -125,19 +125,39 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-12 col-xs-12 footer">
-        <div class="twitter-footer">
-            <i class="fa fa-twitter social-logos"></i>
-            <div class="twitter-infos">
-                <div id="twitter_update_list">
-                <script type="text/javascript" src="http://twitter.com/javascripts/blogger.js">
-                </script>
-                <script type="text/javascript" src="https://api.twitter.com/1.1/statuses/user_timeline.json?count=1&screen_name=mondora">
-                </script>
+        <div class="col-xs-12 col-md-4">
+            <div class="strava">
+                <div class="header">
+                    <a href="https://www.strava.com/clubs/mondora-148440">:m Team on <span></span></a>
                 </div>
+                <ul class="activities">
+                    <li ng-repeat="activity in stravaActivities | orderBy: '-dateUTC' | limitTo: 7" class="activity">
+                        <a ng-href="https://www.strava.com/athletes/{{activity.athlete._id}}" class="athlete"
+                           target="_blank">
+                            <img ng-src="{{activity.athlete.profile}}"
+                                 alt="{{activity.athlete.firstname}} {{activity.athlete.lastname}}"
+                                 title="{{activity.athlete.firstname}} {{activity.athlete.lastname}}">
+                        </a>
+                        <div class="details">
+                            <p class="athlete-name">{{activity.athlete.firstname}} {{activity.athlete.lastname}}</p>
+                            <h3>
+                                <a ng-href="https://www.strava.com/activities/{{activity._id}}"
+                                   target="_blank"
+                                   title="{{activity.name}}" class="activity-link">{{activity.name}}</a>
+                            </h3>
+                            <ul class="stats">
+                                <li>{{activity.distance / 1000 | number: 1}} Km</li>
+                                <li>{{activity.elapsedTime | secondsToDuration}}</li>
+                                <li>{{activity.elevation}} m</li>
+                            </ul>
+                            <p class="timestamp">{{activity.dateUTC | epochToLocal:activity.timezone}}</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
+    </div>
+    <div class="col-sm-12 col-xs-12 footer">
         <div class="col-sm-12 col-xs-12 info-footer">
             <div class="col-sm-4 col-xs-4 info-container">
                 <div>
