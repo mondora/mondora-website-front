@@ -34,6 +34,7 @@ angular.module("mnd-web.pages")
 		);
 	};
 	var canDeleteEntry = function (user, channel, entry) {
+		if(!user) return false;		
 		return (
 			isOwner(user, channel) ||
 			isCurator(user, channel) ||
