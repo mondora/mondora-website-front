@@ -23,7 +23,7 @@
         "bower_components/mnd-dashboard/dist/dashboard-tpls.js",
         "bower_components/mnd-sprinkle/dist/sprinkle-tpls.js",
         "bower_components/moment/moment.js",
-        "bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
+        "bower_components/moment-timezone/builds/moment-timezone-with-data-2012-2022.js",
         "bower_components/ng-file-upload/angular-file-upload.js",
         "bower_components/ng-file-upload/angular-file-upload-shim.js",
         "bower_components/q/q.js"
