@@ -6,3 +6,4 @@ export const primary = color("#feda18");
 export const secondary = color("#565554");
 export const black = color("#000");
 export const white = color("#fff");
+export const darkGray = color("#232B35");

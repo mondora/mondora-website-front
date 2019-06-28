@@ -34,7 +34,8 @@ const StackPanel = ({
     padding = 8,
     gutter = 8,
     justify = "start",
-    style = {}
+    style = {},
+    ...rest
 }) => (
     <Container
         style={style}
@@ -42,6 +43,7 @@ const StackPanel = ({
         padding={padding}
         gutter={gutter}
         justify={justify}
+        {...rest}
     >
         {children}
     </Container>
