@@ -13,7 +13,7 @@ const Container = styled.div`
         ${props =>
             props.direction === "row" &&
             css`
-                margin-left: ${props => props.gutter}px;
+                margin-right: ${props => props.gutter}px;
             `}
 
         ${props =>
@@ -23,16 +23,16 @@ const Container = styled.div`
             `}
     }
 
-    & > :first-child {
-        margin: initial !important;
+    & > :last-child {
+        margin: 0;
     }
 `;
 
 const StackPanel = ({
     children,
     direction = "row",
-    padding = 8,
-    gutter = 8,
+    padding = 0,
+    gutter = 0,
     justify = "start",
     style = {},
     ...rest
