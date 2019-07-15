@@ -8,7 +8,6 @@ import Footer from "../footer";
 const Container = styled.div`
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr 1fr;
 `;
 
 const MenuContainer = styled.div`
