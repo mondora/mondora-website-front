@@ -1,5 +1,7 @@
 import React from "react";
 
-const WorkWithUs = () => <>{"WorkWithUs"}</>;
+import Layout from "../../components/layout";
+
+const WorkWithUs = () => <Layout>{"WorkWithUs"}</Layout>;
 
 export default WorkWithUs;

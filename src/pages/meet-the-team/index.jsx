@@ -1,5 +1,7 @@
 import React from "react";
 
-const MeetTheTeam = () => <>{"MeetTheTeam"}</>;
+import Layout from "../../components/layout";
+
+const MeetTheTeam = () => <Layout>{"MeetTheTeam"}</Layout>;
 
 export default MeetTheTeam;

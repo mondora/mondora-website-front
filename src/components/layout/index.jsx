@@ -1,6 +1,7 @@
 import React from "react";
 
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
+import { theme } from "../../styles/theme";
 
 import Menu from "../menu";
 import Footer from "../footer";
@@ -23,15 +24,17 @@ const FooterContainer = styled.div`
 `;
 
 const Layout = ({ children }) => (
-    <Container>
-        <MenuContainer>
-            <Menu />
-        </MenuContainer>
-        <ContentContainer>{children}</ContentContainer>
-        <FooterContainer>
-            <Footer />
-        </FooterContainer>
-    </Container>
+    <ThemeProvider theme={theme}>
+        <Container>
+            <MenuContainer>
+                <Menu />
+            </MenuContainer>
+            <ContentContainer>{children}</ContentContainer>
+            <FooterContainer>
+                <Footer />
+            </FooterContainer>
+        </Container>
+    </ThemeProvider>
 );
 
 export default Layout;

@@ -1,5 +1,7 @@
 import React from "react";
 
-const Homepage = () => <>{"Homepage"}</>;
+import Layout from "../components/layout";
+
+const Homepage = () => <Layout>{"Homepage"}</Layout>;
 
 export default Homepage;
