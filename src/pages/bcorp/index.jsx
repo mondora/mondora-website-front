@@ -4,13 +4,14 @@ import styled from "styled-components";
 
 import { Link } from "gatsby";
 
+import FaqElement from "../../components/faq-element";
+
 import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
 import HireBittoLogo from "../../../static/images/HireBitto_logo.png";
 import Cycle2WorkGraphic from "../../../static/images/CycleToWork_graphic.png";
 import Cycle2WorkLogo from "../../../static/images/CycleToWork_logo.png";
 import LabFilosofiaGraphic from "../../../static/images/LabFilosofia_graphic.png";
 import LabFilosofiaLogo from "../../../static/images/LabFilosofia_logo.png";
-import FaqPlus from "../../../static/images/FAQ-plus.png";
 import Layout from "../../components/layout";
 
 const ContainerProjects = styled.div`
@@ -31,7 +32,7 @@ const ContainerHero = styled.div`
     grid-template-columns: 1fr 32px 1fr;
     grid-column-gap: 16px;
     @media (max-width: 992px) {
-        grid-template-columns: auto;
+        grid-template-columns: 1fr;
     }
 `;
 const ContainerFaqs = styled.div`
@@ -43,32 +44,6 @@ const ContainerFaqs = styled.div`
     @media (max-width: 992px) {
         grid-template-columns: auto;
     }
-`;
-const FaqLogo = styled.img`
-    float: left;
-    max-width: 100%;
-    height: auto;
-    width: auto;
-    max-height: 40px;
-    padding: 16px;
-`;
-const FaqWrapper = styled.div`
-    margin: 10px;
-    position: relative;
-    top: ${props => props.offset};
-    @media (max-width: 992px) {
-        top: 0;
-    }
-`;
-const Question = styled.div`
-    font-weight: bold;
-    line-height: 1.5;
-    margin: 10px;
-`;
-const Answer = styled.div`
-    display: ${props => (props.show ? "block" : "none")};
-    font-weight: 10;
-    margin: 10px;
 `;
 
 const Graphic = styled.img`
@@ -361,13 +336,7 @@ const BCorp = () => (
         <ContainerFaqs>
             <h1>{"FAQ"}</h1>
             {Faqs.map(faq => (
-                <FaqWrapper>
-                    <FaqLogo src={FaqPlus} />
-                    <Faq>
-                        <Question>{faq.question}</Question>
-                        <Answer show={true}>{faq.answer}</Answer>
-                    </Faq>
-                </FaqWrapper>
+                <FaqElement question={faq.question} answer={faq.answer} />
             ))}
             <ReportContainer>
                 {Reports.map(report => (
