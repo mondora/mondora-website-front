@@ -4,11 +4,16 @@ import styled from "styled-components";
 
 import StackPanel from "../stackpanel";
 
-import twitterLogo from "../../../static/images/twitter.png"
-import instagramLogo from "../../../static/images/instagram.png"
-import facebookLogo from "../../../static/images/facebook.png"
-import linkedinLogo from "../../../static/images/linkedin.png"
-import pinterestLogo from "../../../static/images/pinterest.png"
+import SocialLink from "../../components/social-link";
+
+import {
+    faGithub,
+    faLinkedin,
+    faFacebook,
+    faTwitter,
+    faInstagram,
+    faPinterest
+} from "@fortawesome/free-brands-svg-icons";
 
 const Container = styled.div`
     padding: 32px 192px;
@@ -30,7 +35,7 @@ const Container = styled.div`
 `;
 
 const MiniLogo = styled.div`
-    &:before{
+    &:before {
         color: #ffea00;
         content: ":";
     }
@@ -81,32 +86,37 @@ const SocialLogo = styled.img`
     margin: 0;
     width: 50px;
 `;
-const links = [
+const Socials = [
     {
-        to: "https://www.instagram.com/mondoracom/",
-        text: "Instagram",
-        logo: instagramLogo
+        type: "dark",
+        url: "https://github.com/mondora/",
+        text: "GitHub",
+        icon: faGithub
     },
     {
-        to: "https://it-it.facebook.com/mondoracom/",
-        text: "Facebook",
-        logo: facebookLogo
+        type: "dark",
+        url: "https://www.instagram.com/mondoracom/",
+        icon: faInstagram
     },
     {
-        to: "https://www.linkedin.com/company/mondora-s-p-a-/?originalSubdomain=it",
-        text: "Linkedin",
-        logo: linkedinLogo
+        type: "light",
+        url: "https://it-it.facebook.com/mondoracom/",
+        icon: faFacebook
     },
     {
-        to: "https://twitter.com/mondora",
-        text: "Twitter",
-        logo: twitterLogo
+        type: "dark",
+        url: "https://www.linkedin.com/company/mondora-s-p-a-/",
+        icon: faLinkedin
     },
     {
-        to: "https://www.pinterest.it/mondoracom/",
-        text: "Pinterest",
-        logo: pinterestLogo
+        url: "https://twitter.com/mondora",
+        icon: faTwitter
     },
+    {
+        type: "dark",
+        url: "https://www.pinterest.it/mondoracom/",
+        icon: faPinterest
+    }
 ];
 
 const Footer = () => (
@@ -142,15 +152,16 @@ const Footer = () => (
                     <p>{`+39 0342 1856456 - info@mondora.com`}</p>
                 </span>
                 <span>
-                        
-                    <StackPanel gutter={16}>
-                        {links.map(link => (
-                            <Menuitem>
-                                 <a href={link.to}><SocialLogo src={link.logo}/></a>
-                                
-                            </Menuitem>
+                    <div style={{ display: "flex" }}>
+                        {Socials.map(social => (
+                            <SocialLink
+                                type="light"
+                                text={social.text}
+                                url={social.url}
+                                icon={social.icon}
+                            ></SocialLink>
                         ))}
-                    </StackPanel>
+                    </div>
                 </span>
             </StackPanel>
         </Misc>
