@@ -4,78 +4,66 @@ import styled from "styled-components";
 
 import StackPanel from "../stackpanel";
 
-import Underline from "../../../static/images/underline.png";
-
 import { Link } from "gatsby";
 
 const MiniLogo = styled.div`
+    font-size: ${props => props.theme.size.text.mondora};
+    padding: 8px 0;
+
     &:before {
         color: ${props => props.theme.colors.background.yellow};
         content: ":";
     }
-    margin-top: -10px;
-    font-size: ${props => props.theme.size.text.mondora};
 `;
 
 const Container = styled.div`
-    padding: 0 64px;
-    margin-left: auto;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-column-gap: 16px;
+    padding: 16px 64px;
 `;
 
 const SuperLink = styled(Link)`
-    margin: 8px;
-    padding-bottom: 15px;
     font-size: ${props => props.theme.size.text.menu};
+    white-space: nowrap;
     text-decoration: none;
+    padding: 12px 0;
     color: ${props => props.theme.colors.text.header};
-    display: block;
+
     &.active {
-        background-image: url(${Underline});
+        background-image: url(${require("../../../static/images/underline.png")});
         background-repeat: no-repeat;
-        background-size: 46px;
+        background-size: 48px;
         background-position-y: bottom;
-        background-position-x: left;
+        background-position-x: center;
     }
 `;
 
 const links = [
     {
         to: "/",
-        text: "Home",
-        underscore: Underline
+        text: "Home"
     },
     {
         to: "/about",
-        text: "About Us",
-        underscore: Underline
+        text: "About Us"
     },
     {
         to: "/meet-the-team",
-        text: "Meet the Team",
-        underscore: Underline
+        text: "Meet the Team"
     },
     {
         to: "/bcorp",
-        text: "Impact",
-        underscore: Underline
+        text: "Impact"
     },
     {
         to: "/work-with-us",
-        text: "Work with us",
-        underscore: Underline
+        text: "Work with us"
     },
     {
         to: "/contacts",
-        text: "Contacts",
-        underscore: Underline
+        text: "Contacts"
     },
     {
         to: "/",
-        text: "Blog",
-        underscore: Underline
+        text: "Blog"
     }
 ];
 
@@ -86,7 +74,7 @@ const Menu = () => (
                 <MiniLogo>{"mondora"}</MiniLogo>
             </StackPanel>
 
-            <StackPanel gutter={24}>
+            <StackPanel gutter={16} align="center">
                 {links.map(link => (
                     <SuperLink to={link.to} activeClassName={"active"}>
                         {link.text}
