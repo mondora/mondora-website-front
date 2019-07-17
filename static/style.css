@@ -1,11 +1,16 @@
 @import url("https://fonts.googleapis.com/css?family=Playfair&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
 
 html {
-    font-family: "Playfair", serif;
+    font-family: "Source Sans Pro", sans-serif;
 }
 
 body {
     margin: 0;
+}
+
+h1 {
+    font-family: "Playfair", serif;
 }
 
 :root {
