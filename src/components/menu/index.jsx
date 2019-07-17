@@ -10,16 +10,11 @@ import { Link } from "gatsby";
 
 const MiniLogo = styled.div`
     &:before {
-        color: #ffea00;
+        color: ${props => props.theme.colors.background.yellow};
         content: ":";
     }
     margin-top: -10px;
-    grid-area: 1 / 1 / 3 / 2;
     font-size: ${props => props.theme.size.text.mondora};
-
-    @media (max-width: 992px) {
-        grid-area: 1 / 1 / 2 / 2;
-    }
 `;
 
 const Container = styled.div`
@@ -91,9 +86,11 @@ const Menu = () => (
                 <MiniLogo>{"mondora"}</MiniLogo>
             </StackPanel>
 
-            <StackPanel gutter={24} >
+            <StackPanel gutter={24}>
                 {links.map(link => (
-                    <SuperLink to={link.to} activeClassName={"active"}>{link.text}</SuperLink>
+                    <SuperLink to={link.to} activeClassName={"active"}>
+                        {link.text}
+                    </SuperLink>
                 ))}
             </StackPanel>
         </StackPanel>
