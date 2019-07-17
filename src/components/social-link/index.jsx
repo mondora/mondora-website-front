@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -9,8 +9,10 @@ const RadiusIcon = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${props => (props.type === "dark" ? "white" : "black")};
-    background-color: ${props => (props.type === "dark" ? "black" : "white")};
+    color: ${props =>
+        props.type === "dark" ? css`var(--white)` : css`var(--black)`};
+    background-color: ${props =>
+        props.type === "dark" ? css`var(--black)` : css`var(--white)`};
     padding: 8px;
     margin: 8px;
     border-radius: ${props => (props.text ? "24px" : "50%")};

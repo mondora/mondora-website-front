@@ -65,34 +65,32 @@ const Project = styled.div`
     }
 `;
 const Description = styled.div`
-    background-color: ${props => props.theme.colors.background.grey};
-    color: ${props => props.theme.colors.text.primary};
+    background-color: var(--variant-lightgray);
+    color: var(--text-dark-gray);
     line-height: 1.5;
     padding: 10%;
     margin: 10px;
     text-align: center;
 `;
-const Faq = styled.div`
-    line-height: 1.5;
-    margin: 10px;
-`;
+
 const Button = styled.a`
-    color: ${props => props.theme.colors.text.button};
+    color: var(--black);
     display: block;
     max-width: 40%;
-    background-color: ${props => props.theme.colors.background.yellow};
+    background-color: var(--primary);
     padding: 2%;
     margin: 16px auto;
     text-decoration: none;
-    color: ${props => props.theme.colors.text.menu};
     text-align: center;
 `;
+
 const Divider = styled.div`
     height: 100%;
     width: 100%;
 `;
+
 const Line = styled.div`
-    border: 2px solid black;
+    border: 2px solid var(--black);
     @media (min-width: 992px) {
         margin: 0 auto;
         width: 0;
@@ -104,16 +102,17 @@ const Line = styled.div`
         width: 80%;
     }
 `;
+
 const Circle = styled.div`
-    border: 2px solid black;
+    border: 2px solid var(--black);
     width: 28px;
     border-radius: 100%;
     height: 28px;
-    background-image: ${Circle};
     @media (max-width: 992px) {
         display: none;
     }
 `;
+
 const LeftParagraph = styled.div`
     text-align: left;
     margin-top: 80px;
@@ -122,10 +121,12 @@ const LeftParagraph = styled.div`
         text-align: center;
     }
 `;
+
 const LeftTitle = styled.div`
     margin-top: 16px;
     font-size: ${props => props.theme.size.text.mondora};
 `;
+
 const LeftContent = styled.div`
     width: 70%;
     margin: 24px auto 24px 0;
@@ -134,6 +135,7 @@ const LeftContent = styled.div`
         margin: 24px auto;
     }
 `;
+
 const RightParagraph = styled.div``;
 const RightTitle = styled.div`
     margin-top: 80px;
@@ -156,8 +158,8 @@ const Report = styled(Link)`
     margin: 40px auto;
     text-decoration: none;
     text-align: center;
-    color: ${props => props.theme.colors.text.primary};
-    background-color: ${props => props.theme.colors.background.grey};
+    color: var(--text-dark-gray);
+    background-color: var(--variant-lightgray);
 `;
 
 const Projects = [

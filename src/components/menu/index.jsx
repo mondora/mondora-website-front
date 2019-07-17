@@ -11,7 +11,7 @@ const MiniLogo = styled.div`
     padding: 8px 0;
 
     &:before {
-        color: ${props => props.theme.colors.background.yellow};
+        color: var(--primary);
         content: ":";
     }
 `;
@@ -25,7 +25,7 @@ const SuperLink = styled(Link)`
     white-space: nowrap;
     text-decoration: none;
     padding: 12px 0;
-    color: ${props => props.theme.colors.text.header};
+    color: var(--black);
 
     &.active {
         background-image: url(${require("../../../static/images/underline.png")});

@@ -19,8 +19,8 @@ const Container = styled.div`
     padding: 32px 192px;
     font-size: ${props => props.theme.size.text.subtle};
 
-    color: ${props => props.theme.colors.text.contrast};
-    background-color: ${props => props.theme.colors.background.darkGray};
+    color: var(--white);
+    background-color: var(--variant-black);
 
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -36,13 +36,12 @@ const Container = styled.div`
 
 const MiniLogo = styled.div`
     &:before {
-        color: #ffea00;
+        color: var(--primary);
         content: ":";
     }
     margin-top: -10px;
     grid-area: 1 / 1 / 3 / 2;
     font-size: ${props => props.theme.size.text.megaM};
-    /* background-color: rebeccapurple; */
 
     @media (max-width: 992px) {
         grid-area: 1 / 1 / 2 / 2;
@@ -51,7 +50,6 @@ const MiniLogo = styled.div`
 
 const Info = styled.div`
     grid-area: 1 / 2 / 2 / 3;
-    /* background-color: blue; */
 
     @media (max-width: 992px) {
         grid-area: 1 / 2 / 2 / 3;
@@ -60,7 +58,6 @@ const Info = styled.div`
 
 const Projects = styled.div`
     grid-area: 1 / 3 / 2 / 4;
-    /* background-color: darkgreen; */
 
     @media (max-width: 992px) {
         grid-area: 2 / 1 / 3 / 3;
@@ -69,23 +66,12 @@ const Projects = styled.div`
 
 const Misc = styled.div`
     grid-area: 2 / 2 / 3 / 4;
-    /* background-color: green; */
 
     @media (max-width: 992px) {
         grid-area: 3 / 1 / 4 / 3;
     }
 `;
-const Menuitem = styled.div`
-    display: block;
-    margin: 0;
-    width: 20%;
-    padding: 5px;
-`;
-const SocialLogo = styled.img`
-    display: block;
-    margin: 0;
-    width: 50px;
-`;
+
 const Socials = [
     {
         type: "dark",

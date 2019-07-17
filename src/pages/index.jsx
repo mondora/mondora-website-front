@@ -21,7 +21,7 @@ const Divider = styled.div`
     width: 100%;
 `;
 const Line = styled.div`
-    border: 2px solid black;
+    border: 2px solid var(--black);
     @media (min-width: 992px) {
         margin: 0 auto;
         width: 0;
@@ -34,7 +34,7 @@ const Line = styled.div`
     }
 `;
 const Circle = styled.div`
-    border: 2px solid black;
+    border: 2px solid var(--black);
     width: 28px;
     border-radius: 100%;
     height: 28px;
@@ -89,8 +89,8 @@ const Description = styled.div`
 `;
 
 const Button = styled.button`
-    border-color: ${props => props.theme.colors.background.yellow};
-    background-color: ${props => props.theme.colors.background.yellow};
+    border-color: var(--primary);
+    background-color: var(--primary);
     text-transform: uppercase;
     padding: 8px 16px;
     font-size: 12px;

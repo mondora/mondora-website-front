@@ -33,7 +33,7 @@ const Divider = styled.div`
     width: 100%;
 `;
 const Line = styled.div`
-    border: 2px solid black;
+    border: 2px solid var(--black);
     @media (min-width: 992px) {
         margin: 0 auto;
         width: 0;
@@ -46,11 +46,10 @@ const Line = styled.div`
     }
 `;
 const Circle = styled.div`
-    border: 2px solid black;
+    border: 2px solid var(--black);
     width: 28px;
     border-radius: 100%;
     height: 28px;
-    background-image: ${Circle};
     @media (max-width: 992px) {
         display: none;
     }
@@ -86,7 +85,7 @@ const ContactName = styled.div`
 const ContactBody = styled.div`
     margin-top: 16px;
     font-size: 16px;
-    color: ${props => props.theme.colors.text.primary};
+    color: var(--text-dark-gra);
 `;
 const ContactIcon = styled.img`
     margin-top: 16px;

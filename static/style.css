@@ -7,3 +7,15 @@ html {
 body {
     margin: 0;
 }
+
+:root {
+    --primary: rgb(255, 218, 3);
+
+    --variant-black: rgb(44, 46, 48);
+    --text-dark-gray: rgb(84, 86, 90);
+
+    --black: rgb(0, 0, 0);
+    --white: rgb(255, 255, 255);
+    --gray: rgb(245, 246, 246);
+    --variant-lightgray: rgb(0, 0, 0, 0.04);
+}
