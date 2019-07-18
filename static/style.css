@@ -18,6 +18,7 @@ h1 {
 
     --variant-black: rgb(44, 46, 48);
     --text-dark-gray: rgb(84, 86, 90);
+    --border-gray: rgb(99, 115, 129);
 
     --black: rgb(0, 0, 0);
     --white: rgb(255, 255, 255);

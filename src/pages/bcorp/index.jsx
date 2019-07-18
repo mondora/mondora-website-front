@@ -122,7 +122,7 @@ const LeftParagraph = styled.div`
     }
 `;
 
-const LeftTitle = styled.div`
+const LeftTitle = styled.h1`
     margin-top: 16px;
     font-size: ${props => props.theme.size.text.mondora};
 `;
@@ -135,9 +135,7 @@ const LeftContent = styled.div`
         margin: 24px auto;
     }
 `;
-
-const RightParagraph = styled.div``;
-const RightTitle = styled.div`
+const RightTitle = styled.h1`
     margin-top: 80px;
     font-size: ${props => props.theme.size.text.mondora};
 `;
@@ -314,14 +312,14 @@ const BCorp = () => (
                 <Line></Line>
                 <Circle></Circle>
             </Divider>
-            <RightParagraph>
+            <div>
                 <RightTitle>
                     {"Our score:"} <br /> {"122 points"}
                 </RightTitle>
                 <Button href={"https://bcorporation.net/directory/mondora"}>
                     {"BCorp page"}
                 </Button>
-            </RightParagraph>
+            </div>
         </ContainerHero>
         <ContainerProjects>
             {Projects.map(project => (

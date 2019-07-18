@@ -62,7 +62,7 @@ const LeftParagraph = styled.div`
         text-align: center;
     }
 `;
-const LeftTitle = styled.div`
+const LeftTitle = styled.h1`
     margin-top: 16px;
     font-size: ${props => props.theme.size.text.mondora};
 `;
