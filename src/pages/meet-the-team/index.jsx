@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import Layout from "../../components/layout";
 
-import Logo from "../../../static/images/Japan.png";
+import Logo from "../../../static/images/regions/Japan-icon.png";
 import RegionMiniature from "../../components/region";
 
 const Container = styled.div`
@@ -23,7 +23,7 @@ const Divider = styled.div`
     width: 100%;
 `;
 const Line = styled.div`
-    border: 2px solid black;
+    border: 1px solid black;
     @media (min-width: 992px) {
         margin: 0 auto;
         width: 0;
@@ -90,50 +90,42 @@ const Regions = [
     {
         image: Logo,
         name: "GIAPPONE / TOKYO",
-        number: "1",
-        to: "giappone"
+        number: "1"
     },
     {
         image: Logo,
         name: "ITALIA / CUNEO",
-        number: "5",
-        to: "cuneo"
+        number: "5"
     },
     {
         image: Logo,
         name: "ITALIA / SONDRIO",
-        number: "38",
-        to: "sondrio"
+        number: "38"
     },
     {
         image: Logo,
         name: "LITUANIA / VILNIUS",
-        number: "1",
-        to: "vilnius"
+        number: "1"
     },
     {
         image: Logo,
         name: "ITALIA / LAMEZIA TERME",
-        number: "1",
-        to: "lamezia"
+        number: "1"
     },
     {
         image: Logo,
         name: "ITALIA / PRATO",
-        number: "1",
-        to: "prato"
+        number: "1"
     },
     {
         image: Logo,
         name: "ITALIA / MILANO",
-        number: "6",
-        to: "milano"
+        number: "6"
     },
     {
         image: Logo,
         name: "ITALIA / NAPOLI",
-        number: "1",
-        to: "napoli"
+        number: "1"
     }
 ];
 
@@ -172,7 +164,6 @@ const MeetTheTeam = () => (
                     name={region.name}
                     link={"meet-the-team/region"}
                     button={"WHO'S HERE >"}
-                    region={region.to}
                 ></RegionMiniature>
             ))}
         </ContainerRegions>

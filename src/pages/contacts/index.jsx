@@ -33,7 +33,7 @@ const Divider = styled.div`
     width: 100%;
 `;
 const Line = styled.div`
-    border: 2px solid var(--black);
+    border: 1px solid var(--black);
     @media (min-width: 992px) {
         margin: 0 auto;
         width: 0;
