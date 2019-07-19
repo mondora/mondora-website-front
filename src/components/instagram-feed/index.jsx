@@ -7,9 +7,17 @@ import InstagramPost from "../instagram-post";
 import styled from "styled-components";
 
 const FeedWrapper = styled.div`
+    margin: 0 auto;
+    max-width: 1440px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     height: 160px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    @media (max-width: 1200px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 `;
 
 const InstagramFeed = () => {
@@ -36,7 +44,8 @@ const InstagramFeed = () => {
         <FeedWrapper>
             {data.allInstaNode.edges.map((item, i) => {
                 //console.log(item);
-                return <InstagramPost node={item.node}></InstagramPost>;
+                
+                return <InstagramPost key={item.node.id} index={i} node={item.node}></InstagramPost>;
             })}
         </FeedWrapper>
     );

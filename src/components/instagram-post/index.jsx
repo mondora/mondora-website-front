@@ -9,19 +9,28 @@ const PostImage = styled.img`
     &>:hover{
         opacity: 0.4;
     }
+    display: ${props => props.index < '6' ? "block" : "none"};
+    @media (max-width: 1200px) {
+        display: ${props => props.index < '5' ? "block" : "none"};
+    }
+    @media (max-width: 992px) {
+        display: ${props => props.index < '4' ? "block" : "none"};
+    }
 `;
 
-const InstagramPost = ({ node }) => {
+const InstagramPost = ({ node, index }) => {
     console.log(node);
+    console.log(index);
     return (
         <a href={"https://www.instagram.com/p/" + node.id}>
-            <PostImage src={node.original}/>
+            <PostImage index={index} src={node.original}/>
         </a>
     );
 };
 
 InstagramPost.propTypes = {
     node: PropTypes.object,
+    index: PropTypes.string,
 };
 
 export default InstagramPost;
