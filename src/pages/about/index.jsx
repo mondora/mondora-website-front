@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Layout from "../../components/layout";
+import InstagramFeed from "../../components/instagram-feed";
 
 const Container = styled.div`
     padding: 0 64px;
@@ -98,6 +99,7 @@ const About = () => (
                 </RightTitle>
             </RightParagraph>
         </Container>
+        <InstagramFeed></InstagramFeed>
     </Layout>
 );
 

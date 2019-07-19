@@ -20,6 +20,12 @@ module.exports = {
     },
     plugins: [
         "gatsby-plugin-react-helmet",
+        {
+            resolve: `gatsby-source-instagram`,
+            options: {
+              username: `mondoracom`
+            },
+          },
         "gatsby-plugin-styled-components",
         {
             resolve: "gatsby-plugin-manifest",
