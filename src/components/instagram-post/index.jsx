@@ -19,8 +19,6 @@ const PostImage = styled.img`
 `;
 
 const InstagramPost = ({ node, index }) => {
-    console.log(node);
-    console.log(index);
     return (
         <a href={"https://www.instagram.com/p/" + node.id}>
             <PostImage index={index} src={node.original}/>
