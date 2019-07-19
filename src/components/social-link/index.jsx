@@ -5,36 +5,55 @@ import styled, { css } from "styled-components";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const RadiusIcon = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: ${props =>
-        props.type === "dark" ? css`var(--white)` : css`var(--black)`};
-    background-color: ${props =>
-        props.type === "dark" ? css`var(--black)` : css`var(--white)`};
-    padding: 8px;
-    margin: 8px;
-    border-radius: ${props => (props.text ? "24px" : "50%")};
+import StackPanel from "../stackpanel";
+
+const RadiusIcon = styled(StackPanel)`
     font-size: 24px;
-    height: 32px;
-    width: ${props => (props.text ? "auto" : "32px")};
+    min-width: 24px;
+    height: 24px;
+    border-radius: 24px;
 `;
 
+const WhiteRadiusIcon = styled(RadiusIcon)`
+    color: var(--black);
+    background-color: var(--white);
+`;
+
+const DarkRadiusIcon = styled(RadiusIcon)`
+    color: var(--white);
+    background-color: var(--black);
+`;
+
+const ThemedRadiusIcon = ({ type, ...rest }) => {
+    switch (type) {
+        case "dark":
+            return <DarkRadiusIcon {...rest} />;
+        default:
+            return <WhiteRadiusIcon {...rest} />;
+    }
+};
+
 const SocialName = styled.div`
-    margin-left: 8px;
+    margin: 0 8px;
+    font-size: 12px;
 `;
 
 const LinkContainer = styled.a`
     text-decoration: none;
 `;
 
-const SocialLink = ({ type, text, url, icon }) => (
+const SocialLink = ({ type = "light", text, url, icon }) => (
     <LinkContainer href={url}>
-        <RadiusIcon type={type} text={text}>
+        <ThemedRadiusIcon
+            type={type}
+            align="center"
+            justify="center"
+            gutter={8}
+            padding={8}
+        >
             <FontAwesomeIcon icon={icon} />
             {text && <SocialName>{text}</SocialName>}
-        </RadiusIcon>
+        </ThemedRadiusIcon>
     </LinkContainer>
 );
 SocialLink.propTypes = {

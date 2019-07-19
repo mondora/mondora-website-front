@@ -2,9 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-import Layout from "../../components/layout";
-
-import SocialLink from "../../components/social-link";
 import {
     faGithub,
     faLinkedin,
@@ -13,6 +10,10 @@ import {
     faInstagram,
     faPinterest
 } from "@fortawesome/free-brands-svg-icons";
+
+import Layout from "../../components/layout";
+import SocialLink from "../../components/social-link";
+import StackPanel from "../../components/stackpanel";
 
 import EmailIcon from "../../../static/images/email-icon.png";
 import PhoneIcon from "../../../static/images/phone-icon.png";
@@ -203,7 +204,7 @@ const Contacts = () => (
                 ))}
                 <RightTitle>{"Follow us on:"}</RightTitle>
 
-                <div style={{ display: "flex" }}>
+                <StackPanel gutter={8}>
                     {Socials.map(social => (
                         <SocialLink
                             type="dark"
@@ -212,7 +213,7 @@ const Contacts = () => (
                             icon={social.icon}
                         ></SocialLink>
                     ))}
-                </div>
+                </StackPanel>
             </RightParagraph>
         </Container>
         {/* TODO: aggiungere mappa google */}

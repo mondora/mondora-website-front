@@ -138,7 +138,7 @@ const Footer = () => (
                     <p>{`+39 0342 1856456 - info@mondora.com`}</p>
                 </span>
                 <span>
-                    <div style={{ display: "flex" }}>
+                    <StackPanel gutter={8}>
                         {Socials.map(social => (
                             <SocialLink
                                 type="light"
@@ -147,7 +147,7 @@ const Footer = () => (
                                 icon={social.icon}
                             ></SocialLink>
                         ))}
-                    </div>
+                    </StackPanel>
                 </span>
             </StackPanel>
         </Misc>
