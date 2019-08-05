@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Playfair&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bitter&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
 
 html {
@@ -10,7 +10,7 @@ body {
 }
 
 h1 {
-    font-family: "Playfair", serif;
+    font-family: "Bitter", serif;
 }
 
 :root {

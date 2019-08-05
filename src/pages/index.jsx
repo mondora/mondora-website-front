@@ -4,8 +4,12 @@ import styled from "styled-components";
 
 import Layout from "../components/layout";
 
+import { Link } from "gatsby";
+
+import AboutImage from "../../static/images/regions/Japan-icon.png";
+
 const FirstBox = styled.div`
-    padding: 0 64px;
+    padding: 0;
     margin-bottom: 40px;
     display: grid;
     grid-template-columns: 1fr 32px 1fr;
@@ -88,12 +92,50 @@ const Description = styled.div`
     line-height: 28pt;
 `;
 
-const Button = styled.button`
+const Button = styled(Link)`
     border-color: var(--primary);
     background-color: var(--primary);
     text-transform: uppercase;
+    text-decoration: none;
     padding: 8px 16px;
-    font-size: 12px;
+    font-size: 16px;
+    color: var(--black);
+`;
+const AboutContainer = styled.div`
+    padding: 0;
+    margin: 40px 0 80px 0;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 32px 1fr;
+    grid-column-gap: 16px;
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+        padding: 8px;
+    }
+`;
+const LeftAbout = styled.div``;
+const RightAbout = styled.div`
+    margin: 24px 0 24px 0;
+`;
+const AboutImg = styled.img`
+    height: 80%;
+    margin: 10% 0;
+    width: 100%;
+`;
+const DescriptionParagraph = styled.p`
+    width: 100%;
+    color: var(--text-dark-gray);
+    padding: 8px;
+`;
+const BlogContainer = styled.div`
+    background-color: var(--gray);
+    text-align: center;
+    height: fit-content;
+`;
+const BlogFeed = styled.div`
+    background-color: red;
+    height: 200px;
+
 `;
 
 const whatItems = [
@@ -157,8 +199,42 @@ const Homepage = () => (
                     );
                 })}
             </WhatItemsContainer>
-            <Button>{"Service"}</Button>
+            <Button to={"/about"}>{"Services"}</Button>
         </WhatContainer>
+        <AboutContainer>
+            <LeftAbout>
+                <AboutImg src={AboutImage} />
+            </LeftAbout>
+            <Divider>
+                <Circle />
+                <Line />
+                <Circle />
+            </Divider>
+            <RightAbout>
+                <h1>{"About mondora"}</h1>
+                <DescriptionParagraph>
+                    {
+                        "mondora is a software and advisory company specialising in custom cloud solutions for all kinds of businesses."
+                    }
+                </DescriptionParagraph>
+                <DescriptionParagraph>
+                    {
+                        "The company is self managed and has been working with Scrum and Agile methodologies since 2002."
+                    }
+                </DescriptionParagraph>
+                <DescriptionParagraph>
+                    {
+                        "With a strong focus on creating a positive impact for all stakeholders, mondora is the perfect match for any company wishing to use their business as a force for good and bring positive change to the world."
+                    }
+                </DescriptionParagraph>
+                <Button to={"/about"}>{"About Us"}</Button>
+            </RightAbout>
+        </AboutContainer>
+        <BlogContainer>
+            <h1>{"From our blog"}</h1>
+            <BlogFeed/>
+            <Button >{"visit our blog"}</Button>
+        </BlogContainer>
     </Layout>
 );
 
