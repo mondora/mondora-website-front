@@ -45,7 +45,6 @@ const Circle = styled.div`
     width: 28px;
     border-radius: 100%;
     height: 28px;
-    background-image: ${Circle};
     @media (max-width: 992px) {
         display: none;
     }

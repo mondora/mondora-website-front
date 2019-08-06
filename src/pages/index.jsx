@@ -8,6 +8,8 @@ import { Link } from "gatsby";
 
 import AboutImage from "../../static/images/regions/Japan-icon.png";
 
+import BlogFeed from "../components/blog-feed";
+
 const FirstBox = styled.div`
     padding: 0;
     margin-bottom: 40px;
@@ -101,6 +103,15 @@ const Button = styled(Link)`
     font-size: 16px;
     color: var(--black);
 `;
+const AButton = styled.a`
+    border-color: var(--primary);
+    background-color: var(--primary);
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    color: var(--black);
+`;
 const AboutContainer = styled.div`
     padding: 0;
     margin: 40px 0 80px 0;
@@ -128,14 +139,10 @@ const DescriptionParagraph = styled.p`
     padding: 8px;
 `;
 const BlogContainer = styled.div`
+    padding: 40px 0 40px 0;
     background-color: var(--gray);
     text-align: center;
     height: fit-content;
-`;
-const BlogFeed = styled.div`
-    background-color: red;
-    height: 200px;
-
 `;
 
 const whatItems = [
@@ -232,8 +239,10 @@ const Homepage = () => (
         </AboutContainer>
         <BlogContainer>
             <h1>{"From our blog"}</h1>
-            <BlogFeed/>
-            <Button >{"visit our blog"}</Button>
+            <BlogFeed />
+            <AButton href={"https://bcalmbcorp.com/"}>
+                {"visit our blog"}
+            </AButton>
         </BlogContainer>
     </Layout>
 );

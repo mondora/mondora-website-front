@@ -23,10 +23,17 @@ module.exports = {
         {
             resolve: `gatsby-source-instagram`,
             options: {
-              username: `mondoracom`
-            },
-          },
+                username: `mondoracom`
+            }
+        },
         "gatsby-plugin-styled-components",
+        {
+            resolve: `gatsby-source-medium`,
+            options: {
+                username: `@mondora`,
+                limit: 4
+            }
+        },
         {
             resolve: "gatsby-plugin-manifest",
             options: {

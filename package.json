@@ -11,6 +11,7 @@
         "color": "^3.1.2",
         "gatsby": "^2.13.23",
         "gatsby-source-instagram": "^0.5.1",
+        "gatsby-source-medium": "^2.1.2",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
