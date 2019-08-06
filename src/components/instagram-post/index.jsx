@@ -28,7 +28,7 @@ const InstagramPost = ({ node, index }) => {
 
 InstagramPost.propTypes = {
     node: PropTypes.object,
-    index: PropTypes.string,
+    index: PropTypes.number
 };
 
 export default InstagramPost;

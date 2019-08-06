@@ -53,8 +53,8 @@ const PostDescription = styled.div`
 `;
 
 const BlogPost = ({ node, index }) => {
-    console.log(index);
-    console.log(node);
+    //console.log(index);
+    //console.log(node);
     return (
         <PostWrapper
             index={index}
@@ -76,7 +76,7 @@ const BlogPost = ({ node, index }) => {
 
 BlogPost.propTypes = {
     node: PropTypes.object,
-    index: PropTypes.string
+    index: PropTypes.number
 };
 
 export default BlogPost;
