@@ -17,6 +17,7 @@ import StackPanel from "../../components/stackpanel";
 
 import EmailIcon from "../../../static/images/email-icon.png";
 import PhoneIcon from "../../../static/images/phone-icon.png";
+import MobileIcon from "../../../static/images/mobile-icon.png";
 
 const Container = styled.div`
     padding: 0 64px;
@@ -64,12 +65,12 @@ const LeftParagraph = styled.div`
     }
 `;
 const LeftTitle = styled.h1`
-    margin-top: 16px;
+    margin: 16px auto 0 24px;
     font-size: ${props => props.theme.size.text.mondora};
 `;
 const LeftContent = styled.div`
     width: 70%;
-    margin: 24px auto 24px 0;
+    margin: 24px auto 24px 24px;
     line-height: 1.6;
     @media (max-width: 992px) {
         margin: 24px auto;
@@ -77,7 +78,7 @@ const LeftContent = styled.div`
 `;
 const ContactsWrapper = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     text-align: center;
 `;
 const ContactName = styled.div`
@@ -124,6 +125,11 @@ const ContactInfo = [
         icon: PhoneIcon,
         title: "Phone:",
         text: "+39 0342 1856 456 "
+    },
+    {
+        icon: MobileIcon,
+        title: "Mobile:",
+        text: "+39 345 9960 097"
     }
 ];
 const Addresses = [
