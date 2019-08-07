@@ -11,8 +11,9 @@ import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
 import HireBittoLogo from "../../../static/images/HireBitto_logo.png";
 import Cycle2WorkGraphic from "../../../static/images/CycleToWork_graphic.png";
 import Cycle2WorkLogo from "../../../static/images/CycleToWork_logo.png";
-import LabFilosofiaGraphic from "../../../static/images/LabFilosofia_graphic.png";
-import LabFilosofiaLogo from "../../../static/images/LabFilosofia_logo.png";
+import ReportIcon2016 from "../../../static/images/report-icon-2016.png";
+import ReportIcon2017 from "../../../static/images/report-icon-2017.png";
+import ReportIcon2018 from "../../../static/images/report-icon-2018.png";
 import Layout from "../../components/layout";
 
 const ContainerProjects = styled.div`
@@ -39,12 +40,6 @@ const ContainerHero = styled.div`
 const ContainerFaqs = styled.div`
     padding: 0 64px;
     margin-left: auto;
-    display: grid;
-    grid-template-columns: 1ed auto;
-    grid-column-gap: 16px;
-    @media (max-width: 992px) {
-        grid-template-columns: auto;
-    }
 `;
 
 const Graphic = styled.img`
@@ -138,23 +133,38 @@ const RightTitle = styled.h1`
 `;
 
 const ReportContainer = styled.div`
-    width: 100%;
+    margin-top: 48px;
+    padding: 0 80px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 48px;
+    background-color: var(--gray);
     @media (max-width: 992px) {
         grid-template-columns: auto;
     }
 `;
-const Report = styled(Link)`
-    display: block;
-    max-width: 40%;
-    padding: 3%;
+const Report = styled.div`
+    display: flex;
+    width: 100%;
+    min-height: 128px;
     margin: 40px auto;
+    box-shadow: 0 0 10px gray;
+    background-color: var(--white);
+`;
+const ReportIcon = styled.img`
+    width: 30%;
+    padding: 16px;
+`;
+const ReportTitle = styled.h1`
+    font-size: 20px;
+    margin: 16px 0;
+`;
+const ReportLink = styled(Link)`
+    font-size: 11pt;
     text-decoration: none;
-    text-align: center;
-    color: var(--text-dark-gray);
-    background-color: var(--variant-lightgray);
+    color: var(--variant-black);
+    border: 1px solid var(--border-gray);
+    padding: 8px;
 `;
 
 const Projects = [
@@ -174,15 +184,6 @@ const Projects = [
         link: "http://www.hirebitto.com/",
         logo: Cycle2WorkLogo,
         graphic: Cycle2WorkGraphic,
-        offset: "30%"
-    },
-    {
-        title: "Laboratori di filosofia",
-        text:
-            "Pikachu è un Pokémon di tipo Elettro introdotto nella prima generazione.Si evolve da Pichu tramite affetto e si evolve in Raichu quando esposto ad una Pietratuono. Il Pikachu iniziale di Pokémon Giallo rifiuterà di evolversi a meno che non venga scambiato in un altro file di gioco e fatto evolvere lì.",
-        link: "/",
-        logo: LabFilosofiaLogo,
-        graphic: LabFilosofiaGraphic,
         offset: 0
     }
 ];
@@ -285,12 +286,22 @@ const Faqs = [
 ];
 const Reports = [
     {
-        title: "Report 2016",
+        icon: ReportIcon2016,
+        title: "Impact Report 2016",
+        button: "Leggi il report >",
         to: "/report2016.pdf"
     },
     {
-        title: "Report 2017",
+        icon: ReportIcon2017,
+        title: "Impact Report 2017",
+        button: "Leggi il report >",
         to: "/report2017.pdf"
+    },
+    {
+        icon: ReportIcon2018,
+        title: "Impact Report 2018",
+        button: "Leggi il report >",
+        to: "/report2018.pdf"
     }
 ];
 
@@ -337,14 +348,18 @@ const BCorp = () => (
             {Faqs.map(faq => (
                 <FaqElement question={faq.question} answer={faq.answer} />
             ))}
-            <ReportContainer>
-                {Reports.map(report => (
-                    <div>
-                        <Report to={report.to}>{report.title}</Report>
-                    </div>
-                ))}
-            </ReportContainer>
         </ContainerFaqs>
+        <ReportContainer>
+            {Reports.map(report => (
+                <Report>
+                    <ReportIcon src={report.icon} />
+                    <div>
+                    <ReportTitle>{report.title}</ReportTitle>
+                    <ReportLink to={report.to}>{report.button}</ReportLink>
+                    </div>
+                </Report>
+            ))}
+        </ReportContainer>
     </Layout>
 );
 
