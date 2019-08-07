@@ -7,6 +7,10 @@ import Layout from "../components/layout";
 import { Link } from "gatsby";
 
 import AboutImage from "../../static/images/regions/Japan-icon.png";
+import BCorpLogo from "../../static/images/BCorp-logo.png";
+import DesignIcon from "../../static/images/design-icon.png";
+import DevelopIcon from "../../static/images/develop-icon.png";
+import TrainingIcon from "../../static/images/training-icon.png";
 
 import BlogFeed from "../components/blog-feed";
 import SquareButton from "../components/square-button";
@@ -15,17 +19,24 @@ const FirstBox = styled.div`
     padding: 0;
     margin-bottom: 40px;
     display: grid;
-    grid-template-columns: 1fr 32px 1fr;
-    grid-column-gap: 16px;
+    grid-template-columns: 1fr 2px 1fr;
     @media (max-width: 992px) {
         grid-template-columns: 1fr;
         padding: 8px;
     }
 `;
-
+const FirstLeft = styled.div`
+    width: 80%;
+    margin: 40px 10%;
+`;
+const FirstImg = styled.img`
+    margin: 80px 20%;
+    width: 60%;
+`;
 const Divider = styled.div`
     height: 100%;
     width: 100%;
+    overflow: visible;
 `;
 const Line = styled.div`
     border: 1px solid var(--black);
@@ -45,19 +56,31 @@ const Circle = styled.div`
     width: 28px;
     border-radius: 100%;
     height: 28px;
+    position: relative;
+    left: -15px;
     @media (max-width: 992px) {
         display: none;
     }
 `;
 
-const BCorpLogo = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
+const BCorpImg = styled.img`
+    display: block;
+    width: 80px;
+    margin: 24px auto;
 `;
 
 const WhatContainer = styled.div`
+    width: 90%;
+    max-width: 1440px;
+    margin: 0 auto;
     text-align: center;
+`;
+const WhatSubtitle = styled.div`
+    width: 80%;
+    margin: 0 auto 40px auto;
+    color: var(--variant-black);
+    font-size: 11pt;
+    line-height: 1.2;
 `;
 
 const WhatItemsContainer = styled.div`
@@ -70,7 +93,7 @@ const WhatItemsContainer = styled.div`
 
 const WhatItem = styled.div`
     text-align: left;
-    margin: 8px 16px;
+    padding: 24px;
 `;
 
 const TitleContainer = styled.div`
@@ -79,10 +102,9 @@ const TitleContainer = styled.div`
     margin-bottom: 16px;
 `;
 
-const Icon = styled.div`
+const Icon = styled.img`
     width: 40px;
     height: 40px;
-    border: 1px solid;
     margin-right: 16px;
 `;
 
@@ -92,7 +114,8 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-    line-height: 28pt;
+    line-height: 1.5;
+    font-size: 14px;
 `;
 const SuperA = styled.a`
     text-decoration: none;
@@ -102,8 +125,7 @@ const AboutContainer = styled.div`
     margin: 40px 0 80px 0;
     height: fit-content;
     display: grid;
-    grid-template-columns: 1fr 32px 1fr;
-    grid-column-gap: 16px;
+    grid-template-columns: 1fr 2px 1fr;
     @media (max-width: 992px) {
         grid-template-columns: 1fr;
         padding: 8px;
@@ -111,17 +133,19 @@ const AboutContainer = styled.div`
 `;
 const LeftAbout = styled.div``;
 const RightAbout = styled.div`
-    margin: 24px 0 24px 0;
+    background-color: var(--gray);
+    padding: 24px;
+    margin: 40px 0;
 `;
 const AboutImg = styled.img`
-    height: 80%;
-    margin: 10% 0;
+    margin: 40px 0;
     width: 100%;
 `;
 const DescriptionParagraph = styled.p`
     width: 100%;
     color: var(--text-dark-gray);
-    padding: 8px;
+    margin: 24px 0;
+    line-height: 1.5;
 `;
 const BlogContainer = styled.div`
     padding: 40px 0 40px 0;
@@ -132,19 +156,19 @@ const BlogContainer = styled.div`
 
 const whatItems = [
     {
-        icon: "icona",
+        icon: DesignIcon,
         title: "Design / Image",
         description:
             "Our aim is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
     },
     {
-        icon: "icona",
+        icon: DevelopIcon,
         title: "Develop & ship",
         description:
             "Shaping new ideas, using open tecnologies, and contributing opensource in our spare time. Reduce your costs while increasing the reliability and quality of your cloud computing experience."
     },
     {
-        icon: "icona",
+        icon: TrainingIcon,
         title: "Training",
         description:
             "Training is offered throughout Italy, Europe and the world thanks to mondora.com. Whether you are looking for introductory or advanced training on our courses are just what you need."
@@ -154,36 +178,34 @@ const whatItems = [
 const Homepage = () => (
     <Layout>
         <FirstBox>
-            <div>
+            <FirstLeft>
                 <h1>{"We using Software as a Force for Good"}</h1>
-                <p>
+                <DescriptionParagraph>
                     {
                         "mondora is a Società Benefit and certified B Corporation. The mission of the company is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers we support humans and nature with projects that benefit the community and land."
                     }
-                </p>
-            </div>
+                </DescriptionParagraph>
+            </FirstLeft>
             <Divider>
                 <Line></Line>
                 <Circle></Circle>
             </Divider>
-            <div>
-                <div>{"img"}</div>
-            </div>
+            <FirstImg src={AboutImage}/>
         </FirstBox>
-        <BCorpLogo>{"b corp logo"}</BCorpLogo>
+        <BCorpImg src={BCorpLogo} />
         <WhatContainer>
             <h1>{"What we can do for you"}</h1>
-            <p>
+            <WhatSubtitle>
                 {
                     "Our aim is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
                 }
-            </p>
+            </WhatSubtitle>
             <WhatItemsContainer>
                 {whatItems.map((item, key) => {
                     return (
                         <WhatItem key={key}>
                             <TitleContainer>
-                                <Icon>{item.icon}</Icon>
+                                <Icon src={item.icon}/>
                                 <Title>{item.title}</Title>
                             </TitleContainer>
                             <Description>{item.description}</Description>
