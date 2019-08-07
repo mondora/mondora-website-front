@@ -88,8 +88,13 @@ const ContainerRegions = styled.div`
 const Regions = [
     {
         image: Logo,
-        name: "GIAPPONE / TOKYO",
-        number: "1"
+        name: "ITALIA / SONDRIO",
+        number: "37"
+    },
+    {
+        image: Logo,
+        name: "ITALIA / MILANO",
+        number: "8"
     },
     {
         image: Logo,
@@ -98,49 +103,53 @@ const Regions = [
     },
     {
         image: Logo,
-        name: "ITALIA / SONDRIO",
-        number: "38"
+        name: "ITALIA / PESARO",
+        number: "2"
     },
     {
         image: Logo,
-        name: "LITUANIA / VILNIUS",
+        name: "SVIZZERA / POSCHIAVO",
         number: "1"
     },
     {
         image: Logo,
-        name: "ITALIA / LAMEZIA TERME",
+        name: "ITALIA / AREZZO",
         number: "1"
     },
     {
         image: Logo,
-        name: "ITALIA / PRATO",
+        name: "ITALIA / CASERTA",
         number: "1"
     },
     {
         image: Logo,
-        name: "ITALIA / MILANO",
-        number: "6"
+        name: "ITALIA / VICENZA",
+        number: "1"
     },
     {
         image: Logo,
-        name: "ITALIA / NAPOLI",
+        name: "ITALIA / NOVARA",
         number: "1"
-    }
+    },
+    {
+        image: Logo,
+        name: "ITALIA / PAVIA",
+        number: "1"
+    },    {
+        image: Logo,
+        name: "ITALIA / BERGAMO",
+        number: "1"
+    },
 ];
 
 const MeetTheTeam = () => (
     <Layout>
         <Container>
             <LeftParagraph>
-                <LeftTitle>{"Meet the team"}</LeftTitle>
+                <LeftTitle>{"We are :mondora"}</LeftTitle>
                 <LeftContent>
                     {
-                        "Etiam gravida nibh erat, nec congue neque ultrices imperdiet. Etiam molestie augue sed risus aliquet, ut rhoncus purus fermentum. Aliquam ac tortor ligula. Nulla quis orci pulvinar."
-                    }
-                </LeftContent>
-                <LeftContent>
-                    {
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate quam pharetra nunc molestie interdum. Sed nec lorem scelerisque, fermentum lacus a, congue lacus. "
+                        "Hello! Here you can learn a little about each one of us and how we join together to make the amazing :m team. We have divided our profiles by geographical area to help with navigation… nice to meet you!"
                     }
                 </LeftContent>
             </LeftParagraph>
@@ -149,10 +158,7 @@ const MeetTheTeam = () => (
                 <Circle></Circle>
             </Divider>
             <RightParagraph>
-                <RightTitle>
-                    {"Mondora"} <br />
-                    {"Team!"}
-                </RightTitle>
+                <RightTitle>{"Meet the team"}</RightTitle>
             </RightParagraph>
         </Container>
         <ContainerRegions>
