@@ -6,9 +6,10 @@ import { Link } from "gatsby";
 
 import Layout from "../../../components/layout";
 import Employee from "../../../components/employee";
+import SquareButton from "../../../components/square-button";
 
 import Logo from "../../../../static/images/regions/Sondrio-graphic.png";
-import ProfilePicture from "../../../../static/images/employees/User-profile.png"
+import ProfilePicture from "../../../../static/images/employees/User-profile.png";
 
 const Container = styled.div`
     padding: 0 64px;
@@ -52,24 +53,13 @@ const Circle = styled.div`
 const LeftParagraph = styled.div`
     text-align: left;
     align-items: left;
-    margin-top: 24px;
-    margin-bottom: 40px;
+    margin: 24px 0 40px 24px;
     @media (max-width: 992px) {
         text-align: center;
     }
 `;
-const Button = styled(Link)`
-    color: var(--black);
-    display: block;
-    width: fit-content;
-    background-color: var(--primary);
-    padding: 2%;
-    margin: 16px;
-    text-decoration: none;
-    text-align: center;
-`;
 const LeftTitle = styled.h1`
-    margin: 24px 16px;
+    margin: 24px 0;
     font-size: 24pt;
 `;
 const RightParagraph = styled.div`
@@ -141,7 +131,9 @@ const Region = () => (
     <Layout>
         <Container>
             <LeftParagraph>
-                <Button to={"meet-the-team"}>{"‹ BACK TO LIST"}</Button>
+                <Link to={"meet-the-team"}>
+                    <SquareButton>{"‹ BACK TO LIST"}</SquareButton>
+                </Link>
                 <LeftTitle>{"Italy/Sondrio"}</LeftTitle>
             </LeftParagraph>
             <Divider>

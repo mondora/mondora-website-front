@@ -60,7 +60,7 @@ SocialLink.propTypes = {
     type: PropTypes.oneOf(["dark", "light"]),
     text: PropTypes.string,
     url: PropTypes.string,
-    icon: PropTypes.string
+    icon: PropTypes.object
 };
 
 export default SocialLink;

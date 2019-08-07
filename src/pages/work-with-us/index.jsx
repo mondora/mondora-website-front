@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Layout from "../../components/layout";
+import SquareButton from "../../components/square-button";
 
 import Image1 from "../../../static/images/LabFilosofia_logo.png";
 
@@ -91,15 +92,8 @@ const HandbookDescription = styled.div`
 const Description = styled.div`
     color: var(--text-dark-gray);
 `;
-const SquareButton = styled.a`
-    color: var(--black);
-    display: block;
-    max-width: 40%;
-    background-color: var(--primary);
-    padding: 2%;
-    margin: 16px auto;
+const SuperA = styled.a`
     text-decoration: none;
-    text-align: center;
 `;
 const CarouselContainer = styled.div`
     text-align: center;
@@ -250,7 +244,9 @@ const WorkWithUs = () => (
                     "We are a software development company working with selected clients who subscribe to our unique approach on agile, cloud development and cloud governance."
                 }
             </HandbookDescription>
-            <SquareButton>{"HANDBOOK LINK"}</SquareButton>
+            <SuperA>
+                <SquareButton>{"HANDBOOK LINK"}</SquareButton>
+            </SuperA>
         </HandbookContainer>
         <CarouselContainer>
             {images.map(image => (
@@ -272,13 +268,17 @@ const WorkWithUs = () => (
             <Circle></Circle>
         </Divider>
         <ContainerForm>
-            <Title>
-                {"Apply"}
-            </Title>
+            <Title>{"Apply"}</Title>
             <FormModule>
                 {/* TODO: insert contact module */}
-                {"Vivamus rutrum turpis sed turpis malesuada facilisis. Aliquam laoreet rhoncus est, ac vestibulum nunc mollis sed. Quisque dolor risus, vehicula non tempus in, venenatis fermentum enim. "}
-                <SquareButton>{"Send"}</SquareButton>
+                <div>
+                    {
+                        "Vivamus rutrum turpis sed turpis malesuada facilisis. Aliquam laoreet rhoncus est, ac vestibulum nunc mollis sed. Quisque dolor risus, vehicula non tempus in, venenatis fermentum enim. "
+                    }
+                </div>
+                <SuperA>
+                    <SquareButton>{"Send"}</SquareButton>
+                </SuperA>
             </FormModule>
         </ContainerForm>
     </Layout>

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Link } from "gatsby";
 
 import FaqElement from "../../components/faq-element";
+import SquareButton from "../../components/square-button";
 
 import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
 import HireBittoLogo from "../../../static/images/HireBitto_logo.png";
@@ -73,15 +74,11 @@ const Description = styled.div`
     text-align: center;
 `;
 
-const Button = styled.a`
-    color: var(--black);
-    display: block;
-    max-width: 40%;
-    background-color: var(--primary);
-    padding: 2%;
-    margin: 16px auto;
+const SuperA = styled.a`
     text-decoration: none;
-    text-align: center;
+`;
+const ProjectDescription = styled.div`
+    padding: 24px 0;
 `;
 
 const Divider = styled.div`
@@ -316,9 +313,9 @@ const BCorp = () => (
                 <RightTitle>
                     {"Our score:"} <br /> {"122 points"}
                 </RightTitle>
-                <Button href={"https://bcorporation.net/directory/mondora"}>
-                    {"BCorp page"}
-                </Button>
+                <SuperA href={"https://bcorporation.net/directory/mondora"}>
+                    <SquareButton>{"BCorp page"}</SquareButton>
+                </SuperA>
             </div>
         </ContainerHero>
         <ContainerProjects>
@@ -327,8 +324,10 @@ const BCorp = () => (
                     <Graphic src={project.graphic} />
                     <Description>
                         <ProjectLogo src={project.logo} />
-                        <div>{project.text}</div>
-                        <Button href={project.link}>{project.title}</Button>
+                        <ProjectDescription>{project.text}</ProjectDescription>
+                        <SuperA href={project.link}>
+                            <SquareButton>{project.title}</SquareButton>
+                        </SuperA>
                     </Description>
                 </Project>
             ))}

@@ -9,6 +9,7 @@ import { Link } from "gatsby";
 import AboutImage from "../../static/images/regions/Japan-icon.png";
 
 import BlogFeed from "../components/blog-feed";
+import SquareButton from "../components/square-button";
 
 const FirstBox = styled.div`
     padding: 0;
@@ -93,24 +94,8 @@ const Title = styled.div`
 const Description = styled.div`
     line-height: 28pt;
 `;
-
-const Button = styled(Link)`
-    border-color: var(--primary);
-    background-color: var(--primary);
-    text-transform: uppercase;
+const SuperA = styled.a`
     text-decoration: none;
-    padding: 8px 16px;
-    font-size: 16px;
-    color: var(--black);
-`;
-const AButton = styled.a`
-    border-color: var(--primary);
-    background-color: var(--primary);
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 8px 16px;
-    font-size: 16px;
-    color: var(--black);
 `;
 const AboutContainer = styled.div`
     padding: 0;
@@ -206,7 +191,9 @@ const Homepage = () => (
                     );
                 })}
             </WhatItemsContainer>
-            <Button to={"/about"}>{"Services"}</Button>
+            <Link to={"/about"}>
+                <SquareButton>{"Services"}</SquareButton>
+            </Link>
         </WhatContainer>
         <AboutContainer>
             <LeftAbout>
@@ -234,15 +221,17 @@ const Homepage = () => (
                         "With a strong focus on creating a positive impact for all stakeholders, mondora is the perfect match for any company wishing to use their business as a force for good and bring positive change to the world."
                     }
                 </DescriptionParagraph>
-                <Button to={"/about"}>{"About Us"}</Button>
+                <Link to={"/about"}>
+                    <SquareButton>{"About Us"}</SquareButton>
+                </Link>
             </RightAbout>
         </AboutContainer>
         <BlogContainer>
             <h1>{"From our blog"}</h1>
             <BlogFeed />
-            <AButton href={"https://bcalmbcorp.com/"}>
-                {"visit our blog"}
-            </AButton>
+            <SuperA href={"https://bcalmbcorp.com/"}>
+                <SquareButton>{"visit our blog"}</SquareButton>
+            </SuperA>
         </BlogContainer>
     </Layout>
 );
