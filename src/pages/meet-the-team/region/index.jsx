@@ -7,53 +7,15 @@ import { Link } from "gatsby";
 import Layout from "../../../components/layout";
 import Employee from "../../../components/employee";
 import SquareButton from "../../../components/square-button";
+import Section from "../../../components/section";
 
 import Logo from "../../../../static/images/regions/Sondrio-graphic.png";
 import ProfilePicture from "../../../../static/images/employees/User-profile.png";
 
-const Container = styled.div`
-    padding: 0 64px;
-    margin-left: auto;
-    display: grid;
-    text-align: center;
-    grid-template-columns: 1fr 32px 1fr;
-    grid-column-gap: 16px;
-    @media (max-width: 992px) {
-        grid-template-columns: 1fr;
-    }
-`;
-const Divider = styled.div`
-    height: 100%;
-    width: 100%;
-    position: relative;
-    top: 16px;
-`;
-const Line = styled.div`
-    border: 1px solid black;
-    @media (min-width: 992px) {
-        margin: 0 auto;
-        width: 0;
-        height: 100%;
-    }
-    @media (max-width: 992px) {
-        margin: 24px 10%;
-        height: 0;
-        width: 80%;
-    }
-`;
-const Circle = styled.div`
-    border: 2px solid black;
-    width: 28px;
-    border-radius: 100%;
-    height: 28px;
-    @media (max-width: 992px) {
-        display: none;
-    }
-`;
 const LeftParagraph = styled.div`
     text-align: left;
     align-items: left;
-    margin: 24px 0 40px 24px;
+    margin: 24px 0 40px 80px;
     @media (max-width: 992px) {
         text-align: center;
     }
@@ -129,21 +91,17 @@ const Employees = [
 
 const Region = () => (
     <Layout>
-        <Container>
+        <Section style="margin-bottom: 0;" position={"below"} offset={"32px"} margin={"40px 24px 0 24px"}>
             <LeftParagraph>
                 <Link to={"meet-the-team"}>
                     <SquareButton>{"‹ BACK TO LIST"}</SquareButton>
                 </Link>
                 <LeftTitle>{"Italy/Sondrio"}</LeftTitle>
             </LeftParagraph>
-            <Divider>
-                <Line></Line>
-                <Circle></Circle>
-            </Divider>
             <RightParagraph>
                 <RegionImage src={Logo} />
             </RightParagraph>
-        </Container>
+        </Section>
         <ContainerEmployees>
             {Employees.map(employee => (
                 <Employee

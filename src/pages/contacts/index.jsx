@@ -14,52 +14,15 @@ import {
 import Layout from "../../components/layout";
 import SocialLink from "../../components/social-link";
 import StackPanel from "../../components/stackpanel";
+import Section from "../../components/section";
 
 import EmailIcon from "../../../static/images/email-icon.png";
 import PhoneIcon from "../../../static/images/phone-icon.png";
 import MobileIcon from "../../../static/images/mobile-icon.png";
 
-const Container = styled.div`
-    padding: 0 64px;
-    margin-left: auto;
-    display: grid;
-    text-align: center;
-    grid-template-columns: 1fr 32px 1fr;
-    grid-column-gap: 16px;
-    @media (max-width: 992px) {
-        grid-template-columns: 1fr;
-    }
-`;
-const Divider = styled.div`
-    height: 100%;
-    width: 100%;
-`;
-const Line = styled.div`
-    border: 1px solid var(--black);
-    @media (min-width: 992px) {
-        margin: 0 auto;
-        width: 0;
-        height: 90%;
-    }
-    @media (max-width: 992px) {
-        margin: 24px 10%;
-        height: 0;
-        width: 80%;
-    }
-`;
-const Circle = styled.div`
-    border: 2px solid var(--black);
-    width: 28px;
-    border-radius: 100%;
-    height: 28px;
-    @media (max-width: 992px) {
-        display: none;
-    }
-`;
 const LeftParagraph = styled.div`
     text-align: left;
-    margin-top: 80px;
-    margin-bottom: 40px;
+    margin: 40px 32px;
     @media (max-width: 992px) {
         text-align: center;
     }
@@ -95,7 +58,7 @@ const ContactIcon = styled.img`
 `;
 const RightParagraph = styled.div`
     text-align: left;
-    margin: 16px;
+    margin: 32px;
 `;
 const RightTitle = styled.div`
     margin-top: 40px;
@@ -179,7 +142,7 @@ const Socials = [
 
 const Contacts = () => (
     <Layout>
-        <Container>
+        <Section position={"below"}>
             <LeftParagraph>
                 <LeftTitle>{"Keep in touch"}</LeftTitle>
                 <LeftContent>
@@ -197,10 +160,6 @@ const Contacts = () => (
                     ))}
                 </ContactsWrapper>
             </LeftParagraph>
-            <Divider>
-                <Line></Line>
-                <Circle></Circle>
-            </Divider>
             <RightParagraph>
                 {Addresses.map(address => (
                     <div>
@@ -221,7 +180,7 @@ const Contacts = () => (
                     ))}
                 </StackPanel>
             </RightParagraph>
-        </Container>
+        </Section>
         {/* TODO: aggiungere mappa google */}
         <MapContainer>{"google maps"}</MapContainer>
     </Layout>

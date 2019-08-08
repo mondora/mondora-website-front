@@ -2,8 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-import Layout from "../components/layout";
-
 import { Link } from "gatsby";
 
 import AboutImage from "../../static/images/regions/Japan-icon.png";
@@ -14,17 +12,9 @@ import TrainingIcon from "../../static/images/training-icon.png";
 
 import BlogFeed from "../components/blog-feed";
 import SquareButton from "../components/square-button";
+import Layout from "../components/layout";
+import Section from "../components/section";
 
-const FirstBox = styled.div`
-    padding: 0;
-    margin-bottom: 40px;
-    display: grid;
-    grid-template-columns: 1fr 2px 1fr;
-    @media (max-width: 992px) {
-        grid-template-columns: 1fr;
-        padding: 8px;
-    }
-`;
 const FirstLeft = styled.div`
     width: 80%;
     margin: 40px 10%;
@@ -32,35 +22,6 @@ const FirstLeft = styled.div`
 const FirstImg = styled.img`
     margin: 80px 20%;
     width: 60%;
-`;
-const Divider = styled.div`
-    height: 100%;
-    width: 100%;
-    overflow: visible;
-`;
-const Line = styled.div`
-    border: 1px solid var(--black);
-    @media (min-width: 992px) {
-        margin: 0 auto;
-        width: 0;
-        height: 90%;
-    }
-    @media (max-width: 992px) {
-        margin: 24px 10%;
-        height: 0;
-        width: 80%;
-    }
-`;
-const Circle = styled.div`
-    border: 2px solid var(--black);
-    width: 28px;
-    border-radius: 100%;
-    height: 28px;
-    position: relative;
-    left: -15px;
-    @media (max-width: 992px) {
-        display: none;
-    }
 `;
 
 const BCorpImg = styled.img`
@@ -82,7 +43,6 @@ const WhatSubtitle = styled.div`
     font-size: 11pt;
     line-height: 1.2;
 `;
-
 const WhatItemsContainer = styled.div`
     display: flex;
 
@@ -90,46 +50,30 @@ const WhatItemsContainer = styled.div`
         flex-direction: column;
     }
 `;
-
 const WhatItem = styled.div`
     text-align: left;
     padding: 24px;
 `;
-
 const TitleContainer = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 16px;
 `;
-
 const Icon = styled.img`
     width: 40px;
     height: 40px;
     margin-right: 16px;
 `;
-
 const Title = styled.div`
     font-size: 24px;
     font-weight: bold;
 `;
-
 const Description = styled.div`
     line-height: 1.5;
     font-size: 14px;
 `;
 const SuperA = styled.a`
     text-decoration: none;
-`;
-const AboutContainer = styled.div`
-    padding: 0;
-    margin: 40px 0 80px 0;
-    height: fit-content;
-    display: grid;
-    grid-template-columns: 1fr 2px 1fr;
-    @media (max-width: 992px) {
-        grid-template-columns: 1fr;
-        padding: 8px;
-    }
 `;
 const LeftAbout = styled.div``;
 const RightAbout = styled.div`
@@ -177,7 +121,7 @@ const whatItems = [
 
 const Homepage = () => (
     <Layout>
-        <FirstBox>
+        <Section position={"below"}>
             <FirstLeft>
                 <h1>{"We using Software as a Force for Good"}</h1>
                 <DescriptionParagraph>
@@ -186,12 +130,9 @@ const Homepage = () => (
                     }
                 </DescriptionParagraph>
             </FirstLeft>
-            <Divider>
-                <Line></Line>
-                <Circle></Circle>
-            </Divider>
-            <FirstImg src={AboutImage}/>
-        </FirstBox>
+            <FirstImg src={AboutImage} />
+        </Section>
+
         <BCorpImg src={BCorpLogo} />
         <WhatContainer>
             <h1>{"What we can do for you"}</h1>
@@ -205,7 +146,7 @@ const Homepage = () => (
                     return (
                         <WhatItem key={key}>
                             <TitleContainer>
-                                <Icon src={item.icon}/>
+                                <Icon src={item.icon} />
                                 <Title>{item.title}</Title>
                             </TitleContainer>
                             <Description>{item.description}</Description>
@@ -217,15 +158,11 @@ const Homepage = () => (
                 <SquareButton>{"Services"}</SquareButton>
             </Link>
         </WhatContainer>
-        <AboutContainer>
+
+        <Section position={"both"}>
             <LeftAbout>
                 <AboutImg src={AboutImage} />
             </LeftAbout>
-            <Divider>
-                <Circle />
-                <Line />
-                <Circle />
-            </Divider>
             <RightAbout>
                 <h1>{"About mondora"}</h1>
                 <DescriptionParagraph>
@@ -247,7 +184,8 @@ const Homepage = () => (
                     <SquareButton>{"About Us"}</SquareButton>
                 </Link>
             </RightAbout>
-        </AboutContainer>
+        </Section>
+
         <BlogContainer>
             <h1>{"From our blog"}</h1>
             <BlogFeed />

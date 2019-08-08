@@ -6,6 +6,8 @@ import { Link } from "gatsby";
 
 import FaqElement from "../../components/faq-element";
 import SquareButton from "../../components/square-button";
+import Section from "../../components/section";
+import Layout from "../../components/layout";
 
 import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
 import HireBittoLogo from "../../../static/images/HireBitto_logo.png";
@@ -14,7 +16,6 @@ import Cycle2WorkLogo from "../../../static/images/CycleToWork_logo.png";
 import ReportIcon2016 from "../../../static/images/report-icon-2016.png";
 import ReportIcon2017 from "../../../static/images/report-icon-2017.png";
 import ReportIcon2018 from "../../../static/images/report-icon-2018.png";
-import Layout from "../../components/layout";
 
 const ContainerProjects = styled.div`
     padding: 0 64px;
@@ -24,17 +25,6 @@ const ContainerProjects = styled.div`
     grid-column-gap: 16px;
     @media (max-width: 992px) {
         grid-template-columns: auto;
-    }
-`;
-const ContainerHero = styled.div`
-    padding: 0 64px;
-    margin-left: auto;
-    display: grid;
-    text-align: center;
-    grid-template-columns: 1fr 32px 1fr;
-    grid-column-gap: 16px;
-    @media (max-width: 992px) {
-        grid-template-columns: 1fr;
     }
 `;
 const ContainerFaqs = styled.div`
@@ -75,50 +65,17 @@ const SuperA = styled.a`
 const ProjectDescription = styled.div`
     padding: 24px 0;
 `;
-
-const Divider = styled.div`
-    height: 100%;
-    width: 100%;
-`;
-
-const Line = styled.div`
-    border: 1px solid var(--black);
-    @media (min-width: 992px) {
-        margin: 0 auto;
-        width: 0;
-        height: 90%;
-    }
-    @media (max-width: 992px) {
-        margin: 24px 10%;
-        height: 0;
-        width: 80%;
-    }
-`;
-
-const Circle = styled.div`
-    border: 2px solid var(--black);
-    width: 28px;
-    border-radius: 100%;
-    height: 28px;
-    @media (max-width: 992px) {
-        display: none;
-    }
-`;
-
 const LeftParagraph = styled.div`
     text-align: left;
-    margin-top: 80px;
-    margin-bottom: 40px;
+    margin: 80px 0 64px 40px;
     @media (max-width: 992px) {
         text-align: center;
     }
 `;
-
 const LeftTitle = styled.h1`
     margin-top: 16px;
     font-size: ${props => props.theme.size.text.mondora};
 `;
-
 const LeftContent = styled.div`
     width: 70%;
     margin: 24px auto 24px 0;
@@ -130,6 +87,10 @@ const LeftContent = styled.div`
 const RightTitle = styled.h1`
     margin-top: 80px;
     font-size: ${props => props.theme.size.text.mondora};
+`;
+const RightContainer = styled.div`
+    margin: 40px 64px 40px 0;
+    text-align: center;
 `;
 
 const ReportContainer = styled.div`
@@ -307,7 +268,7 @@ const Reports = [
 
 const BCorp = () => (
     <Layout>
-        <ContainerHero>
+        <Section position={"below"}>
             <LeftParagraph>
                 <LeftTitle>{"mondora is a BCorp!"}</LeftTitle>
                 <LeftContent>
@@ -316,19 +277,15 @@ const BCorp = () => (
                     }
                 </LeftContent>
             </LeftParagraph>
-            <Divider>
-                <Line></Line>
-                <Circle></Circle>
-            </Divider>
-            <div>
+            <RightContainer>
                 <RightTitle>
                     {"Our score:"} <br /> {"122 points"}
                 </RightTitle>
                 <SuperA href={"https://bcorporation.net/directory/mondora"}>
                     <SquareButton>{"BCorp page"}</SquareButton>
                 </SuperA>
-            </div>
-        </ContainerHero>
+            </RightContainer>
+        </Section>
         <ContainerProjects>
             {Projects.map(project => (
                 <Project offset={project.offset}>
@@ -354,8 +311,8 @@ const BCorp = () => (
                 <Report>
                     <ReportIcon src={report.icon} />
                     <div>
-                    <ReportTitle>{report.title}</ReportTitle>
-                    <ReportLink to={report.to}>{report.button}</ReportLink>
+                        <ReportTitle>{report.title}</ReportTitle>
+                        <ReportLink to={report.to}>{report.button}</ReportLink>
                     </div>
                 </Report>
             ))}
