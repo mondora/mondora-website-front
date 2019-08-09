@@ -2,6 +2,8 @@ import React from "react";
 
 import styled from "styled-components";
 
+import {Link} from "gatsby";
+
 import StackPanel from "../stackpanel";
 
 import SocialLink from "../../components/social-link";
@@ -34,11 +36,13 @@ const Container = styled.div`
     }
 `;
 
-const MiniLogo = styled.div`
+const MiniLogo = styled(Link)`
     &:before {
         color: var(--primary);
         content: ":";
     }
+    text-decoration: none;
+    color: var(--white);
     margin-top: -10px;
     grid-area: 1 / 1 / 3 / 2;
     font-size: ${props => props.theme.size.text.megaM};

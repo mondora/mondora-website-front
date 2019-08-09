@@ -6,7 +6,9 @@ import StackPanel from "../stackpanel";
 
 import { Link } from "gatsby";
 
-const MiniLogo = styled.div`
+const MiniLogo = styled(Link)`
+    color: var(--black);
+    text-decoration: none;
     font-size: ${props => props.theme.size.text.mondora};
     padding: 8px 0;
 
@@ -71,7 +73,7 @@ const Menu = () => (
     <Container>
         <StackPanel justify="space-between">
             <StackPanel>
-                <MiniLogo>{"mondora"}</MiniLogo>
+                <MiniLogo to={"/"}>{"mondora"}</MiniLogo>
             </StackPanel>
 
             <StackPanel gutter={16} align="center">
