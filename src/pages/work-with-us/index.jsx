@@ -6,7 +6,7 @@ import Layout from "../../components/layout";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 
-import Image1 from "../../../static/images/LabFilosofia_logo.png";
+import Image1 from "../../../static/images/image.png";
 
 const LeftParagraph = styled.div`
     text-align: left;
