@@ -37,6 +37,13 @@ const SuperLink = styled(Link)`
         background-position-x: center;
     }
 `;
+const BlogButton = styled.button`
+    font-size: ${props => props.theme.size.text.menu};
+    padding: 8px 16px;
+    color: var(--black);
+    border: 1px solid var(--variant-black);
+    border-radius: 24px;
+`;
 
 const links = [
     {
@@ -62,10 +69,6 @@ const links = [
     {
         to: "/contacts",
         text: "Contacts"
-    },
-    {
-        to: "/",
-        text: "Blog"
     }
 ];
 
@@ -82,6 +85,9 @@ const Menu = () => (
                         {link.text}
                     </SuperLink>
                 ))}
+                <a href="https://bcalmbcorp.com/">
+                    <BlogButton>{"Blog :m"}</BlogButton>
+                </a>
             </StackPanel>
         </StackPanel>
     </Container>
