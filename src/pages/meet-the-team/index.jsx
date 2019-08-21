@@ -3,10 +3,11 @@ import React from "react";
 import styled from "styled-components";
 
 import Layout from "../../components/layout";
-import Section from "../../components/section"
+import Section from "../../components/section";
+import RegionMiniature from "../../components/region";
+import Divider from "../../components/divider";
 
 import Logo from "../../../static/images/regions/Japan-icon.png";
-import RegionMiniature from "../../components/region";
 
 const LeftParagraph = styled.div`
     text-align: left;
@@ -98,27 +99,37 @@ const Regions = [
         image: Logo,
         name: "ITALIA / PAVIA",
         number: "1"
-    },    {
+    },
+    {
         image: Logo,
         name: "ITALIA / BERGAMO",
         number: "1"
-    },
+    }
 ];
 
 const MeetTheTeam = () => (
     <Layout>
-        <Section position={"below"} top={"32px"}>
-            <LeftParagraph>
-                <LeftTitle>{"We are :mondora"}</LeftTitle>
-                <LeftContent>
-                    {
-                        "Hello! Here you can learn a little about each one of us and how we join together to make the amazing :m team. We have divided our profiles by geographical area to help with navigation… nice to meet you!"
-                    }
-                </LeftContent>
-            </LeftParagraph>
-            <RightParagraph>
-                <RightTitle>{"Meet the team"}</RightTitle>
-            </RightParagraph>
+        <Section gutter={32}>
+            <Section.LeftContainer>
+                <LeftParagraph>
+                    <LeftTitle>{"We are :mondora"}</LeftTitle>
+                    <LeftContent>
+                        {
+                            "Hello! Here you can learn a little about each one of us and how we join together to make the amazing :m team. We have divided our profiles by geographical area to help with navigation… nice to meet you!"
+                        }
+                    </LeftContent>
+                </LeftParagraph>
+            </Section.LeftContainer>
+
+            <Section.DividerContainer>
+                <Divider />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <RightParagraph>
+                    <RightTitle>{"Meet the team"}</RightTitle>
+                </RightParagraph>
+            </Section.RightContainer>
         </Section>
         <ContainerRegions>
             {Regions.map(region => (

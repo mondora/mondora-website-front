@@ -15,6 +15,7 @@ import Layout from "../../components/layout";
 import SocialLink from "../../components/social-link";
 import StackPanel from "../../components/stackpanel";
 import Section from "../../components/section";
+import Divider from "../../components/divider";
 
 import EmailIcon from "../../../static/images/email-icon.png";
 import PhoneIcon from "../../../static/images/phone-icon.png";
@@ -142,44 +143,53 @@ const Socials = [
 
 const Contacts = () => (
     <Layout>
-        <Section position={"below"}>
-            <LeftParagraph>
-                <LeftTitle>{"Keep in touch"}</LeftTitle>
-                <LeftContent>
-                    {
-                        "Whether you are interested in working with us on a custom software solution for your business, or are just curious about the :m world, we would love to get in touch! "
-                    }
-                </LeftContent>
-                <ContactsWrapper>
-                    {ContactInfo.map(contact => (
+        <Section gutter={32}>
+            <Section.LeftContainer>
+                <LeftParagraph>
+                    <LeftTitle>{"Keep in touch"}</LeftTitle>
+                    <LeftContent>
+                        {
+                            "Whether you are interested in working with us on a custom software solution for your business, or are just curious about the :m world, we would love to get in touch! "
+                        }
+                    </LeftContent>
+                    <ContactsWrapper>
+                        {ContactInfo.map(contact => (
+                            <div>
+                                <ContactIcon src={contact.icon} />
+                                <ContactName>{contact.title}</ContactName>
+                                <ContactBody>{contact.text}</ContactBody>
+                            </div>
+                        ))}
+                    </ContactsWrapper>
+                </LeftParagraph>
+            </Section.LeftContainer>
+
+            <Section.DividerContainer>
+                <Divider />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <RightParagraph>
+                    {Addresses.map(address => (
                         <div>
-                            <ContactIcon src={contact.icon} />
-                            <ContactName>{contact.title}</ContactName>
-                            <ContactBody>{contact.text}</ContactBody>
+                            <RightTitle>{address.title}</RightTitle>
+                            <RightContent>{address.address}</RightContent>
                         </div>
                     ))}
-                </ContactsWrapper>
-            </LeftParagraph>
-            <RightParagraph>
-                {Addresses.map(address => (
-                    <div>
-                        <RightTitle>{address.title}</RightTitle>
-                        <RightContent>{address.address}</RightContent>
-                    </div>
-                ))}
-                <RightTitle>{"Follow us on:"}</RightTitle>
+                    <RightTitle>{"Follow us on:"}</RightTitle>
 
-                <StackPanel gutter={8}>
-                    {Socials.map(social => (
-                        <SocialLink
-                            type="dark"
-                            text={social.text}
-                            url={social.url}
-                            icon={social.icon}
-                        ></SocialLink>
-                    ))}
-                </StackPanel>
-            </RightParagraph>
+                    <StackPanel gutter={8}>
+                        {Socials.map(social => (
+                            <SocialLink
+                                type="dark"
+                                text={social.text}
+                                url={social.url}
+                                icon={social.icon}
+                            ></SocialLink>
+                        ))}
+                    </StackPanel>
+                </RightParagraph>
+            </Section.RightContainer>
         </Section>
         {/* TODO: aggiungere mappa google */}
         <MapContainer>{"google maps"}</MapContainer>

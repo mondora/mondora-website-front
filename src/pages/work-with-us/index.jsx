@@ -7,6 +7,7 @@ import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 
 import Image1 from "../../../static/images/image.png";
+import Divider from "../../components/divider";
 
 const LeftParagraph = styled.div`
     text-align: left;
@@ -174,26 +175,35 @@ const Reasons = [
 
 const WorkWithUs = () => (
     <Layout>
-        <Section position={"below"} margin={"40px 64px 80px 64px"}>
-            <LeftParagraph>
-                <LeftTitle>{"Meet the team"}</LeftTitle>
-                <LeftContent>
-                    {
-                        "Etiam gravida nibh erat, nec congue neque ultrices imperdiet. Etiam molestie augue sed risus aliquet, ut rhoncus purus fermentum. Aliquam ac tortor ligula. Nulla quis orci pulvinar."
-                    }
-                </LeftContent>
-                <LeftContent>
-                    {
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate quam pharetra nunc molestie interdum. Sed nec lorem scelerisque, fermentum lacus a, congue lacus. "
-                    }
-                </LeftContent>
-            </LeftParagraph>
-            <RightParagraph>
-                <RightTitle>
-                    {"Mondora"} <br />
-                    {"Team!"}
-                </RightTitle>
-            </RightParagraph>
+        <Section gutter={32}>
+            <Section.LeftContainer>
+                <LeftParagraph>
+                    <LeftTitle>{"Meet the team"}</LeftTitle>
+                    <LeftContent>
+                        {
+                            "Etiam gravida nibh erat, nec congue neque ultrices imperdiet. Etiam molestie augue sed risus aliquet, ut rhoncus purus fermentum. Aliquam ac tortor ligula. Nulla quis orci pulvinar."
+                        }
+                    </LeftContent>
+                    <LeftContent>
+                        {
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate quam pharetra nunc molestie interdum. Sed nec lorem scelerisque, fermentum lacus a, congue lacus. "
+                        }
+                    </LeftContent>
+                </LeftParagraph>
+            </Section.LeftContainer>
+
+            <Section.DividerContainer>
+                <Divider />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <RightParagraph>
+                    <RightTitle>
+                        {"Mondora"} <br />
+                        {"Team!"}
+                    </RightTitle>
+                </RightParagraph>
+            </Section.RightContainer>
         </Section>
         <HandbookContainer>
             <Title>{"Mondora Srl"}</Title>
@@ -221,7 +231,7 @@ const WorkWithUs = () => (
                 </ReasonPanel>
             ))}
         </ReasonsContainer>
-                <Section position={"below"}/>
+        <Section position={"below"} />
         <ContainerForm>
             <Title>{"Apply"}</Title>
             <FormModule>

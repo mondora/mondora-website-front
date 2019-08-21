@@ -10,6 +10,7 @@ const MiniLogo = styled(Link)`
     color: var(--black);
     text-decoration: none;
     font-size: ${props => props.theme.size.text.mondora};
+    font-weight: bold;
     padding: 8px 0;
 
     &:before {

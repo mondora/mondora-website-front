@@ -14,14 +14,10 @@ import BlogFeed from "../components/blog-feed";
 import SquareButton from "../components/square-button";
 import Layout from "../components/layout";
 import Section from "../components/section";
+import Divider from "../components/divider";
 
-const FirstLeft = styled.div`
-    width: 80%;
-    margin: 40px 10%;
-`;
 const FirstImg = styled.img`
-    margin: 80px 20%;
-    width: 60%;
+    margin: 80px auto;
 `;
 
 const BCorpImg = styled.img`
@@ -31,9 +27,8 @@ const BCorpImg = styled.img`
 `;
 
 const WhatContainer = styled.div`
-    width: 90%;
     max-width: 1440px;
-    margin: 0 auto;
+    margin: 24px auto;
     text-align: center;
 `;
 const WhatSubtitle = styled.div`
@@ -64,7 +59,7 @@ const Icon = styled.img`
     height: 40px;
     margin-right: 16px;
 `;
-const Title = styled.div`
+const Title = styled.h3`
     font-size: 24px;
     font-weight: bold;
 `;
@@ -75,18 +70,18 @@ const Description = styled.div`
 const SuperA = styled.a`
     text-decoration: none;
 `;
-const LeftAbout = styled.div``;
 const RightAbout = styled.div`
-    background-color: var(--gray);
-    padding: 24px;
-    margin: 40px 0;
+    padding: 32px 64px;
 `;
-const AboutImg = styled.img`
-    margin: 40px 0;
+const AboutImg = styled.div`
     width: 100%;
+    height: 320px;
+    background-image: url(${AboutImage});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 `;
 const DescriptionParagraph = styled.p`
-    width: 100%;
     color: var(--text-dark-gray);
     margin: 24px 0;
     line-height: 1.5;
@@ -121,19 +116,29 @@ const whatItems = [
 
 const Homepage = () => (
     <Layout>
-        <Section position={"below"}>
-            <FirstLeft>
-                <h1>{"We using Software as a Force for Good"}</h1>
-                <DescriptionParagraph>
-                    {
-                        "mondora is a Società Benefit and certified B Corporation. The mission of the company is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers we support humans and nature with projects that benefit the community and land."
-                    }
-                </DescriptionParagraph>
-            </FirstLeft>
-            <FirstImg src={AboutImage} />
+        <Section gutter={32}>
+            <Section.LeftContainer padding={64}>
+                <div>
+                    <h1>{"We using Software as a Force for Good"}</h1>
+                    <DescriptionParagraph>
+                        {
+                            "mondora is a Società Benefit and certified B Corporation. The mission of the company is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers we support humans and nature with projects that benefit the community and land."
+                        }
+                    </DescriptionParagraph>
+                </div>
+            </Section.LeftContainer>
+
+            <Section.DividerContainer>
+                <Divider below />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <FirstImg src={AboutImage} />
+            </Section.RightContainer>
         </Section>
 
         <BCorpImg src={BCorpLogo} />
+
         <WhatContainer>
             <h1>{"What we can do for you"}</h1>
             <WhatSubtitle>
@@ -159,31 +164,38 @@ const Homepage = () => (
             </Link>
         </WhatContainer>
 
-        <Section position={"both"}>
-            <LeftAbout>
-                <AboutImg src={AboutImage} />
-            </LeftAbout>
-            <RightAbout>
-                <h1>{"About mondora"}</h1>
-                <DescriptionParagraph>
-                    {
-                        "mondora is a software and advisory company specialising in custom cloud solutions for all kinds of businesses."
-                    }
-                </DescriptionParagraph>
-                <DescriptionParagraph>
-                    {
-                        "The company is self managed and has been working with Scrum and Agile methodologies since 2002."
-                    }
-                </DescriptionParagraph>
-                <DescriptionParagraph>
-                    {
-                        "With a strong focus on creating a positive impact for all stakeholders, mondora is the perfect match for any company wishing to use their business as a force for good and bring positive change to the world."
-                    }
-                </DescriptionParagraph>
-                <Link to={"/about"}>
-                    <SquareButton>{"About Us"}</SquareButton>
-                </Link>
-            </RightAbout>
+        <Section margin={0}>
+            <Section.LeftContainer>
+                <AboutImg />
+            </Section.LeftContainer>
+
+            <Section.DividerContainer>
+                <Divider above below={false} />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <RightAbout>
+                    <h1>{"About mondora"}</h1>
+                    <DescriptionParagraph>
+                        {
+                            "mondora is a software and advisory company specialising in custom cloud solutions for all kinds of businesses."
+                        }
+                    </DescriptionParagraph>
+                    <DescriptionParagraph>
+                        {
+                            "The company is self managed and has been working with Scrum and Agile methodologies since 2002."
+                        }
+                    </DescriptionParagraph>
+                    <DescriptionParagraph>
+                        {
+                            "With a strong focus on creating a positive impact for all stakeholders, mondora is the perfect match for any company wishing to use their business as a force for good and bring positive change to the world."
+                        }
+                    </DescriptionParagraph>
+                    <Link to={"/about"}>
+                        <SquareButton>{"About Us"}</SquareButton>
+                    </Link>
+                </RightAbout>
+            </Section.RightContainer>
         </Section>
 
         <BlogContainer>

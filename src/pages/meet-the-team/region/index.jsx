@@ -8,6 +8,7 @@ import Layout from "../../../components/layout";
 import Employee from "../../../components/employee";
 import SquareButton from "../../../components/square-button";
 import Section from "../../../components/section";
+import Divider from "../../../components/divider";
 
 import Logo from "../../../../static/images/regions/Sondrio-graphic.png";
 import ProfilePicture from "../../../../static/images/employees/User-profile.png";
@@ -91,16 +92,25 @@ const Employees = [
 
 const Region = () => (
     <Layout>
-        <Section style="margin-bottom: 0;" position={"below"} offset={"32px"} margin={"40px 24px 0 24px"}>
-            <LeftParagraph>
-                <Link to={"meet-the-team"}>
-                    <SquareButton>{"‹ BACK TO LIST"}</SquareButton>
-                </Link>
-                <LeftTitle>{"Italy/Sondrio"}</LeftTitle>
-            </LeftParagraph>
-            <RightParagraph>
-                <RegionImage src={Logo} />
-            </RightParagraph>
+        <Section gutter={32}>
+            <Section.LeftContainer>
+                <LeftParagraph>
+                    <Link to={"meet-the-team"}>
+                        <SquareButton>{"‹ BACK TO LIST"}</SquareButton>
+                    </Link>
+                    <LeftTitle>{"Italy/Sondrio"}</LeftTitle>
+                </LeftParagraph>
+            </Section.LeftContainer>
+
+            <Section.DividerContainer>
+                <Divider />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <RightParagraph>
+                    <RegionImage src={Logo} />
+                </RightParagraph>
+            </Section.RightContainer>
         </Section>
         <ContainerEmployees>
             {Employees.map(employee => (

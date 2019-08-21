@@ -8,6 +8,7 @@ import FaqElement from "../../components/faq-element";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 import Layout from "../../components/layout";
+import Divider from "../../components/divider";
 
 import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
 import HireBittoLogo from "../../../static/images/HireBitto_logo.png";
@@ -268,24 +269,34 @@ const Reports = [
 
 const BCorp = () => (
     <Layout>
-        <Section position={"below"}>
-            <LeftParagraph>
-                <LeftTitle>{"mondora is a BCorp!"}</LeftTitle>
-                <LeftContent>
-                    {
-                        "Mondora is strongly focused on serving the local community and is running a few side projects aimed at improving the quality of life of farmers, employees and the air around us. "
-                    }
-                </LeftContent>
-            </LeftParagraph>
-            <RightContainer>
-                <RightTitle>
-                    {"Our score:"} <br /> {"122 points"}
-                </RightTitle>
-                <SuperA href={"https://bcorporation.net/directory/mondora"}>
-                    <SquareButton>{"BCorp page"}</SquareButton>
-                </SuperA>
-            </RightContainer>
+        <Section gutter={32}>
+            <Section.LeftContainer>
+                <LeftParagraph>
+                    <LeftTitle>{"mondora is a BCorp!"}</LeftTitle>
+                    <LeftContent>
+                        {
+                            "Mondora is strongly focused on serving the local community and is running a few side projects aimed at improving the quality of life of farmers, employees and the air around us. "
+                        }
+                    </LeftContent>
+                </LeftParagraph>
+            </Section.LeftContainer>
+
+            <Section.DividerContainer>
+                <Divider />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <RightContainer>
+                    <RightTitle>
+                        {"Our score:"} <br /> {"122 points"}
+                    </RightTitle>
+                    <SuperA href={"https://bcorporation.net/directory/mondora"}>
+                        <SquareButton>{"BCorp page"}</SquareButton>
+                    </SuperA>
+                </RightContainer>
+            </Section.RightContainer>
         </Section>
+
         <ContainerProjects>
             {Projects.map(project => (
                 <Project offset={project.offset}>
