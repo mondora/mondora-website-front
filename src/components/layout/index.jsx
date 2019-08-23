@@ -3,8 +3,8 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../styles/theme";
 
-import Menu from "../menu";
-import Footer from "../footer";
+import Menu from "./menu";
+import Footer from "./footer";
 
 const Container = styled.div`
     display: grid;

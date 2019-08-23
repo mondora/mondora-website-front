@@ -1,26 +1,21 @@
 import React from "react";
+import { Link } from "gatsby";
 
 import styled from "styled-components";
 
-import StackPanel from "../stackpanel";
+import StackPanel from "../../stackpanel";
 
-import { Link } from "gatsby";
-
-const MiniLogo = styled(Link)`
-    color: var(--black);
-    text-decoration: none;
-    font-size: ${props => props.theme.size.text.mondora};
-    font-weight: bold;
-    padding: 8px 0;
-
-    &:before {
-        color: var(--primary);
-        content: ":";
-    }
-`;
+import mondoraLogoPath from "../assets/mondora-logo.svg";
 
 const Container = styled.div`
-    padding: 16px 64px;
+    padding: 32px 64px;
+`;
+
+const MiniLogo = styled(Link)`
+    width: 192px;
+    background: url(${mondoraLogoPath});
+    background-repeat: no-repeat;
+    background-position: center;
 `;
 
 const SuperLink = styled(Link)`
@@ -31,7 +26,7 @@ const SuperLink = styled(Link)`
     color: var(--black);
 
     &.active {
-        background-image: url(${require("../../../static/images/underline.png")});
+        background-image: url(${require("../../../../static/images/underline.png")});
         background-repeat: no-repeat;
         background-size: 48px;
         background-position-y: bottom;
@@ -77,7 +72,7 @@ const Menu = () => (
     <Container>
         <StackPanel justify="space-between">
             <StackPanel>
-                <MiniLogo to={"/"}>{"mondora"}</MiniLogo>
+                <MiniLogo to={"/"} />
             </StackPanel>
 
             <StackPanel gutter={16} align="center">

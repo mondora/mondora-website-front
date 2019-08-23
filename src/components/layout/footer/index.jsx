@@ -2,11 +2,13 @@ import React from "react";
 
 import styled from "styled-components";
 
-import {Link} from "gatsby";
+import { Link } from "gatsby";
 
-import StackPanel from "../stackpanel";
+import StackPanel from "../../stackpanel";
 
-import SocialLink from "../../components/social-link";
+import SocialLink from "../../../components/social-link";
+
+import mondoraMiniLogoPath from "../assets/mondora-mini-logo.svg";
 
 import {
     faGithub,
@@ -37,19 +39,9 @@ const Container = styled.div`
 `;
 
 const MiniLogo = styled(Link)`
-    &:before {
-        color: var(--primary);
-        content: ":";
-    }
-    text-decoration: none;
-    color: var(--white);
-    margin-top: -10px;
-    grid-area: 1 / 1 / 3 / 2;
-    font-size: ${props => props.theme.size.text.megaM};
-
-    @media (max-width: 992px) {
-        grid-area: 1 / 1 / 2 / 2;
-    }
+    width: 56px;
+    background: url(${mondoraMiniLogoPath});
+    background-repeat: no-repeat;
 `;
 
 const Info = styled.div`
@@ -111,21 +103,21 @@ const Socials = [
 
 const Footer = () => (
     <Container justify="center">
-        <MiniLogo>{"m"}</MiniLogo>
+        <MiniLogo />
 
         <Info>
-            <StackPanel direction="column">
+            <StackPanel direction="column" gutter={4} padding={8}>
+                <span>{`© 2018 mondora srl sb . All Rights Reserved.`} </span>
                 <span>
-                    <p>{`© 2018 mondora srl sb . All Rights Reserved.`}</p>
-                    <p>{`Via Uberto Visconti di Modrone 33 , 20122, Milano`}</p>
-                    <p>{`P.IVA 03680680968`}</p>
-                    <p>{`Made with love ❤ in Valtellina`}</p>
+                    {`Via Uberto Visconti di Modrone 33 , 20122, Milano`}
                 </span>
+                <span>{`P.IVA 03680680968`} </span>
+                <span>{`Made with love ❤ in Valtellina`} </span>
             </StackPanel>
         </Info>
 
         <Projects>
-            <StackPanel align="flex-end" direction="column">
+            <StackPanel align="flex-end" direction="column" padding={8}>
                 <span>
                     <p>{`Discover our projects:`}</p>
                 </span>
@@ -137,7 +129,7 @@ const Footer = () => (
         </Projects>
 
         <Misc>
-            <StackPanel justify="space-between">
+            <StackPanel justify="space-between" padding={8}>
                 <span>
                     <p>{`+39 0342 1856456 - info@mondora.com`}</p>
                 </span>
