@@ -38,6 +38,8 @@ button {
     --text-dark-gray: rgb(84, 86, 90);
     --text-gray: rgb(99, 115, 129);
 
+    --background-light-gray: rgb(242, 242, 242);
+    --background-dark-gray: rgb(32, 39, 47);
 
     --border-gray: rgb(99, 115, 129);
 
