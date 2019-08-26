@@ -2,10 +2,13 @@ import React from "react";
 
 import styled from "styled-components";
 
+import { Link } from "gatsby";
+
 import Layout from "../../components/layout";
 import Section from "../../components/section";
 import RegionMiniature from "../../components/region";
 import Divider from "../../components/divider";
+import SquareButton from "../../components/square-button";
 
 import Logo from "../../../static/images/regions/Japan-icon.png";
 
@@ -118,6 +121,9 @@ const MeetTheTeam = () => (
                             "Hello! Here you can learn a little about each one of us and how we join together to make the amazing :m team. We have divided our profiles by geographical area to help with navigation… nice to meet you!"
                         }
                     </LeftContent>
+                    <Link to={"/work-with-us"}>
+                        <SquareButton>{"Join the team !"}</SquareButton>
+                    </Link>
                 </LeftParagraph>
             </Section.LeftContainer>
 
