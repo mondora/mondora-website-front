@@ -31,6 +31,7 @@ const ContainerProjects = styled.div`
 const ContainerFaqs = styled.div`
     padding: 0 64px;
     margin-left: auto;
+    text-align: center;
 `;
 
 const Graphic = styled.img`
@@ -93,7 +94,6 @@ const RightContainer = styled.div`
     margin: 40px 64px 40px 0;
     text-align: center;
 `;
-
 const ReportContainer = styled.div`
     margin-top: 48px;
     padding: 0 80px;
