@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const Line = styled.div`
     width: 2px;
-    height: 100%;
+    height: calc(100% - 32px);
     background-color: var(--black);
 `;
 
