@@ -22,6 +22,7 @@ const ContainerProjects = styled.div`
     padding: 0 64px;
     margin-left: auto;
     display: grid;
+    text-align: center;
     grid-template-columns: auto auto;
     grid-column-gap: 16px;
     @media (max-width: 992px) {
@@ -79,7 +80,8 @@ const LeftTitle = styled.h1`
     font-size: ${props => props.theme.size.text.mondora};
 `;
 const LeftContent = styled.div`
-    width: 70%;
+    color: var(--text-gray);
+    width: 90%;
     margin: 24px auto 24px 0;
     line-height: 1.6;
     @media (max-width: 992px) {
@@ -272,10 +274,10 @@ const BCorp = () => (
         <Section gutter={32}>
             <Section.LeftContainer>
                 <LeftParagraph>
-                    <LeftTitle>{"mondora is a BCorp!"}</LeftTitle>
+                    <LeftTitle>{"Mondora impact"}</LeftTitle>
                     <LeftContent>
                         {
-                            "Mondora is strongly focused on serving the local community and is running a few side projects aimed at improving the quality of life of farmers, employees and the air around us. "
+                            "In mondora we all work towards a shared purpose: making the world a better place. In fact, if you want to join the team, you first have to tell us how you will contribute to changing the world. You can focus on whatever you are most passionate about: an environmental issue, the local community, giving free coding classes to kids, teaching something to your colleagues… anything that has an impact!"
                         }
                     </LeftContent>
                 </LeftParagraph>
@@ -296,7 +298,6 @@ const BCorp = () => (
                 </RightContainer>
             </Section.RightContainer>
         </Section>
-
         <ContainerProjects>
             {Projects.map(project => (
                 <Project offset={project.offset}>
@@ -311,12 +312,14 @@ const BCorp = () => (
                 </Project>
             ))}
         </ContainerProjects>
+
         <ContainerFaqs>
             <h1>{"FAQ"}</h1>
             {Faqs.map(faq => (
                 <FaqElement question={faq.question} answer={faq.answer} />
             ))}
         </ContainerFaqs>
+
         <ReportContainer>
             {Reports.map(report => (
                 <Report>
