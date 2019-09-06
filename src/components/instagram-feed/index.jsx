@@ -28,11 +28,8 @@ const InstagramFeed = () => {
                     node {
                         id
                         likes
-                        comments
-                        mediaType
                         preview
                         original
-                        timestamp
                         caption
                     }
                 }
@@ -43,7 +40,7 @@ const InstagramFeed = () => {
     return (
         <FeedWrapper>
             {data.allInstaNode.edges.map((item, i) => {
-                //console.log(item);
+                console.log(item);
                 
                 return <InstagramPost key={item.node.id} index={i} node={item.node}></InstagramPost>;
             })}
