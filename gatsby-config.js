@@ -28,10 +28,10 @@ module.exports = {
         },
         "gatsby-plugin-styled-components",
         {
-            resolve: `gatsby-source-medium`,
+            resolve: `gatsby-source-rss-feed`,
             options: {
-                username: `@mondora`,
-                limit: 4
+                url: `https://bcalmbcorp.com/feed/`,
+                name: `BcalmBcorp`,
             }
         },
         {

@@ -8,7 +8,7 @@ const PostWrapper = styled.a`
     height: 100%;
     height: fit-content;
     background-color: var(--white);
-    
+
     @media (max-width: 1400px) {
         display: ${props => (props.index < "3" ? "block" : "none")};
     }
@@ -27,8 +27,10 @@ const Divider = styled.div`
 `;
 
 const PostImage = styled.img`
+    object-fit: cover;
     width: 100%;
-    margin: 0;
+    height: 200px;
+    margin: 0 auto;
     & > :hover {
         opacity: 0.4;
     }
@@ -53,23 +55,24 @@ const PostDescription = styled.div`
 `;
 
 const BlogPost = ({ node, index }) => {
-    //console.log(index);
-    //console.log(node);
+    var shortened = node.content.encoded.substring(
+        node.content.encoded.search('img alt="" src=') + 16
+    );
+    var imgFormats = ["png", "jpg", "peg"];
+    var end = shortened.length;
+    imgFormats.map((format, i) => {
+        if (shortened.search(format) > 0)
+            end = Math.min(shortened.search(format), end);
+    });
+    var imgUrl = shortened.substring(0, end + 3);
+
     return (
-        <PostWrapper
-            index={index}
-            // href={"https://medium.com/@mondora/" + node.node.id}
-        >
-            <PostImage
-                src={
-                    "https://cdn-images-1.medium.com/max/800/" +
-                    node.node.virtuals.previewImage.imageId
-                }
-            />
+        <PostWrapper index={index} href={node.link}>
+            <PostImage src={imgUrl} />
             <Divider />
-            <PostAuthor>{node.node.author.name}</PostAuthor>
-            <PostTitle>{node.node.title}</PostTitle>
-            <PostDescription>{node.node.virtuals.subtitle}</PostDescription>
+            <PostAuthor>{node.creator}</PostAuthor>
+            <PostTitle>{node.title}</PostTitle>
+            <PostDescription>{node.pubDate}</PostDescription>
         </PostWrapper>
     );
 };

@@ -13,32 +13,26 @@ const FeedWrapper = styled.div`
     display: grid;
     height: fit-content;
     padding: 16px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 25% 25%  25% 25%;
     @media (max-width: 1400px) {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 33% 33% 33%;
     }
     @media (max-width: 992px) {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 50% 50%;
     }
 `;
 
 const BlogFeed = () => {
     const data = useStaticQuery(graphql`
         query {
-            allMediumPost(sort: { fields: [createdAt], order: DESC }) {
+            allFeedBcalmBcorp {
                 edges {
                     node {
-                        id
-                        title
-                        virtuals {
-                            subtitle
-                            previewImage {
-                                imageId
-                            }
-                        }
-                        author {
-                            name
-                        }
+                        title,
+                        link,
+                        creator,
+                        pubDate,
+                        content{encoded}
                     }
                 }
             }
@@ -47,9 +41,9 @@ const BlogFeed = () => {
 
     return (
         <FeedWrapper>
-            {data.allMediumPost.edges.map((item, i) => {
+            {data.allFeedBcalmBcorp.edges.map((item, i) => {
                 if(i < 4){
-                return <BlogPost index={i} node={item}/>;
+                return <BlogPost index={i} node={item.node}/>;
                 }
             })}
         </FeedWrapper>
