@@ -40,8 +40,6 @@ const InstagramFeed = () => {
     return (
         <FeedWrapper>
             {data.allInstaNode.edges.map((item, i) => {
-                console.log(item);
-                
                 return <InstagramPost key={item.node.id} index={i} node={item.node}></InstagramPost>;
             })}
         </FeedWrapper>
