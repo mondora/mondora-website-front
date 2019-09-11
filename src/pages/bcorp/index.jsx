@@ -2,8 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-import Slider from "react-slick";
-
 import { Link } from "gatsby";
 
 import FaqElement from "../../components/faq-element";
@@ -11,12 +9,10 @@ import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 import Layout from "../../components/layout";
 import Divider from "../../components/divider";
-import BenefitSlide from "../../components/benefit-slide";
+import BenefitCarousel from "../../components/benefit-carousel";
 
 import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
-import HireBittoLogo from "../../../static/images/HireBitto_logo.png";
 import Cycle2WorkGraphic from "../../../static/images/CycleToWork_graphic.png";
-import Cycle2WorkLogo from "../../../static/images/CycleToWork_logo.png";
 import ReportIcon2016 from "../../../static/images/report-icon-2016.png";
 import ReportIcon2017 from "../../../static/images/report-icon-2017.png";
 import ReportIcon2018 from "../../../static/images/report-icon-2018.png";
@@ -266,19 +262,7 @@ const BCorp = () => (
         </Section>
 
         <ContainerProjects>
-            <Slider
-                dots={true}
-                infinite={true}
-                fade={true}
-                swipeToSlide={true}
-                speed={500}
-                slidesToShow={1}
-                slidesToScroll={1}
-            >
-                {Projects.map(project => (
-                    <BenefitSlide project={project} />
-                ))}
-            </Slider>
+            <BenefitCarousel projects={Projects}/>
         </ContainerProjects>
 
         <ContainerFaqs>
