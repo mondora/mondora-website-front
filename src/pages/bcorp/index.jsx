@@ -2,6 +2,8 @@ import React from "react";
 
 import styled from "styled-components";
 
+import Slider from "react-slick";
+
 import { Link } from "gatsby";
 
 import FaqElement from "../../components/faq-element";
@@ -9,6 +11,7 @@ import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 import Layout from "../../components/layout";
 import Divider from "../../components/divider";
+import BenefitSlide from "../../components/benefit-slide";
 
 import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
 import HireBittoLogo from "../../../static/images/HireBitto_logo.png";
@@ -19,15 +22,7 @@ import ReportIcon2017 from "../../../static/images/report-icon-2017.png";
 import ReportIcon2018 from "../../../static/images/report-icon-2018.png";
 
 const ContainerProjects = styled.div`
-    padding: 0 64px;
-    margin-left: auto;
-    display: grid;
-    text-align: center;
-    grid-template-columns: auto auto;
-    grid-column-gap: 16px;
-    @media (max-width: 992px) {
-        grid-template-columns: auto;
-    }
+    width: 100vw;
 `;
 const ContainerFaqs = styled.div`
     padding: 0 64px;
@@ -35,39 +30,10 @@ const ContainerFaqs = styled.div`
     text-align: center;
 `;
 
-const Graphic = styled.img`
-    width: 100%;
-`;
-const ProjectLogo = styled.img`
-    max-width: 100%;
-    height: auto;
-    width: auto;
-    max-height: 100px;
-`;
-const Project = styled.div`
-    margin: 10px;
-    text-align: center;
-    position: relative;
-    top: ${props => props.offset};
-    @media (max-width: 992px) {
-        top: 0;
-    }
-`;
-const Description = styled.div`
-    background-color: var(--variant-lightgray);
-    color: var(--text-dark-gray);
-    line-height: 1.5;
-    padding: 10%;
-    margin: 10px;
-    text-align: center;
-`;
-
 const SuperA = styled.a`
     text-decoration: none;
 `;
-const ProjectDescription = styled.div`
-    padding: 24px 0;
-`;
+
 const LeftParagraph = styled.div`
     text-align: left;
     margin: 80px 0 64px 40px;
@@ -134,21 +100,21 @@ const ReportLink = styled(Link)`
 const Projects = [
     {
         title: "HireBitto",
+        caption: "For a healthier, happier world",
         text:
             "HireBitto is a project which benefits local farmers and cheesemakers who choose to work with traditional methods, without the use of chemicals or industrial machinery. For every new employee, the company buys a wheel of Storico Ribelle cheese. Once matured, the cheese is auctioned and the earnings are reinvested in the community. The cheese is paid for by mondora, but it belongs to the community. The employee is responsible for this benefit creation process.",
         link: "http://www.hirebitto.com/",
-        logo: HireBittoLogo,
+        button: "Visit Website",
         graphic: HireBittoGraphic,
-        offset: 0
     },
     {
         title: "Cycle2Work",
+        caption: "Each one of us is responsible",
         text:
             "Cycle2Work.io is an app that rewards employees for commuting to work, whilst safeguarding the environment. It’s connected to the app Strava, where people can join their company team and earn € 0.20/km for cycling rather than driving to the office, as well as saving an average of 4.32 kg of CO2 each day! If you would like your company to take part in the programme, get in touch! ",
         link: "http://www.hirebitto.com/",
-        logo: Cycle2WorkLogo,
+        button: "Visit Website",
         graphic: Cycle2WorkGraphic,
-        offset: 0
     }
 ];
 const Faqs = [
@@ -298,19 +264,21 @@ const BCorp = () => (
                 </RightContainer>
             </Section.RightContainer>
         </Section>
+
         <ContainerProjects>
-            {Projects.map(project => (
-                <Project offset={project.offset}>
-                    <Graphic src={project.graphic} />
-                    <Description>
-                        <ProjectLogo src={project.logo} />
-                        <ProjectDescription>{project.text}</ProjectDescription>
-                        <SuperA href={project.link}>
-                            <SquareButton>{project.title}</SquareButton>
-                        </SuperA>
-                    </Description>
-                </Project>
-            ))}
+            <Slider
+                dots={true}
+                infinite={true}
+                fade={true}
+                swipeToSlide={true}
+                speed={500}
+                slidesToShow={1}
+                slidesToScroll={1}
+            >
+                {Projects.map(project => (
+                    <BenefitSlide project={project} />
+                ))}
+            </Slider>
         </ContainerProjects>
 
         <ContainerFaqs>
