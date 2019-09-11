@@ -19,6 +19,7 @@ import ReportIcon2018 from "../../../static/images/report-icon-2018.png";
 
 const ContainerProjects = styled.div`
     width: 100vw;
+    margin-bottom: 40px;
 `;
 const ContainerFaqs = styled.div`
     padding: 0 64px;
