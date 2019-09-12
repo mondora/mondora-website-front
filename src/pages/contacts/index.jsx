@@ -16,6 +16,7 @@ import SocialLink from "../../components/social-link";
 import StackPanel from "../../components/stackpanel";
 import Section from "../../components/section";
 import Divider from "../../components/divider";
+import ContactsMap from "../../components/contacts-map";
 
 import EmailIcon from "../../../static/images/email-icon.png";
 import PhoneIcon from "../../../static/images/phone-icon.png";
@@ -140,6 +141,13 @@ const Socials = [
         icon: faYoutube
     }
 ];
+const mapSettings = {
+    position: {
+      lat: 46.1612067,
+      lng: 9.7570392,
+    },
+    zoom: 15,
+  }
 
 const Contacts = () => (
     <Layout>
@@ -191,8 +199,7 @@ const Contacts = () => (
                 </RightParagraph>
             </Section.RightContainer>
         </Section>
-        {/* TODO: aggiungere mappa google */}
-        <MapContainer>{"google maps"}</MapContainer>
+        <MapContainer><ContactsMap position={mapSettings.position} zoom={mapSettings.zoom}/></MapContainer>
     </Layout>
 );
 
