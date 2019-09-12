@@ -1,11 +1,22 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 
-import GoogleMapReact from 'google-map-react'
+import styled from "styled-components";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>
+import GoogleMapReact from "google-map-react";
 
-const ContactsMap = ({position, zoom}) => {
+import PointerSrc from "../../../static/images/pointer.svg";
+
+const PointerImg = styled.img`
+    height: 140px;
+    width: 100px;
+    position: relative;
+    top: -104px;
+    left: -56px;
+    border-radius: 100%;
+`;
+
+const ContactsMap = ({ position, zoom }) => {
     return (
         <div style={{ height: "520px", width: "100%" }}>
             <GoogleMapReact
@@ -15,14 +26,19 @@ const ContactsMap = ({position, zoom}) => {
                 defaultCenter={position}
                 defaultZoom={zoom}
             >
-                <AnyReactComponent
-                    lat={46.1612067}
-                    lng={9.7570392}
-                    text={"MONDORA"}
+                <PointerImg
+                    lat={position.lat}
+                    lng={position.lng}
+                    src={PointerSrc}
                 />
             </GoogleMapReact>
         </div>
     );
+};
+
+ContactsMap.PropTypes = {
+    position: PropTypes.object,
+    zoom: number
 };
 
 export default ContactsMap;

@@ -143,8 +143,8 @@ const Socials = [
 ];
 const mapSettings = {
     position: {
-      lat: 46.1612067,
-      lng: 9.7570392,
+      lat: 46.161530,
+      lng: 9.758879,
     },
     zoom: 15,
   }
