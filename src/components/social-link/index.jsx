@@ -43,7 +43,7 @@ const LinkContainer = styled.a`
 `;
 
 const SocialLink = ({ type = "light", text, url, icon }) => (
-    <LinkContainer href={url}>
+    <LinkContainer target={"_blank"} href={url}>
         <ThemedRadiusIcon
             type={type}
             align="center"

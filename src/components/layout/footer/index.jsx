@@ -16,7 +16,7 @@ import {
     faFacebook,
     faTwitter,
     faInstagram,
-    faPinterest
+    faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 
 const Container = styled.div`
@@ -96,8 +96,8 @@ const Socials = [
     },
     {
         type: "dark",
-        url: "https://www.pinterest.it/mondoracom/",
-        icon: faPinterest
+        url: "https://www.youtube.com/channel/UCeAVpel9SZj6WKHWLEtVlsg",
+        icon: faYoutube
     }
 ];
 
