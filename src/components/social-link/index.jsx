@@ -8,10 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StackPanel from "../stackpanel";
 
 const RadiusIcon = styled(StackPanel)`
-    font-size: 24px;
-    min-width: 24px;
-    height: 24px;
-    border-radius: 24px;
+    font-size: 16px;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 16px;
 `;
 
 const WhiteRadiusIcon = styled(RadiusIcon)`
