@@ -7,7 +7,7 @@ import InstagramFeed from "../../components/instagram-feed";
 import Section from "../../components/section";
 import Divider from "../../components/divider";
 
-import Underline from "../../../static/images/underline-swirl.png";
+import Underline from "../../../static/images/separator.svg";
 import Image1 from "../../../static/images/diversity.png";
 import Image2 from "../../../static/images/brothers.png";
 import Image3 from "../../../static/images/working.png";
