@@ -4,7 +4,8 @@ import styled from "styled-components";
 
 import { Link } from "gatsby";
 
-import AboutImage from "../../static/images/regions/Japan-icon.png";
+import TitleImage from "../../static/images/mondora.png";
+import ImpactsImage from "../../static/images/impacts.png";
 import BCorpLogo from "../../static/images/BCorp-logo.png";
 import DesignIcon from "../../static/images/design-icon.png";
 import DevelopIcon from "../../static/images/develop-icon.png";
@@ -17,7 +18,8 @@ import Section from "../components/section";
 import Divider from "../components/divider";
 
 const FirstImg = styled.img`
-    margin: 80px auto;
+    margin: 40px;
+    width: 30vw;
 `;
 
 const BCorpImg = styled.img`
@@ -76,8 +78,8 @@ const RightAbout = styled.div`
 const AboutImg = styled.div`
     width: 100%;
     height: 320px;
-    background-image: url(${AboutImage});
-    background-size: cover;
+    background-image: url(${ImpactsImage});
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 `;
@@ -134,7 +136,7 @@ const Homepage = () => (
             </Section.DividerContainer>
 
             <Section.RightContainer>
-                <FirstImg src={AboutImage} />
+                <FirstImg src={TitleImage} />
             </Section.RightContainer>
         </Section>
 
