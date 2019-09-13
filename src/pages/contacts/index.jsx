@@ -18,9 +18,9 @@ import Section from "../../components/section";
 import Divider from "../../components/divider";
 import ContactsMap from "../../components/contacts-map";
 
-import EmailIcon from "../../../static/images/email-icon.png";
-import PhoneIcon from "../../../static/images/phone-icon.png";
-import MobileIcon from "../../../static/images/mobile-icon.png";
+import EmailIcon from "../../../static/images/email.svg";
+import PhoneIcon from "../../../static/images/phone.svg";
+import MobileIcon from "../../../static/images/mobile.svg";
 
 const LeftParagraph = styled.div`
     text-align: left;
