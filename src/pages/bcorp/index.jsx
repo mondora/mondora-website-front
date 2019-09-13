@@ -11,8 +11,9 @@ import Layout from "../../components/layout";
 import Divider from "../../components/divider";
 import BenefitCarousel from "../../components/benefit-carousel";
 
-import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
-import Cycle2WorkGraphic from "../../../static/images/CycleToWork_graphic.png";
+import HireBittoGraphic from "../../../static/images/hirebitto.png";
+import Cycle2WorkGraphic from "../../../static/images/c2w.png";
+import FarmingGraphic from "../../../static/images/farmers.png";
 import ReportIcon2016 from "../../../static/images/report-icon-2016.png";
 import ReportIcon2017 from "../../../static/images/report-icon-2017.png";
 import ReportIcon2018 from "../../../static/images/report-icon-2018.png";
@@ -112,6 +113,14 @@ const Projects = [
         link: "http://www.hirebitto.com/",
         button: "Visit Website",
         graphic: Cycle2WorkGraphic,
+    },
+    {
+        title: "Farming",
+        caption: " ",
+        text: "",
+        link: "http://www.hirebitto.com/",
+        button: "Visit Website",
+        graphic: FarmingGraphic,
     }
 ];
 const Faqs = [
