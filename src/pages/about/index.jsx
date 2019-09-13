@@ -8,9 +8,9 @@ import Section from "../../components/section";
 import Divider from "../../components/divider";
 
 import Underline from "../../../static/images/underline-swirl.png";
-import Image1 from "../../../static/images/about-us-1.png";
-import Image2 from "../../../static/images/about-us-2.png";
-import Image3 from "../../../static/images/about-us-3.png";
+import Image1 from "../../../static/images/diversity.png";
+import Image2 from "../../../static/images/brothers.png";
+import Image3 from "../../../static/images/working.png";
 
 const LeftParagraph = styled.div`
     @media (max-width: 992px) {
