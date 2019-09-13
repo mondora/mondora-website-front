@@ -202,7 +202,7 @@ const Homepage = () => (
         <BlogContainer>
             <h1>{"From our blog"}</h1>
             <BlogFeed />
-            <SuperA href={"https://bcalmbcorp.com/"}>
+            <SuperA target="_blank" href={"https://bcalmbcorp.com/"}>
                 <SquareButton>{"visit our blog"}</SquareButton>
             </SuperA>
         </BlogContainer>

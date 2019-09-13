@@ -255,7 +255,7 @@ const BCorp = () => (
                     <RightTitle>
                         {"Our score:"} <br /> {"122 points"}
                     </RightTitle>
-                    <SuperA href={"https://bcorporation.net/directory/mondora"}>
+                    <SuperA target="_blank" href={"https://bcorporation.net/directory/mondora"}>
                         <SquareButton>{"BCorp page"}</SquareButton>
                     </SuperA>
                 </RightContainer>

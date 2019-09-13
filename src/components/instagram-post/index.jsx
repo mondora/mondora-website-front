@@ -20,7 +20,7 @@ const PostImage = styled.img`
 
 const InstagramPost = ({ node, index }) => {
     return (
-        <a href={"https://www.instagram.com/p/" + node.id}>
+        <a target="_blank" href={"https://www.instagram.com/p/" + node.id}>
             <PostImage index={index} src={node.original}/>
         </a>
     );

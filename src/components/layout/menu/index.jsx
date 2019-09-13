@@ -81,7 +81,7 @@ const Menu = () => (
                         {link.text}
                     </SuperLink>
                 ))}
-                <a href="https://bcalmbcorp.com/">
+                <a target="_blank" href="https://bcalmbcorp.com/">
                     <BlogButton>{"Blog :m"}</BlogButton>
                 </a>
             </StackPanel>
