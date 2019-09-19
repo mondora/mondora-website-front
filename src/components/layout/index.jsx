@@ -17,6 +17,13 @@ const MenuContainer = styled.div`
 
 const ContentContainer = styled.div`
     grid-area: 2 / 1 / 3 / 2;
+
+    > * {
+        padding: 0px 120px;
+        @media (max-width: 768px) {
+            padding: 0px 16px;
+        }
+    }
 `;
 
 const FooterContainer = styled.div`

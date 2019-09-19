@@ -20,51 +20,62 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 const Container = styled.div`
-    padding: 32px 192px;
+    padding: 30px 120px;
     font-size: ${props => props.theme.size.text.subtle};
 
     color: var(--white);
-    background-color: var(--variant-black);
+    background-color: var(--background-dark-gray);
 
     display: grid;
     grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto auto auto;
-    grid-column-gap: 16px;
-    grid-row-gap: 16px;
 
-    @media (max-width: 992px) {
-        padding: 32px 16px;
-        grid-template-columns: auto 1fr;
-    }
+    @media (max-width: 768px) {
+        padding: 30px 16px;
+        
 `;
 
 const MiniLogo = styled(Link)`
     width: 56px;
     background: url(${mondoraMiniLogoPath});
     background-repeat: no-repeat;
+
+    @media (max-width: 768px) {
+        background: none;
+    }
 `;
 
 const Info = styled.div`
     grid-area: 1 / 2 / 2 / 3;
 
-    @media (max-width: 992px) {
-        grid-area: 1 / 2 / 2 / 3;
+    @media (max-width: 768px) {
+        grid-area: 1 / 1 / 2 / 1;
     }
 `;
 
-const Projects = styled.div`
-    grid-area: 1 / 3 / 2 / 4;
+const SectionsLinks = styled.div`
+    grid-area: 1 / 3 / 3 / 4;
 
-    @media (max-width: 992px) {
-        grid-area: 2 / 1 / 3 / 3;
+    @media (max-width: 768px) {
+        grid-area: 4 / 1 / 5 / 1;
+        padding-top: 16px;
     }
 `;
 
-const Misc = styled.div`
+const Contacts = styled.div`
     grid-area: 2 / 2 / 3 / 4;
 
-    @media (max-width: 992px) {
-        grid-area: 3 / 1 / 4 / 3;
+    @media (max-width: 768px) {
+        grid-area: 2 / 1 / 3 / 1;
+    }
+`;
+
+const Social = styled.div`
+    grid-area: 3 / 2 / 4 / 4;
+    padding-top: 10px;
+
+    @media (max-width: 768px) {
+        grid-area: 3 / 1 / 4 / 1;
+        padding-top: 0;
     }
 `;
 
@@ -109,30 +120,48 @@ const Footer = () => (
             <StackPanel direction="column" gutter={4} padding={8}>
                 <span>{`© 2018 mondora srl sb . All Rights Reserved.`} </span>
                 <span>
-                    {`Via Uberto Visconti di Modrone 33 , 20122, Milano`}
+                    {`Via Uberto Visconti di Modrone 33 , 20122, Milano - P.IVA 03680680968`}
                 </span>
-                <span>{`P.IVA 03680680968`} </span>
                 <span>{`Made with love ❤ in Valtellina`} </span>
             </StackPanel>
         </Info>
 
-        <Projects>
-            <StackPanel align="flex-end" direction="column" padding={8}>
-                <span>
-                    <p>{`Discover our projects:`}</p>
-                </span>
-                <StackPanel gutter={24}>
-                    <span>{`project1`}</span>
-                    <span>{`project2`}</span>
+        <SectionsLinks>
+            <StackPanel direction="row">
+                <StackPanel direction="column" padding={8}>
+                    <span>{`ABOUT`}</span>
+                    <span>{`About us`}</span>
+                    <span>{`Meet the team`}</span>
+                    <span>{`Contacts`}</span>
+                </StackPanel>
+                <StackPanel direction="column" padding={8}>
+                    <span>{`WORK WITH US`}</span>
+                    <span>{`Work with us`}</span>
+                    <span>{`Mondora handbook`}</span>
+                </StackPanel>
+                <StackPanel direction="column" padding={8}>
+                    <span>{`IMPACT`}</span>
+                    <span>{`Impact`}</span>
+                    <span>{`Blog BCalm BCorp`}</span>
+                    <span>{"Blog tecnico"}</span>
+                </StackPanel>
+                <StackPanel direction="column" padding={8}>
+                    <span>{`SIDE PROJECTS`}</span>
+                    <span>{`Hirebitto`}</span>
+                    <span>{`Cycle2Work`}</span>
+                    <span>{"Minicoder"}</span>
                 </StackPanel>
             </StackPanel>
-        </Projects>
+        </SectionsLinks>
 
-        <Misc>
+        <Contacts>
             <StackPanel justify="space-between" padding={8}>
-                <span>
-                    <p>{`+39 0342 1856456 - info@mondora.com`}</p>
-                </span>
+                <span>{`+39 0342 1856456 - info@mondora.com`}</span>
+            </StackPanel>
+        </Contacts>
+
+        <Social>
+            <StackPanel justify="space-between" padding={8}>
                 <span>
                     <StackPanel gutter={8}>
                         {Socials.map(social => (
@@ -146,7 +175,7 @@ const Footer = () => (
                     </StackPanel>
                 </span>
             </StackPanel>
-        </Misc>
+        </Social>
     </Container>
 );
 

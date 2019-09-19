@@ -7,9 +7,7 @@ import { Link } from "gatsby";
 import TitleImage from "../../static/images/mondora.png";
 import ImpactsImage from "../../static/images/impacts.png";
 import BCorpLogo from "../../static/images/BCorp-logo.png";
-import DesignIcon from "../../static/images/design-icon.png";
-import DevelopIcon from "../../static/images/develop-icon.png";
-import TrainingIcon from "../../static/images/training-icon.png";
+import AboutImage from "../components/layout/assets/brothers.png";
 
 import BlogFeed from "../components/blog-feed";
 import SquareButton from "../components/square-button";
@@ -18,14 +16,21 @@ import Section from "../components/section";
 import Divider from "../components/divider";
 
 const FirstImg = styled.img`
-    margin: 40px;
     width: 30vw;
+
+    @media (max-width: 768px) {
+        width: 70vw;
+    }
 `;
 
 const BCorpImg = styled.img`
     display: block;
     width: 80px;
-    margin: 24px auto;
+    margin: 0px auto;
+
+    @media (max-width: 768px) {
+        grid-area: 4 / 1 / 5 / 1;
+    }
 `;
 
 const WhatContainer = styled.div`
@@ -50,19 +55,17 @@ const WhatItemsContainer = styled.div`
 const WhatItem = styled.div`
     text-align: left;
     padding: 24px;
+
+    @media (max-width: 768px) {
+        text-align: center;
+    }
 `;
 const TitleContainer = styled.div`
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
-`;
-const Icon = styled.img`
-    width: 40px;
-    height: 40px;
-    margin-right: 16px;
 `;
 const Title = styled.h3`
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
 `;
 const Description = styled.div`
@@ -72,22 +75,47 @@ const Description = styled.div`
 const SuperA = styled.a`
     text-decoration: none;
 `;
-const RightAbout = styled.div`
-    padding: 32px 64px;
+const BenefitProject = styled.div`
+    padding: 0px 36px;
 `;
-const AboutImg = styled.div`
-    width: 100%;
-    height: 320px;
-    background-image: url(${ImpactsImage});
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+
+const BenefitImageContainer = styled.div`
+    text-align: center;
+    padding-bottom: 86px;
+`;
+
+const BenefitImage = styled.img`
+    width: 66vw;
 `;
 const DescriptionParagraph = styled.p`
     color: var(--text-dark-gray);
     margin: 24px 0;
     line-height: 1.5;
 `;
+
+const AboutSection = styled.div`
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    padding-top: 94px;
+    padding-bottom: 124px;
+    background-color: var(--background-dark-gray);
+
+    @media (max-width: 768px) {
+        text-align: center;
+        grid-template-columns: initial;
+    }
+`;
+
+const AboutTitle = styled.h1`
+    color: var(--white);
+`;
+
+const AboutParagraph = styled.p`
+    color: var(--white);
+    margin: 24px 0;
+    line-height: 1.5;
+`;
+
 const BlogContainer = styled.div`
     padding: 40px 0 40px 0;
     background-color: var(--gray);
@@ -98,49 +126,46 @@ const BlogContainer = styled.div`
 
 const whatItems = [
     {
-        icon: DesignIcon,
-        title: "Design / Image",
+        title: "Failure party",
         description:
-            "Our aim is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
+            "We are a team of explorers who are allowed to have Failure Parties when we try to learn something new and mess up."
     },
     {
-        icon: DevelopIcon,
-        title: "Develop & ship",
+        title: "Passions",
         description:
-            "Shaping new ideas, using open tecnologies, and contributing opensource in our spare time. Reduce your costs while increasing the reliability and quality of your cloud computing experience."
+            "This mix of qualities and passions allows us to push boundaries and keep learning and innovating. So if you have a challenging project for us… bring it on!"
     },
     {
-        icon: TrainingIcon,
-        title: "Training",
+        title: "Experimenting",
         description:
-            "Training is offered throughout Italy, Europe and the world thanks to mondora.com. Whether you are looking for introductory or advanced training on our courses are just what you need."
+            "Right now we are experimenting with, and would like to work more on: Machine Learning, Artificial Intelligence, Augmented Reality, Blockchain Technology...and more"
     }
 ];
 
 const Homepage = () => (
     <Layout>
         <Section gutter={32}>
-            <Section.LeftContainer padding={64}>
+            <Section.LeftContainer>
                 <div>
-                    <h1>{"We using Software as a Force for Good"}</h1>
+                    <h1>{"Welcome to the :mondora world!"}</h1>
                     <DescriptionParagraph>
                         {
-                            "mondora is a Società Benefit and certified B Corporation. The mission of the company is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers we support humans and nature with projects that benefit the community and land."
+                            "Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
                         }
                     </DescriptionParagraph>
                 </div>
             </Section.LeftContainer>
 
             <Section.DividerContainer>
-                <Divider below />
+                <Divider below height={"458px"} />
             </Section.DividerContainer>
 
             <Section.RightContainer>
                 <FirstImg src={TitleImage} />
             </Section.RightContainer>
-        </Section>
 
-        <BCorpImg src={BCorpLogo} />
+            <BCorpImg src={BCorpLogo} />
+        </Section>
 
         <WhatContainer>
             <h1>{"What we can do for you"}</h1>
@@ -154,7 +179,6 @@ const Homepage = () => (
                     return (
                         <WhatItem key={key}>
                             <TitleContainer>
-                                <Icon src={item.icon} />
                                 <Title>{item.title}</Title>
                             </TitleContainer>
                             <Description>{item.description}</Description>
@@ -163,43 +187,9 @@ const Homepage = () => (
                 })}
             </WhatItemsContainer>
             <Link to={"/about"}>
-                <SquareButton>{"Services"}</SquareButton>
+                <SquareButton>{"SERVICES"}</SquareButton>
             </Link>
         </WhatContainer>
-
-        <Section margin={0}>
-            <Section.LeftContainer>
-                <AboutImg />
-            </Section.LeftContainer>
-
-            <Section.DividerContainer>
-                <Divider above below={false} />
-            </Section.DividerContainer>
-
-            <Section.RightContainer>
-                <RightAbout>
-                    <h1>{"About mondora"}</h1>
-                    <DescriptionParagraph>
-                        {
-                            "mondora is a software and advisory company specialising in custom cloud solutions for all kinds of businesses."
-                        }
-                    </DescriptionParagraph>
-                    <DescriptionParagraph>
-                        {
-                            "The company is self managed and has been working with Scrum and Agile methodologies since 2002."
-                        }
-                    </DescriptionParagraph>
-                    <DescriptionParagraph>
-                        {
-                            "With a strong focus on creating a positive impact for all stakeholders, mondora is the perfect match for any company wishing to use their business as a force for good and bring positive change to the world."
-                        }
-                    </DescriptionParagraph>
-                    <Link to={"/about"}>
-                        <SquareButton>{"About Us"}</SquareButton>
-                    </Link>
-                </RightAbout>
-            </Section.RightContainer>
-        </Section>
 
         <BlogContainer>
             <h1>{"From our blog"}</h1>
@@ -208,6 +198,45 @@ const Homepage = () => (
                 <SquareButton>{"visit our blog"}</SquareButton>
             </SuperA>
         </BlogContainer>
+
+        <Section margin={0}>
+            <Section.DividerContainer>
+                <Divider below height={"304px"} />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <BenefitProject>
+                    <h1>{"Benefit Project"}</h1>
+                    <DescriptionParagraph>
+                        {
+                            "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
+                        }
+                    </DescriptionParagraph>
+                    <Link to={"/impact"}>
+                        <SquareButton>{"IMPACT"}</SquareButton>
+                    </Link>
+                </BenefitProject>
+            </Section.RightContainer>
+        </Section>
+        <BenefitImageContainer>
+            <BenefitImage src={ImpactsImage} />
+        </BenefitImageContainer>
+        <AboutSection>
+            <Section.LeftContainer>
+                <FirstImg src={AboutImage} />
+            </Section.LeftContainer>
+
+            <Section.RightContainer>
+                <div>
+                    <AboutTitle>{"About Mondora"}</AboutTitle>
+                    <AboutParagraph>
+                        {
+                            "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
+                        }
+                    </AboutParagraph>
+                </div>
+            </Section.RightContainer>
+        </AboutSection>
     </Layout>
 );
 
