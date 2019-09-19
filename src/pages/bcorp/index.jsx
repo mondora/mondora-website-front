@@ -11,11 +11,10 @@ import Layout from "../../components/layout";
 import Divider from "../../components/divider";
 import BenefitCarousel from "../../components/benefit-carousel";
 
-import HireBittoGraphic from "../../../static/images/HireBitto_graphic.png";
-import Cycle2WorkGraphic from "../../../static/images/CycleToWork_graphic.png";
-import ReportIcon2016 from "../../../static/images/report-icon-2016.png";
-import ReportIcon2017 from "../../../static/images/report-icon-2017.png";
-import ReportIcon2018 from "../../../static/images/report-icon-2018.png";
+import HireBittoGraphic from "../../../static/images/hirebitto.png";
+import Cycle2WorkGraphic from "../../../static/images/c2w.png";
+import FarmingGraphic from "../../../static/images/farmers.png";
+import ReportHeart from "../../../static/images/heart.svg";
 
 const ContainerProjects = styled.div`
     width: 100vw;
@@ -72,6 +71,8 @@ const ReportContainer = styled.div`
 `;
 const Report = styled.div`
     display: flex;
+    overflow: hidden;
+    position: relative;
     width: 100%;
     min-height: 128px;
     margin: 40px auto;
@@ -79,8 +80,19 @@ const Report = styled.div`
     background-color: var(--white);
 `;
 const ReportIcon = styled.img`
-    width: 30%;
+    width: 120px;
     padding: 16px;
+`;
+const ReportYear = styled.div`
+    position: absolute;
+    top: 44px;
+    left: 48px;
+    transform: rotate(-4deg);
+    font-weight: bold;
+    font-size: 24px;
+    color: var(--primary);
+    width: 120px;
+    margin: 16px auto;
 `;
 const ReportTitle = styled.h1`
     font-size: 20px;
@@ -102,7 +114,7 @@ const Projects = [
             "HireBitto is a project which benefits local farmers and cheesemakers who choose to work with traditional methods, without the use of chemicals or industrial machinery. For every new employee, the company buys a wheel of Storico Ribelle cheese. Once matured, the cheese is auctioned and the earnings are reinvested in the community. The cheese is paid for by mondora, but it belongs to the community. The employee is responsible for this benefit creation process.",
         link: "http://www.hirebitto.com/",
         button: "Visit Website",
-        graphic: HireBittoGraphic,
+        graphic: HireBittoGraphic
     },
     {
         title: "Cycle2Work",
@@ -111,7 +123,15 @@ const Projects = [
             "Cycle2Work.io is an app that rewards employees for commuting to work, whilst safeguarding the environment. It’s connected to the app Strava, where people can join their company team and earn € 0.20/km for cycling rather than driving to the office, as well as saving an average of 4.32 kg of CO2 each day! If you would like your company to take part in the programme, get in touch! ",
         link: "http://www.hirebitto.com/",
         button: "Visit Website",
-        graphic: Cycle2WorkGraphic,
+        graphic: Cycle2WorkGraphic
+    },
+    {
+        title: "Farming",
+        caption: " ",
+        text: "",
+        link: "http://www.hirebitto.com/",
+        button: "Visit Website",
+        graphic: FarmingGraphic
     }
 ];
 const Faqs = [
@@ -213,19 +233,22 @@ const Faqs = [
 ];
 const Reports = [
     {
-        icon: ReportIcon2016,
+        icon: ReportHeart,
+        year: "2016",
         title: "Impact Report 2016",
         button: "Leggi il report >",
         to: "/report2016.pdf"
     },
     {
-        icon: ReportIcon2017,
+        icon: ReportHeart,
+        year: "2017",
         title: "Impact Report 2017",
         button: "Leggi il report >",
         to: "/report2017.pdf"
     },
     {
-        icon: ReportIcon2018,
+        icon: ReportHeart,
+        year: "2018",
         title: "Impact Report 2018",
         button: "Leggi il report >",
         to: "/report2018.pdf"
@@ -255,7 +278,10 @@ const BCorp = () => (
                     <RightTitle>
                         {"Our score:"} <br /> {"122 points"}
                     </RightTitle>
-                    <SuperA target="_blank" href={"https://bcorporation.net/directory/mondora"}>
+                    <SuperA
+                        target="_blank"
+                        href={"https://bcorporation.net/directory/mondora"}
+                    >
                         <SquareButton>{"BCorp page"}</SquareButton>
                     </SuperA>
                 </RightContainer>
@@ -263,7 +289,7 @@ const BCorp = () => (
         </Section>
 
         <ContainerProjects>
-            <BenefitCarousel projects={Projects}/>
+            <BenefitCarousel projects={Projects} />
         </ContainerProjects>
 
         <ContainerFaqs>
@@ -276,7 +302,11 @@ const BCorp = () => (
         <ReportContainer>
             {Reports.map(report => (
                 <Report>
-                    <ReportIcon src={report.icon} />
+                    <div>
+                        <ReportIcon src={report.icon} />
+                        <ReportYear>{report.year}</ReportYear>
+                    </div>
+
                     <div>
                         <ReportTitle>{report.title}</ReportTitle>
                         <ReportLink to={report.to}>{report.button}</ReportLink>

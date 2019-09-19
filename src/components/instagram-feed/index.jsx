@@ -20,10 +20,19 @@ const FeedWrapper = styled.div`
     }
 `;
 
+function FilterPosts(post){
+    if(post.node.caption.toLowerCase().includes("#tech")){
+        return post;
+        
+    } else{
+    return 0;
+    }
+};
+
 const InstagramFeed = () => {
     const data = useStaticQuery(graphql`
         query InstagramPosts {
-            allInstaNode {
+            allInstaNode(sort: {order: DESC, fields: timestamp}) {
                 edges {
                     node {
                         id
@@ -36,11 +45,18 @@ const InstagramFeed = () => {
             }
         }
     `);
-
+    var posts = data.allInstaNode.edges.filter(FilterPosts);
     return (
         <FeedWrapper>
-            {data.allInstaNode.edges.map((item, i) => {
-                return <InstagramPost key={item.node.id} index={i} node={item.node}></InstagramPost>;
+            
+            {posts.map((item, i) => {
+                    return (
+                        <InstagramPost
+                            key={item.node.id}
+                            index={i}
+                            node={item.node}
+                        ></InstagramPost>
+                    );
             })}
         </FeedWrapper>
     );

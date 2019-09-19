@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import { Link } from "gatsby";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import Underline from "../../../static/images/underline-swirl.png";
+import Underline from "../../../static/images/separator.svg";
 
 const RegionContainer = styled.div`
     background-color: white;
