@@ -1,6 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
+
 import useWindowSize from "@rehooks/window-size";
 
 import { Link } from "gatsby";
@@ -29,7 +30,7 @@ const Container = styled.div`
 
     @media (max-width: 768px) {
         padding: 30px 16px;
-        
+    }
 `;
 
 const FooterContainer = styled.div`
@@ -126,7 +127,10 @@ const Socials = [
 ];
 
 const Footer = () => {
-    const windowSize = useWindowSize();
+    let windowSize = 900;
+    if (typeof window !== "undefined") {
+        windowSize = useWindowSize();
+    }
     return (
         <Container justify="center">
             <FooterContainer>
