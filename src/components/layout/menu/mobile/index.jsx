@@ -9,16 +9,12 @@ import mondoraLogoPath from "../../assets/mondora-logo.svg";
 import burgerBannerPath from "../../assets/burger_menu.png";
 
 const Container = styled.div`
-    padding: 30px 120px;
-
-    @media (max-width: 768px) {
-        background-color: var(--background-dark-gray);
-        padding: 30px 16px;
-    }
+    background-color: var(--background-dark-gray);
+    padding: 20px 16px;
 `;
 
 const MiniLogo = styled(Link)`
-    width: 192px;
+    width: 130px;
     background: url(${mondoraLogoPath});
     background-repeat: no-repeat;
 `;

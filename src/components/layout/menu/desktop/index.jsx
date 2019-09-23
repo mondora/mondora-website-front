@@ -7,16 +7,13 @@ import StackPanel from "../../../stackpanel";
 import mondoraLogoPath from "../../assets/mondora-logo.svg";
 
 const Container = styled.div`
-    padding: 30px 120px;
-
-    @media (max-width: 768px) {
-        background-color: var(--background-dark-gray);
-        padding: 30px 16px;
-    }
+    padding: 30px 16px;
+    max-width: 1440px;
+    margin: auto;
 `;
 
 const MiniLogo = styled(Link)`
-    width: 192px;
+    width: 162px;
     background: url(${mondoraLogoPath});
     background-repeat: no-repeat;
 `;
@@ -25,7 +22,6 @@ const SuperLink = styled(Link)`
     font-size: ${props => props.theme.size.text.menu};
     white-space: nowrap;
     text-decoration: none;
-    padding: 12px 20px;
     color: var(--black);
 
     &.active {
@@ -35,10 +31,6 @@ const SuperLink = styled(Link)`
         background-position-y: bottom;
         background-position-x: center;
     }
-`;
-
-const BlogButtonContainer = styled.a`
-    padding: 0px 20px;
 `;
 
 const BlogButton = styled.button`
@@ -84,12 +76,9 @@ const DesktopMenu = () => (
                         {link.text}
                     </SuperLink>
                 ))}
-                <BlogButtonContainer
-                    target="_blank"
-                    href="https://bcalmbcorp.com/"
-                >
+                <a target="_blank" href="https://bcalmbcorp.com/">
                     <BlogButton>{"Blog :m"}</BlogButton>
-                </BlogButtonContainer>
+                </a>
             </StackPanel>
         </StackPanel>
     </Container>

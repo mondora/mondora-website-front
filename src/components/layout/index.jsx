@@ -8,7 +8,6 @@ import Footer from "./footer";
 
 const Container = styled.div`
     display: grid;
-    grid-template-columns: 1fr;
 `;
 
 const MenuContainer = styled.div`
@@ -19,10 +18,7 @@ const ContentContainer = styled.div`
     grid-area: 2 / 1 / 3 / 2;
 
     > * {
-        padding: 0px 120px;
-        @media (max-width: 768px) {
-            padding: 0px 16px;
-        }
+        padding: 0px 16px;
     }
 `;
 

@@ -9,7 +9,7 @@ const Menu = () => {
     const windowSize = useWindowSize();
 
     return (
-        <>{windowSize.innerWidth <= 768 ? <MobileMenu /> : <DesktopMenu />}</>
+        <>{windowSize.innerWidth <= 790 ? <MobileMenu /> : <DesktopMenu />}</>
     );
 };
 

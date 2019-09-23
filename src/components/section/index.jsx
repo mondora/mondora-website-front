@@ -7,9 +7,12 @@ const SectionContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     grid-column-gap: ${props => props.gutter}px;
+    max-width: 1440px;
 
-    margin-right: ${props => props.margin}px;
-    margin-left: ${props => props.margin}px;
+    margin-right: ${props =>
+        props.margin === "auto" ? props.margin : props.margin + "px"};
+    margin-left: ${props =>
+        props.margin === "auto" ? props.margin : props.margin + "px"};
 
     @media (max-width: 768px) {
         text-align: center;
@@ -32,7 +35,6 @@ const Container = styled.div`
 
 const LeftContainer = styled(Container)`
     grid-area: 1 / 1 / 3 / 2;
-    /* background: bisque; */
 
     @media (max-width: 768px) {
         grid-area: 1 / 1 / 2 / 2;
@@ -41,7 +43,6 @@ const LeftContainer = styled(Container)`
 
 const RightContainer = styled(Container)`
     grid-area: 1 / 3 / 3 / 4;
-    /* background: teal; */
 
     @media (max-width: 768px) {
         grid-area: 2 / 1 / 3 / 2;
