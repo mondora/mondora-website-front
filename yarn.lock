@@ -7930,6 +7930,11 @@ regjsparser@^0.6.0:
   dependencies:
     jsesc "~0.5.0"
 
+rehooks@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/rehooks/-/rehooks-0.0.4.tgz#5b6b0814585401a11f4b49535ba09cce4816948c"
+  integrity sha512-tDHSpgoQdnFkQioN+Mv1Xzyqn8NF+ZxlgH9+YK7505K2Bi5IqmkVVCck1lqE4asudGA082StXdQSeOxcHLrtbA==
+
 relay-runtime@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-2.0.0.tgz#0e42df90365cc69f104f7e4b20fdcf975f5a9c0b"
