@@ -23,6 +23,7 @@ const SuperLink = styled(Link)`
     white-space: nowrap;
     text-decoration: none;
     color: var(--black);
+    padding: 12px 0;
 
     &.active {
         background-image: url(${require("../../../../../static/images/underline.png")});

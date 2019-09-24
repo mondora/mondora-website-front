@@ -151,18 +151,24 @@ const Footer = () => {
                 <SectionsContainer>
                     <StackPanel direction="column" padding={16}>
                         <span>{`ABOUT`}</span>
-                        <SectionLinks>{`About us`}</SectionLinks>
-                        <SectionLinks>{`Meet the team`}</SectionLinks>
-                        <SectionLinks>{`Contacts`}</SectionLinks>
+                        <SectionLinks to={"/about"}>{`About us`}</SectionLinks>
+                        <SectionLinks
+                            to={"/meet-the-team"}
+                        >{`Meet the team`}</SectionLinks>
+                        <SectionLinks
+                            to={"/contacts"}
+                        >{`Contacts`}</SectionLinks>
                     </StackPanel>
                     <StackPanel direction="column" padding={16}>
                         <span>{`WORK WITH US`}</span>
-                        <SectionLinks>{`Work with us`}</SectionLinks>
+                        <SectionLinks
+                            to={"/work-with-us"}
+                        >{`Work with us`}</SectionLinks>
                         <SectionLinks>{`Mondora handbook`}</SectionLinks>
                     </StackPanel>
                     <StackPanel direction="column" padding={16}>
                         <span>{`IMPACT`}</span>
-                        <SectionLinks>{`Impact`}</SectionLinks>
+                        <SectionLinks to={"/bcorp"}>{`Impact`}</SectionLinks>
                         <SectionLinks>{`Blog BCalm BCorp`}</SectionLinks>
                         <SectionLinks>{"Blog tecnico"}</SectionLinks>
                     </StackPanel>
