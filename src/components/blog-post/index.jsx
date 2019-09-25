@@ -8,13 +8,7 @@ const PostWrapper = styled.a`
     height: 100%;
     height: fit-content;
     background-color: var(--white);
-
-    @media (max-width: 1400px) {
-        display: ${props => (props.index < "3" ? "block" : "none")};
-    }
-    @media (max-width: 992px) {
-        display: ${props => (props.index < "2" ? "block" : "none")};
-    }
+    display: block;
     text-align: left;
     text-decoration: none;
 `;
