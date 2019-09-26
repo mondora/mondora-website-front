@@ -236,7 +236,7 @@ const Homepage = () => {
                                 "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
                             }
                         </DescriptionParagraph>
-                        <Link to={"/impact"}>
+                        <Link to={"/bcorp"}>
                             <SquareButton>{"IMPACT"}</SquareButton>
                         </Link>
                     </BenefitProject>
