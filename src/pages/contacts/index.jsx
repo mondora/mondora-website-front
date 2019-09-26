@@ -16,7 +16,7 @@ import SocialLink from "../../components/social-link";
 import StackPanel from "../../components/stackpanel";
 import Section from "../../components/section";
 import Divider from "../../components/divider";
-import ContactsMap from "../../components/contacts-map";
+//import ContactsMap from "../../components/contacts-map";
 
 import EmailIcon from "../../../static/images/email.svg";
 import PhoneIcon from "../../../static/images/phone.svg";
@@ -201,10 +201,10 @@ const Contacts = () => (
             </Section.RightContainer>
         </Section>
         <MapContainer>
-            <ContactsMap
+            {/* <ContactsMap
                 position={mapSettings.position}
                 zoom={mapSettings.zoom}
-            />
+            /> */}
         </MapContainer>
     </Layout>
 );
