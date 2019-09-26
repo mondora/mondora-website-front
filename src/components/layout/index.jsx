@@ -7,6 +7,7 @@ import Menu from "./menu";
 import Footer from "./footer";
 
 import logoWhite from "./assets/mondora-logo-white.svg";
+import bannerPath from "./assets/Banner-970x90-Cool-Down.png";
 
 const Container = styled.div`
     display: grid;
@@ -57,6 +58,10 @@ const Overlay = styled.div`
 const WhiteLogo = styled.img`
     max-width: 300px;
 `;
+
+const Banner = styled.img`
+    margin-top: 16px;
+`;
 //---------------------
 
 const Layout = ({ children }) => (
@@ -74,6 +79,13 @@ const Layout = ({ children }) => (
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                 ></iframe>
+                <a
+                    href="https://digital.globalclimatestrike.net/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Banner src={bannerPath} alt="climate-strike" />
+                </a>
             </Overlay>
             <BlurredWrapper>
                 <Container>
