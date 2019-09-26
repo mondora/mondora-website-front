@@ -52,13 +52,7 @@ const BlogPost = ({ node, index }) => {
     var shortened = node.content.encoded.substring(
         node.content.encoded.search('img alt="" src=') + 16
     );
-    var imgFormats = ["png", "jpg", "peg"];
-    var end = shortened.length;
-    imgFormats.map((format, i) => {
-        if (shortened.search(format) > 0)
-            end = Math.min(shortened.search(format), end);
-    });
-    var imgUrl = shortened.substring(0, end + 3);
+    var imgUrl = shortened.substring(0, shortened.search('"'));
 
     return (
         <PostWrapper index={index} target="_blank" href={node.link}>
