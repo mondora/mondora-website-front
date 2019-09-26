@@ -6,6 +6,9 @@ import { theme } from "../../styles/theme";
 import Menu from "./menu";
 import Footer from "./footer";
 
+import logoWhite from "./assets/mondora-logo-white.svg";
+import bannerPath from "./assets/Banner-970x90-Cool-Down.png";
+
 const Container = styled.div`
     display: grid;
 `;
@@ -26,17 +29,76 @@ const FooterContainer = styled.div`
     grid-area: 3 / 1 / 4 / 2;
 `;
 
+//TODO temporary component
+const BlurredWrapper = styled.div`
+    filter: blur(2px);
+`;
+
+const TemporaryTitle = styled.h1`
+    color: var(--white);
+    font-size: 56px;
+`;
+
+const Overlay = styled.div`
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`;
+
+const WhiteLogo = styled.img`
+    max-width: 300px;
+`;
+
+const Banner = styled.img`
+    margin-top: 16px;
+`;
+//---------------------
+
 const Layout = ({ children }) => (
     <ThemeProvider theme={theme}>
-        <Container>
-            <MenuContainer>
-                <Menu />
-            </MenuContainer>
-            <ContentContainer>{children}</ContentContainer>
-            <FooterContainer>
-                <Footer />
-            </FooterContainer>
-        </Container>
+        <div>
+            <Overlay>
+                <WhiteLogo src={logoWhite} />
+                <TemporaryTitle>{"We are on strike"}</TemporaryTitle>
+                <iframe
+                    title="Greta speech"
+                    width="50%"
+                    height="50%"
+                    src="https://www.youtube.com/embed/KAJsdgTPJpU"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+                <a
+                    href="https://digital.globalclimatestrike.net/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Banner src={bannerPath} alt="climate-strike" />
+                </a>
+            </Overlay>
+            <BlurredWrapper>
+                <Container>
+                    <MenuContainer>
+                        <Menu />
+                    </MenuContainer>
+                    <ContentContainer>{children}</ContentContainer>
+                    <FooterContainer>
+                        <Footer />
+                    </FooterContainer>
+                </Container>
+            </BlurredWrapper>
+        </div>
     </ThemeProvider>
 );
 
