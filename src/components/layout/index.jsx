@@ -73,6 +73,10 @@ const VideoContainer = styled.div`
     @media (max-width: 1024px) {
         height: 30%;
     }
+
+    @media (max-width: 700px) {
+        width: 80%;
+    }
 `;
 //---------------------
 
