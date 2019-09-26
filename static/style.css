@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Karla:400,400i,700,700i|Playfair+Display:400,400i,700,700i,900,900i&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Karla:400,400i,700,700i|Playfair+Display:400,400i,700,700i,900,900i&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css");
 html {
@@ -9,7 +9,10 @@ body {
     margin: 0;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: "Playfair Display", serif;
     color: var(--text-dark-black);
 }
@@ -35,7 +38,7 @@ button {
 :root {
     --primary: rgb(255, 218, 3);
 
-    --text-dark-black: rgb(33,43,54);
+    --text-dark-black: rgb(33, 43, 54);
     --text-dark-gray: rgb(84, 86, 90);
     --text-gray: rgb(99, 115, 129);
     --text-light-gray: rgb(179, 178, 193);
@@ -44,6 +47,7 @@ button {
     --background-dark-gray: rgb(32, 39, 47);
 
     --border-gray: rgb(99, 115, 129);
+    --border-dark-gray: rgb(66, 73, 80);
 
     --black: rgb(0, 0, 0);
     --white: rgb(255, 255, 255);
