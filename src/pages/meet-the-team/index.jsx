@@ -141,8 +141,9 @@ const MeetTheTeam = () => (
             </Section.RightContainer>
         </Section>
         <ContainerRegions>
-            {Regions.map(region => (
+            {Regions.map((region, i) => (
                 <RegionMiniature
+                    key={i}
                     image={region.image}
                     number={region.number}
                     name={region.name}

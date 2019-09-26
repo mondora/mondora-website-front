@@ -46,15 +46,15 @@ const BenefitCarousel = ({ projects }) => {
             nextArrow={<Arrow icon={faAngleRight} />}
             prevArrow={<Arrow icon={faAngleLeft} />}
         >
-            {projects.map(project => (
-                <BenefitSlide project={project} />
+            {projects.map((project, i) => (
+                <BenefitSlide key={i} project={project} />
             ))}
         </CustomSlider>
     );
 };
 
 BenefitCarousel.propTypes = {
-    projects: PropTypes.object
+    projects: PropTypes.array
 };
 
 export default BenefitCarousel;

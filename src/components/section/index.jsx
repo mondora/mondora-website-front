@@ -57,7 +57,7 @@ const DividerContainer = styled.div`
     }
 `;
 
-const Section = ({ children, position, margin = 0, gutter = 0 }) => {
+const Section = ({ children, margin = 0, gutter = 0 }) => {
     return (
         <SectionContainer gutter={gutter} margin={margin}>
             {children}
@@ -70,9 +70,8 @@ Section.LeftContainer = LeftContainer;
 Section.DividerContainer = DividerContainer;
 
 Section.propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.array,
     gutter: PropTypes.number,
-    position: PropTypes.string,
     margin: PropTypes.string
 };
 

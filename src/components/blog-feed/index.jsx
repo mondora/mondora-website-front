@@ -45,7 +45,6 @@ const FeedWrapper = styled.div`
     width: 80vw;
     height: fit-content;
     padding: 16px;
-
 `;
 
 const BlogFeed = () => {
@@ -54,9 +53,9 @@ const BlogFeed = () => {
         windowSize = useWindowSize();
     }
     var slidesNumber = 4;
-    if(windowSize.innerWidth < 1400) slidesNumber = 3;
-    if(windowSize.innerWidth < 992) slidesNumber = 2;
-    if(windowSize.innerWidth < 768) slidesNumber = 1;
+    if (windowSize.innerWidth < 1400) slidesNumber = 3;
+    if (windowSize.innerWidth < 992) slidesNumber = 2;
+    if (windowSize.innerWidth < 768) slidesNumber = 1;
     const data = useStaticQuery(graphql`
         query {
             allFeedBcalmBcorp {
@@ -87,9 +86,9 @@ const BlogFeed = () => {
                 nextArrow={<Arrow icon={faAngleRight} />}
                 prevArrow={<Arrow icon={faAngleLeft} />}
             >
-                 {data.allFeedBcalmBcorp.edges.map((item, i) => {
+                {data.allFeedBcalmBcorp.edges.map((item, i) => {
                     if (i < 6) {
-                        return <BlogPost index={i} node={item.node} />;
+                        return <BlogPost key={i} index={i} node={item.node} />;
                     }
                 })}
             </CustomSlider>

@@ -72,8 +72,8 @@ const DesktopMenu = () => (
                 <MiniLogo to={"/"} />
             </StackPanel>
             <StackPanel gutter={16} align="center">
-                {links.map(link => (
-                    <SuperLink to={link.to} activeClassName={"active"}>
+                {links.map((link, i) => (
+                    <SuperLink key={i} to={link.to} activeClassName={"active"}>
                         {link.text}
                     </SuperLink>
                 ))}

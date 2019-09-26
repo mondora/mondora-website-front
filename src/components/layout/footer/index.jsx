@@ -134,7 +134,7 @@ const Footer = () => {
     return (
         <Container justify="center">
             <FooterContainer>
-                {windowSize.innerWidth > 768 ? <MiniLogo /> : null}
+                {windowSize.innerWidth > 768 ? <MiniLogo to={"/"} /> : null}
 
                 <Info>
                     <StackPanel direction="column" gutter={4} padding={8}>
@@ -190,8 +190,9 @@ const Footer = () => {
                     <StackPanel justify="space-between" padding={8}>
                         <span>
                             <StackPanel gutter={8}>
-                                {Socials.map(social => (
+                                {Socials.map((social, i) => (
                                     <SocialLink
+                                        key={i}
                                         type="light"
                                         text={social.text}
                                         url={social.url}

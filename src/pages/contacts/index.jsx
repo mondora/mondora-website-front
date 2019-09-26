@@ -143,11 +143,11 @@ const Socials = [
 ];
 const mapSettings = {
     position: {
-      lat: 46.161530,
-      lng: 9.758879,
+        lat: 46.16153,
+        lng: 9.758879
     },
-    zoom: 15,
-  }
+    zoom: 15
+};
 
 const Contacts = () => (
     <Layout>
@@ -161,8 +161,8 @@ const Contacts = () => (
                         }
                     </LeftContent>
                     <ContactsWrapper>
-                        {ContactInfo.map(contact => (
-                            <div>
+                        {ContactInfo.map((contact, i) => (
+                            <div key={i}>
                                 <ContactIcon src={contact.icon} />
                                 <ContactName>{contact.title}</ContactName>
                                 <ContactBody>{contact.text}</ContactBody>
@@ -178,8 +178,8 @@ const Contacts = () => (
 
             <Section.RightContainer>
                 <RightParagraph>
-                    {Addresses.map(address => (
-                        <div>
+                    {Addresses.map((address, i) => (
+                        <div key={i}>
                             <RightTitle>{address.title}</RightTitle>
                             <RightContent>{address.address}</RightContent>
                         </div>
@@ -187,8 +187,9 @@ const Contacts = () => (
                     <RightTitle>{"Follow us on:"}</RightTitle>
 
                     <StackPanel gutter={8}>
-                        {Socials.map(social => (
+                        {Socials.map((social, i) => (
                             <SocialLink
+                                key={i}
                                 type="dark"
                                 text={social.text}
                                 url={social.url}
@@ -199,7 +200,12 @@ const Contacts = () => (
                 </RightParagraph>
             </Section.RightContainer>
         </Section>
-        <MapContainer><ContactsMap position={mapSettings.position} zoom={mapSettings.zoom}/></MapContainer>
+        <MapContainer>
+            <ContactsMap
+                position={mapSettings.position}
+                zoom={mapSettings.zoom}
+            />
+        </MapContainer>
     </Layout>
 );
 

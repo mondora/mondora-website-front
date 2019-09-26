@@ -146,7 +146,7 @@ const ContactsMap = ({ position, zoom }) => {
     );
 };
 
-ContactsMap.PropTypes = {
+ContactsMap.propTypes = {
     position: PropTypes.object,
     zoom: number
 };

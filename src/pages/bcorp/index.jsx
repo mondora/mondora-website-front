@@ -294,14 +294,18 @@ const BCorp = () => (
 
         <ContainerFaqs>
             <h1>{"FAQ"}</h1>
-            {Faqs.map(faq => (
-                <FaqElement question={faq.question} answer={faq.answer} />
+            {Faqs.map((faq, i) => (
+                <FaqElement
+                    key={i}
+                    question={faq.question}
+                    answer={faq.answer}
+                />
             ))}
         </ContainerFaqs>
 
         <ReportContainer>
-            {Reports.map(report => (
-                <Report>
+            {Reports.map((report, i) => (
+                <Report key={i}>
                     <div>
                         <ReportIcon src={report.icon} />
                         <ReportYear>{report.year}</ReportYear>

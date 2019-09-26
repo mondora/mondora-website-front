@@ -217,14 +217,14 @@ const WorkWithUs = () => (
             </SuperA>
         </HandbookContainer>
         <CarouselContainer>
-            {images.map(image => (
-                <CarouselImage src={image.source} />
+            {images.map((image, i) => (
+                <CarouselImage key={i} src={image.source} />
             ))}
         </CarouselContainer>
         <Title>{"Why work with us?"}</Title>
         <ReasonsContainer>
-            {Reasons.map(reason => (
-                <ReasonPanel col={reason.col} row={reason.row}>
+            {Reasons.map((reason, i) => (
+                <ReasonPanel key={i} col={reason.col} row={reason.row}>
                     <ReasonNumber>{reason.number}</ReasonNumber>
                     <ReasonTitle>{reason.title}</ReasonTitle>
                     <Description>{reason.descriprion}</Description>
