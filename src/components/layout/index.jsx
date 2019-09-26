@@ -37,6 +37,8 @@ const BlurredWrapper = styled.div`
 const TemporaryTitle = styled.h1`
     color: var(--white);
     font-size: 56px;
+    padding: 0 16px;
+    text-align: center;
 `;
 
 const Overlay = styled.div`
@@ -61,6 +63,16 @@ const WhiteLogo = styled.img`
 
 const Banner = styled.img`
     margin-top: 16px;
+    width: 100%;
+`;
+
+const VideoContainer = styled.div`
+    width: 50%;
+    height: 50%;
+
+    @media (max-width: 1024px) {
+        height: 30%;
+    }
 `;
 //---------------------
 
@@ -70,15 +82,17 @@ const Layout = ({ children }) => (
             <Overlay>
                 <WhiteLogo src={logoWhite} />
                 <TemporaryTitle>{"We are on strike"}</TemporaryTitle>
-                <iframe
-                    title="Greta speech"
-                    width="50%"
-                    height="50%"
-                    src="https://www.youtube.com/embed/KAJsdgTPJpU"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
+                <VideoContainer>
+                    <iframe
+                        title="Greta speech"
+                        width="100%"
+                        height="100%"
+                        src="https://www.youtube.com/embed/KAJsdgTPJpU"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </VideoContainer>
                 <a
                     href="https://digital.globalclimatestrike.net/"
                     target="_blank"
