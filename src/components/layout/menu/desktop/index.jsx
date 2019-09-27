@@ -10,6 +10,10 @@ const Container = styled.div`
     padding: 30px 16px;
     max-width: 1440px;
     margin: auto;
+
+    @media (max-width: 790px) {
+        display: none;
+    }
 `;
 
 const MiniLogo = styled(Link)`
