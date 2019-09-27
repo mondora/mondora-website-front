@@ -2,8 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-import useWindowSize from "@rehooks/window-size";
-
 import { Link } from "gatsby";
 
 import StackPanel from "../../stackpanel";
@@ -46,7 +44,7 @@ const MiniLogo = styled(Link)`
     background-repeat: no-repeat;
 
     @media (max-width: 768px) {
-        background: none;
+        display: none;
     }
 `;
 
@@ -127,14 +125,10 @@ const Socials = [
 ];
 
 const Footer = () => {
-    let windowSize = 900;
-    if (typeof window !== "undefined") {
-        windowSize = useWindowSize();
-    }
     return (
         <Container justify="center">
             <FooterContainer>
-                {windowSize.innerWidth > 768 ? <MiniLogo to={"/"} /> : null}
+                <MiniLogo to={"/"} />
 
                 <Info>
                     <StackPanel direction="column" gutter={4} padding={8}>

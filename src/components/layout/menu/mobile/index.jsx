@@ -11,6 +11,10 @@ import mondoraLogoPath from "../../assets/mondora-logo.svg";
 
 const Container = styled.div`
     background-color: var(--background-dark-gray);
+
+    @media (min-width: 790px) {
+        display: none;
+    }
 `;
 
 const ClosedMenu = styled.div`

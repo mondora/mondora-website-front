@@ -12,6 +12,7 @@ const Container = styled.div`
 
     @media (max-width: 768px) {
         height: 70px;
+        display: ${props => props.hideOnMobile && "none"};
     }
 `;
 
@@ -35,9 +36,14 @@ const Circle = styled.div`
         `}
 `;
 
-const Divider = ({ above = false, below = true, height = 0 }) => {
+const Divider = ({
+    above = false,
+    below = true,
+    height = "100%",
+    hideOnMobile = false
+}) => {
     return (
-        <Container height={height}>
+        <Container height={height} hideOnMobile={hideOnMobile}>
             <Circle show={above} />
             <Line />
             <Circle show={below} />
