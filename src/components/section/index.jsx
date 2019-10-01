@@ -45,7 +45,10 @@ const RightContainer = styled(Container)`
     grid-area: 1 / 3 / 2 / 4;
 
     @media (max-width: 768px) {
-        grid-area: 2 / 1 / 3 / 2;
+        ${props =>
+            props.middleDivider
+                ? "grid-area: 3 / 1 / 4 / 2"
+                : "grid-area: 3 / 1 / 4 / 2"}
     }
 `;
 
@@ -53,7 +56,10 @@ const DividerContainer = styled.div`
     grid-area: 1 / 2 / 2 / 3;
 
     @media (max-width: 768px) {
-        grid-area: 3 / 1 / 4 / 2;
+        ${props =>
+            props.middleDivider
+                ? "grid-area: 2 / 1 / 3 / 2"
+                : "grid-area: 3 / 1 / 4 / 2"}
     }
 `;
 

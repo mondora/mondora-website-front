@@ -10,29 +10,30 @@ const FeedWrapper = styled.div`
     margin: 0 auto;
     max-width: 1440px;
     display: grid;
-    height: 160px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    @media (max-width: 1200px) {
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    padding-top: 80px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 25% 25% 25% 25%;
     }
-    @media (max-width: 992px) {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    @media (max-width: 500px) {
+        grid-template-columns: 50% 50%;
     }
 `;
 
-function FilterPosts(post){
-    if(post.node.caption.toLowerCase().includes("#tech")){
+function FilterPosts(post) {
+    if (post.node.caption.toLowerCase().includes("#tech")) {
         return post;
-        
-    } else{
-    return 0;
+    } else {
+        return 0;
     }
-};
+}
 
 const InstagramFeed = () => {
     const data = useStaticQuery(graphql`
         query InstagramPosts {
-            allInstaNode(sort: {order: DESC, fields: timestamp}) {
+            allInstaNode(sort: { order: DESC, fields: timestamp }) {
                 edges {
                     node {
                         id
@@ -48,15 +49,14 @@ const InstagramFeed = () => {
     var posts = data.allInstaNode.edges.filter(FilterPosts);
     return (
         <FeedWrapper>
-            
             {posts.map((item, i) => {
-                    return (
-                        <InstagramPost
-                            key={item.node.id}
-                            index={i}
-                            node={item.node}
-                        ></InstagramPost>
-                    );
+                return (
+                    <InstagramPost
+                        key={item.node.id}
+                        index={i}
+                        node={item.node}
+                    ></InstagramPost>
+                );
             })}
         </FeedWrapper>
     );
