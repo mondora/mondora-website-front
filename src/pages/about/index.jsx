@@ -50,9 +50,9 @@ const RightTitle = styled.h1`
 const AboutSection = styled.div`
     div,
     h1 {
-        color: ${props => (props.color === "light" ? "" : "white !important")};
+        color: ${props => (props.color === "light" ? "" : "white")};
     }
-    color: ${props => (props.color === "light" ? "" : "white !important")};
+    color: ${props => (props.color === "light" ? "" : "white")};
     margin-top: ${props => props.marginTop && "110pt"};
     padding-top: 65pt;
     padding-bottom: 80pt;
@@ -83,9 +83,13 @@ const TitleAndDescription = styled.div`
         grid-area: 2 / 1 / 3 / 1;
     }
 `;
-const AboutTitle = styled.h1`
-    margin-top: 80px;
+
+const AboutSubtitle = styled.div`
+    color: ${props =>
+        props.color === "light" ? "var(--text-gray)" : "var(--white)"};
 `;
+
+const AboutTitle = styled.h1``;
 const AboutParagraph = styled.div`
     color: var(--text-gray);
     line-height: 1.5;
@@ -101,8 +105,7 @@ const AboutDivider = styled.img`
 `;
 
 const AboutImage = styled.img`
-    width: 80%;
-    margin: 0 40pt;
+    width: 100%;
 
     @media (max-width: 768px) {
         grid-area: 1 / 1 / 2 / 1;
@@ -111,6 +114,11 @@ const AboutImage = styled.img`
 const AboutConclusion = styled.div`
     padding-top: 40pt;
     margin: 40pt 10%;
+    text-align: center;
+
+    @media (max-width: 768px) {
+        margin: 0;
+    }
 `;
 
 const FeaturesFirst = [
@@ -215,6 +223,9 @@ const About = () => (
         <AboutSection color="light" marginTop>
             <AboutWrapper>
                 <TitleAndDescription>
+                    <AboutSubtitle color={"light"}>
+                        {"WHO WE ARE"}
+                    </AboutSubtitle>
                     <AboutTitle>{"Mondora, a really diverse group"}</AboutTitle>
                     <AboutParagraph>
                         {
@@ -232,6 +243,9 @@ const About = () => (
             <AboutWrapper>
                 <AboutImage src={Image2} />
                 <TitleAndDescription>
+                    <AboutSubtitle color={"dark"}>
+                        {"WHERE DO WE COME FROM"}
+                    </AboutSubtitle>
                     <AboutTitle>{"From 2002 to now"}</AboutTitle>
                     <AboutParagraph>
                         {
@@ -252,6 +266,9 @@ const About = () => (
         <AboutSection color={"light"}>
             <AboutWrapper>
                 <TitleAndDescription>
+                    <AboutSubtitle color={"light"}>
+                        {"WHERE ARE WE DREAMING OF GOING TOGETHER"}
+                    </AboutSubtitle>
                     <AboutTitle>
                         {
                             "We love innovation, new technologies and new challenges"
