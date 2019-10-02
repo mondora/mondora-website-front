@@ -2,8 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { Link } from "gatsby";
-
 import TitleImage from "../../static/images/mondora.png";
 import ImpactsImage from "../../static/images/impacts.png";
 import BCorpLogo from "../../static/images/BCorp-logo.png";
@@ -18,7 +16,8 @@ import Section from "../components/section";
 import Divider from "../components/divider";
 
 const FirstImg = styled.img`
-    width: 100%;
+    max-width: 100%;
+    height: auto;
 `;
 
 const BCorpImg = styled.img`
@@ -94,8 +93,10 @@ const BenefitImageContainer = styled.div`
 `;
 
 const BenefitImage = styled.img`
-    width: 100%;
+    max-width: 100%;
+    height: auto;
 `;
+
 const DescriptionParagraph = styled.p`
     color: var(--text-dark-gray);
     margin: 24px 0;

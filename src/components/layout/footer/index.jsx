@@ -64,9 +64,14 @@ const Contacts = styled.div`
     }
 `;
 
+const ContactLink = styled.a`
+    text-decoration: none;
+    color: var(--white);
+    padding: 2px;
+`;
+
 const Social = styled.div`
-    grid-area: 3 / 2 / 4 / 4;
-    padding-top: 10px;
+    grid-area: 1 / 3 / 2 / 4;
 
     @media (max-width: 768px) {
         grid-area: 3 / 1 / 4 / 1;
@@ -126,8 +131,16 @@ const Footer = () => {
                 </Info>
 
                 <Contacts>
-                    <StackPanel justify="space-between" padding={8}>
-                        <span>{`+39 0342 1856456 - info@mondora.com`}</span>
+                    <StackPanel justify="start" padding={8}>
+                        <ContactLink href="tel:+3903421856456">
+                            {"+39 0342 1856456"}
+                        </ContactLink>
+                        <ContactLink
+                            href="mailto:info@mondora.com"
+                            target="_blank"
+                        >
+                            {"- info@mondora.com"}
+                        </ContactLink>
                     </StackPanel>
                 </Contacts>
 

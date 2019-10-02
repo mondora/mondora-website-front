@@ -7,7 +7,7 @@ import StackPanel from "../../../stackpanel";
 import mondoraLogoPath from "../../assets/mondora-logo.svg";
 
 const Container = styled.div`
-    padding: 30px 16px;
+    padding: 20px 16px;
     max-width: 1440px;
     margin: auto;
 
@@ -18,8 +18,10 @@ const Container = styled.div`
 
 const MiniLogo = styled(Link)`
     width: 162px;
+    height: 65px;
     background: url(${mondoraLogoPath});
     background-repeat: no-repeat;
+    background-position: center;
 `;
 
 const DesktopMenu = () => (
