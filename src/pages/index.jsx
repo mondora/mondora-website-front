@@ -18,11 +18,7 @@ import Section from "../components/section";
 import Divider from "../components/divider";
 
 const FirstImg = styled.img`
-    width: 30vw;
-
-    @media (max-width: 768px) {
-        width: 70vw;
-    }
+    width: 100%;
 `;
 
 const BCorpImg = styled.img`
@@ -89,6 +85,8 @@ const BenefitProject = styled.div`
 const BenefitImageContainer = styled.div`
     text-align: center;
     padding-bottom: 86px;
+    max-width: 1440px;
+    margin: 0 auto;
 
     @media (max-width: 768px) {
         display: none;
@@ -96,7 +94,7 @@ const BenefitImageContainer = styled.div`
 `;
 
 const BenefitImage = styled.img`
-    width: 66vw;
+    width: 100%;
 `;
 const DescriptionParagraph = styled.p`
     color: var(--text-dark-gray);
