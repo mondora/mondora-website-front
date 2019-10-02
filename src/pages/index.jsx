@@ -205,9 +205,6 @@ const Homepage = () => {
                         );
                     })}
                 </WhatItemsContainer>
-                <Link to={"/about"}>
-                    <SquareButton>{"SERVICES"}</SquareButton>
-                </Link>
             </WhatContainer>
 
             <BlogContainer>
@@ -231,9 +228,6 @@ const Homepage = () => {
                                 "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
                             }
                         </DescriptionParagraph>
-                        <Link to={"/bcorp"}>
-                            <SquareButton>{"IMPACT"}</SquareButton>
-                        </Link>
                     </BenefitProject>
                 </Section.RightContainer>
             </Section>

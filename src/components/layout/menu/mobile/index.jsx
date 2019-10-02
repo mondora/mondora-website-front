@@ -43,44 +43,12 @@ const Item = styled.div`
     align-items: center;
     text-decoration: none;
     border-bottom: 1px solid var(--border-dark-gray);
+    color: var(--white);
 `;
 
 const OpenedMenu = styled.div`
     border-top: 1px solid var(--white);
 `;
-
-const MenuLink = styled(Link)`
-    text-decoration: none;
-    color: var(--white);
-`;
-
-const BlogLink = styled.div`
-    text-decoration: none;
-    color: var(--white);
-`;
-
-const links = [
-    {
-        to: "/about",
-        text: "ABOUT US"
-    },
-    {
-        to: "/meet-the-team",
-        text: "MEET THE TEAM"
-    },
-    {
-        to: "/bcorp",
-        text: "IMPACT"
-    },
-    {
-        to: "/work-with-us",
-        text: "WORK WITH US"
-    },
-    {
-        to: "/contacts",
-        text: "CONTACTS"
-    }
-];
 
 const MobileMenu = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -98,18 +66,7 @@ const MobileMenu = () => {
             </ClosedMenu>
             {isMenuOpen && (
                 <OpenedMenu>
-                    {links.map(link => (
-                        <Item>
-                            <MenuLink to={link.to} activeClassName={"active"}>
-                                {link.text}
-                            </MenuLink>
-                        </Item>
-                    ))}
-                    <Item>
-                        <a target="_blank" href="https://bcalmbcorp.com/">
-                            <BlogLink>{"BLOG :m"}</BlogLink>
-                        </a>
-                    </Item>
+                    <Item>{"website under construction"}</Item>
                 </OpenedMenu>
             )}
         </Container>
