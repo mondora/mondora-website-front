@@ -56,23 +56,6 @@ const Info = styled.div`
     }
 `;
 
-const SectionsContainer = styled.div`
-    grid-area: 1 / 3 / 3 / 4;
-    grid-template-columns: 25% 25% 25% 25%;
-    display: grid;
-
-    @media (max-width: 768px) {
-        grid-area: 4 / 1 / 5 / 1;
-        grid-template-columns: 50% 50%;
-    }
-`;
-
-const SectionLinks = styled(Link)`
-    font-size: 11pt;
-    text-decoration: none;
-    color: var(--white);
-`;
-
 const Contacts = styled.div`
     grid-area: 2 / 2 / 3 / 4;
 
@@ -81,9 +64,14 @@ const Contacts = styled.div`
     }
 `;
 
+const ContactLink = styled.a`
+    text-decoration: none;
+    color: var(--white);
+    padding: 2px;
+`;
+
 const Social = styled.div`
-    grid-area: 3 / 2 / 4 / 4;
-    padding-top: 10px;
+    grid-area: 1 / 3 / 2 / 4;
 
     @media (max-width: 768px) {
         grid-area: 3 / 1 / 4 / 1;
@@ -142,41 +130,17 @@ const Footer = () => {
                     </StackPanel>
                 </Info>
 
-                <SectionsContainer>
-                    <StackPanel direction="column" padding={16}>
-                        <span>{`ABOUT`}</span>
-                        <SectionLinks to={"/about"}>{`About us`}</SectionLinks>
-                        <SectionLinks
-                            to={"/meet-the-team"}
-                        >{`Meet the team`}</SectionLinks>
-                        <SectionLinks
-                            to={"/contacts"}
-                        >{`Contacts`}</SectionLinks>
-                    </StackPanel>
-                    <StackPanel direction="column" padding={16}>
-                        <span>{`WORK WITH US`}</span>
-                        <SectionLinks
-                            to={"/work-with-us"}
-                        >{`Work with us`}</SectionLinks>
-                        <SectionLinks>{`Mondora handbook`}</SectionLinks>
-                    </StackPanel>
-                    <StackPanel direction="column" padding={16}>
-                        <span>{`IMPACT`}</span>
-                        <SectionLinks to={"/bcorp"}>{`Impact`}</SectionLinks>
-                        <SectionLinks>{`Blog BCalm BCorp`}</SectionLinks>
-                        <SectionLinks>{"Blog tecnico"}</SectionLinks>
-                    </StackPanel>
-                    <StackPanel direction="column" padding={16}>
-                        <span>{`SIDE PROJECTS`}</span>
-                        <SectionLinks>{`Hirebitto`}</SectionLinks>
-                        <SectionLinks>{`Cycle2Work`}</SectionLinks>
-                        <SectionLinks>{"Minicoder"}</SectionLinks>
-                    </StackPanel>
-                </SectionsContainer>
-
                 <Contacts>
-                    <StackPanel justify="space-between" padding={8}>
-                        <span>{`+39 0342 1856456 - info@mondora.com`}</span>
+                    <StackPanel justify="start" padding={8}>
+                        <ContactLink href="tel:+3903421856456">
+                            {"+39 0342 1856456"}
+                        </ContactLink>
+                        <ContactLink
+                            href="mailto:info@mondora.com"
+                            target="_blank"
+                        >
+                            {"- info@mondora.com"}
+                        </ContactLink>
                     </StackPanel>
                 </Contacts>
 

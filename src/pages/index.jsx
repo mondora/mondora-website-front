@@ -2,8 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { Link } from "gatsby";
-
 import TitleImage from "../../static/images/mondora.png";
 import ImpactsImage from "../../static/images/impacts.png";
 import BCorpLogo from "../../static/images/BCorp-logo.png";
@@ -18,11 +16,8 @@ import Section from "../components/section";
 import Divider from "../components/divider";
 
 const FirstImg = styled.img`
-    width: 30vw;
-
-    @media (max-width: 768px) {
-        width: 70vw;
-    }
+    max-width: 100%;
+    height: auto;
 `;
 
 const BCorpImg = styled.img`
@@ -89,6 +84,8 @@ const BenefitProject = styled.div`
 const BenefitImageContainer = styled.div`
     text-align: center;
     padding-bottom: 86px;
+    max-width: 1440px;
+    margin: 0 auto;
 
     @media (max-width: 768px) {
         display: none;
@@ -96,8 +93,10 @@ const BenefitImageContainer = styled.div`
 `;
 
 const BenefitImage = styled.img`
-    width: 66vw;
+    max-width: 100%;
+    height: auto;
 `;
+
 const DescriptionParagraph = styled.p`
     color: var(--text-dark-gray);
     margin: 24px 0;
@@ -207,9 +206,6 @@ const Homepage = () => {
                         );
                     })}
                 </WhatItemsContainer>
-                <Link to={"/about"}>
-                    <SquareButton>{"SERVICES"}</SquareButton>
-                </Link>
             </WhatContainer>
 
             <BlogContainer>
@@ -233,9 +229,6 @@ const Homepage = () => {
                                 "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
                             }
                         </DescriptionParagraph>
-                        <Link to={"/bcorp"}>
-                            <SquareButton>{"IMPACT"}</SquareButton>
-                        </Link>
                     </BenefitProject>
                 </Section.RightContainer>
             </Section>
