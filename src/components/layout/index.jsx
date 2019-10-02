@@ -83,29 +83,7 @@ const VideoContainer = styled.div`
 const Layout = ({ children }) => (
     <ThemeProvider theme={theme}>
         <div>
-            <Overlay>
-                <WhiteLogo src={logoWhite} />
-                <TemporaryTitle>{"We are on strike"}</TemporaryTitle>
-                <VideoContainer>
-                    <iframe
-                        title="Greta speech"
-                        width="100%"
-                        height="100%"
-                        src="https://www.youtube.com/embed/KAJsdgTPJpU"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                    ></iframe>
-                </VideoContainer>
-                <a
-                    href="https://digital.globalclimatestrike.net/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Banner src={bannerPath} alt="climate-strike" />
-                </a>
-            </Overlay>
-            <BlurredWrapper>
+            
                 <Container>
                     <MenuContainer>
                         <Menu />
@@ -115,8 +93,7 @@ const Layout = ({ children }) => (
                         <Footer />
                     </FooterContainer>
                 </Container>
-            </BlurredWrapper>
-        </div>
+            </div>
     </ThemeProvider>
 );
 

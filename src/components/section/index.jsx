@@ -34,7 +34,7 @@ const Container = styled.div`
 `;
 
 const LeftContainer = styled(Container)`
-    grid-area: 1 / 1 / 3 / 2;
+    grid-area: 1 / 1 / 2 / 2;
 
     @media (max-width: 768px) {
         grid-area: 1 / 1 / 2 / 2;
@@ -42,7 +42,7 @@ const LeftContainer = styled(Container)`
 `;
 
 const RightContainer = styled(Container)`
-    grid-area: 1 / 3 / 3 / 4;
+    grid-area: 1 / 3 / 2 / 4;
 
     @media (max-width: 768px) {
         grid-area: 2 / 1 / 3 / 2;

@@ -1,7 +1,6 @@
 import React from "react";
 
 import styled from "styled-components";
-import useWindowSize from "@rehooks/window-size";
 
 import { Link } from "gatsby";
 
@@ -19,19 +18,16 @@ import Section from "../components/section";
 import Divider from "../components/divider";
 
 const FirstImg = styled.img`
-    width: 30vw;
-
-    @media (max-width: 768px) {
-        width: 70vw;
-    }
+    width: 100%;
 `;
 
 const BCorpImg = styled.img`
     width: 80px;
-    margin: 0px auto;
+    grid-area: 2 / 2;
 
     @media (max-width: 768px) {
         grid-area: 4 / 1 / 5 / 1;
+        margin: 0 auto;
     }
 `;
 
@@ -77,6 +73,7 @@ const Description = styled.div`
 const SuperA = styled.a`
     text-decoration: none;
 `;
+
 const BenefitProject = styled.div`
     padding: 0px 36px;
 
@@ -88,10 +85,16 @@ const BenefitProject = styled.div`
 const BenefitImageContainer = styled.div`
     text-align: center;
     padding-bottom: 86px;
+    max-width: 1440px;
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const BenefitImage = styled.img`
-    width: 66vw;
+    width: 100%;
 `;
 const DescriptionParagraph = styled.p`
     color: var(--text-dark-gray);
@@ -159,11 +162,6 @@ const whatItems = [
 ];
 
 const Homepage = () => {
-    let windowSize = 900;
-    if (typeof window !== "undefined") {
-        windowSize = useWindowSize();
-    }
-
     return (
         <Layout>
             <Section gutter={32} margin={"auto"}>
@@ -179,13 +177,12 @@ const Homepage = () => {
                 </Section.LeftContainer>
 
                 <Section.DividerContainer>
-                    <Divider below height={"458px"} />
+                    <Divider below />
                 </Section.DividerContainer>
 
                 <Section.RightContainer>
                     <FirstImg src={TitleImage} />
                 </Section.RightContainer>
-
                 <BCorpImg src={BCorpLogo} />
             </Section>
 
@@ -222,11 +219,9 @@ const Homepage = () => {
             </BlogContainer>
 
             <Section margin={"auto"}>
-                {windowSize.innerWidth > 768 ? (
-                    <Section.DividerContainer>
-                        <Divider below height={"304px"} />
-                    </Section.DividerContainer>
-                ) : null}
+                <Section.DividerContainer>
+                    <Divider below hideOnMobile={true} />
+                </Section.DividerContainer>
 
                 <Section.RightContainer>
                     <BenefitProject>
@@ -242,11 +237,11 @@ const Homepage = () => {
                     </BenefitProject>
                 </Section.RightContainer>
             </Section>
-            {windowSize.innerWidth > 768 ? (
-                <BenefitImageContainer>
-                    <BenefitImage src={ImpactsImage} />
-                </BenefitImageContainer>
-            ) : null}
+
+            <BenefitImageContainer>
+                <BenefitImage src={ImpactsImage} />
+            </BenefitImageContainer>
+
             <AboutSection>
                 <AboutContainer>
                     <Section.LeftContainer>
