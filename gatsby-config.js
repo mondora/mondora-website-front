@@ -1,17 +1,25 @@
 module.exports = {
     siteMetadata: {
-        title: ":mondora: building software, creating benefit",
-        description: "Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact. We support humans and nature with projects that benefit the community and land.",
+        siteUrl: "https://mondora.com",
+        title: ":mondora - building software, creating benefit",
+        description:
+            "Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact. We support humans and nature with projects that benefit the community and land.",
         author: "mondora-team"
     },
     plugins: [
         "gatsby-plugin-react-helmet",
+        {
+            resolve: `gatsby-source-instagram`,
+            options: {
+                username: `mondoracom`
+            }
+        },
         "gatsby-plugin-styled-components",
         {
             resolve: `gatsby-source-rss-feed`,
             options: {
                 url: `https://bcalmbcorp.com/feed/`,
-                name: `BcalmBcorp`,
+                name: `BcalmBcorp`
             }
         },
         {
