@@ -16,16 +16,6 @@ const SiteMetadata = ({ post }) => {
     `);
 
     const defaults = data.site.siteMetadata;
-
-    if (defaults.siteUrl === "" && typeof window !== "undefined") {
-        defaults.siteUrl = window.location.origin;
-    }
-
-    if (defaults.siteUrl === "") {
-        console.error("Please set a baseUrl in your site metadata!");
-        return null;
-    }
-
     const title = defaults.title;
     const description = defaults.description;
     const url = new URL(defaults.siteUrl);
