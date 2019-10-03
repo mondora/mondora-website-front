@@ -36,11 +36,11 @@ const WhatContainer = styled.div`
     text-align: center;
 `;
 const WhatSubtitle = styled.div`
-    width: 80%;
     margin: 0 auto 40px auto;
     color: var(--variant-black);
     font-size: 11pt;
     line-height: 1.2;
+    background: red;
 `;
 const WhatItemsContainer = styled.div`
     display: flex;
