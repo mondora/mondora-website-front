@@ -101,6 +101,7 @@ const DescriptionParagraph = styled.p`
     color: var(--text-dark-gray);
     margin: 24px 0;
     line-height: 1.5;
+    background: blue;
 `;
 
 const AboutContainer = styled.div`
