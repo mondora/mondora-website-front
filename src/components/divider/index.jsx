@@ -30,8 +30,8 @@ const Circle = styled.div`
         css`
             display: block;
             border: 2px solid var(--black);
-            height: 16px;
-            width: 16px;
+            height: 12px;
+            width: 12px;
             border-radius: 16px;
         `}
 `;

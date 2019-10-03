@@ -74,7 +74,7 @@ const SuperA = styled.a`
 `;
 
 const BenefitProject = styled.div`
-    padding: 0px 36px;
+    padding: 80px 36px;
 
     @media (max-width: 768px) {
         padding-bottom: 37px;
