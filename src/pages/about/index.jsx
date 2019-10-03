@@ -84,12 +84,13 @@ const TitleAndDescription = styled.div`
     }
 `;
 
-const AboutSubtitle = styled.div`
+const AboutTitle = styled.div`
+    padding-top: 15pt;
+    font-size: 12pt;
     color: ${props =>
         props.color === "light" ? "var(--text-gray)" : "var(--white)"};
 `;
 
-const AboutTitle = styled.h1``;
 const AboutParagraph = styled.div`
     color: var(--text-gray);
     line-height: 1.5;
@@ -223,10 +224,8 @@ const About = () => (
         <AboutSection color="light" marginTop>
             <AboutWrapper>
                 <TitleAndDescription>
-                    <AboutSubtitle color={"light"}>
-                        {"WHO WE ARE"}
-                    </AboutSubtitle>
-                    <AboutTitle>{"Mondora, a really diverse group"}</AboutTitle>
+                    <AboutTitle color={"light"}>{"WHO WE ARE"}</AboutTitle>
+                    <h1>{"Mondora, a really diverse group"}</h1>
                     <AboutParagraph>
                         {
                             "We are a passionate and dedicated team of over 60 Full-Stack Software Developers, UX Designers, System Administrators… and a few Farmers!"
@@ -243,10 +242,10 @@ const About = () => (
             <AboutWrapper>
                 <AboutImage src={Image2} />
                 <TitleAndDescription>
-                    <AboutSubtitle color={"dark"}>
+                    <AboutTitle color={"dark"}>
                         {"WHERE DO WE COME FROM"}
-                    </AboutSubtitle>
-                    <AboutTitle>{"From 2002 to now"}</AboutTitle>
+                    </AboutTitle>
+                    <h1>{"From 2002 to now"}</h1>
                     <AboutParagraph>
                         {
                             "In 2002 two brothers, Michele and Francesco Mondora, decided to found a small company together with their respective wives, Sara and Lucia.  "
@@ -266,14 +265,14 @@ const About = () => (
         <AboutSection color={"light"}>
             <AboutWrapper>
                 <TitleAndDescription>
-                    <AboutSubtitle color={"light"}>
+                    <AboutTitle color={"light"}>
                         {"WHERE ARE WE DREAMING OF GOING TOGETHER"}
-                    </AboutSubtitle>
-                    <AboutTitle>
+                    </AboutTitle>
+                    <h1>
                         {
                             "We love innovation, new technologies and new challenges"
                         }
-                    </AboutTitle>
+                    </h1>
                     <AboutParagraph>
                         {
                             "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."

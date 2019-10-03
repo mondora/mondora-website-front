@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "gatsby";
 
 import styled from "styled-components";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import StackPanel from "../../../stackpanel";
@@ -91,7 +91,7 @@ const MobileMenu = () => {
                 <MiniLogo to={"/"} />
                 <StackPanel gutter={16} align="center">
                     <BurgerBunner
-                        icon={faBars}
+                        icon={isMenuOpen ? faTimes : faBars}
                         onClick={() => setMenuOpen(!isMenuOpen)}
                     />
                 </StackPanel>

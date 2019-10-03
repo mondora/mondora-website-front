@@ -32,7 +32,7 @@ const FeatureTitle = styled.div`
     font-size: 18pt;
 `;
 const FeatureText = styled.div`
-    color: var(--border-gray);
+    color: var(--text-gray);
     line-height: 1.5;
     margin-bottom: 16px;
 `;
