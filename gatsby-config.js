@@ -1,21 +1,9 @@
-// const env = require("@mondora/env").default;
-
-// const nodeEnv = env("NODE_ENV", { default: "development" });
-
-// require("dotenv").config({
-//     path: `${__dirname}/.env.${nodeEnv}`
-// });
-
-// const contentfulSpaceId = env("CONTENTFUL_SPACE_ID", { required: true });
-// const contentfulAccessToken = env("CONTENTFUL_ACCESS_TOKEN", {
-//     required: true
-// });
-
 module.exports = {
     siteMetadata: {
-        title: ":mondora's website",
-        // TODO: write a decent description.
-        description: ":mondora",
+        siteUrl: "https://mondora.com",
+        title: ":mondora - building software, creating benefit",
+        description:
+            "Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact. We support humans and nature with projects that benefit the community and land.",
         author: "mondora-team"
     },
     plugins: [
@@ -31,7 +19,7 @@ module.exports = {
             resolve: `gatsby-source-rss-feed`,
             options: {
                 url: `https://bcalmbcorp.com/feed/`,
-                name: `BcalmBcorp`,
+                name: `BcalmBcorp`
             }
         },
         {
@@ -41,17 +29,10 @@ module.exports = {
                 name: ":mondora",
                 short_name: ":m",
                 start_url: "/",
-                background_color: "#663399",
-                theme_color: "#663399",
+                background_color: "#f2f2f2",
+                theme_color: "#ffda03",
                 display: "minimal-ui"
             }
         }
-        // {
-        //     resolve: `gatsby-source-contentful`,
-        //     options: {
-        //         spaceId: process.env.CONTENTFUL_SPACE_ID,
-        //         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
-        //     }
-        // }
     ]
 };
