@@ -30,9 +30,6 @@ const DesktopMenu = () => (
             <StackPanel>
                 <MiniLogo to={"/"} />
             </StackPanel>
-            <StackPanel gutter={16} align="center">
-                {"website under construction"}
-            </StackPanel>
         </StackPanel>
     </Container>
 );
