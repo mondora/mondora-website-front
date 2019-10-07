@@ -5,8 +5,6 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FeaturesContainer = styled.div`
-    max-width: 1440px;
-    margin: 0 auto;
     border-bottom: 1pt solid var(--border-gray);
     padding-top: 40pt;
 

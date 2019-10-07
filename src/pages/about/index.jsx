@@ -66,10 +66,13 @@ const AboutSection = styled.div`
     @media (max-width: 768px) {
         margin-top: ${props => props.marginTop && "50pt"};
     }
+
+    > * {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
 `;
 const AboutWrapper = styled.div`
-    max-width: 1440px;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: 50% 50%;
 
