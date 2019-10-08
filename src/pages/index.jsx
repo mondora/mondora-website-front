@@ -13,6 +13,7 @@ import LightBackground from "../components/layout/assets/light_background.svg";
 
 import BlogFeed from "../components/blog-feed";
 import SquareButton from "../components/square-button";
+import MaxWidthContainer from "../components/max-width-container";
 import Layout from "../components/layout";
 import Section from "../components/section";
 import Divider from "../components/divider";
@@ -31,8 +32,7 @@ const BCorpImg = styled.img`
     }
 `;
 
-const WhatContainer = styled.div`
-    max-width: 1440px;
+const WhatContainer = styled(MaxWidthContainer)`
     margin: 24px auto;
     text-align: center;
 `;
@@ -82,11 +82,9 @@ const BenefitProject = styled.div`
     }
 `;
 
-const BenefitImageContainer = styled.div`
+const BenefitImageContainer = styled(MaxWidthContainer)`
     text-align: center;
     padding-bottom: 86px;
-    max-width: 1440px;
-    margin: 0 auto;
 
     @media (max-width: 768px) {
         display: none;
@@ -102,9 +100,7 @@ const DescriptionParagraph = styled.p`
     line-height: 1.5;
 `;
 
-const AboutContainer = styled.div`
-    max-width: 1440px;
-    margin: auto;
+const AboutContainer = styled(MaxWidthContainer)`
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     @media (max-width: 768px) {

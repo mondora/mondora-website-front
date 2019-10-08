@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
-const SectionContainer = styled.div`
+import MaxWidthContainer from "../../components/max-width-container";
+
+const SectionContainer = styled(MaxWidthContainer)`
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     grid-column-gap: ${props => props.gutter}px;
-    max-width: 1440px;
 
     margin-right: ${props =>
         props.margin === "auto" ? props.margin : props.margin + "px"};

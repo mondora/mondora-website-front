@@ -3,12 +3,11 @@ import React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 
 import InstagramPost from "../instagram-post";
+import MaxWidthContainer from "../max-width-container";
 
 import styled from "styled-components";
 
-const FeedWrapper = styled.div`
-    margin: 0 auto;
-    max-width: 1440px;
+const FeedWrapper = styled(MaxWidthContainer)`
     display: grid;
     padding-top: 80px;
     grid-template-columns: 20% 20% 20% 20% 20%;
