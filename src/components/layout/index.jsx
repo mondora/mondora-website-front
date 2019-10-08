@@ -28,17 +28,15 @@ const FooterContainer = styled.div`
 
 const Layout = ({ children }) => (
     <ThemeProvider theme={theme}>
-        <div>
-            <Container>
-                <MenuContainer>
-                    <Menu />
-                </MenuContainer>
-                <ContentContainer>{children}</ContentContainer>
-                <FooterContainer>
-                    <Footer />
-                </FooterContainer>
-            </Container>
-        </div>
+        <Container>
+            <MenuContainer>
+                <Menu />
+            </MenuContainer>
+            <ContentContainer>{children}</ContentContainer>
+            <FooterContainer>
+                <Footer />
+            </FooterContainer>
+        </Container>
     </ThemeProvider>
 );
 
