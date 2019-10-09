@@ -10,7 +10,7 @@
         "@fortawesome/react-fontawesome": "^0.1.5",
         "@rehooks/window-size": "^1.0.2",
         "color": "^3.1.2",
-        "gatsby": "2.15.28",
+        "gatsby": "2.15.34",
         "gatsby-source-instagram": "^0.5.1",
         "gatsby-source-rss-feed": "^1.1.1",
         "google-map-react": "^1.1.5",
