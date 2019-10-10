@@ -216,7 +216,7 @@ const Homepage = () => {
                 <SuperA
                     target="_blank"
                     rel="noopener noreferrer"
-                    href={"https://bcalmbcorp.com/"}
+                    href="https://bcalmbcorp.com/"
                 >
                     <SquareButton>{"visit our blog"}</SquareButton>
                 </SuperA>
