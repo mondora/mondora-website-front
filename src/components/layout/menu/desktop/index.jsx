@@ -29,7 +29,7 @@ const SuperLink = styled(Link)`
     padding: 12px 0;
 
     &.active {
-        background-image: url(${require("../../../../../static/images/underline.png")});
+        background-image: url(${require("../../../../../static/images/underlines.svg")});
         background-repeat: no-repeat;
         background-size: 48px;
         background-position-y: bottom;
@@ -80,7 +80,11 @@ const DesktopMenu = () => (
                         {link.text}
                     </SuperLink>
                 ))}
-                <a target="_blank" href="https://bcalmbcorp.com/">
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://bcalmbcorp.com/"
+                >
                     <BlogButton>{"Blog :m"}</BlogButton>
                 </a>
             </StackPanel>
