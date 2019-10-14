@@ -1,23 +1,36 @@
-import React, { memo } from "react";
+import React from "react";
 
 import { graphql, useStaticQuery } from "gatsby";
 
-import { InstagramPost } from "../instagram-post";
+import InstagramPost from "../instagram-post";
+import MaxWidthContainer from "../max-width-container";
 
 import styled from "styled-components";
 
-const FeedWrapper = styled.div`
-    display: flex;
-    padding: 0;
-    margin: 0;
-    height: 240px;
-    width: 100vw;
-    align-items: flex-start;
-    overflow-x: scroll;
+const FeedWrapper = styled(MaxWidthContainer)`
+    display: grid;
+    padding-top: 80px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 25% 25% 25% 25%;
+    }
+
+    @media (max-width: 500px) {
+        grid-template-columns: 50% 50%;
+    }
 `;
 
-const InstagramFeed = memo(() => {
-    const posts = useStaticQuery(graphql`
+function FilterPosts(post) {
+    if (post.node.caption.toLowerCase().includes("#tech")) {
+        return post;
+    } else {
+        return 0;
+    }
+}
+
+const InstagramFeed = () => {
+    const data = useStaticQuery(graphql`
         query InstagramPosts {
             allInstaNode(sort: { order: DESC, fields: timestamp }) {
                 edges {
@@ -31,15 +44,21 @@ const InstagramFeed = memo(() => {
                 }
             }
         }
-    `).allInstaNode.edges;
-
+    `);
+    var posts = data.allInstaNode.edges.filter(FilterPosts);
     return (
         <FeedWrapper>
-            {posts.map(({ node: post }) => (
-                <InstagramPost key={post.id} src={post.original} id={post.id} />
-            ))}
+            {posts.map((item, i) => {
+                return (
+                    <InstagramPost
+                        key={item.node.id}
+                        index={i}
+                        node={item.node}
+                    ></InstagramPost>
+                );
+            })}
         </FeedWrapper>
     );
-});
+};
 
 export default InstagramFeed;
