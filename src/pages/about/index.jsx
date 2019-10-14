@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-import Layout from "../../components/layout";
+import { Layout } from "../../components/layout";
 import InstagramFeed from "../../components/instagram-feed";
 import Section from "../../components/section";
 import Divider from "../../components/divider";
