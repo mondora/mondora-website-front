@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import PropTypes, { number } from "prop-types";
 
 import GoogleMapReact from "google-map-react";
@@ -6,7 +6,7 @@ import GoogleMapReact from "google-map-react";
 import PointerSrc from "../../../static/images/pointer.svg";
 import { MapContainer, PointerImg } from "./styled";
 
-export const ContactsMap = memo(({ position, zoom }) => {
+export const ContactsMap = ({ position, zoom }) => {
     return (
         <MapContainer>
             <GoogleMapReact
@@ -131,7 +131,7 @@ export const ContactsMap = memo(({ position, zoom }) => {
             </GoogleMapReact>
         </MapContainer>
     );
-});
+};
 
 ContactsMap.propTypes = {
     position: PropTypes.object,

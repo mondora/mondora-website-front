@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../styles/theme";
@@ -22,7 +22,7 @@ const FooterContainer = styled.div`
     grid-area: 3 / 1 / 4 / 2;
 `;
 
-export const Layout = memo(({ children }) => (
+export const Layout = ({ children }) => (
     <ThemeProvider theme={theme}>
         <Container>
             <MenuContainer>
@@ -34,4 +34,4 @@ export const Layout = memo(({ children }) => (
             </FooterContainer>
         </Container>
     </ThemeProvider>
-));
+);
