@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { Grid } from "../../grid";
 import { SocialLink } from "../../social-link";
 import {
@@ -10,7 +10,7 @@ import {
     faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 
-export const WhereToFindUs = memo(() => (
+export const WhereToFindUs = () => (
     <Grid item container direction="column">
         <Grid item container direction="column">
             <Grid item>
@@ -64,4 +64,4 @@ export const WhereToFindUs = memo(() => (
             </Grid>
         </Grid>
     </Grid>
-));
+);

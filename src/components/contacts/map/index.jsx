@@ -1,7 +1,7 @@
-import React, { memo } from "react";
+import React from "react";
 import { ContactsMap } from "../../contacts-map";
 
-export const Map = memo(() => (
+export const Map = () => (
     <ContactsMap
         position={{
             lat: 46.16153,
@@ -9,4 +9,4 @@ export const Map = memo(() => (
         }}
         zoom={15}
     />
-));
+);

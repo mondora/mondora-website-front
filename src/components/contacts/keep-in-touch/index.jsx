@@ -1,11 +1,11 @@
-import React, { memo } from "react";
+import React from "react";
 import { Grid } from "../../grid";
 import { ContactIcon, ContactName, ContactBody } from "./styled";
 import EmailIcon from "../../../../static/images/email.svg";
 import PhoneIcon from "../../../../static/images/phone.svg";
 import MobileIcon from "../../../../static/images/mobile.svg";
 
-export const KeepInTouch = memo(() => (
+export const KeepInTouch = () => (
     <>
         <Grid item container direction="column">
             <h1>Keep in touch</h1>
@@ -33,4 +33,4 @@ export const KeepInTouch = memo(() => (
             </Grid>
         </Grid>
     </>
-));
+);
