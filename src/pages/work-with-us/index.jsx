@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { Layout } from "../../components/layout";
+import Layout from "../../components/layout";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 

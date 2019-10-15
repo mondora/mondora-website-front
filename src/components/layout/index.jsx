@@ -22,7 +22,7 @@ const FooterContainer = styled.div`
     grid-area: 3 / 1 / 4 / 2;
 `;
 
-export const Layout = ({ children }) => (
+const Layout = ({ children }) => (
     <ThemeProvider theme={theme}>
         <Container>
             <MenuContainer>
@@ -35,3 +35,5 @@ export const Layout = ({ children }) => (
         </Container>
     </ThemeProvider>
 );
+
+export default Layout;

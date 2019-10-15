@@ -1,5 +1,5 @@
 import React from "react";
-import { ContactsMap } from "../../contacts-map";
+import ContactsMap from "../../contacts-map";
 
 const Map = () => (
     <ContactsMap

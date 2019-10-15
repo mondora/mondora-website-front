@@ -13,7 +13,7 @@ import LightBackground from "../components/layout/assets/light_background.svg";
 
 import BlogFeed from "../components/blog-feed";
 import SquareButton from "../components/square-button";
-import { Layout } from "../components/layout";
+import Layout from "../components/layout";
 import Section from "../components/section";
 import Divider from "../components/divider";
 

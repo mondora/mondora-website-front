@@ -2,7 +2,7 @@ import React, { Children } from "react";
 import PropTypes from "prop-types";
 import { Container, Spacer } from "./styled";
 
-export const Grid = ({
+const Grid = ({
     direction,
     align,
     justify,
@@ -79,3 +79,5 @@ Grid.defaultProps = {
     spacingRatio: 0,
     wrap: true
 };
+
+export default Grid;

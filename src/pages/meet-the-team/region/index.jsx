@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Link } from "gatsby";
 
-import { Layout } from "../../../components/layout";
+import Layout from "../../../components/layout";
 import Employee from "../../../components/employee";
 import SquareButton from "../../../components/square-button";
 import Section from "../../../components/section";

@@ -7,7 +7,7 @@ import { Link } from "gatsby";
 import FaqElement from "../../components/faq-element";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
-import { Layout } from "../../components/layout";
+import Layout from "../../components/layout";
 import Divider from "../../components/divider";
 import BenefitCarousel from "../../components/benefit-carousel";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "../../grid";
+import Grid from "../../grid";
 import { SocialLink } from "../../social-link";
 import {
     faGithub,

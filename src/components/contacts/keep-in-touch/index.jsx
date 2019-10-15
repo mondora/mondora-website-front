@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "../../grid";
+import Grid from "../../grid";
 import { ContactIcon, ContactName, ContactBody } from "./styled";
 import EmailIcon from "../../../../static/images/email.svg";
 import PhoneIcon from "../../../../static/images/phone.svg";
