@@ -8,7 +8,7 @@ import { KeepInTouch } from "../../components/contacts/keep-in-touch";
 import { WhereToFindUs } from "../../components/contacts/where-to-find-us";
 import { Map } from "../../components/contacts/map";
 
-export default () => (
+const Contacts = () => (
     <Layout>
         <Grid container direction="column" spacingRatio={6}>
             <Grid container justify="center">
@@ -37,3 +37,5 @@ export default () => (
         </Grid>
     </Layout>
 );
+
+export default Contacts;

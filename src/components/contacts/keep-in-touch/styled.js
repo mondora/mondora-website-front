@@ -14,7 +14,7 @@ export const ContactName = styled.div`
 export const ContactBody = styled.div`
     margin-top: 16px;
     font-size: 16px;
-    color: var(--text-dark-gra);
+    color: var(--text-dark-gray);
 `;
 
 export const ContactIcon = styled.img`
