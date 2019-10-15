@@ -10,7 +10,7 @@ import {
     faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 
-export const WhereToFindUs = () => (
+const WhereToFindUs = () => (
     <Grid item container direction="column">
         <Grid item container direction="column">
             <Grid item>
@@ -65,3 +65,5 @@ export const WhereToFindUs = () => (
         </Grid>
     </Grid>
 );
+
+export default WhereToFindUs;

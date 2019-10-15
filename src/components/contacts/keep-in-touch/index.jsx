@@ -5,7 +5,7 @@ import EmailIcon from "../../../../static/images/email.svg";
 import PhoneIcon from "../../../../static/images/phone.svg";
 import MobileIcon from "../../../../static/images/mobile.svg";
 
-export const KeepInTouch = () => (
+const KeepInTouch = () => (
     <>
         <Grid item container direction="column">
             <h1>Keep in touch</h1>
@@ -34,3 +34,5 @@ export const KeepInTouch = () => (
         </Grid>
     </>
 );
+
+export default KeepInTouch;
