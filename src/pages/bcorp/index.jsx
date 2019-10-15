@@ -7,7 +7,6 @@ import { Link } from "gatsby";
 import FaqElement from "../../components/faq-element";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
-import Layout from "../../components/layout";
 import Divider from "../../components/divider";
 import BenefitCarousel from "../../components/benefit-carousel";
 
@@ -15,6 +14,7 @@ import HireBittoGraphic from "../../../static/images/hirebitto.png";
 import Cycle2WorkGraphic from "../../../static/images/c2w.png";
 import FarmingGraphic from "../../../static/images/farmers.png";
 import ReportHeart from "../../../static/images/heart.svg";
+import Layout from "../../components/layout";
 
 const ContainerProjects = styled.div`
     width: 100vw;

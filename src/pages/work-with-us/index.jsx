@@ -2,12 +2,12 @@ import React from "react";
 
 import styled from "styled-components";
 
-import Layout from "../../components/layout";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 
 import Image1 from "../../../static/images/image.png";
 import Divider from "../../components/divider";
+import Layout from "../../components/layout";
 
 const LeftParagraph = styled.div`
     text-align: left;

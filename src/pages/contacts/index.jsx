@@ -1,11 +1,11 @@
 import React from "react";
 
-import Layout from "../../components/layout";
 import Divider from "../../components/divider";
 import Grid from "../../components/grid";
 import KeepInTouch from "../../components/contacts/keep-in-touch";
 import WhereToFindUs from "../../components/contacts/where-to-find-us";
 import Map from "../../components/contacts/map";
+import Layout from "../../components/layout";
 
 const Contacts = () => (
     <Layout>
