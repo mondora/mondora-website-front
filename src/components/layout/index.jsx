@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../styles/theme";
 
 import Menu from "./menu";
 import Footer from "./footer";
+import CookiesAlert from "../cookies-alert";
 
 const Container = styled.div`
     display: grid;
@@ -22,18 +23,27 @@ const FooterContainer = styled.div`
     grid-area: 3 / 1 / 4 / 2;
 `;
 
-const Layout = ({ children }) => (
-    <ThemeProvider theme={theme}>
-        <Container>
-            <MenuContainer>
-                <Menu />
-            </MenuContainer>
-            <ContentContainer>{children}</ContentContainer>
-            <FooterContainer>
-                <Footer />
-            </FooterContainer>
-        </Container>
-    </ThemeProvider>
-);
+const Layout = ({ children }) => {
+    const [show, setShow] = useState(true);
+
+    const handleHide = () => {
+        setShow(false);
+    };
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Container>
+                <MenuContainer>
+                    <Menu />
+                </MenuContainer>
+                <ContentContainer>{children}</ContentContainer>
+                <FooterContainer>
+                    <Footer />
+                </FooterContainer>
+            </Container>
+            <CookiesAlert show={show} onHide={handleHide} />
+        </ThemeProvider>
+    );
+};
 
 export default Layout;

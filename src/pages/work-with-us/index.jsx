@@ -2,7 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-import Layout from "../../components/layout";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 
@@ -174,7 +173,7 @@ const Reasons = [
 ];
 
 const WorkWithUs = () => (
-    <Layout>
+    <>
         <Section gutter={32}>
             <Section.LeftContainer>
                 <LeftParagraph>
@@ -246,7 +245,7 @@ const WorkWithUs = () => (
                 </SuperA>
             </FormModule>
         </ContainerForm>
-    </Layout>
+    </>
 );
 
 export default WorkWithUs;

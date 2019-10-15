@@ -7,7 +7,6 @@ import { Link } from "gatsby";
 import FaqElement from "../../components/faq-element";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
-import Layout from "../../components/layout";
 import Divider from "../../components/divider";
 import BenefitCarousel from "../../components/benefit-carousel";
 
@@ -256,7 +255,7 @@ const Reports = [
 ];
 
 const BCorp = () => (
-    <Layout>
+    <>
         <Section gutter={32}>
             <Section.LeftContainer>
                 <LeftParagraph>
@@ -319,7 +318,7 @@ const BCorp = () => (
                 </Report>
             ))}
         </ReportContainer>
-    </Layout>
+    </>
 );
 
 export default BCorp;

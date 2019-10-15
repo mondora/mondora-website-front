@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import { Link } from "gatsby";
 
-import Layout from "../../components/layout";
 import Section from "../../components/section";
 import RegionMiniature from "../../components/region";
 import Divider from "../../components/divider";
@@ -114,7 +113,7 @@ const Regions = [
 ];
 
 const MeetTheTeam = () => (
-    <Layout>
+    <>
         <Section gutter={32}>
             <Section.LeftContainer>
                 <LeftParagraph>
@@ -152,7 +151,7 @@ const MeetTheTeam = () => (
                 ></RegionMiniature>
             ))}
         </ContainerRegions>
-    </Layout>
+    </>
 );
 
 export default MeetTheTeam;
