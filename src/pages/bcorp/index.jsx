@@ -14,6 +14,7 @@ import HireBittoGraphic from "../../../static/images/hirebitto.png";
 import Cycle2WorkGraphic from "../../../static/images/c2w.png";
 import FarmingGraphic from "../../../static/images/farmers.png";
 import ReportHeart from "../../../static/images/heart.svg";
+import Layout from "../../components/layout";
 
 const ContainerProjects = styled.div`
     width: 100vw;
@@ -255,7 +256,7 @@ const Reports = [
 ];
 
 const BCorp = () => (
-    <>
+    <Layout>
         <Section gutter={32}>
             <Section.LeftContainer>
                 <LeftParagraph>
@@ -318,7 +319,7 @@ const BCorp = () => (
                 </Report>
             ))}
         </ReportContainer>
-    </>
+    </Layout>
 );
 
 export default BCorp;

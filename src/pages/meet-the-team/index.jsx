@@ -10,6 +10,7 @@ import Divider from "../../components/divider";
 import SquareButton from "../../components/square-button";
 
 import Logo from "../../../static/images/regions/Japan-icon.png";
+import Layout from "../../components/layout";
 
 const LeftParagraph = styled.div`
     text-align: left;
@@ -113,7 +114,7 @@ const Regions = [
 ];
 
 const MeetTheTeam = () => (
-    <>
+    <Layout>
         <Section gutter={32}>
             <Section.LeftContainer>
                 <LeftParagraph>
@@ -151,7 +152,7 @@ const MeetTheTeam = () => (
                 ></RegionMiniature>
             ))}
         </ContainerRegions>
-    </>
+    </Layout>
 );
 
 export default MeetTheTeam;

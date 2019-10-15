@@ -10,6 +10,7 @@ import Underline from "../../../static/images/separator.svg";
 import Image1 from "../../../static/images/diversity.png";
 import Image2 from "../../../static/images/brothers.png";
 import Image3 from "../../../static/images/working.png";
+import Layout from "../../components/layout";
 
 const LeftParagraph = styled.div`
     @media (max-width: 992px) {
@@ -92,7 +93,7 @@ const AboutConclusion = styled.div`
     margin: 40px 10%;
 `;
 const About = () => (
-    <>
+    <Layout>
         <Section gutter={32}>
             <Section.LeftContainer>
                 <LeftParagraph>
@@ -258,7 +259,7 @@ const About = () => (
         </AboutSection>
 
         <InstagramFeed />
-    </>
+    </Layout>
 );
 
 export default About;

@@ -24,10 +24,16 @@ const FooterContainer = styled.div`
 `;
 
 const Layout = ({ children }) => {
-    const [show, setShow] = useState(true);
+    const [hide, setHidden] = useState(
+        typeof window !== "undefined"
+            ? window.localStorage.getItem("cookies-alert-hidden")
+            : false
+    );
 
     const handleHide = () => {
-        setShow(false);
+        typeof window !== "undefined" &&
+            window.localStorage.setItem("cookies-alert-hidden", true);
+        setHidden(true);
     };
 
     return (
@@ -41,7 +47,7 @@ const Layout = ({ children }) => {
                     <Footer />
                 </FooterContainer>
             </Container>
-            <CookiesAlert show={show} onHide={handleHide} />
+            <CookiesAlert show={!hide} onHide={handleHide} />
         </ThemeProvider>
     );
 };

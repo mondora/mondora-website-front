@@ -7,6 +7,7 @@ import Section from "../../components/section";
 
 import Image1 from "../../../static/images/image.png";
 import Divider from "../../components/divider";
+import Layout from "../../components/layout";
 
 const LeftParagraph = styled.div`
     text-align: left;
@@ -173,7 +174,7 @@ const Reasons = [
 ];
 
 const WorkWithUs = () => (
-    <>
+    <Layout>
         <Section gutter={32}>
             <Section.LeftContainer>
                 <LeftParagraph>
@@ -245,7 +246,7 @@ const WorkWithUs = () => (
                 </SuperA>
             </FormModule>
         </ContainerForm>
-    </>
+    </Layout>
 );
 
 export default WorkWithUs;

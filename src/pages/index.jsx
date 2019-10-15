@@ -15,6 +15,7 @@ import BlogFeed from "../components/blog-feed";
 import SquareButton from "../components/square-button";
 import Section from "../components/section";
 import Divider from "../components/divider";
+import Layout from "../components/layout";
 
 const FirstImg = styled.img`
     width: 100%;
@@ -161,7 +162,7 @@ const whatItems = [
 ];
 
 const Homepage = () => (
-    <>
+    <Layout>
         <Section gutter={32} margin={"auto"}>
             <Section.LeftContainer>
                 <div>
@@ -260,7 +261,7 @@ const Homepage = () => (
                 </Section.RightContainer>
             </AboutContainer>
         </AboutSection>
-    </>
+    </Layout>
 );
 
 export default Homepage;
