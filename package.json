@@ -29,7 +29,7 @@
         "@commitlint/config-conventional": "^8.2.0",
         "@mondora/env": "^1.3.0",
         "babel-plugin-styled-components": "^1.10.6",
-        "dotenv": "^8.1.0",
+        "dotenv": "^8.2.0",
         "gatsby-plugin-manifest": "^2.2.21",
         "gatsby-plugin-react-helmet": "^3.1.12",
         "gatsby-plugin-styled-components": "^3.1.9",
