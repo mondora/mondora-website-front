@@ -157,105 +157,107 @@ const whatItems = [
     }
 ];
 
-const Homepage = () => {
-    return (
-        <Layout>
-            <Section gutter={32} margin={"auto"}>
+const Homepage = () => (
+    <Layout>
+        <Section gutter={32} margin={"auto"}>
+            <Section.LeftContainer>
+                <div>
+                    <h1>{"Welcome to the :mondora world!"}</h1>
+                    <DescriptionParagraph>
+                        {
+                            "Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
+                        }
+                    </DescriptionParagraph>
+                </div>
+            </Section.LeftContainer>
+
+            <Section.DividerContainer>
+                <Divider below />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <FirstImg src={TitleImage} />
+            </Section.RightContainer>
+            <BCorpImg src={BCorpLogo} />
+        </Section>
+
+        <WhatContainer>
+            <h1>{"What we can do for you"}</h1>
+            <WhatSubtitle>
+                {
+                    "Our aim is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
+                }
+            </WhatSubtitle>
+            <WhatItemsContainer>
+                {whatItems.map((item, key) => {
+                    return (
+                        <WhatItem key={key}>
+                            <TitleContainer>
+                                <Title>{item.title}</Title>
+                            </TitleContainer>
+                            <Description>{item.description}</Description>
+                        </WhatItem>
+                    );
+                })}
+            </WhatItemsContainer>
+            <Link to={"/about"}>
+                <SquareButton>{"SERVICES"}</SquareButton>
+            </Link>
+        </WhatContainer>
+
+        <BlogContainer>
+            <h1>{"From our blog"}</h1>
+            <BlogFeed />
+            <SuperA
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://bcalmbcorp.com/"
+            >
+                <SquareButton>{"visit our blog"}</SquareButton>
+            </SuperA>
+        </BlogContainer>
+
+        <Section margin={"auto"}>
+            <Section.DividerContainer>
+                <Divider below hideOnMobile={true} />
+            </Section.DividerContainer>
+
+            <Section.RightContainer>
+                <BenefitProject>
+                    <h1>{"Benefit Project"}</h1>
+                    <DescriptionParagraph>
+                        {
+                            "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
+                        }
+                    </DescriptionParagraph>
+                    <Link to={"/bcorp"}>
+                        <SquareButton>{"IMPACT"}</SquareButton>
+                    </Link>
+                </BenefitProject>
+            </Section.RightContainer>
+        </Section>
+
+        <BenefitImageContainer>
+            <BenefitImage src={ImpactsImage} />
+        </BenefitImageContainer>
+
+        <AboutSection>
+            <AboutContainer>
                 <Section.LeftContainer>
-                    <div>
-                        <h1>{"Welcome to the :mondora world!"}</h1>
-                        <DescriptionParagraph>
-                            {
-                                "Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
-                            }
-                        </DescriptionParagraph>
-                    </div>
+                    <FirstImg src={AboutImage} />
                 </Section.LeftContainer>
 
-                <Section.DividerContainer>
-                    <Divider below />
-                </Section.DividerContainer>
-
                 <Section.RightContainer>
-                    <FirstImg src={TitleImage} />
+                    <AboutTitle>{"About Mondora"}</AboutTitle>
+                    <AboutParagraph>
+                        {
+                            "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
+                        }
+                    </AboutParagraph>
                 </Section.RightContainer>
-                <BCorpImg src={BCorpLogo} />
-            </Section>
-
-            <WhatContainer>
-                <h1>{"What we can do for you"}</h1>
-                <WhatSubtitle>
-                    {
-                        "Our aim is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
-                    }
-                </WhatSubtitle>
-                <WhatItemsContainer>
-                    {whatItems.map((item, key) => {
-                        return (
-                            <WhatItem key={key}>
-                                <TitleContainer>
-                                    <Title>{item.title}</Title>
-                                </TitleContainer>
-                                <Description>{item.description}</Description>
-                            </WhatItem>
-                        );
-                    })}
-                </WhatItemsContainer>
-                <Link to={"/about"}>
-                    <SquareButton>{"SERVICES"}</SquareButton>
-                </Link>
-            </WhatContainer>
-
-            <BlogContainer>
-                <h1>{"From our blog"}</h1>
-                <BlogFeed />
-                <SuperA target="_blank" href={"https://bcalmbcorp.com/"}>
-                    <SquareButton>{"visit our blog"}</SquareButton>
-                </SuperA>
-            </BlogContainer>
-
-            <Section margin={"auto"}>
-                <Section.DividerContainer>
-                    <Divider below hideOnMobile={true} />
-                </Section.DividerContainer>
-
-                <Section.RightContainer>
-                    <BenefitProject>
-                        <h1>{"Benefit Project"}</h1>
-                        <DescriptionParagraph>
-                            {
-                                "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
-                            }
-                        </DescriptionParagraph>
-                        <Link to={"/bcorp"}>
-                            <SquareButton>{"IMPACT"}</SquareButton>
-                        </Link>
-                    </BenefitProject>
-                </Section.RightContainer>
-            </Section>
-
-            <BenefitImageContainer>
-                <BenefitImage src={ImpactsImage} />
-            </BenefitImageContainer>
-
-            <AboutSection>
-                <AboutContainer>
-                    <Section.LeftContainer>
-                        <FirstImg src={AboutImage} />
-                    </Section.LeftContainer>
-
-                    <Section.RightContainer>
-                        <AboutTitle>{"About Mondora"}</AboutTitle>
-                        <AboutParagraph>
-                            {
-                                "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
-                            }
-                        </AboutParagraph>
-                    </Section.RightContainer>
-                </AboutContainer>
-            </AboutSection>
-        </Layout>
-    );
-};
+            </AboutContainer>
+        </AboutSection>
+    </Layout>
+);
 
 export default Homepage;

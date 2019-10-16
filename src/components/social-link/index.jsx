@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -42,8 +42,8 @@ const LinkContainer = styled.a`
     text-decoration: none;
 `;
 
-const SocialLink = ({ type = "light", text, url, icon }) => (
-    <LinkContainer target={"_blank"} href={url}>
+export const SocialLink = ({ type = "light", text, url, icon }) => (
+    <LinkContainer target="_blank" rel="noopener noreferrer" href={url}>
         <ThemedRadiusIcon
             type={type}
             align="center"
@@ -56,11 +56,10 @@ const SocialLink = ({ type = "light", text, url, icon }) => (
         </ThemedRadiusIcon>
     </LinkContainer>
 );
+
 SocialLink.propTypes = {
     type: PropTypes.oneOf(["dark", "light"]),
     text: PropTypes.string,
     url: PropTypes.string,
     icon: PropTypes.object
 };
-
-export default SocialLink;

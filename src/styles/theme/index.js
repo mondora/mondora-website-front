@@ -4,5 +4,12 @@ export const theme = {
     },
     spacing: {
         unit: 8
+    },
+    breakpoints: {
+        xs: 600,
+        sm: 960,
+        md: 960,
+        lg: 1280,
+        xl: 1920
     }
 };

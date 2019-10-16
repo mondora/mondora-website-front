@@ -6,8 +6,8 @@ import { Link } from "gatsby";
 
 import StackPanel from "../../stackpanel";
 
-import SocialLink from "../../../components/social-link";
 import MaxWidthContainer from "../../max-width-container";
+import { SocialLink } from "../../../components/social-link";
 
 import mondoraMiniLogoPath from "../assets/mondora-mini-logo.svg";
 

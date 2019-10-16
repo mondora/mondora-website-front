@@ -4,13 +4,13 @@ import styled from "styled-components";
 
 import { Link } from "gatsby";
 
-import Layout from "../../components/layout";
 import Section from "../../components/section";
 import RegionMiniature from "../../components/region";
 import Divider from "../../components/divider";
 import SquareButton from "../../components/square-button";
 
 import Logo from "../../../static/images/regions/Japan-icon.png";
+import Layout from "../../components/layout";
 
 const LeftParagraph = styled.div`
     text-align: left;
