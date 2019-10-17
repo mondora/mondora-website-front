@@ -6,7 +6,7 @@ export const FeaturesContainer = styled.div`
     grid-column-gap: 32px;
     padding-top: 20pt;
 
-    @media (max-width: 768px) {
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
         display: none;
     }
 `;

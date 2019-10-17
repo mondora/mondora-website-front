@@ -1,7 +1,5 @@
 import React from "react";
 
-import styled from "styled-components";
-
 import InstagramFeed from "../../components/instagram-feed";
 import Section from "../../components/section";
 import Divider from "../../components/divider";
@@ -13,117 +11,20 @@ import Image2 from "../../../static/images/brothers.png";
 import Image3 from "../../../static/images/working.png";
 import Layout from "../../components/layout";
 
-import DarkBackground from "../../components/layout/assets/dark_background.svg";
-import LightBackground from "../../components/layout/assets/light_background.svg";
-
-const LeftParagraph = styled.div`
-    display: ${props => !props.hideOnMobile && "none"};
-    @media (max-width: 768px) {
-        text-align: center;
-        display: ${props => (props.hideOnMobile ? "none" : "initial")};
-    }
-`;
-
-const LeftTitle = styled.h1`
-    font-size: 34pt;
-`;
-
-const LeftContent = styled.div`
-    color: var(--text-gray);
-`;
-
-const RightTitle = styled.h1`
-    font-size: 100pt;
-    text-align: center;
-    display: ${props => !props.hideOnMobile && "none"};
-
-    @media (max-width: 768px) {
-        font-size: 70pt;
-        display: ${props => (props.hideOnMobile ? "none" : "initial")};
-    }
-
-    @media (max-width: 350px) {
-        font-size: 60pt;
-    }
-`;
-
-const AboutSection = styled.div`
-    div,
-    h1 {
-        color: ${props => (props.color === "light" ? "" : "white")};
-    }
-    color: ${props => (props.color === "light" ? "" : "white")};
-    margin-top: ${props => props.marginTop && "110pt"};
-    padding-top: 65pt;
-    padding-bottom: 80pt;
-    background-position: center;
-    background-size: cover;
-    background-image: ${props =>
-        props.color === "light"
-            ? `url(${LightBackground})`
-            : `url(${DarkBackground})`};
-
-    @media (max-width: 768px) {
-        margin-top: ${props => props.marginTop && "50pt"};
-    }
-
-    > * {
-        max-width: 1440px;
-        margin: 0 auto;
-    }
-`;
-const AboutWrapper = styled.div`
-    display: grid;
-    grid-template-columns: 50% 50%;
-
-    @media (max-width: 768px) {
-        grid-template-columns: 100%;
-    }
-`;
-
-const TitleAndDescription = styled.div`
-    @media (max-width: 768px) {
-        grid-area: 2 / 1 / 3 / 1;
-    }
-`;
-
-const AboutTitle = styled.div`
-    padding-top: 15pt;
-    font-size: 12pt;
-    color: ${props =>
-        props.color === "light" ? "var(--text-gray)" : "var(--white)"};
-`;
-
-const AboutParagraph = styled.div`
-    color: var(--text-gray);
-    line-height: 1.5;
-`;
-const AboutDivider = styled.img`
-    width: 25%;
-    margin-top: 24pt;
-    min-width: 120pt;
-
-    @media (max-width: 768px) {
-        display: none;
-    }
-`;
-
-const AboutImage = styled.img`
-    width: 100%;
-
-    @media (max-width: 768px) {
-        grid-area: 1 / 1 / 2 / 1;
-    }
-`;
-const AboutConclusion = styled.div`
-    padding-top: 40pt;
-    margin: 40pt 10%;
-    text-align: center;
-
-    @media (max-width: 768px) {
-        margin: 0;
-    }
-`;
+import {
+    LeftParagraph,
+    LeftTitle,
+    LeftContent,
+    RightTitle,
+    AboutSection,
+    AboutWrapper,
+    TitleAndDescription,
+    AboutTitle,
+    AboutParagraph,
+    AboutDivider,
+    AboutImage,
+    AboutConclusion
+} from "./styled";
 
 const FeaturesFirst = [
     {

@@ -3,11 +3,11 @@ export const theme = {
         text: { subtle: "0.8em", menu: "1em", mondora: "40px", megaM: "64px" }
     },
     spacing: {
-        unit: 8
+        unit: 4
     },
     breakpoints: {
-        xs: 600,
-        sm: 960,
+        xs: 480,
+        sm: 768,
         md: 960,
         lg: 1280,
         xl: 1920

@@ -5,7 +5,7 @@ export const FeaturesContainer = styled.div`
     border-bottom: 1pt solid var(--border-gray);
     padding-top: 40pt;
 
-    @media (min-width: 768px) {
+    @media (min-width: ${props => props.theme.breakpoints.sm}px) {
         display: none;
     }
 `;
