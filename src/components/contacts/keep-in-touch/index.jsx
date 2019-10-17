@@ -15,7 +15,7 @@ const KeepInTouch = () => (
                 the :m world, we would love to get in touch!
             </Grid>
         </Grid>
-        <Grid item container xs={12} spacing={2}>
+        <Grid item container xs={12} spacingRatio={2}>
             <Grid item xs={12} md={3} direction="column" align="center">
                 <ContactIcon src={EmailIcon} />
                 <ContactName>Email:</ContactName>

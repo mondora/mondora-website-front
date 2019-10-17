@@ -1,59 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-import styled from "styled-components";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import StackPanel from "../stackpanel";
+import { LinkContainer, RadiusIcon, SocialName } from "./styled";
+import Grid from "../Grid";
 
-const RadiusIcon = styled(StackPanel)`
-    font-size: 16px;
-    min-width: 16px;
-    height: 16px;
-    border-radius: 16px;
-`;
-
-const WhiteRadiusIcon = styled(RadiusIcon)`
-    color: var(--black);
-    background-color: var(--white);
-`;
-
-const DarkRadiusIcon = styled(RadiusIcon)`
-    color: var(--white);
-    background-color: var(--black);
-`;
-
-const ThemedRadiusIcon = ({ type, ...rest }) => {
-    switch (type) {
-        case "dark":
-            return <DarkRadiusIcon {...rest} />;
-        default:
-            return <WhiteRadiusIcon {...rest} />;
-    }
-};
-
-const SocialName = styled.div`
-    margin: 0 8px;
-    font-size: 12px;
-`;
-
-const LinkContainer = styled.a`
-    text-decoration: none;
-`;
-
-export const SocialLink = ({ type = "light", text, url, icon }) => (
-    <LinkContainer target="_blank" rel="noopener noreferrer" href={url}>
-        <ThemedRadiusIcon
+export const SocialLink = ({ type, text, url, icon }) => (
+    <LinkContainer>
+        <RadiusIcon
+            container
             type={type}
             align="center"
             justify="center"
-            gutter={8}
-            padding={8}
+            spacingRatio={2}
         >
-            <FontAwesomeIcon icon={icon} />
-            {text && <SocialName>{text}</SocialName>}
-        </ThemedRadiusIcon>
+            <Grid item>
+                <FontAwesomeIcon icon={icon} />
+            </Grid>
+            {text && (
+                <Grid item>
+                    <SocialName>{text}</SocialName>
+                </Grid>
+            )}
+        </RadiusIcon>
     </LinkContainer>
 );
 
@@ -62,4 +31,8 @@ SocialLink.propTypes = {
     text: PropTypes.string,
     url: PropTypes.string,
     icon: PropTypes.object
+};
+
+SocialLink.defaultProps = {
+    type: "light"
 };

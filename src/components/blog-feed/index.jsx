@@ -2,8 +2,6 @@ import React from "react";
 
 import { graphql, useStaticQuery } from "gatsby";
 
-import useWindowSize from "@rehooks/window-size";
-
 import Slider from "react-slick";
 import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -48,14 +46,8 @@ const FeedWrapper = styled(MaxWidthContainer)`
 `;
 
 const BlogFeed = () => {
-    let windowSize = 900;
-    if (typeof window !== "undefined") {
-        windowSize = useWindowSize();
-    }
     var slidesNumber = 4;
-    if (windowSize.innerWidth < 1400) slidesNumber = 3;
-    if (windowSize.innerWidth < 992) slidesNumber = 2;
-    if (windowSize.innerWidth < 768) slidesNumber = 1;
+
     const data = useStaticQuery(graphql`
         query {
             allFeedBcalmBcorp {
@@ -90,6 +82,7 @@ const BlogFeed = () => {
                     if (i < 6) {
                         return <BlogPost key={i} index={i} node={item.node} />;
                     }
+                    return null;
                 })}
             </CustomSlider>
         </FeedWrapper>

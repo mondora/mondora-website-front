@@ -29,38 +29,50 @@ const WhereToFindUs = () => (
             <Grid item>
                 <h1>Follow us on:</h1>
             </Grid>
-            <Grid item spacingRatio={2}>
-                <SocialLink
-                    type="dark"
-                    text="GitHub"
-                    url="https://github.com/mondora/"
-                    icon={faGithub}
-                />
-                <SocialLink
-                    type="dark"
-                    url="https://www.instagram.com/mondoracom/"
-                    icon={faInstagram}
-                />
-                <SocialLink
-                    type="dark"
-                    url="https://it-it.facebook.com/mondoracom/"
-                    icon={faFacebook}
-                />
-                <SocialLink
-                    type="dark"
-                    url="https://www.linkedin.com/company/mondora-s-p-a-/"
-                    icon={faLinkedin}
-                />
-                <SocialLink
-                    type="dark"
-                    url="https://twitter.com/mondora"
-                    icon={faTwitter}
-                />
-                <SocialLink
-                    type="dark"
-                    url="https://www.youtube.com/channel/UCeAVpel9SZj6WKHWLEtVlsg"
-                    icon={faYoutube}
-                />
+            <Grid item container spacingRatio={2}>
+                <Grid item>
+                    <SocialLink
+                        type="dark"
+                        text="GitHub"
+                        url="https://github.com/mondora/"
+                        icon={faGithub}
+                    />
+                </Grid>
+                <Grid item>
+                    <SocialLink
+                        type="dark"
+                        url="https://www.instagram.com/mondoracom/"
+                        icon={faInstagram}
+                    />
+                </Grid>
+                <Grid item>
+                    <SocialLink
+                        type="dark"
+                        url="https://it-it.facebook.com/mondoracom/"
+                        icon={faFacebook}
+                    />
+                </Grid>
+                <Grid item>
+                    <SocialLink
+                        type="dark"
+                        url="https://www.linkedin.com/company/mondora-s-p-a-/"
+                        icon={faLinkedin}
+                    />
+                </Grid>
+                <Grid item>
+                    <SocialLink
+                        type="dark"
+                        url="https://twitter.com/mondora"
+                        icon={faTwitter}
+                    />
+                </Grid>
+                <Grid item>
+                    <SocialLink
+                        type="dark"
+                        url="https://www.youtube.com/channel/UCeAVpel9SZj6WKHWLEtVlsg"
+                        icon={faYoutube}
+                    />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

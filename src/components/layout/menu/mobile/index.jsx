@@ -5,16 +5,12 @@ import styled from "styled-components";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import StackPanel from "../../../stackpanel";
+import Grid from "../../../Grid";
 
 import mondoraLogoPath from "../../assets/mondora-logo.svg";
 
 const Container = styled.div`
     background-color: var(--background-dark-gray);
-
-    @media (min-width: 790px) {
-        display: none;
-    }
 `;
 
 const ClosedMenu = styled.div`
@@ -82,6 +78,7 @@ const links = [
     }
 ];
 
+// TODO: review grid usage
 const MobileMenu = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);
 
@@ -89,12 +86,12 @@ const MobileMenu = () => {
         <Container>
             <ClosedMenu>
                 <MiniLogo to={"/"} />
-                <StackPanel gutter={16} align="center">
+                <Grid gutter={16} align="center">
                     <BurgerBunner
                         icon={isMenuOpen ? faTimes : faBars}
                         onClick={() => setMenuOpen(!isMenuOpen)}
                     />
-                </StackPanel>
+                </Grid>
             </ClosedMenu>
             {isMenuOpen && (
                 <OpenedMenu>

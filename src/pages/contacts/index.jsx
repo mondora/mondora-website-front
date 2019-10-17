@@ -9,7 +9,7 @@ import Layout from "../../components/layout";
 
 const Contacts = () => (
     <Layout>
-        <Grid container direction="column" spacingRatio={6}>
+        <Grid container direction="column" spacingRatio={12}>
             <Grid container justify="center">
                 <Grid
                     item
