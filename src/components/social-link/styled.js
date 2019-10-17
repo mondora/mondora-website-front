@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import Grid from "../Grid";
+import Grid from "../grid";
 
 export const RadiusIcon = styled(Grid)`
     ${props => {

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Grid from "../../Grid";
+import Grid from "../../grid";
 import Hidden from "../../hidden";
 import DesktopFooter from "./desktop";
 import MobileFooter from "./mobile";

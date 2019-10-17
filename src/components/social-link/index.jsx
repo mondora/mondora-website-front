@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { LinkContainer, RadiusIcon, SocialName } from "./styled";
-import Grid from "../Grid";
+import Grid from "../grid";
 
 export const SocialLink = ({ type, text, url, icon }) => (
     <LinkContainer>

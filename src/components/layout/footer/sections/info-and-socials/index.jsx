@@ -7,7 +7,7 @@ import {
     faInstagram,
     faYoutube
 } from "@fortawesome/free-brands-svg-icons";
-import Grid from "../../../../Grid";
+import Grid from "../../../../grid";
 import { SocialLink } from "../../../../social-link";
 
 const InfoAndSocials = props => (

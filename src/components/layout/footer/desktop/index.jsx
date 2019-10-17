@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from "../../../Grid";
+import Grid from "../../../grid";
 import InfoAndSocials from "../sections/info-and-socials";
 import About from "../sections/about";
 import WorkWithUs from "../sections/work-with-us";

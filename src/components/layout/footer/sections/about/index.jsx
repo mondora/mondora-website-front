@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from "../../../../Grid";
+import Grid from "../../../../grid";
 import Title from "../title";
 import InnerLink from "../../../../inner-link";
 

@@ -4,7 +4,7 @@ import { Link } from "gatsby";
 import styled from "styled-components";
 
 import mondoraLogoPath from "../../assets/mondora-logo.svg";
-import Grid from "../../../Grid";
+import Grid from "../../../grid";
 import InnerLink from "../../../inner-link";
 
 const Container = styled(Grid)`

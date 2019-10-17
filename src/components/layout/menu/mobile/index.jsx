@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Grid from "../../../Grid";
+import Grid from "../../../grid";
 
 import mondoraLogoPath from "../../assets/mondora-logo.svg";
 
