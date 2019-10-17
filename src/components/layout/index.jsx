@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../styles/theme";
@@ -6,6 +6,7 @@ import { theme } from "../../styles/theme";
 import Menu from "./menu";
 import Footer from "./footer";
 import CookiesAlert from "../cookies-alert";
+import { useCookies } from "react-cookie";
 
 const Container = styled.div`
     display: grid;
@@ -23,17 +24,15 @@ const FooterContainer = styled.div`
     grid-area: 3 / 1 / 4 / 2;
 `;
 
+const cookiesAlertHiddenCookieName = "cookies-alert-hidden";
+
 const Layout = ({ children }) => {
-    const [hide, setHidden] = useState(
-        typeof window !== "undefined"
-            ? window.localStorage.getItem("cookies-alert-hidden")
-            : false
-    );
+    const [cookies, setCookie] = useCookies([cookiesAlertHiddenCookieName]);
 
     const handleHide = () => {
-        typeof window !== "undefined" &&
-            window.localStorage.setItem("cookies-alert-hidden", true);
-        setHidden(true);
+        setCookie(cookiesAlertHiddenCookieName, true, {
+            expires: new Date(Date.now() + 31557600000)
+        });
     };
 
     return (
@@ -47,7 +46,10 @@ const Layout = ({ children }) => {
                     <Footer />
                 </FooterContainer>
             </Container>
-            <CookiesAlert show={!hide} onHide={handleHide} />
+            <CookiesAlert
+                show={!cookies[cookiesAlertHiddenCookieName]}
+                onHide={handleHide}
+            />
         </ThemeProvider>
     );
 };
