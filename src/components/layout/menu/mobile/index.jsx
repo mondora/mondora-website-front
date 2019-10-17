@@ -106,7 +106,11 @@ const MobileMenu = () => {
                         </Item>
                     ))}
                     <Item>
-                        <a target="_blank" href="https://bcalmbcorp.com/">
+                        <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://bcalmbcorp.com/"
+                        >
                             <BlogLink>{"BLOG :m"}</BlogLink>
                         </a>
                     </Item>

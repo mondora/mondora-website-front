@@ -280,7 +280,8 @@ const BCorp = () => (
                     </RightTitle>
                     <SuperA
                         target="_blank"
-                        href={"https://bcorporation.net/directory/mondora"}
+                        rel="noopener noreferrer"
+                        href="https://bcorporation.net/directory/mondora"
                     >
                         <SquareButton>{"BCorp page"}</SquareButton>
                     </SuperA>
