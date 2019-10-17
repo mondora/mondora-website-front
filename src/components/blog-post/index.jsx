@@ -58,8 +58,8 @@ const BlogPost = ({ node, index }) => {
         <PostWrapper
             index={index}
             target="_blank"
-            rel="noopener noreferrer"
             href={node.link}
+            rel="noopener noreferrer"
         >
             <PostImage src={imgUrl} />
             <Divider />

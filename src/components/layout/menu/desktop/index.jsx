@@ -5,11 +5,10 @@ import styled from "styled-components";
 
 import StackPanel from "../../../stackpanel";
 import mondoraLogoPath from "../../assets/mondora-logo.svg";
+import MaxWidthContainer from "../../../max-width-container";
 
-const Container = styled.div`
+const Container = styled(MaxWidthContainer)`
     padding: 30px 16px;
-    max-width: 1440px;
-    margin: auto;
 
     @media (max-width: 790px) {
         display: none;

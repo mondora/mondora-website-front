@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 import BlogPost from "../blog-post";
+import MaxWidthContainer from "../max-width-container";
 
 const Arrow = styled(FontAwesomeIcon)`
     height: 40px;
@@ -39,9 +40,8 @@ const CustomSlider = styled(Slider)`
     }
 `;
 
-const FeedWrapper = styled.div`
+const FeedWrapper = styled(MaxWidthContainer)`
     margin: 24px auto;
-    max-width: 1440px;
     width: 80vw;
     height: fit-content;
     padding: 16px;

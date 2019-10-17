@@ -6,6 +6,7 @@ import { Link } from "gatsby";
 
 import StackPanel from "../../stackpanel";
 
+import MaxWidthContainer from "../../max-width-container";
 import { SocialLink } from "../../../components/social-link";
 
 import mondoraMiniLogoPath from "../assets/mondora-mini-logo.svg";
@@ -31,9 +32,7 @@ const Container = styled.div`
     }
 `;
 
-const FooterContainer = styled.div`
-    max-width: 1440px;
-    margin: auto;
+const FooterContainer = styled(MaxWidthContainer)`
     display: grid;
     grid-template-columns: auto 1fr auto;
 `;

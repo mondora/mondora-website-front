@@ -8,6 +8,7 @@ const PostImage = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    border: 4px solid var(--gray);
     width: 240px;
     height: 240px;
     transition: opacity 0.3s ease-in-out;
