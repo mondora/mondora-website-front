@@ -1,5 +1,7 @@
 import React from "react";
 
+import styled from "styled-components";
+
 import InstagramFeed from "../../components/instagram-feed";
 import Section from "../../components/section";
 import Divider from "../../components/divider";
@@ -11,20 +13,119 @@ import Image2 from "../../../static/images/brothers.png";
 import Image3 from "../../../static/images/working.png";
 import Layout from "../../components/layout";
 
-import {
-    LeftParagraph,
-    LeftTitle,
-    LeftContent,
-    RightTitle,
-    AboutSection,
-    AboutWrapper,
-    TitleAndDescription,
-    AboutTitle,
-    AboutParagraph,
-    AboutDivider,
-    AboutImage,
-    AboutConclusion
-} from "./styled";
+import DarkBackground from "../../components/layout/assets/dark_background.svg";
+import LightBackground from "../../components/layout/assets/light_background.svg";
+
+const LeftParagraph = styled.div`
+    display: ${props => !props.hideOnMobile && "none"};
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+        text-align: center;
+        display: ${props => (props.hideOnMobile ? "none" : "initial")};
+    }
+`;
+
+const LeftTitle = styled.h1`
+    font-size: 34pt;
+`;
+
+const LeftContent = styled.div`
+    color: var(--text-gray);
+`;
+
+const RightTitle = styled.h1`
+    font-size: 100pt;
+    text-align: center;
+    display: ${props => !props.hideOnMobile && "none"};
+
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+        font-size: 70pt;
+        display: ${props => (props.hideOnMobile ? "none" : "initial")};
+    }
+
+    @media (max-width: ${props => props.theme.breakpoints.xs}px) {
+        font-size: 60pt;
+    }
+`;
+
+const AboutSection = styled.div`
+    div,
+    h1 {
+        color: ${props => (props.color === "light" ? "" : "white")};
+    }
+    color: ${props => (props.color === "light" ? "" : "white")};
+    margin-top: ${props => props.marginTop && "110pt"};
+    padding-top: ${props => props.theme.spacing.unit * 16}px;
+    padding-bottom: ${props => props.theme.spacing.unit * 20}px;
+    padding-right: ${props => props.theme.spacing.unit * 4}px;
+    padding-left: ${props => props.theme.spacing.unit * 4}px;
+    background-position: center;
+    background-size: cover;
+    background-image: ${props =>
+        props.color === "light"
+            ? `url(${LightBackground})`
+            : `url(${DarkBackground})`};
+
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+        margin-top: ${props => props.marginTop && "50pt"};
+    }
+
+    > * {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+`;
+const AboutWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+        grid-template-columns: 100%;
+    }
+`;
+
+const TitleAndDescription = styled.div`
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+        grid-area: 2 / 1 / 3 / 1;
+    }
+`;
+
+const AboutTitle = styled.div`
+    padding-top: ${props => props.theme.spacing.unit * 4}px;
+    font-size: 12pt;
+    color: ${props =>
+        props.color === "light" ? "var(--text-gray)" : "var(--white)"};
+`;
+
+const AboutParagraph = styled.div`
+    color: var(--text-gray);
+    line-height: 1.5;
+`;
+const AboutDivider = styled.img`
+    width: 25%;
+    margin-top: ${props => props.theme.spacing.unit * 7}px;
+    min-width: 120pt;
+
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+        display: none;
+    }
+`;
+
+const AboutImage = styled.img`
+    width: 100%;
+
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+        grid-area: 1 / 1 / 2 / 1;
+    }
+`;
+const AboutConclusion = styled.div`
+    padding-top: ${props => props.theme.spacing.unit * 10}px;
+    margin: ${props => props.theme.spacing.unit * 10}px 10%;
+    text-align: center;
+
+    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+        margin: 0;
+    }
+`;
 
 const FeaturesFirst = [
     {
