@@ -55,7 +55,12 @@ const BlogPost = ({ node, index }) => {
     var imgUrl = shortened.substring(0, shortened.search('"'));
 
     return (
-        <PostWrapper index={index} target="_blank" href={node.link}>
+        <PostWrapper
+            index={index}
+            target="_blank"
+            href={node.link}
+            rel="noopener noreferrer"
+        >
             <PostImage src={imgUrl} />
             <Divider />
             <PostAuthor>{node.creator}</PostAuthor>

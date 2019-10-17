@@ -1,26 +1,6 @@
 import React from "react";
 
-import styled from "styled-components";
-
-const FeaturesContainer = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 32px;
-    padding-top: 20pt;
-
-    @media (max-width: 768px) {
-        display: none;
-    }
-`;
-
-const FeatureTitle = styled.div`
-    font-size: 14pt;
-`;
-const FeatureText = styled.div`
-    color: var(--text-gray);
-    line-height: 1.5;
-    margin-top: 16px;
-`;
+import { FeaturesContainer, FeatureTitle, FeatureText } from "./styled";
 
 const FeaturesDesktop = ({ features = [] }) => (
     <FeaturesContainer>

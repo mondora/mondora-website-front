@@ -1,39 +1,14 @@
 import React, { useState } from "react";
 
-import styled from "styled-components";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const FeaturesContainer = styled.div`
-    border-bottom: 1pt solid var(--border-gray);
-    padding-top: 40pt;
-
-    @media (min-width: 768px) {
-        display: none;
-    }
-`;
-
-const Feature = styled.div`
-    display: flex;
-    justify-content: space-between;
-    height: 63pt;
-    align-items: center;
-    border-top: 1pt solid var(--border-gray);
-`;
-
-const FeatureArrow = styled(FontAwesomeIcon)`
-    font-size: 18pt;
-    color: ${props => (props.dark ? "var(--white)" : "var(--black)")};
-`;
-
-const FeatureTitle = styled.div`
-    font-size: 18pt;
-`;
-const FeatureText = styled.div`
-    color: var(--text-gray);
-    line-height: 1.5;
-    margin-bottom: 16px;
-`;
+import {
+    FeaturesContainer,
+    Feature,
+    FeatureTitle,
+    FeatureArrow,
+    FeatureText
+} from "./styled";
 
 const FeaturesMobile = ({ dark = false, features = [] }) => {
     const [isFeatureOpen, setFeatureOpen] = useState(null);
