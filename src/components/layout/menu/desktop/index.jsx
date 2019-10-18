@@ -3,16 +3,18 @@ import { Link } from "gatsby";
 
 import styled from "styled-components";
 
-import mondoraLogoPath from "../../assets/mondora-logo.svg";
+import blackMondoraLogoPath from "../../assets/mondora-logo-black.svg";
 import Grid from "../../../grid";
 import InnerLink from "../../../inner-link";
+import Hidden from "../../../hidden";
 
 const Container = styled(Grid)`
     height: ${props => props.theme.spacing.unit * 24}px;
 `;
 
 const Logo = styled.img`
-    width: ${props => props.theme.spacing.unit * 40}px;
+    height: 100%;
+    width: ${props => props.theme.spacing.unit * 38}px;
 `;
 
 const SuperLink = styled(Link)`
@@ -63,13 +65,14 @@ const links = [
 
 const DesktopMenu = () => (
     <Container container justify="center" align="center">
-        <Grid item container align="center" xs={10}>
+        <Grid item container align="center" justify="space-between" xs={11}>
             <Grid item>
                 <InnerLink to="/">
-                    <Logo src={mondoraLogoPath} alt="logo" />
+                    <Hidden smDown>
+                        <Logo src={blackMondoraLogoPath} alt="logo" />
+                    </Hidden>
                 </InnerLink>
             </Grid>
-            <Grid item grow={1} />
             <Grid container item spacingRatio={4} align="center">
                 {links.map((link, i) => (
                     <Grid item>
@@ -87,7 +90,7 @@ const DesktopMenu = () => (
                     rel="noopener noreferrer"
                     href="https://bcalmbcorp.com/"
                 >
-                    <BlogButton>{"Blog :m"}</BlogButton>
+                    <BlogButton>Blog :m</BlogButton>
                 </a>
             </Grid>
         </Grid>

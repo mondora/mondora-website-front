@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Grid from "../../../grid";
 
-import mondoraLogoPath from "../../assets/mondora-logo.svg";
+import mondoraLogoPath from "../../assets/mondora-logo-white.svg";
 
 const Container = styled.div`
     background-color: var(--background-dark-gray);

@@ -13,7 +13,7 @@ const Hidden = styled.div`
     ${props =>
         props.xsDown &&
         css`
-            @media (max-width: ${props => props.theme.breakpoints.xs}px) {
+            @media (max-width: ${props => props.theme.breakpoints.xs - 1}px) {
                 display: none;
             }
         `}
@@ -27,7 +27,7 @@ const Hidden = styled.div`
     ${props =>
         props.smDown &&
         css`
-            @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+            @media (max-width: ${props => props.theme.breakpoints.sm - 1}px) {
                 display: none;
             }
         `}
@@ -41,7 +41,7 @@ const Hidden = styled.div`
     ${props =>
         props.mdDown &&
         css`
-            @media (max-width: ${props => props.theme.breakpoints.md}px) {
+            @media (max-width: ${props => props.theme.breakpoints.md - 1}px) {
                 display: none;
             }
         `}
@@ -55,7 +55,7 @@ const Hidden = styled.div`
     ${props =>
         props.lgDown &&
         css`
-            @media (max-width: ${props => props.theme.breakpoints.lg}px) {
+            @media (max-width: ${props => props.theme.breakpoints.lg - 1}px) {
                 display: none;
             }
         `}

@@ -5,11 +5,11 @@ import About from "../sections/about";
 import WorkWithUs from "../sections/work-with-us";
 import Impact from "../sections/impact";
 import SideProjects from "../sections/side-projects";
-import MiniLogo from "../mini-logo";
+import MiniLogo from "../../mini-logo";
 
 const DesktopFooter = () => (
     <Grid container justify="center">
-        <Grid item container xs={10} spacingRatio={4}>
+        <Grid item container xs={11} spacingRatio={4}>
             <Grid item>
                 <MiniLogo />
             </Grid>

@@ -12,12 +12,9 @@ import { SocialLink } from "../../../../social-link";
 
 const InfoAndSocials = props => (
     <Grid container direction="column" spacingRatio={1} {...props}>
-        <Grid item>
-            © 2018 mondora srl sb . All Rights Reserved. Via Uberto
-        </Grid>
-        <Grid item>
-            Visconti di Modrone 33 , 20122, Milano - P.IVA 03680680968
-        </Grid>
+        <Grid item>© 2018 mondora srl sb . All Rights Reserved.</Grid>
+        <Grid item>Via Uberto Visconti di Modrone 33, 20122, Milano</Grid>
+        <Grid item>P.IVA 03680680968</Grid>
         <Grid item>Made with love ❤ in Valtellina</Grid>
         <Grid item>
             <p>+39 0342 1856 456 - info@mondora.com</p>

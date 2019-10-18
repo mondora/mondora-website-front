@@ -7,10 +7,10 @@ import Hidden from "../../hidden";
 const Menu = () => {
     return (
         <>
-            <Hidden xsUp>
+            <Hidden smUp>
                 <MobileMenu />
             </Hidden>
-            <Hidden xsDown>
+            <Hidden smDown>
                 <DesktopMenu />
             </Hidden>
         </>

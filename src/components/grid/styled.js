@@ -36,20 +36,6 @@ export const Container = styled.div`
         css`
             flex-grow: ${props.grow};
         `}
-    ${props =>
-        ((props.direction === "row" && props.justify === "center") ||
-            (props.direction === "column" && props.align === "center")) &&
-        css`
-            text-align: "center";
-        `}
-    & > & {
-        ${props =>
-            ((props.direction === "row" && props.justify === "center") ||
-                (props.direction === "column" && props.align === "center")) &&
-            css`
-                text-align: "center";
-            `}
-    }
     & > &:not(:last-child) {
         ${props => {
             if (!props.container || !props.spacingRatio) {

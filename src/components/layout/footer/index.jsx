@@ -4,6 +4,7 @@ import Grid from "../../grid";
 import Hidden from "../../hidden";
 import DesktopFooter from "./desktop";
 import MobileFooter from "./mobile";
+import TabletFooter from "./tablet";
 
 const RootGrid = styled(Grid)`
     font-size: ${props => props.theme.size.text.subtle};
@@ -14,10 +15,13 @@ const RootGrid = styled(Grid)`
 
 const Footer = () => (
     <RootGrid container xs={12} justify="center">
-        <Hidden xsDown>
+        <Hidden mdDown>
             <DesktopFooter />
         </Hidden>
-        <Hidden xsUp>
+        <Hidden smDown mdUp>
+            <TabletFooter />
+        </Hidden>
+        <Hidden smUp>
             <MobileFooter />
         </Hidden>
     </RootGrid>
