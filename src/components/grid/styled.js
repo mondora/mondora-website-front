@@ -25,11 +25,35 @@ export const Container = styled.div`
     ${props =>
         props.wrap &&
         css`
-            flex-wrap: wrap;
+            flex-wrap: ${props.wrap};
         `}
     align-items: ${({ align }) => align};
     justify-content: ${({ justify }) => justify};
     box-sizing: border-box;
+    ${props =>
+        props.item &&
+        props.grow &&
+        css`
+            flex-grow: ${props.grow};
+        `}
+    & > &:not(:last-child) {
+        ${props => {
+            if (!props.container || !props.spacingRatio) {
+                return null;
+            }
+            if (props.direction === "row") {
+                return css`
+                    padding-right: ${props =>
+                        props.theme.spacing.unit * props.spacingRatio}px;
+                `;
+            } else {
+                return css`
+                    padding-bottom: ${props =>
+                        props.theme.spacing.unit * props.spacingRatio}px;
+                `;
+            }
+        }}
+    }
     ${props => getPercentageWidthFromRatio(props.xs)}
     ${props =>
         props.item &&
@@ -63,22 +87,4 @@ export const Container = styled.div`
                 ${getPercentageWidthFromRatio(props.xl)}
             }
         `}
-`;
-
-export const Spacer = styled.div`
-    display: flex;
-    box-sizing: border-box;
-    ${props => {
-        const { verticalRatio, horizontalRatio } = props;
-        if (!verticalRatio && !horizontalRatio) {
-            return;
-        }
-        const spacingUnit = props.theme.spacing.unit;
-        const verticalSpacing = spacingUnit * verticalRatio;
-        const horizontalSpacing = spacingUnit * horizontalRatio;
-        return css`
-            margin-top: ${verticalSpacing}px;
-            margin-left: ${horizontalSpacing}px;
-        `;
-    }};
 `;

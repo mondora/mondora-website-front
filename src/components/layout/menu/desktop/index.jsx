@@ -3,27 +3,22 @@ import { Link } from "gatsby";
 
 import styled from "styled-components";
 
-import StackPanel from "../../../stackpanel";
-import mondoraLogoPath from "../../assets/mondora-logo.svg";
-import MaxWidthContainer from "../../../max-width-container";
+import blackMondoraLogoPath from "../../assets/mondora-logo-black.svg";
+import Grid from "../../../grid";
+import InnerLink from "../../../inner-link";
+import Hidden from "../../../hidden";
 
-const Container = styled(MaxWidthContainer)`
-    padding: 30px 16px;
-
-    @media (max-width: 790px) {
-        display: none;
-    }
+const Container = styled(Grid)`
+    height: ${props => props.theme.spacing.unit * 24}px;
 `;
 
-const MiniLogo = styled(Link)`
-    width: 162px;
-    background: url(${mondoraLogoPath});
-    background-repeat: no-repeat;
+const Logo = styled.img`
+    height: 100%;
+    width: ${props => props.theme.spacing.unit * 38}px;
 `;
 
 const SuperLink = styled(Link)`
     font-size: ${props => props.theme.size.text.menu};
-    white-space: nowrap;
     text-decoration: none;
     color: var(--black);
     padding: 12px 0;
@@ -69,26 +64,36 @@ const links = [
 ];
 
 const DesktopMenu = () => (
-    <Container>
-        <StackPanel justify="space-between">
-            <StackPanel>
-                <MiniLogo to={"/"} />
-            </StackPanel>
-            <StackPanel gutter={16} align="center">
+    <Container container justify="center" align="center">
+        <Grid item container align="center" justify="space-between" xs={11}>
+            <Grid item>
+                <InnerLink to="/">
+                    <Hidden smDown>
+                        <Logo src={blackMondoraLogoPath} alt="logo" />
+                    </Hidden>
+                </InnerLink>
+            </Grid>
+            <Grid container item spacingRatio={4} align="center">
                 {links.map((link, i) => (
-                    <SuperLink key={i} to={link.to} activeClassName={"active"}>
-                        {link.text}
-                    </SuperLink>
+                    <Grid item>
+                        <SuperLink
+                            key={i}
+                            to={link.to}
+                            activeClassName="active"
+                        >
+                            {link.text}
+                        </SuperLink>
+                    </Grid>
                 ))}
                 <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://bcalmbcorp.com/"
                 >
-                    <BlogButton>{"Blog :m"}</BlogButton>
+                    <BlogButton>Blog :m</BlogButton>
                 </a>
-            </StackPanel>
-        </StackPanel>
+            </Grid>
+        </Grid>
     </Container>
 );
 

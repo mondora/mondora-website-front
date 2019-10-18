@@ -8,7 +8,7 @@ import { Container } from "./styled";
 
 const CookiesAlert = ({ show, onHide }) => (
     <Container show={show}>
-        <Grid container direction="column" spacingRatio={2}>
+        <Grid container direction="column" spacingRatio={4}>
             <Grid item xs={12}>
                 Questo sito fa uso di cookie per migliorare l’esperienza di
                 navigazione degli utenti e per raccogliere informazioni

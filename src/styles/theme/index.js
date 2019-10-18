@@ -6,9 +6,9 @@ export const theme = {
         unit: 4
     },
     breakpoints: {
-        xs: 480,
+        xs: 576,
         sm: 768,
-        md: 960,
+        md: 992,
         lg: 1280,
         xl: 1920
     }
