@@ -5,15 +5,11 @@ import About from "../sections/about";
 import WorkWithUs from "../sections/work-with-us";
 import Impact from "../sections/impact";
 import SideProjects from "../sections/side-projects";
-import MiniLogo from "../../mini-logo";
 
 const TabletFooter = () => (
     <Grid container justify="center">
-        <Grid item container xs={11} spacingRatio={8} align="center">
-            <Grid item container spacingRatio={8}>
-                <Grid item>
-                    <MiniLogo />
-                </Grid>
+        <Grid item container xs={11} align="center">
+            <Grid item container>
                 <Grid item container>
                     <InfoAndSocials />
                 </Grid>
