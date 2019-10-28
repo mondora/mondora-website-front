@@ -31,7 +31,7 @@ module.exports = {
             resolve: `gatsby-source-rss-feed`,
             options: {
                 url: `https://bcalmbcorp.com/feed/`,
-                name: `BcalmBcorp`,
+                name: `BcalmBcorp`
             }
         },
         {
@@ -45,7 +45,16 @@ module.exports = {
                 theme_color: "#663399",
                 display: "minimal-ui"
             }
-        }
+        },
+        {
+            resolve: "gatsby-source-filesystem",
+            options: {
+                name: "images",
+                path: `${__dirname}/src/images`
+            }
+        },
+        "gatsby-transformer-sharp",
+        "gatsby-plugin-sharp"
         // {
         //     resolve: `gatsby-source-contentful`,
         //     options: {

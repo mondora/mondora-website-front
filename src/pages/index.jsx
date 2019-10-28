@@ -3,11 +3,11 @@ import { Link } from "gatsby";
 import SquareButton from "../components/square-button";
 import Layout from "../components/layout";
 import Grid from "../components/grid";
-import Header from "../components/homepage/header";
-import WhatWeCanDo from "../components/homepage/what-we-can-do";
-import Blog from "../components/homepage/blog";
-import Benefit from "../components/homepage/benefit";
-import About from "../components/homepage/about";
+import Header from "../components/pages/home/header";
+import WhatWeCanDo from "../components/pages/home/what-we-can-do";
+import Blog from "../components/pages/home/blog";
+import Benefit from "../components/pages/home/benefit";
+import About from "../components/pages/home/about";
 
 const Homepage = () => (
     <Layout>

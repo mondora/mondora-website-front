@@ -1,18 +1,17 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const Title = styled.h1`
-    font-size: ${props => props.theme.spacing.unit * 6}pt;
-    font-weight: bold;
+const Description = styled.p`
     color: ${props => (props.light ? `var(--white)` : `var(--black)`)};
+    font-size: ${props => props.theme.spacing.unit * 3}pt;
 `;
 
-Title.propTypes = {
+Description.propTypes = {
     light: PropTypes.boolean
 };
 
-Title.defaultProps = {
+Description.defaultProps = {
     light: false
 };
 
-export default Title;
+export default Description;

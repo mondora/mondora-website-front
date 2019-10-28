@@ -1,8 +1,9 @@
 import React from "react";
-import Grid from "../../grid";
-import { Subtitle, Item } from "./styled";
-import Title from "../title";
-import Description from "../description";
+import Grid from "../../../grid";
+import { Item } from "./styled";
+import Title from "../../../title";
+import Description from "../../../description";
+import Subtitle from "../../../subtitle";
 
 const WhatWeCanDo = () => (
     <Grid container xs={12} direction="column" align="center" spacingRatio={6}>
@@ -19,7 +20,7 @@ const WhatWeCanDo = () => (
                 </Subtitle>
             </Grid>
         </Grid>
-        <Grid item container xs={10} sm={12} spacingRatio={4} justify="center">
+        <Grid item container xs={10} spacingRatio={8}>
             <Grid item xs={10} sm={4}>
                 <Item>
                     <Title>Failure party</Title>
