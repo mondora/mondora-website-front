@@ -9,11 +9,18 @@ import Hidden from "../../../hidden";
 const Header = () => (
     <>
         <Hidden smDown>
-            <Grid container xs={12} direction="column" spacingRatio={4}>
+            <Grid
+                container
+                xs={12}
+                direction="column"
+                align="center"
+                spacingRatio={4}
+            >
                 <MarginGrid
                     item
                     container
                     xs={12}
+                    xl={6}
                     justify="center"
                     align="stretch"
                 >

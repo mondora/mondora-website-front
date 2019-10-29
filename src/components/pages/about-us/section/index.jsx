@@ -120,6 +120,7 @@ export const Section = ({
                         item
                         container
                         xs={11}
+                        xl={6}
                         justify="space-around"
                         align="stretch"
                     >
@@ -163,6 +164,7 @@ export const Section = ({
                         item
                         container
                         xs={10}
+                        xl={6}
                         spacingRatio={12}
                         justify="center"
                     >
