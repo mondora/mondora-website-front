@@ -178,7 +178,7 @@ export const Section = ({
                         ))}
                     </Grid>
                     {additionalText && (
-                        <Grid item sm={10} md={8} justify="center">
+                        <Grid item sm={10} md={8} xl={4} justify="center">
                             <Subtitle light={dark}>{additionalText}</Subtitle>
                         </Grid>
                     )}
