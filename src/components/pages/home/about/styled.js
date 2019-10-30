@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Grid from "../../grid";
-import DarkBackground from "../../layout/assets/dark_background.svg";
+import Grid from "../../../grid";
+import DarkBackground from "../../../layout/assets/dark_background.svg";
 
 export const AboutSection = styled(Grid)`
     background-image: url(${DarkBackground});

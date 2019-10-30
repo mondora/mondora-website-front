@@ -1,8 +1,8 @@
 import React from "react";
-import Grid from "../../grid";
+import Grid from "../../../grid";
 import { Container, UndecoratedLink } from "./styled";
-import BlogFeed from "../../blog-feed";
-import SquareButton from "../../square-button";
+import BlogFeed from "../../../blog-feed";
+import SquareButton from "../../../square-button";
 
 const Blog = () => (
     <Grid item container xs={12}>
