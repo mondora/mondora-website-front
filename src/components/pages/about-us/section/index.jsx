@@ -120,8 +120,10 @@ export const Section = ({
                         item
                         container
                         xs={11}
+                        md={10}
+                        lg={8}
                         xl={6}
-                        justify="space-around"
+                        justify="space-between"
                         align="stretch"
                     >
                         {!rightImage && (
@@ -163,7 +165,9 @@ export const Section = ({
                     <Grid
                         item
                         container
-                        xs={10}
+                        xs={11}
+                        md={10}
+                        lg={8}
                         xl={6}
                         spacingRatio={12}
                         justify="center"
@@ -178,7 +182,14 @@ export const Section = ({
                         ))}
                     </Grid>
                     {additionalText && (
-                        <Grid item sm={10} md={8} xl={4} justify="center">
+                        <Grid
+                            item
+                            xs={11}
+                            md={10}
+                            lg={8}
+                            xl={6}
+                            justify="center"
+                        >
                             <Subtitle light={dark}>{additionalText}</Subtitle>
                         </Grid>
                     )}

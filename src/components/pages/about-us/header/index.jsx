@@ -19,9 +19,11 @@ const Header = () => (
                 <MarginGrid
                     item
                     container
-                    xs={12}
+                    xs={11}
+                    md={10}
+                    lg={8}
                     xl={6}
-                    justify="center"
+                    justify="space-between"
                     align="stretch"
                 >
                     <Grid
@@ -33,14 +35,14 @@ const Header = () => (
                         justify="center"
                         align="center"
                     >
-                        <Grid item container justify="center" xs={12}>
-                            <Grid item xs={10}>
+                        <Grid item container xs={12}>
+                            <Grid item>
                                 <Title>
                                     We Design and Build Software that generates
                                     Positive Impact
                                 </Title>
                             </Grid>
-                            <Grid item xs={10}>
+                            <Grid item>
                                 <Subtitle>
                                     Mondora is a software and advisory company
                                     specialising in custom cloud solutions for

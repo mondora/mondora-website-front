@@ -17,7 +17,7 @@ const About = () => (
             spacingRatio={8}
             direction="column"
         >
-            <Grid item xs={11}>
+            <Grid item xs={12}>
                 <Header />
             </Grid>
             <Grid item xs={12} justify="center">
