@@ -37,7 +37,7 @@ module.exports = {
         {
             resolve: "gatsby-plugin-manifest",
             options: {
-                icon: `src/images/logo_mondora_high.png`,
+                icon: `src/images/logo/square.png`,
                 name: ":mondora",
                 short_name: ":m",
                 start_url: "/",

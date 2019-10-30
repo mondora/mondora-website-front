@@ -20,7 +20,7 @@ const Title = styled.h1`
 `;
 
 Title.propTypes = {
-    light: PropTypes.light,
+    light: PropTypes.bool,
     mini: PropTypes.bool,
     center: PropTypes.bool
 };

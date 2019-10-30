@@ -1,20 +1,15 @@
 import React from "react";
-import { Link } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 
 import styled from "styled-components";
 
-import blackMondoraLogoPath from "../../assets/mondora-logo-black.svg";
 import Grid from "../../../grid";
 import InnerLink from "../../../inner-link";
 import Hidden from "../../../hidden";
+import Image from "gatsby-image";
 
 const Container = styled(Grid)`
     height: ${props => props.theme.spacing.unit * 24}px;
-`;
-
-const Logo = styled.img`
-    height: 100%;
-    width: ${props => props.theme.spacing.unit * 38}px;
 `;
 
 const SuperLink = styled(Link)`
@@ -63,38 +58,56 @@ const links = [
     }
 ];
 
-const DesktopMenu = () => (
-    <Container container justify="center" align="center">
-        <Grid item container align="center" justify="space-between" xs={11}>
-            <Grid item>
-                <InnerLink to="/">
-                    <Hidden smDown>
-                        <Logo src={blackMondoraLogoPath} alt="logo" />
-                    </Hidden>
-                </InnerLink>
+const DesktopMenu = () => {
+    const { miniLogoImage } = useStaticQuery(graphql`
+        query {
+            miniLogoImage: file(
+                relativePath: { eq: "logo/extended-dark.png" }
+            ) {
+                childImageSharp {
+                    fixed(width: 156) {
+                        ...GatsbyImageSharpFixed
+                    }
+                }
+            }
+        }
+    `);
+
+    return (
+        <Container container justify="center" align="center">
+            <Grid item container align="center" justify="space-between" xs={11}>
+                <Grid item>
+                    <InnerLink to="/">
+                        <Hidden smDown>
+                            <Image
+                                fixed={miniLogoImage.childImageSharp.fixed}
+                            />
+                        </Hidden>
+                    </InnerLink>
+                </Grid>
+                <Grid container item spacingRatio={4} align="center">
+                    {links.map((link, i) => (
+                        <Grid item key={link.to}>
+                            <SuperLink
+                                key={i}
+                                to={link.to}
+                                activeClassName="active"
+                            >
+                                {link.text}
+                            </SuperLink>
+                        </Grid>
+                    ))}
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://bcalmbcorp.com/"
+                    >
+                        <BlogButton>Blog :m</BlogButton>
+                    </a>
+                </Grid>
             </Grid>
-            <Grid container item spacingRatio={4} align="center">
-                {links.map((link, i) => (
-                    <Grid item>
-                        <SuperLink
-                            key={i}
-                            to={link.to}
-                            activeClassName="active"
-                        >
-                            {link.text}
-                        </SuperLink>
-                    </Grid>
-                ))}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://bcalmbcorp.com/"
-                >
-                    <BlogButton>Blog :m</BlogButton>
-                </a>
-            </Grid>
-        </Grid>
-    </Container>
-);
+        </Container>
+    );
+};
 
 export default DesktopMenu;
