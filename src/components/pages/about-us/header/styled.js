@@ -21,3 +21,7 @@ export const ImpactfulTitle = styled(Title)`
 export const TextCenterAlignedGrid = styled(Grid)`
     text-align: center;
 `;
+
+export const DesktopRootGrid = styled(Grid)`
+    padding: ${props => props.theme.spacing.unit * 8}px 0;
+`;

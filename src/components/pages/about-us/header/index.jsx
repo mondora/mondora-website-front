@@ -2,14 +2,19 @@ import React from "react";
 import Grid from "../../../grid";
 import Divider from "../../../divider";
 import Title from "../../../title";
-import { ImpactfulTitle, TextCenterAlignedGrid, MarginGrid } from "./styled";
+import {
+    ImpactfulTitle,
+    TextCenterAlignedGrid,
+    MarginGrid,
+    DesktopRootGrid
+} from "./styled";
 import Subtitle from "../../../subtitle";
 import Hidden from "../../../hidden";
 
 const Header = () => (
     <>
         <Hidden smDown>
-            <Grid
+            <DesktopRootGrid
                 container
                 xs={12}
                 direction="column"
@@ -64,7 +69,7 @@ const Header = () => (
                         <ImpactfulTitle>Be the change</ImpactfulTitle>
                     </TextCenterAlignedGrid>
                 </MarginGrid>
-            </Grid>
+            </DesktopRootGrid>
         </Hidden>
         <Hidden smUp>
             <MarginGrid
