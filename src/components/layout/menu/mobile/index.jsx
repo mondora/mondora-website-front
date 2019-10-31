@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 
 import styled from "styled-components";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -7,24 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Grid from "../../../grid";
 
-import mondoraLogoPath from "../../assets/mondora-logo-white.svg";
+import Image from "gatsby-image";
 
 const Container = styled.div`
     background-color: var(--background-dark-gray);
 `;
 
-const ClosedMenu = styled.div`
-    display: flex;
-    justify-content: space-between;
+const ClosedMenu = styled(Grid)`
     height: 65px;
-    padding: 0 16px;
-`;
-
-const MiniLogo = styled(Link)`
-    width: 130px;
-    background: url(${mondoraLogoPath});
-    background-repeat: no-repeat;
-    background-position: center;
+    padding: 0 ${props => props.theme.spacing.unit * 4}px;
 `;
 
 const BurgerBunner = styled(FontAwesomeIcon)`
@@ -80,12 +71,24 @@ const links = [
 
 // TODO: review grid usage
 const MobileMenu = () => {
+    const { miniLogoImage } = useStaticQuery(graphql`
+        query {
+            miniLogoImage: file(relativePath: { eq: "logo/small-light.png" }) {
+                childImageSharp {
+                    fixed(height: 40) {
+                        ...GatsbyImageSharpFixed
+                    }
+                }
+            }
+        }
+    `);
+
     const [isMenuOpen, setMenuOpen] = useState(false);
 
     return (
         <Container>
-            <ClosedMenu>
-                <MiniLogo to={"/"} />
+            <ClosedMenu justify="space-between" align="center">
+                <Image fixed={miniLogoImage.childImageSharp.fixed} />
                 <Grid gutter={16} align="center">
                     <BurgerBunner
                         icon={isMenuOpen ? faTimes : faBars}

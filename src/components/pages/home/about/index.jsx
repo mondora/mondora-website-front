@@ -4,7 +4,6 @@ import Grid from "../../../grid";
 import Title from "../../../title";
 import Description from "../../../description";
 import FullWidthImage from "../../../full-width-image";
-import Image from "gatsby-image";
 import { useStaticQuery, graphql } from "gatsby";
 
 const About = () => {
@@ -24,8 +23,9 @@ const About = () => {
         <AboutSection item container justify="center">
             <Grid item container xs={12} align="center" justify="center">
                 <Grid item xs={12} sm={5} justify="center">
-                    {/* TODO: change to native Gatsby Image. */}
-                    <FullWidthImage src={brothersImage} as={Image} />
+                    <FullWidthImage
+                        fluid={brothersImage.childImageSharp.fluid}
+                    />
                 </Grid>
                 <Grid item container xs={11} sm={5}>
                     <Grid item xs={12} sm={10}>

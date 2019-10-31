@@ -7,7 +7,7 @@ const Description = styled.p`
 `;
 
 Description.propTypes = {
-    light: PropTypes.boolean
+    light: PropTypes.bool
 };
 
 Description.defaultProps = {

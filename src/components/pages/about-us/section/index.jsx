@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import Hidden from "../../../hidden";
 import Grid from "../../../grid";
-import { FullWidthImage, MarginFullWidthImage } from "./styled";
+import { MarginFullWidthImage } from "./styled";
 import Title from "../../../title";
 import Subtitle from "../../../subtitle";
 import Description from "../../../description";
 import { useStaticQuery, graphql } from "gatsby";
 import { PaddedBackgroundDecoratedGrid } from "../styled";
+import FullWidthImage from "../../../full-width-image";
 
 export const Section = ({
     rightImage,

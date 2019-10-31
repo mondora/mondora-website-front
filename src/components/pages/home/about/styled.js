@@ -3,6 +3,7 @@ import Grid from "../../../grid";
 import DarkBackground from "../../../layout/assets/dark_background.svg";
 
 export const AboutSection = styled(Grid)`
+    width: 100%;
     background-image: url(${DarkBackground});
     background-position: center;
     background-size: cover;
