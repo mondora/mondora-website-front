@@ -5,7 +5,6 @@ import Title from "../../../title";
 import FullWidthImage from "../../../full-width-image";
 import Subtitle from "../../../subtitle";
 import { graphql, useStaticQuery } from "gatsby";
-import Image from "gatsby-image";
 
 const Header = () => {
     const { headerImage, bCorpImage } = useStaticQuery(graphql`
