@@ -61,7 +61,7 @@ const Benefit = () => {
                             </Description>
                         </Grid>
                         <Grid item>
-                            <Link to="/bcorp">
+                            <Link to="/impact">
                                 <SquareButton>Impact</SquareButton>
                             </Link>
                         </Grid>

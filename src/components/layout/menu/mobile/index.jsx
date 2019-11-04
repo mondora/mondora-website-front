@@ -56,7 +56,7 @@ const links = [
         text: "MEET THE TEAM"
     },
     {
-        to: "/bcorp",
+        to: "/impact",
         text: "IMPACT"
     },
     {

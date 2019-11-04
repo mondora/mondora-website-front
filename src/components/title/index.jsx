@@ -12,7 +12,13 @@ const Title = styled.h1`
     }};
     font-size: ${props => {
         const spacingUnit = props.theme.spacing.unit;
-        return props.mini ? spacingUnit * 3 : spacingUnit * 5;
+        if (props.mini) {
+            return spacingUnit * 3;
+        }
+        if (props.big) {
+            return spacingUnit * 8;
+        }
+        return spacingUnit * 5;
     }}pt;
     font-family: ${props =>
         props.mini ? "Source Sans Pro" : "Playfair Display"};
@@ -22,6 +28,7 @@ const Title = styled.h1`
 Title.propTypes = {
     light: PropTypes.bool,
     mini: PropTypes.bool,
+    big: PropTypes.bool,
     center: PropTypes.bool
 };
 

@@ -1,140 +1,9 @@
 import React from "react";
+import Grid from "../../../grid";
+import Element from "./element";
+import Title from "../../../title";
 
-import styled from "styled-components";
-
-import { Link } from "gatsby";
-
-import FaqElement from "../../components/faq-element";
-import SquareButton from "../../components/square-button";
-import Section from "../../components/section";
-import Divider from "../../components/divider";
-import BenefitCarousel from "../../components/benefit-carousel";
-
-import HireBittoGraphic from "../../../static/images/hirebitto.png";
-import Cycle2WorkGraphic from "../../../static/images/c2w.png";
-import FarmingGraphic from "../../../static/images/farmers.png";
-import ReportHeart from "../../../static/images/heart.svg";
-import Layout from "../../components/layout";
-
-const ContainerProjects = styled.div`
-    width: 100vw;
-    margin-bottom: 40px;
-`;
-const ContainerFaqs = styled.div`
-    padding: 0 64px;
-    margin-left: auto;
-    text-align: center;
-`;
-
-const SuperA = styled.a`
-    text-decoration: none;
-`;
-
-const LeftParagraph = styled.div`
-    text-align: left;
-    margin: 80px 0 64px 40px;
-    @media (max-width: 992px) {
-        text-align: center;
-    }
-`;
-const LeftTitle = styled.h1`
-    margin-top: 16px;
-    font-size: ${props => props.theme.size.text.mondora};
-`;
-const LeftContent = styled.div`
-    color: var(--text-gray);
-    width: 90%;
-    margin: 24px auto 24px 0;
-    line-height: 1.6;
-    @media (max-width: 992px) {
-        margin: 24px auto;
-    }
-`;
-const RightTitle = styled.h1`
-    margin-top: 80px;
-    font-size: ${props => props.theme.size.text.mondora};
-`;
-const RightContainer = styled.div`
-    margin: 40px 64px 40px 0;
-    text-align: center;
-`;
-const ReportContainer = styled.div`
-    margin-top: 48px;
-    padding: 0 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 48px;
-    background-color: var(--gray);
-    @media (max-width: 992px) {
-        grid-template-columns: auto;
-    }
-`;
-const Report = styled.div`
-    display: flex;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    min-height: 128px;
-    margin: 40px auto;
-    box-shadow: 0 0 10px gray;
-    background-color: var(--white);
-`;
-const ReportIcon = styled.img`
-    width: 120px;
-    padding: 16px;
-`;
-const ReportYear = styled.div`
-    position: absolute;
-    top: 44px;
-    left: 48px;
-    transform: rotate(-4deg);
-    font-weight: bold;
-    font-size: 24px;
-    color: var(--primary);
-    width: 120px;
-    margin: 16px auto;
-`;
-const ReportTitle = styled.h1`
-    font-size: 20px;
-    margin: 16px 0;
-`;
-const ReportLink = styled(Link)`
-    font-size: 11pt;
-    text-decoration: none;
-    color: var(--variant-black);
-    border: 1px solid var(--border-gray);
-    padding: 8px;
-`;
-
-const Projects = [
-    {
-        title: "HireBitto",
-        caption: "For a healthier, happier world",
-        text:
-            "HireBitto is a project which benefits local farmers and cheesemakers who choose to work with traditional methods, without the use of chemicals or industrial machinery. For every new employee, the company buys a wheel of Storico Ribelle cheese. Once matured, the cheese is auctioned and the earnings are reinvested in the community. The cheese is paid for by mondora, but it belongs to the community. The employee is responsible for this benefit creation process.",
-        link: "http://www.hirebitto.com/",
-        button: "Visit Website",
-        graphic: HireBittoGraphic
-    },
-    {
-        title: "Cycle2Work",
-        caption: "Each one of us is responsible",
-        text:
-            "Cycle2Work.io is an app that rewards employees for commuting to work, whilst safeguarding the environment. It’s connected to the app Strava, where people can join their company team and earn € 0.20/km for cycling rather than driving to the office, as well as saving an average of 4.32 kg of CO2 each day! If you would like your company to take part in the programme, get in touch! ",
-        link: "http://www.hirebitto.com/",
-        button: "Visit Website",
-        graphic: Cycle2WorkGraphic
-    },
-    {
-        title: "Farming",
-        caption: " ",
-        text: "",
-        link: "http://www.hirebitto.com/",
-        button: "Visit Website",
-        graphic: FarmingGraphic
-    }
-];
-const Faqs = [
+const faqs = [
     {
         question:
             "Mondora è sia una B Corp certificata sia una Società Benefit. Qual è la differenza?",
@@ -231,95 +100,27 @@ const Faqs = [
             "Che è un bellissimo percorso nel quale un’azienda impara molto, vede modi diversi in cui potrebbe operare, prova nuove soluzioni e pensa in maniera più profonda al proprio impatto ambientale e sociale."
     }
 ];
-const Reports = [
-    {
-        icon: ReportHeart,
-        year: "2016",
-        title: "Impact Report 2016",
-        button: "Leggi il report >",
-        to: "/report2016.pdf"
-    },
-    {
-        icon: ReportHeart,
-        year: "2017",
-        title: "Impact Report 2017",
-        button: "Leggi il report >",
-        to: "/report2017.pdf"
-    },
-    {
-        icon: ReportHeart,
-        year: "2018",
-        title: "Impact Report 2018",
-        button: "Leggi il report >",
-        to: "/report2018.pdf"
-    }
-];
 
-const BCorp = () => (
-    <Layout>
-        <Section gutter={32}>
-            <Section.LeftContainer>
-                <LeftParagraph>
-                    <LeftTitle>{"Mondora impact"}</LeftTitle>
-                    <LeftContent>
-                        {
-                            "In mondora we all work towards a shared purpose: making the world a better place. In fact, if you want to join the team, you first have to tell us how you will contribute to changing the world. You can focus on whatever you are most passionate about: an environmental issue, the local community, giving free coding classes to kids, teaching something to your colleagues… anything that has an impact!"
-                        }
-                    </LeftContent>
-                </LeftParagraph>
-            </Section.LeftContainer>
-
-            <Section.DividerContainer>
-                <Divider />
-            </Section.DividerContainer>
-
-            <Section.RightContainer>
-                <RightContainer>
-                    <RightTitle>
-                        {"Our score:"} <br /> {"122 points"}
-                    </RightTitle>
-                    <SuperA
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://bcorporation.net/directory/mondora"
-                    >
-                        <SquareButton>{"BCorp page"}</SquareButton>
-                    </SuperA>
-                </RightContainer>
-            </Section.RightContainer>
-        </Section>
-
-        <ContainerProjects>
-            <BenefitCarousel projects={Projects} />
-        </ContainerProjects>
-
-        <ContainerFaqs>
-            <h1>{"FAQ"}</h1>
-            {Faqs.map((faq, i) => (
-                <FaqElement
-                    key={i}
-                    question={faq.question}
-                    answer={faq.answer}
-                />
+const Faq = () => (
+    <Grid container direction="column" align="center" spacingRatio={8}>
+        <Grid item>
+            <Title big>FAQ</Title>
+        </Grid>
+        <Grid
+            item
+            container
+            direction="column"
+            spacingRatio={4}
+            xs={12}
+            align="center"
+        >
+            {faqs.map(({ question, answer }, index) => (
+                <Grid item xs={11} sm={10}>
+                    <Element key={index} question={question} answer={answer} />
+                </Grid>
             ))}
-        </ContainerFaqs>
-
-        <ReportContainer>
-            {Reports.map((report, i) => (
-                <Report key={i}>
-                    <div>
-                        <ReportIcon src={report.icon} />
-                        <ReportYear>{report.year}</ReportYear>
-                    </div>
-
-                    <div>
-                        <ReportTitle>{report.title}</ReportTitle>
-                        <ReportLink to={report.to}>{report.button}</ReportLink>
-                    </div>
-                </Report>
-            ))}
-        </ReportContainer>
-    </Layout>
+        </Grid>
+    </Grid>
 );
 
-export default BCorp;
+export default Faq;
