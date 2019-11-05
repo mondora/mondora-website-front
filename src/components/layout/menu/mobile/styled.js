@@ -32,6 +32,7 @@ export const MenuItem = styled(Grid)`
 `;
 
 export const AnimatedMenu = styled(Grid)`
+    z-index: 20;
     padding-top: ${toolbarHeight}px;
     background: var(--background-dark-gray);
     position: fixed;

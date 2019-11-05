@@ -47,7 +47,7 @@ const MobileMenu = () => {
         query {
             miniLogoImage: file(relativePath: { eq: "logo/small-light.png" }) {
                 childImageSharp {
-                    fixed(height: 40) {
+                    fixed(height: 32) {
                         ...GatsbyImageSharpFixed
                     }
                 }
