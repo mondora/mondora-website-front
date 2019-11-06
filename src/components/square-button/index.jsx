@@ -8,6 +8,12 @@ const SquareButton = styled.button`
     padding: 8px 16px;
     font-size: 16px;
     color: var(--black);
+    cursor: pointer;
+    transition: all 0.5s ease;
+   
+    &:hover {
+        background-color: var(--primary-hover);
+    }
 `;
 
 export default SquareButton;
