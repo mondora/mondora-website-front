@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import Grid from "../../../../grid";
 import { QuestionGrid, Icon, Answer } from "./styled";
 
@@ -26,7 +26,7 @@ const Element = ({ question, answer }) => {
                     {question}
                 </Grid>
                 <Grid item xs={1} justify="flex-end">
-                    <Icon icon={faAngleUp} open={open} />
+                    <Icon icon={faAngleDown} open={open} />
                 </Grid>
             </QuestionGrid>
             <Answer item open={open} xs={12}>
