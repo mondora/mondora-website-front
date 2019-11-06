@@ -38,7 +38,7 @@ const CustomSlider = styled(Slider)`
     }
 `;
 
-const FeedWrapper = styled(MaxWidthContainer)`
+const FeedWrapper = styled.div`
     margin: 24px auto;
     width: 80vw;
     height: fit-content;

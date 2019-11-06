@@ -1,11 +1,13 @@
 import React from "react";
-import Grid from "../../../grid";
+
 import { Container, UndecoratedLink } from "./styled";
+
 import BlogFeed from "../../../blog-feed";
 import SquareButton from "../../../square-button";
+import BackgroundDecoratedGrid from "../../../background-decorated-grid";
 
 const Blog = () => (
-    <Grid item container xs={12}>
+    <BackgroundDecoratedGrid theme="light">
         <Container xs={12} direction="column" justify="center" align="center">
             <h1>From our blog</h1>
             <BlogFeed />
@@ -17,7 +19,7 @@ const Blog = () => (
                 <SquareButton>Visit our blog</SquareButton>
             </UndecoratedLink>
         </Container>
-    </Grid>
+    </BackgroundDecoratedGrid>
 );
 
 export default Blog;
