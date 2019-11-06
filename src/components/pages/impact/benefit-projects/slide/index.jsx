@@ -55,7 +55,7 @@ const Slide = ({ image, miniTitle, title, description, link }) => (
                                 <Description>{description}</Description>
                             </Grid>
                             <Grid item>
-                                <SquareButton as={Link} to={link}>
+                                <SquareButton externalLink={link}>
                                     Visit website
                                 </SquareButton>
                             </Grid>
@@ -104,7 +104,7 @@ const Slide = ({ image, miniTitle, title, description, link }) => (
                             </CenteredDescription>
                         </Grid>
                         <Grid item>
-                            <SquareButton as={Link} to={link}>
+                            <SquareButton externalLink={link}>
                                 Visit website
                             </SquareButton>
                         </Grid>

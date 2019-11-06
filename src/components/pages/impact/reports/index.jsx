@@ -43,7 +43,7 @@ const Reports = () => (
                                     <Title>{title}</Title>
                                 </Grid>
                                 <Grid item>
-                                    <SquareButton as={Link} to={link}>
+                                    <SquareButton internalLink={link}>
                                         Leggi il report
                                     </SquareButton>
                                 </Grid>
@@ -82,7 +82,7 @@ const Reports = () => (
                                     <Title>{title}</Title>
                                 </Grid>
                                 <Grid item>
-                                    <SquareButton as={Link} to={link}>
+                                    <SquareButton internalLink={link}>
                                         Leggi il report
                                     </SquareButton>
                                 </Grid>
