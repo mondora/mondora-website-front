@@ -2,6 +2,10 @@ import styled, { css } from "styled-components";
 import Grid from "../../../../grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+export const RootGrid = styled(Grid)`
+    width: 100%;
+`;
+
 export const QuestionGrid = styled(Grid)`
     padding: ${props => props.theme.spacing.unit * 4}px;
     background: rgb(245, 246, 246);
@@ -23,12 +27,15 @@ export const Icon = styled(FontAwesomeIcon)`
 
 export const Answer = styled(Grid)`
     color: #000;
-    display: none;
+    visibility: hidden;
     max-width: 100%;
-    padding: ${props => props.theme.spacing.unit * 4}px;
+    height: 0;
+    padding: 0;
     ${props =>
         props.open &&
         css`
-            display: block;
+            padding: ${props => props.theme.spacing.unit * 4}px;
+            visibility: visible;
+            height: auto;
         `}
 `;
