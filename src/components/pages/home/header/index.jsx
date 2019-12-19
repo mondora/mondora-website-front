@@ -8,6 +8,7 @@ import Section from "../../../section";
 import MaxWidthContainer from "../../../max-width-container";
 import FullWidthImage from "../../../full-width-image";
 import BackgroundStripe from "../../../background-stripe";
+import Title from "../../../title";
 
 const Header = () => {
     const { headerImage } = useStaticQuery(graphql`
@@ -28,7 +29,7 @@ const Header = () => {
                 <MaxWidthContainer>
                     <Section>
                         <Section.LeftContainer>
-                            <h1>What we can do for you</h1>
+                            <Title>What we can do for you</Title>
 
                             <Subtitle>
                                 Our aim is to create benefit for all

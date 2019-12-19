@@ -1,11 +1,17 @@
-import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import styled, { css } from "styled-components";
+
 const Subtitle = styled.div`
-    color: ${props =>
-        props.light ? "var(--white)" : "var(--variant - black)"};
+    font-size: calc(16px + 0.15vw);
     margin: ${props => props.theme.spacing.unit * 2}px 0;
-    font-size: ${props => props.theme.spacing.unit * 4}pt;
+    color: var(--text-gray);
+
+    ${props =>
+        props.light &&
+        css`
+            color: var(--white);
+        `}
 `;
 
 Subtitle.propTypes = {

@@ -10,7 +10,7 @@ import About from "../components/pages/home/about";
 
 import { ThemeProvider } from "styled-components";
 
-import theme from "../styles/theme";
+import { theme } from "../styles/theme";
 
 const rebassTheme = {
     theme,

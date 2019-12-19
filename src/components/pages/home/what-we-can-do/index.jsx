@@ -6,7 +6,6 @@ import { Link, useStaticQuery, graphql } from "gatsby";
 import Image from "gatsby-image";
 
 import Title from "../../../title";
-import Description from "../../../description";
 import Subtitle from "../../../subtitle";
 import MaxWidthContainer from "../../../max-width-container";
 import SquareButton from "../../../square-button";
@@ -31,7 +30,7 @@ const WhatWeCanDo = () => {
                 <Image fixed={bCorpImage.childImageSharp.fixed} />
             </MaxWidthContainer>
             <MaxWidthContainer justifyContent="center">
-                <h1>What we can do for you</h1>
+                <Title>What we can do for you</Title>
             </MaxWidthContainer>
 
             <MaxWidthContainer>
@@ -46,29 +45,29 @@ const WhatWeCanDo = () => {
             <MaxWidthContainer my={32}>
                 <Box width={[1, 1, 1 / 3]}>
                     <Title>Failure party</Title>
-                    <Description>
+                    <Subtitle>
                         We are a team of explorers who are allowed to have
                         failure parties when we try to learn something new and
                         mess up.
-                    </Description>
+                    </Subtitle>
                 </Box>
 
                 <Box width={[1, 1, 1 / 3]} px={[0, 0, 24]}>
                     <Title>Passions</Title>
-                    <Description>
+                    <Subtitle>
                         This mix of qualities and passions allows us to push
                         boundaries and keep learning and innovating. So if you
                         have a challenging project for us… bring it on!
-                    </Description>
+                    </Subtitle>
                 </Box>
 
                 <Box width={[1, 1, 1 / 3]}>
                     <Title>Experimenting</Title>
-                    <Description>
+                    <Subtitle>
                         Right now we are experimenting with, and would like to
                         work more on: machine learning, artificial intelligence,
                         augmented reality, blockchain...and more
-                    </Description>
+                    </Subtitle>
                 </Box>
             </MaxWidthContainer>
 

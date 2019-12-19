@@ -4,14 +4,15 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const PostWrapper = styled.a`
-    margin: 0 16px;
-    height: 100%;
-    height: fit-content;
+    margin: 16px;
     background-color: var(--white);
     display: block;
     text-align: left;
     text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
 `;
+
 const Divider = styled.div`
     background-color: var(--primary);
     width: 100%;
@@ -23,27 +24,23 @@ const Divider = styled.div`
 const PostImage = styled.img`
     object-fit: cover;
     width: 100%;
-    height: 200px;
-    margin: 0 auto;
-    & > :hover {
-        opacity: 0.4;
-    }
+    height: 192px;
 `;
-const PostAuthor = styled.div`
+
+const PostCreator = styled.div`
     text-transform: uppercase;
     color: var(--border-gray);
     padding: 16px;
-    font-size: 8pt;
 `;
+
 const PostTitle = styled.div`
-    text-decoration: none;
+    min-height: 64px;
     font-size: 12pt;
     padding: 0 16px;
     color: var(--black);
 `;
-const PostDescription = styled.div`
-    text-decoration: none;
-    font-size: 8pt;
+
+const PostPubDate = styled.div`
     padding: 16px;
     color: var(--text-dark-gray);
 `;
@@ -55,17 +52,12 @@ const BlogPost = ({ node, index }) => {
     var imgUrl = shortened.substring(0, shortened.search('"'));
 
     return (
-        <PostWrapper
-            index={index}
-            target="_blank"
-            href={node.link}
-            rel="noopener noreferrer"
-        >
+        <PostWrapper target="_blank" href={node.link} rel="noopener noreferrer">
             <PostImage src={imgUrl} />
             <Divider />
-            <PostAuthor>{node.creator}</PostAuthor>
+            <PostCreator>{node.creator}</PostCreator>
             <PostTitle>{node.title}</PostTitle>
-            <PostDescription>{node.pubDate}</PostDescription>
+            <PostPubDate>{node.pubDate}</PostPubDate>
         </PostWrapper>
     );
 };
