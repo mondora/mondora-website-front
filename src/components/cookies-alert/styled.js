@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// FIXME: fix animation
 export const Container = styled.div`
     opacity: ${props => (props.show ? 1 : 0)};
     background: #fff;
