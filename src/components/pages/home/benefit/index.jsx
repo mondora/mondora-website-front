@@ -1,10 +1,14 @@
 import React from "react";
-import Grid from "../../../grid";
+
+import { useStaticQuery, graphql } from "gatsby";
+
+import { Box } from "reflexbox";
+
 import Divider from "../../../divider";
-import { Link, useStaticQuery, graphql } from "gatsby";
-import SquareButton from "../../../square-button";
-import Description from "../../../description";
 import FullWidthImage from "../../../full-width-image";
+import Section from "../../../section";
+import MaxWidthContainer from "../../../max-width-container";
+import Subtitle from "../../../subtitle";
 
 const Benefit = () => {
     const { impactImage } = useStaticQuery(graphql`
@@ -20,58 +24,26 @@ const Benefit = () => {
     `);
 
     return (
-        <Grid
-            container
-            xs={12}
-            justify="center"
-            align="center"
-            spacingRatio={6}
-            direction="column"
-        >
-            <Grid item container xs={11} justify="center" align="stretch">
-                <Grid item xs={12} sm={5} justify="flex-end">
-                    <Divider hideOnMobile />
-                </Grid>
-                <Grid
-                    item
-                    container
-                    xs={12}
-                    sm={5}
-                    align="center"
-                    justify="center"
-                >
-                    <Grid
-                        item
-                        container
-                        xs={12}
-                        sm={10}
-                        spacingRatio={3}
-                        direction="column"
-                        align="center"
-                    >
-                        <Grid item>
-                            <h1>Benefit projects</h1>
-                        </Grid>
-                        <Grid item>
-                            <Description>
-                                We are a team of open-minded and kind people who
-                                always offer each other help to overcome
-                                obstacles and create cutting edge solutions to
-                                problems.
-                            </Description>
-                        </Grid>
-                        <Grid item>
-                            <Link to="/bcorp">
-                                <SquareButton>Impact</SquareButton>
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={8}>
-                <FullWidthImage fluid={impactImage.childImageSharp.fluid} />
-            </Grid>
-        </Grid>
+        <MaxWidthContainer>
+            <Section>
+                <Section.LeftContainer />
+                <Section.DividerContainer>
+                    <Divider />
+                </Section.DividerContainer>
+                <Section.RightContainer>
+                    <Box my={48} backgroundColor="white">
+                        <h1>Benefit projects</h1>
+                        <Subtitle>
+                            We are a team of open-minded and kind people who
+                            always offer each other help to overcome obstacles
+                            and create cutting edge solutions to problems.
+                        </Subtitle>
+                    </Box>
+                </Section.RightContainer>
+            </Section>
+
+            <FullWidthImage fluid={impactImage.childImageSharp.fluid} />
+        </MaxWidthContainer>
     );
 };
 

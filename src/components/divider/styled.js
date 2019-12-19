@@ -7,6 +7,7 @@ export const Container = styled.div`
     align-items: center;
 
     height: ${props => props.height};
+    margin: 0 16px;
 
     @media (max-width: ${props => props.theme.breakpoints.sm}px) {
         height: 70px;

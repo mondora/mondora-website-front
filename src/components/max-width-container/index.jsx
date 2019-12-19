@@ -1,8 +1,17 @@
-import styled from "styled-components";
+import React from "react";
 
-const MaxWidthContainer = styled.div`
-    max-width: 1440px;
-    margin: 0 auto;
-`;
+import { Flex, Box } from "reflexbox";
+
+const MaxWidthContainer = ({ children, ...rest }) => (
+    <Flex
+        mx={[16, 32, "auto"]}
+        px={[0, 0, 32]}
+        flexWrap="wrap"
+        maxWidth={1200}
+        {...rest}
+    >
+        {children}
+    </Flex>
+);
 
 export default MaxWidthContainer;
