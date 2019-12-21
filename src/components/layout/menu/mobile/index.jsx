@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-
-import Grid from "../../../grid";
-
 import Image from "gatsby-image";
 import {
     MenuLink,
     AnimatedMenu,
     MenuItem,
     ToolbarGrid,
-    Icon,
     Spacer
 } from "./styled";
+import FeatherIcon from "../../../feather-icon";
 
 const links = [
     {
@@ -63,23 +59,24 @@ const MobileMenu = () => {
 
     return (
         <>
-            <AnimatedMenu container direction="column" open={open}>
+            <AnimatedMenu container={true} direction="column" open={open}>
                 {links.map(link => (
-                    <MenuItem item xs={12} align="center" justify="center">
+                    <MenuItem key={link.to} item={true} xs={12} align="center" justify="center">
                         <MenuLink to={link.to} activeClassName={"active"}>
                             {link.text}
                         </MenuLink>
                     </MenuItem>
                 ))}
             </AnimatedMenu>
-            <ToolbarGrid container justify="space-between" align="center">
+            <ToolbarGrid container={true} justify="space-between" align="center">
                 <Image fixed={miniLogoImage.childImageSharp.fixed} />
-                <Grid item justify="flex-end" align="center">
-                    <Icon
-                        icon={open ? faTimes : faBars}
-                        onClick={handleToggle}
+                <div onClick={handleToggle}>
+                    <FeatherIcon
+                        color="white"
+                        size={24}
+                        name={open ? "x" : "menu"}
                     />
-                </Grid>
+                </div>
             </ToolbarGrid>
             <Spacer />
         </>

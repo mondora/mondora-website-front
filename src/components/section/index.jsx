@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const SectionContainer = styled.div`
     display: grid;
@@ -12,8 +12,12 @@ const SectionContainer = styled.div`
 
     @media (max-width: 768px) {
         text-align: center;
-        grid-template-columns: initial;
+        grid-template-columns: 1fr;
     }
+
+    ${props => props.header && css`
+        min-height: 448px;
+    `}
 `;
 
 const Container = styled.div`
@@ -31,6 +35,7 @@ const Container = styled.div`
 
 const LeftContainer = styled(Container)`
     grid-area: 1 / 1 / 2 / 2;
+    margin: 32px 0;
 
     @media (max-width: 768px) {
         grid-area: 1 / 1 / 2 / 2;
@@ -39,6 +44,7 @@ const LeftContainer = styled(Container)`
 
 const RightContainer = styled(Container)`
     grid-area: 1 / 3 / 2 / 4;
+    margin: 32px 0;
 
     @media (max-width: 768px) {
         ${props =>
@@ -59,9 +65,9 @@ const DividerContainer = styled.div`
     }
 `;
 
-const Section = ({ children, margin = 0, gutter = 0 }) => {
+const Section = ({ children, margin = 0, gutter = 0, header }) => {
     return (
-        <SectionContainer gutter={gutter} margin={margin}>
+        <SectionContainer gutter={gutter} margin={margin} header={header}>
             {children}
         </SectionContainer>
     );
@@ -74,7 +80,12 @@ Section.DividerContainer = DividerContainer;
 Section.propTypes = {
     children: PropTypes.array,
     gutter: PropTypes.number,
-    margin: PropTypes.string
+    margin: PropTypes.string,
+    header: PropTypes.bool
+};
+
+Section.defaultProps = {
+    gutter: 32
 };
 
 export default Section;

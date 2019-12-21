@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { Container, Circle, Line } from "./styled";
 
@@ -15,6 +16,13 @@ const Divider = ({
             <Circle show={below} />
         </Container>
     );
+};
+
+Divider.propTypes = {
+    above: PropTypes.bool,
+    below: PropTypes.bool,
+    height: PropTypes.string,
+    hideOnMobile: PropTypes.bool
 };
 
 export default Divider;

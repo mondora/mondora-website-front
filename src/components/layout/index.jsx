@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { useCookies } from "react-cookie";
 
@@ -32,6 +33,10 @@ const Layout = ({ children }) => {
             />
         </ThemeProvider>
     );
+};
+
+Layout.propTypes = {
+    children: PropTypes.node
 };
 
 export default Layout;

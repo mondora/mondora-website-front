@@ -2,33 +2,17 @@ import React from "react";
 
 import styled from "styled-components";
 
+import Image1 from "../../../static/images/image.png";
+
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
-
-import Image1 from "../../../static/images/image.png";
 import Divider from "../../components/divider";
 import Layout from "../../components/layout";
+import MaxWidthContainer from "../../components/max-width-container";
+import BackgroundStripe from "../../components/background-stripe";
+import Subtitle from "../../components/subtitle";
+import Title from "../../components/title";
 
-const LeftParagraph = styled.div`
-    text-align: left;
-    margin-top: 80px;
-    margin-bottom: 40px;
-    @media (max-width: 992px) {
-        text-align: center;
-    }
-`;
-const LeftTitle = styled.h1`
-    margin-top: 16px;
-    font-size: ${props => props.theme.size.text.mondora};
-`;
-const LeftContent = styled.div`
-    width: 70%;
-    margin: 24px auto 24px 0;
-    line-height: 1.6;
-    @media (max-width: 992px) {
-        margin: 24px auto;
-    }
-`;
 const RightParagraph = styled.div`
     text-align: center;
     margin: 16px;
@@ -42,12 +26,7 @@ const HandbookContainer = styled.div`
     width: 40%;
     margin: 40px auto;
 `;
-const Title = styled.h1`
-    text-align: center;
-    width: fit-content;
-    margin: 0 auto;
-    color: var(--variant-black);
-`;
+
 const HandbookDescription = styled.div`
     color: var(--text-dark-gray);
     margin: 16px;
@@ -96,13 +75,7 @@ const ReasonTitle = styled.h1`
     color: var(--variant-black);
     margin: 0;
 `;
-const ContainerForm = styled.div`
-    height: fit-content;
-    padding: 40px 240px;
-    margin-top: 80px;
-    text-align: center;
-    background-color: var(--variant-lightgray);
-`;
+
 const FormModule = styled.div`
     height: fit-content;
     padding: 40px 240px;
@@ -175,52 +148,57 @@ const Reasons = [
 
 const WorkWithUs = () => (
     <Layout>
-        <Section gutter={32}>
-            <Section.LeftContainer>
-                <LeftParagraph>
-                    <LeftTitle>{"Meet the team"}</LeftTitle>
-                    <LeftContent>
-                        {
-                            "Etiam gravida nibh erat, nec congue neque ultrices imperdiet. Etiam molestie augue sed risus aliquet, ut rhoncus purus fermentum. Aliquam ac tortor ligula. Nulla quis orci pulvinar."
-                        }
-                    </LeftContent>
-                    <LeftContent>
-                        {
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate quam pharetra nunc molestie interdum. Sed nec lorem scelerisque, fermentum lacus a, congue lacus. "
-                        }
-                    </LeftContent>
-                </LeftParagraph>
-            </Section.LeftContainer>
+        <MaxWidthContainer>
+            <BackgroundStripe>
+                <Section header={true}>
+                    <Section.LeftContainer>
+                        <Title>{"Meet the team"}</Title>
+                        <Subtitle>
+                            Etiam gravida nibh erat, nec congue neque ultrices
+                            imperdiet. Etiam molestie augue sed risus aliquet,
+                            ut rhoncus purus fermentum. Aliquam ac tortor
+                            ligula. Nulla quis orci pulvinar. Lorem ipsum dolor
+                            sit amet, consectetur adipiscing elit. Maecenas
+                            vulputate quam pharetra nunc molestie interdum. Sed
+                            nec lorem scelerisque, fermentum lacus a, congue
+                            lacus.
+                        </Subtitle>
+                    </Section.LeftContainer>
 
-            <Section.DividerContainer>
-                <Divider />
-            </Section.DividerContainer>
+                    <Section.DividerContainer>
+                        <Divider />
+                    </Section.DividerContainer>
 
-            <Section.RightContainer>
-                <RightParagraph>
-                    <RightTitle>
-                        {"Mondora"} <br />
-                        {"Team!"}
-                    </RightTitle>
-                </RightParagraph>
-            </Section.RightContainer>
-        </Section>
+                    <Section.RightContainer>
+                        <RightParagraph>
+                            <RightTitle>
+                                {"Mondora"} <br />
+                                {"Team!"}
+                            </RightTitle>
+                        </RightParagraph>
+                    </Section.RightContainer>
+                </Section>
+            </BackgroundStripe>
+        </MaxWidthContainer>
+
         <HandbookContainer>
             <Title>{"Mondora Srl"}</Title>
             <HandbookDescription>
-                {
-                    "We are a software development company working with selected clients who subscribe to our unique approach on agile, cloud development and cloud governance."
-                }
+                We are a software development company working with selected
+                clients who subscribe to our unique approach on agile, cloud
+                development and cloud governance.
             </HandbookDescription>
             <SuperA>
                 <SquareButton>{"HANDBOOK LINK"}</SquareButton>
             </SuperA>
         </HandbookContainer>
+
         <CarouselContainer>
             {images.map((image, i) => (
                 <CarouselImage key={i} src={image.source} />
             ))}
         </CarouselContainer>
+
         <Title>{"Why work with us?"}</Title>
         <ReasonsContainer>
             {Reasons.map((reason, i) => (
@@ -232,20 +210,24 @@ const WorkWithUs = () => (
             ))}
         </ReasonsContainer>
         <Section position={"below"} />
-        <ContainerForm>
-            <Title>{"Apply"}</Title>
-            <FormModule>
-                {/* TODO: insert contact module */}
-                <div>
-                    {
-                        "Vivamus rutrum turpis sed turpis malesuada facilisis. Aliquam laoreet rhoncus est, ac vestibulum nunc mollis sed. Quisque dolor risus, vehicula non tempus in, venenatis fermentum enim. "
-                    }
-                </div>
-                <SuperA>
-                    <SquareButton>{"Send"}</SquareButton>
-                </SuperA>
-            </FormModule>
-        </ContainerForm>
+
+        <BackgroundStripe>
+            <MaxWidthContainer>
+                <Title>{"Apply"}</Title>
+                <FormModule>
+                    {/* TODO: insert contact module */}
+                    <div>
+                        Vivamus rutrum turpis sed turpis malesuada facilisis.
+                        Aliquam laoreet rhoncus est, ac vestibulum nunc mollis
+                        sed. Quisque dolor risus, vehicula non tempus in,
+                        venenatis fermentum enim.
+                    </div>
+                    <SuperA>
+                        <SquareButton>{"Send"}</SquareButton>
+                    </SuperA>
+                </FormModule>
+            </MaxWidthContainer>
+        </BackgroundStripe>
     </Layout>
 );
 

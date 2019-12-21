@@ -10,7 +10,7 @@ const BackgroundStripe = styled.div`
     padding: 32px 0;
 
     background-position: center;
-    background-size: cover;
+    background-size: contain;
 
     ${props =>
         props.theme === darkTheme &&

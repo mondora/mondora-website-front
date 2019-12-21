@@ -1,17 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Hidden from "../../../hidden";
-import Grid from "../../../grid";
-import { MarginFullWidthImage } from "./styled";
+
+import { useStaticQuery, graphql } from "gatsby";
+import { Flex } from "reflexbox";
+
 import Title from "../../../title";
 import Subtitle from "../../../subtitle";
-import Description from "../../../description";
-import { useStaticQuery, graphql } from "gatsby";
-import { PaddedBackgroundDecoratedGrid } from "../styled";
+import SectionComponent from "../../../section";
 import FullWidthImage from "../../../full-width-image";
+import BackgroundStripe from "../../../background-stripe";
+import MaxWidthContainer from "../../../max-width-container";
+import SubtleTitle from "../../../subtle-title";
 
 export const Section = ({
-    rightImage,
     image,
     miniTitle,
     title,
@@ -29,174 +30,43 @@ export const Section = ({
     `);
 
     return (
-        <>
-            <Hidden smUp>
-                <PaddedBackgroundDecoratedGrid
-                    item
-                    container
-                    xs={12}
-                    direction="column"
-                    align="center"
-                    dark={dark}
-                >
-                    <Grid
-                        item
-                        container
-                        direction="column"
-                        xs={11}
-                        align="center"
-                        spacingRatio={8}
-                    >
-                        <Grid item xs={12}>
-                            <FullWidthImage fluid={image} />
-                        </Grid>
-                        <Grid
-                            item
-                            container
-                            xs={12}
-                            sm={5}
-                            direction="column"
-                            spacingRatio={8}
+        <BackgroundStripe theme={dark ? "dark" : "light"}>
+            <MaxWidthContainer>
+                <SectionComponent>
+                    <SectionComponent.LeftContainer>
+                        <FullWidthImage fluid={image} />
+                    </SectionComponent.LeftContainer>
+
+                    <SectionComponent.RightContainer>
+                        <SubtleTitle light={dark}>{miniTitle}</SubtleTitle>
+
+                        <Title light={dark}>{title}</Title>
+
+                        <Subtitle light={dark}>{subtitle}</Subtitle>
+                    </SectionComponent.RightContainer>
+                </SectionComponent>
+
+                <FullWidthImage fluid={underlinesImage.publicURL} />
+
+                <Flex margin={-2}>
+                    {voices.map(({ title, description }, index) => (
+                        <Flex
+                            width={[1, 1 / 3]}
+                            flexDirection="column"
+                            margin={2}
+                            key={index}
                         >
-                            <Grid item>
-                                <Title mini light={dark}>
-                                    {miniTitle}
-                                </Title>
-                            </Grid>
-                            <Grid item direction="column">
-                                <Title light={dark}>{title}</Title>
-                            </Grid>
-                            <Grid item>
-                                <Subtitle light={dark}>{subtitle}</Subtitle>
-                            </Grid>
-                        </Grid>
-                        <Grid
-                            item
-                            container
-                            direction="column"
-                            align="center"
-                            xs={10}
-                            spacingRatio={8}
-                        >
-                            {voices.map(({ key, title, description }) => (
-                                <Grid
-                                    item
-                                    container
-                                    key={key}
-                                    direction="column"
-                                    align="center"
-                                >
-                                    <Grid item>
-                                        <Title light={dark}>{title}</Title>
-                                    </Grid>
-                                    <Grid item>
-                                        <Description light={dark}>
-                                            {description}
-                                        </Description>
-                                    </Grid>
-                                </Grid>
-                            ))}
-                        </Grid>
-                        {additionalText && (
-                            <Grid item xs={11} justify="center">
-                                <Subtitle light={dark}>
-                                    {additionalText}
-                                </Subtitle>
-                            </Grid>
-                        )}
-                    </Grid>
-                </PaddedBackgroundDecoratedGrid>
-            </Hidden>
-            <Hidden smDown>
-                <PaddedBackgroundDecoratedGrid
-                    item
-                    container
-                    xs={12}
-                    direction="column"
-                    align="center"
-                    spacingRatio={8}
-                    dark={dark}
-                >
-                    <Grid
-                        item
-                        container
-                        xs={11}
-                        md={10}
-                        lg={8}
-                        xl={6}
-                        justify="space-between"
-                        align="stretch"
-                    >
-                        {!rightImage && (
-                            <Grid item xs={12} sm={5} direction="column">
-                                <FullWidthImage fluid={image} />
-                            </Grid>
-                        )}
-                        <Grid
-                            item
-                            container
-                            xs={12}
-                            sm={5}
-                            direction="column"
-                            spacingRatio={4}
-                        >
-                            <Grid item>
-                                <Title mini light={dark}>
-                                    {miniTitle}
-                                </Title>
-                            </Grid>
-                            <Grid item direction="column" xs={12}>
-                                <Title light={dark}>{title}</Title>
-                            </Grid>
-                            <Grid item>
-                                <Subtitle light={dark}>{subtitle}</Subtitle>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <MarginFullWidthImage
-                                    fluid={underlinesImage.publicURL}
-                                />
-                            </Grid>
-                        </Grid>
-                        {rightImage && (
-                            <Grid item xs={12} sm={5} direction="column">
-                                <FullWidthImage fluid={image} />
-                            </Grid>
-                        )}
-                    </Grid>
-                    <Grid
-                        item
-                        container
-                        xs={11}
-                        md={10}
-                        lg={8}
-                        xl={6}
-                        spacingRatio={12}
-                        justify="center"
-                    >
-                        {voices.map(({ key, title, description }) => (
-                            <Grid key={key} item xs={10} sm={4}>
-                                <Title light={dark}>{title}</Title>
-                                <Description light={dark}>
-                                    {description}
-                                </Description>
-                            </Grid>
-                        ))}
-                    </Grid>
-                    {additionalText && (
-                        <Grid
-                            item
-                            xs={11}
-                            md={10}
-                            lg={8}
-                            xl={6}
-                            justify="center"
-                        >
-                            <Subtitle light={dark}>{additionalText}</Subtitle>
-                        </Grid>
-                    )}
-                </PaddedBackgroundDecoratedGrid>
-            </Hidden>
-        </>
+                            <Title light={dark}>{title}</Title>
+                            <Subtitle light={dark}>{description}</Subtitle>
+                        </Flex>
+                    ))}
+                </Flex>
+
+                <Flex width={1} margin={4} textAlign="center">
+                    <Subtitle light={dark}>{additionalText}</Subtitle>
+                </Flex>
+            </MaxWidthContainer>
+        </BackgroundStripe>
     );
 };
 

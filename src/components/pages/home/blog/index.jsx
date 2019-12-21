@@ -3,11 +3,12 @@ import React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 
 import BackgroundStripe from "../../../background-stripe";
-import BlogPost from "../../../blog-post";
 import Carousel from "../../../carousel";
 import MaxWidthContainer from "../../../max-width-container";
 import SquareButton from "../../../square-button";
 import Title from "../../../title";
+
+import BlogPost from "./components/blog-post";
 
 const Blog = () => {
     const { allFeedBcalmBcorp } = useStaticQuery(graphql`
