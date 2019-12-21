@@ -3,80 +3,58 @@ import PropTypes from "prop-types";
 
 const Hidden = styled.div`
     width: 100%;
+
     ${props =>
         props.xsUp &&
         css`
-            @media (min-width: ${props => props.theme.breakpoints.xs}px) {
+            @media (min-width: ${props => props.theme.breakpoints[0]}px) {
                 display: none;
             }
         `}
     ${props =>
         props.xsDown &&
         css`
-            @media (max-width: ${props => props.theme.breakpoints.xs - 1}px) {
+            @media (max-width: ${props => props.theme.breakpoints[0] - 1}px) {
                 display: none;
             }
         `}
     ${props =>
         props.smUp &&
         css`
-            @media (min-width: ${props => props.theme.breakpoints.sm}px) {
+            @media (min-width: ${props => props.theme.breakpoints[1]}px) {
                 display: none;
             }
         `}
     ${props =>
         props.smDown &&
         css`
-            @media (max-width: ${props => props.theme.breakpoints.sm - 1}px) {
-                display: none;
-            }
-        `}
-    ${props =>
-        props.mdUp &&
-        css`
-            @media (min-width: ${props => props.theme.breakpoints.md}px) {
-                display: none;
-            }
-        `}
-    ${props =>
-        props.mdDown &&
-        css`
-            @media (max-width: ${props => props.theme.breakpoints.md - 1}px) {
+            @media (max-width: ${props => props.theme.breakpoints[1] - 1}px) {
                 display: none;
             }
         `}
     ${props =>
         props.lgUp &&
         css`
-            @media (min-width: ${props => props.theme.breakpoints.lg}px) {
+            @media (min-width: ${props => props.theme.breakpoints[2]}px) {
                 display: none;
             }
         `}
     ${props =>
         props.lgDown &&
         css`
-            @media (max-width: ${props => props.theme.breakpoints.lg - 1}px) {
+            @media (max-width: ${props => props.theme.breakpoints[2] - 1}px) {
                 display: none;
             }
         `}
-    ${props =>
-        props.xlDown &&
-        css`
-            @media (max-width: ${props => props.theme.breakpoints.xl}px) {
-                display: none;
-            }
-        `};
 `;
 
 Hidden.propTypes = {
     xsUp: PropTypes.bool,
+    xsDown: PropTypes.bool,
     smUp: PropTypes.bool,
     smDown: PropTypes.bool,
-    mdUp: PropTypes.bool,
-    mdDown: PropTypes.bool,
     lgUp: PropTypes.bool,
-    lgDown: PropTypes.bool,
-    xlDown: PropTypes.bool
+    lgDown: PropTypes.bool
 };
 
 export default Hidden;

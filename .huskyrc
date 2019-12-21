@@ -1,6 +1,6 @@
 {
     "hooks": {
-        "pre-commit": "yarn lint:ci",
-        "commit-msg": "yarn lint:commit-message"
+        "pre-commit": "yarn lint && yarn prettier",
+        "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
 }

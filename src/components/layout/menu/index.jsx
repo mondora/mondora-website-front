@@ -4,16 +4,18 @@ import DesktopMenu from "./desktop";
 import MobileMenu from "./mobile";
 import Hidden from "../../hidden";
 
+import MaxWidthContainer from "../../max-width-container";
+
 const Menu = () => {
     return (
-        <>
-            <Hidden mdUp>
+        <MaxWidthContainer>
+            <Hidden smUp={true}>
                 <MobileMenu />
             </Hidden>
-            <Hidden mdDown>
+            <Hidden smDown={true}>
                 <DesktopMenu />
             </Hidden>
-        </>
+        </MaxWidthContainer>
     );
 };
 

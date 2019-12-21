@@ -1,42 +1,40 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SquareButton from "../square-button";
 
 import styled from "styled-components";
 
-const ProjectWrapper = styled.div`
-    display: grid;
-    grid-template-columns: 50% 50%;
-    margin: 24px;
-`;
+import { Flex } from "reflexbox";
+
+import SubtleTitle from "../subtle-title";
+import Title from "../title";
+import SquareButton from "../square-button";
+import Subtitle from "../subtitle";
+import Section from "../section";
+
 const Image = styled.img`
     width: 100%;
-`;
-const Caption = styled.div`
-    margin: 64px 0 24px 0;
-    text-transform: uppercase;
-    color: var(--text-light-gray);
-    font-size: 12pt;
-`;
-const Description = styled.div`
-    color: var(--text-gray);
-    width: 90%;
-    margin: 24px auto 24px 0;
-    line-height: 1.6;
 `;
 
 const BenefitSlide = ({ project }) => {
     return (
-        <ProjectWrapper>
-        <Image src={project.graphic}/>
+        <Section>
+            <Section.LeftContainer>
+                <Image src={project.graphic} />
+            </Section.LeftContainer>
 
-        <div>
-            <Caption>{project.caption}</Caption>
-            <h1>{project.title}</h1>
-            <Description>{project.text}</Description>
-            <SquareButton>{project.button}</SquareButton>
-        </div>
-        </ProjectWrapper>
+            <Section.RightContainer>
+                <Flex
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="flex-start"
+                >
+                    <SubtleTitle>{project.caption}</SubtleTitle>
+                    <Title>{project.title}</Title>
+                    <Subtitle>{project.text}</Subtitle>
+                    <SquareButton>{project.button}</SquareButton>
+                </Flex>
+            </Section.RightContainer>
+        </Section>
     );
 };
 

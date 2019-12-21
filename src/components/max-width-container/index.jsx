@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import { Flex, Box } from "reflexbox";
+import { Flex } from "reflexbox";
 
 const MaxWidthContainer = ({ children, ...rest }) => (
     <Flex
@@ -13,5 +14,9 @@ const MaxWidthContainer = ({ children, ...rest }) => (
         {children}
     </Flex>
 );
+
+MaxWidthContainer.propTypes = {
+    children: PropTypes.node
+}
 
 export default MaxWidthContainer;

@@ -3,20 +3,16 @@ import { Link, useStaticQuery, graphql } from "gatsby";
 
 import styled from "styled-components";
 
-import Grid from "../../../grid";
-import InnerLink from "../../../inner-link";
-import Hidden from "../../../hidden";
 import Image from "gatsby-image";
 
-const Container = styled(Grid)`
-    height: ${props => props.theme.spacing.unit * 24}px;
-`;
+import { Flex } from "reflexbox";
 
 const SuperLink = styled(Link)`
     font-size: ${props => props.theme.size.text.menu};
     text-decoration: none;
     color: var(--black);
     padding: 12px 0;
+    margin-right: 16px;
 
     &.active {
         background-image: url(${require("../../../../../static/images/underlines.svg")});
@@ -27,12 +23,13 @@ const SuperLink = styled(Link)`
     }
 `;
 
-const BlogButton = styled.button`
+const BlogButton = styled.a`
     font-size: ${props => props.theme.size.text.menu};
-    padding: 8px 16px;
+    padding: 2px 8px;
     color: var(--black);
     border: 1px solid var(--variant-black);
     border-radius: 24px;
+    text-decoration: none;
 `;
 
 const links = [
@@ -74,39 +71,26 @@ const DesktopMenu = () => {
     `);
 
     return (
-        <Container container justify="center" align="center">
-            <Grid item container align="center" justify="space-between" xs={11}>
-                <Grid item>
-                    <InnerLink to="/">
-                        <Hidden smDown>
-                            <Image
-                                fixed={miniLogoImage.childImageSharp.fixed}
-                            />
-                        </Hidden>
-                    </InnerLink>
-                </Grid>
-                <Grid container item spacingRatio={4} align="center">
-                    {links.map((link, i) => (
-                        <Grid item key={link.to}>
-                            <SuperLink
-                                key={i}
-                                to={link.to}
-                                activeClassName="active"
-                            >
-                                {link.text}
-                            </SuperLink>
-                        </Grid>
-                    ))}
-                    <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://bcalmbcorp.com/"
-                    >
-                        <BlogButton>Blog :m</BlogButton>
-                    </a>
-                </Grid>
-            </Grid>
-        </Container>
+        <Flex my={32} justifyContent="space-between" alignItems="center">
+            <Link to="/">
+                <Image fixed={miniLogoImage.childImageSharp.fixed} />
+            </Link>
+
+            <Flex justifyContent="space-between" alignItems="center">
+                {links.map((link, i) => (
+                    <SuperLink key={i} to={link.to} activeClassName="active">
+                        {link.text}
+                    </SuperLink>
+                ))}
+                <BlogButton
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://bcalmbcorp.com/"
+                >
+                    {"Blog :m"}
+                </BlogButton>
+            </Flex>
+        </Flex>
     );
 };
 

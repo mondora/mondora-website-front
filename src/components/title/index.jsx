@@ -2,6 +2,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const Title = styled.h2`
+    margin-top: 0;
     font-weight: bold;
     margin: 0;
     color: ${props => {
@@ -10,10 +11,10 @@ const Title = styled.h2`
         }
         return props.mini ? "#9a9a9a" : "var(--black)";
     }};
-    font-size: ${props =>
-        props.mini ? "18px" : "24px"};
-    font-family: ${props =>
-        props.mini ? "Source Sans Pro" : "Playfair Display"};
+
+    font-size: 26px;
+    font-family: "Playfair Display";
+
     text-align: ${props => (props.center ? "center" : "inherit")};
 `;
 

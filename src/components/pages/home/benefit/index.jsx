@@ -9,6 +9,7 @@ import FullWidthImage from "../../../full-width-image";
 import Section from "../../../section";
 import MaxWidthContainer from "../../../max-width-container";
 import Subtitle from "../../../subtitle";
+import Title from "../../../title";
 
 const Benefit = () => {
     const { impactImage } = useStaticQuery(graphql`
@@ -26,13 +27,12 @@ const Benefit = () => {
     return (
         <MaxWidthContainer>
             <Section>
-                <Section.LeftContainer />
                 <Section.DividerContainer>
                     <Divider />
                 </Section.DividerContainer>
                 <Section.RightContainer>
                     <Box my={48} backgroundColor="white">
-                        <h1>Benefit projects</h1>
+                        <Title>Benefit projects</Title>
                         <Subtitle>
                             We are a team of open-minded and kind people who
                             always offer each other help to overcome obstacles

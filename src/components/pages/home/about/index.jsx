@@ -5,11 +5,11 @@ import { useStaticQuery, graphql } from "gatsby";
 import { Box } from "reflexbox";
 
 import Title from "../../../title";
-import Description from "../../../description";
 import FullWidthImage from "../../../full-width-image";
 import BackgroundStripe from "../../../background-stripe";
 import MaxWidthContainer from "../../../max-width-container";
 import Section from "../../../section";
+import Subtitle from "../../../subtitle";
 
 const About = () => {
     const { brothersImage } = useStaticQuery(graphql`
@@ -35,14 +35,14 @@ const About = () => {
                     </Section.LeftContainer>
                     <Section.DividerContainer />
                     <Section.RightContainer>
-                        <Box mx={32} my={48}>
-                            <Title light>About Mondora</Title>
-                            <Description light>
+                        <Box my={48}>
+                            <Title light={true}>About Mondora</Title>
+                            <Subtitle light={true}>
                                 We are a team of open-minded and kind people who
                                 always offer each other help to overcome
                                 obstacles and create cutting edge solutions to
                                 problems.
-                            </Description>
+                            </Subtitle>
                         </Box>
                     </Section.RightContainer>
                 </Section>

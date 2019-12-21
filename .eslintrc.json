@@ -1,0 +1,53 @@
+{
+    "extends": "react-app",
+    "parser": "babel-eslint",
+    "plugins": ["react", "react-hooks", "jsx-a11y"],
+    "env": {
+        "browser": true,
+        "mocha": true,
+        "node": true,
+        "es6": true
+    },
+    "rules": {
+        "jsx-a11y/alt-text": ["error"],
+        "jsx-a11y/anchor-has-content": ["error"],
+        "jsx-a11y/heading-has-content": ["error"],
+        "jsx-a11y/html-has-lang": ["error"],
+        "jsx-a11y/img-redundant-alt": ["error"],
+        "no-unused-vars": ["error", { "args": "after-used", "varsIgnorePattern": "React" }],
+        "no-useless-escape": ["warn"],
+        "no-var": ["error"],
+        "prefer-arrow-callback": ["error"],
+        "prefer-template": ["error"],
+        "react/jsx-boolean-value": ["warn", "always"],
+        "react/jsx-key": ["error"],
+        "react/jsx-no-duplicate-props": ["error"],
+        "react/jsx-no-literals": ["warn"],
+        "react/jsx-no-undef": ["error"],
+        "react/jsx-pascal-case": ["error"],
+        "react/jsx-uses-react": ["error"],
+        "react/no-deprecated": ["warn"],
+        "react/no-did-mount-set-state": ["error"],
+        "react/no-did-update-set-state": ["error"],
+        "react/no-direct-mutation-state": ["error"],
+        "react/no-is-mounted": ["error"],
+        "react/no-string-refs": ["error"],
+        "react/no-unknown-property": ["error"],
+        "react/prefer-es6-class": ["error"],
+        "react/prop-types": ["error"],
+        "react/require-render-return": ["error"],
+        "react/self-closing-comp": ["error"],
+        "react/sort-comp": [
+            "error",
+            {
+                "order": ["constructor", "lifecycle", "everything-else", "rendering"],
+                "groups": {
+                    "rendering": ["^render.+$/", "render"]
+                }
+            }
+        ],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "strict": ["error", "never"]
+    }
+}

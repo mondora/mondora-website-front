@@ -1,7 +1,8 @@
 import React from "react";
-import { Section } from "../section";
+
 import { useStaticQuery, graphql } from "gatsby";
-import Grid from "../../../grid";
+
+import { Section } from "../section";
 
 const voices = [
     {
@@ -45,20 +46,16 @@ const WhereDoWeComeFrom = () => {
     `);
 
     return (
-        <Grid container justify="center">
-            <Grid item xs={12}>
-                <Section
-                    image={brothersImage.childImageSharp.fluid}
-                    miniTitle={miniTitle}
-                    title={title}
-                    subtitle={subtitle}
-                    voices={voices}
-                    rightImage
-                    dark
-                    additionalText={additionalText}
-                />
-            </Grid>
-        </Grid>
+        <Section
+            image={brothersImage.childImageSharp.fluid}
+            miniTitle={miniTitle}
+            title={title}
+            subtitle={subtitle}
+            voices={voices}
+            rightImage={true}
+            dark={true}
+            additionalText={additionalText}
+        />
     );
 };
 
