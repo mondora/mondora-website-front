@@ -59,17 +59,18 @@ const MobileMenu = () => {
 
     return (
         <>
-            <AnimatedMenu container={true} direction="column" open={open}>
+            <AnimatedMenu open={open}>
                 {links.map(link => (
-                    <MenuItem key={link.to} item={true} xs={12} align="center" justify="center">
+                    <MenuItem key={link.to}>
                         <MenuLink to={link.to} activeClassName={"active"}>
                             {link.text}
                         </MenuLink>
                     </MenuItem>
                 ))}
             </AnimatedMenu>
-            <ToolbarGrid container={true} justify="space-between" align="center">
+            <ToolbarGrid>
                 <Image fixed={miniLogoImage.childImageSharp.fixed} />
+
                 <div onClick={handleToggle}>
                     <FeatherIcon
                         color="white"

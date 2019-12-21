@@ -48,13 +48,13 @@ export const Section = ({
 
                 <FullWidthImage fluid={underlinesImage.publicURL} />
 
-                <Flex margin={-2}>
+                <Flex flexWrap="wrap" padding={-2}>
                     {voices.map(({ title, description }, index) => (
                         <Flex
                             width={[1, 1 / 3]}
                             flexDirection="column"
-                            margin={2}
                             key={index}
+                            padding={2}
                         >
                             <Title light={dark}>{title}</Title>
                             <Subtitle light={dark}>{description}</Subtitle>
