@@ -31,9 +31,6 @@ const HandbookDescription = styled.div`
     color: var(--text-dark-gray);
     margin: 16px;
 `;
-const Description = styled.div`
-    color: var(--text-dark-gray);
-`;
 const SuperA = styled.a`
     text-decoration: none;
 `;
@@ -205,7 +202,7 @@ const WorkWithUs = () => (
                 <ReasonPanel key={i} col={reason.col} row={reason.row}>
                     <ReasonNumber>{reason.number}</ReasonNumber>
                     <ReasonTitle>{reason.title}</ReasonTitle>
-                    <Description>{reason.descriprion}</Description>
+                    <Subtitle>{reason.descriprion}</Subtitle>
                 </ReasonPanel>
             ))}
         </ReasonsContainer>

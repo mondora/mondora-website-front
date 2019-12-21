@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 import { Link } from "gatsby";
-import { theme } from "../../../../styles/theme";
 
-const toolbarHeight = theme.spacing.unit * 18;
+const toolbarHeight = 74;
 
 export const ToolbarGrid = styled.div`
     position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     top: 0;
     left: 0;
     right: 0;
@@ -18,6 +20,9 @@ export const ToolbarGrid = styled.div`
 `;
 
 export const MenuItem = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: ${props => props.theme.spacing.unit * 12}px;
     text-decoration: none;
     border-bottom: 1px solid var(--border-dark-gray);

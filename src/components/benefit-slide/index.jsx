@@ -26,7 +26,6 @@ const BenefitSlide = ({ project }) => {
                 <Flex
                     flexDirection="column"
                     justifyContent="center"
-                    alignItems="flex-start"
                 >
                     <SubtleTitle>{project.caption}</SubtleTitle>
                     <Title>{project.title}</Title>
