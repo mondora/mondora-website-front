@@ -28,13 +28,41 @@ const Blog = () => {
         }
     `);
 
+    const settings = {
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 960,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    };
+
     return (
         <BackgroundStripe theme="light">
             <MaxWidthContainer justifyContent="center">
                 <Title>From our blog</Title>
             </MaxWidthContainer>
 
-            <Carousel>
+            <Carousel {...settings}>
                 {allFeedBcalmBcorp.nodes.map(blogPost => (
                     <BlogPost key={blogPost.id} node={blogPost} />
                 ))}

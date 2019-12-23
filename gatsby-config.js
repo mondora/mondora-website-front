@@ -20,13 +20,9 @@ module.exports = {
     },
     plugins: [
         "gatsby-plugin-react-helmet",
-        {
-            resolve: `gatsby-source-instagram`,
-            options: {
-                username: `mondoracom`
-            }
-        },
         "gatsby-plugin-styled-components",
+        "gatsby-transformer-sharp",
+        "gatsby-plugin-sharp",
         {
             resolve: `gatsby-source-rss-feed`,
             options: {
@@ -53,8 +49,12 @@ module.exports = {
                 path: `${__dirname}/src/images`
             }
         },
-        "gatsby-transformer-sharp",
-        "gatsby-plugin-sharp"
+        {
+            resolve: `gatsby-source-instagram`,
+            options: {
+                username: `mondoracom`
+            }
+        }
         // {
         //     resolve: `gatsby-source-contentful`,
         //     options: {
