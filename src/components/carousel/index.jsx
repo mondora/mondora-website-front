@@ -1,16 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import Slider from "react-slick";
 
 import FeatherIcon from "../feather-icon";
 
 const CarouselContainer = styled.div`
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 48px;
+    ${props =>
+        !props.fullWidth &&
+        css`
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 48px;
+        `}
 `;
 
 const ArrowContainer = styled.div`
@@ -24,40 +28,15 @@ const ArrowContainer = styled.div`
     }
 `;
 
-const Carousel = ({ children, ...rest }) => {
+const Carousel = ({ children, fullWidth, ...rest }) => {
     const settings = {
         speed: 500,
         slidesToScroll: 4,
-        slidesToShow: 4,
-        responsive: [
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    dots: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    initialSlide: 2
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
+        slidesToShow: 4
     };
 
     return (
-        <CarouselContainer>
+        <CarouselContainer fullWidth={fullWidth}>
             <Slider
                 {...settings}
                 {...rest}
@@ -79,7 +58,8 @@ const Carousel = ({ children, ...rest }) => {
 };
 
 Carousel.propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    fullWidth: PropTypes.bool
 };
 
 export default Carousel;
