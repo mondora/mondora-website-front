@@ -166,7 +166,7 @@ const WorkWithUs = () => {
                 </MaxWidthContainer>
             </BackgroundStripe>
 
-            <Carousel slidesToShow={3} slidesToScroll={3} fillWidth={true}>
+            <Carousel slidesToShow={3} slidesToScroll={3} fullWidth={true} arrows={false}>
                 {allInstaNode.edges.map(instagram => (
                     <FullWidthImage
                         key={instagram.node.id}
