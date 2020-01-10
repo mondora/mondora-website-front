@@ -9,7 +9,7 @@
         "feather-icons": "^4.25.0",
         "gatsby": "2.18.17",
         "gatsby-image": "^2.2.34",
-        "gatsby-plugin-sharp": "^2.3.10",
+        "gatsby-plugin-sharp": "^2.3.13",
         "gatsby-source-filesystem": "^2.1.43",
         "gatsby-source-instagram": "^0.6.1",
         "gatsby-source-rss-feed": "^1.1.1",
