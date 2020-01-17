@@ -7,7 +7,7 @@
         "@rehooks/window-size": "^1.0.2",
         "color": "^3.1.2",
         "feather-icons": "^4.25.0",
-        "gatsby": "2.18.17",
+        "gatsby": "2.18.23",
         "gatsby-image": "^2.2.34",
         "gatsby-plugin-sharp": "^2.3.10",
         "gatsby-source-filesystem": "^2.1.43",
