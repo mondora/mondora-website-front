@@ -29,7 +29,7 @@ const lightTheme = "light";
 const darkTheme = "dark";
 
 BackgroundStripe.propTypes = {
-    theme: PropTypes.oneOf(lightTheme, darkTheme)
+    theme: PropTypes.oneOf([lightTheme, darkTheme])
 };
 
 export default BackgroundStripe;
