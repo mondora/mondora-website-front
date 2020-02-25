@@ -32,11 +32,9 @@ const Benefit = () => {
                 </Section.DividerContainer>
                 <Section.RightContainer>
                     <Box my={48} backgroundColor="white">
-                        <Title>Benefit projects</Title>
+                        <Title>{"Benefit projects"}</Title>
                         <Subtitle>
-                            We are a team of open-minded and kind people who
-                            always offer each other help to overcome obstacles
-                            and create cutting edge solutions to problems.
+                            {"We are a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."}
                         </Subtitle>
                     </Box>
                 </Section.RightContainer>

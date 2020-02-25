@@ -27,11 +27,9 @@ const ContactBody = styled.div`
 
 const KeepInTouch = () => (
     <>
-        <Title>Keep in touch</Title>
+        <Title>{"Keep in touch"}</Title>
         <Subtitle>
-            Whether you are interested in working with us on a custom software
-            solution for your business, or are just curious about the :m world,
-            we would love to get in touch!
+            {"Whether you are interested in working with us on a custom software solution for your business, or are just curious about the :m world, we would love to get in touch!"}
         </Subtitle>
 
         <Flex justifyContent="center">
@@ -42,8 +40,8 @@ const KeepInTouch = () => (
                 alignItems="center"
             >
                 <ContactIcon src={EmailIcon} />
-                <ContactName>Email:</ContactName>
-                <ContactBody>info@mondora.com</ContactBody>
+                <ContactName>{"Email:"}</ContactName>
+                <ContactBody>{"info@mondora.com"}</ContactBody>
             </Flex>
             <Flex
                 width={[1 / 2, 1 / 3]}
@@ -52,8 +50,8 @@ const KeepInTouch = () => (
                 alignItems="center"
             >
                 <ContactIcon src={PhoneIcon} />
-                <ContactName>Phone:</ContactName>
-                <ContactBody>+39 0342 1856 456</ContactBody>
+                <ContactName>{"Phone:"}</ContactName>
+                <ContactBody>{"+39 0342 1856 456"}</ContactBody>
             </Flex>
             <Flex
                 width={[1 / 2, 1 / 3]}
@@ -62,8 +60,8 @@ const KeepInTouch = () => (
                 alignItems="center"
             >
                 <ContactIcon src={MobileIcon} />
-                <ContactName>Mobile:</ContactName>
-                <ContactBody>+39 345 9960 097</ContactBody>
+                <ContactName>{"Mobile:"}</ContactName>
+                <ContactBody>{"+39 345 9960 097"}</ContactBody>
             </Flex>
         </Flex>
     </>

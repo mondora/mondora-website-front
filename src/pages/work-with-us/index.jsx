@@ -125,15 +125,9 @@ const WorkWithUs = () => {
                         <Section.LeftContainer>
                             <Title>{"Meet the team"}</Title>
                             <Subtitle>
-                                Etiam gravida nibh erat, nec congue neque
-                                ultrices imperdiet. Etiam molestie augue sed
-                                risus aliquet, ut rhoncus purus fermentum.
-                                Aliquam ac tortor ligula. Nulla quis orci
-                                pulvinar. Lorem ipsum dolor sit amet,
-                                consectetur adipiscing elit. Maecenas vulputate
-                                quam pharetra nunc molestie interdum. Sed nec
-                                lorem scelerisque, fermentum lacus a, congue
-                                lacus.
+                                {
+                                    "Etiam gravida nibh erat, nec congue neque ultrices imperdiet. Etiam molestie augue sed risus aliquet, ut rhoncus purus fermentum. Aliquam ac tortor ligula. Nulla quis orci pulvinar. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate quam pharetra nunc molestie interdum. Sed nec lorem scelerisque, fermentum lacus a, congue lacus."
+                                }
                             </Subtitle>
                         </Section.LeftContainer>
 
@@ -156,9 +150,9 @@ const WorkWithUs = () => {
                 <MaxWidthContainer justifyContent="center">
                     <Title>{"Mondora Srl"}</Title>
                     <HandbookDescription>
-                        We are a software development company working with
-                        selected clients who subscribe to our unique approach on
-                        agile, cloud development and cloud governance.
+                        {
+                            "We are a software development company working with selected clients who subscribe to our unique approach on agile, cloud development and cloud governance."
+                        }
                     </HandbookDescription>
                     <SuperA>
                         <SquareButton>{"Our Handbook"}</SquareButton>
@@ -166,7 +160,12 @@ const WorkWithUs = () => {
                 </MaxWidthContainer>
             </BackgroundStripe>
 
-            <Carousel slidesToShow={3} slidesToScroll={3} fullWidth={true} arrows={false}>
+            <Carousel
+                slidesToShow={3}
+                slidesToScroll={3}
+                fullWidth={true}
+                arrows={false}
+            >
                 {allInstaNode.edges.map(instagram => (
                     <FullWidthImage
                         key={instagram.node.id}
@@ -210,10 +209,9 @@ const WorkWithUs = () => {
                     <FormModule>
                         {/* TODO: insert contact module */}
                         <div>
-                            Vivamus rutrum turpis sed turpis malesuada
-                            facilisis. Aliquam laoreet rhoncus est, ac
-                            vestibulum nunc mollis sed. Quisque dolor risus,
-                            vehicula non tempus in, venenatis fermentum enim.
+                            {
+                                "Vivamus rutrum turpis sed turpis malesuada facilisis. Aliquam laoreet rhoncus est, ac vestibulum nunc mollis sed. Quisque dolor risus, vehicula non tempus in, venenatis fermentum enim."
+                            }
                         </div>
 
                         <SquareButton>{"Send"}</SquareButton>

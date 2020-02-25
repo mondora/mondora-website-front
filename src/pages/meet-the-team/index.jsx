@@ -81,10 +81,9 @@ const MeetTheTeam = () => (
                     <Section.LeftContainer>
                         <Title>{"We are :mondora"}</Title>
                         <Subtitle>
-                            Hello! Here you can learn a little about each one of
-                            us and how we join together to make the amazing :m
-                            team. We have divided our profiles by geographical
-                            area to help with navigation… nice to meet you!
+                            {
+                                "Hello! Here you can learn a little about each one of us and how we join together to make the amazing :m team. We have divided our profiles by geographical area to help with navigation… nice to meet you!"
+                            }
                         </Subtitle>
 
                         <Subtitle>

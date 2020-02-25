@@ -28,15 +28,10 @@ const Header = () => {
             <MaxWidthContainer>
                 <Section header={true}>
                     <Section.LeftContainer>
-                        <Title>What we can do for you</Title>
+                        <Title>{"What we can do for you"}</Title>
 
                         <Subtitle>
-                            Our aim is to create benefit for all stakeholders by
-                            designing and building software solutions that
-                            maximise positive impact. Together with our
-                            customers and suppliers, we support humans and
-                            nature with projects that benefit the community and
-                            land.
+                            {"Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."}
                         </Subtitle>
                     </Section.LeftContainer>
                     <Section.DividerContainer>

@@ -14,13 +14,15 @@ const Header = () => (
             <Section header={true}>
                 <Section.LeftContainer>
                     <Title>
-                        We Design and Build Software that generates Positive
-                        Impact
+                        {
+                            "We Design and Build Software that generates Positive Impact"
+                        }
                     </Title>
 
                     <Subtitle>
-                        Mondora is a software and advisory company specialising
-                        in custom cloud solutions for all kinds of businesses.
+                        {
+                            "Mondora is a software and advisory company specialising in custom cloud solutions for all kinds of businesses."
+                        }
                     </Subtitle>
                 </Section.LeftContainer>
 

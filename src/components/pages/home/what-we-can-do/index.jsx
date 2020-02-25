@@ -30,50 +30,47 @@ const WhatWeCanDo = () => {
                 <Image fixed={bCorpImage.childImageSharp.fixed} />
             </MaxWidthContainer>
             <MaxWidthContainer justifyContent="center">
-                <Title>What we can do for you</Title>
+                <Title>{"What we can do for you"}</Title>
             </MaxWidthContainer>
 
             <MaxWidthContainer>
                 <Subtitle>
-                    Our aim is to create benefit for all stakeholders through
-                    software solutions designed for positive impact. Together
-                    with our customers and suppliers, we support humans and
-                    nature with projects that benefit the community and land.
+                    {
+                        "Our aim is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
+                    }
                 </Subtitle>
             </MaxWidthContainer>
 
             <MaxWidthContainer my={32}>
                 <Box width={[1, 1, 1 / 3]}>
-                    <Title>Failure party</Title>
+                    <Title>{"Failure party"}</Title>
                     <Subtitle>
-                        We are a team of explorers who are allowed to have
-                        failure parties when we try to learn something new and
-                        mess up.
+                        {
+                            "We are a team of explorers who are allowed to have failure parties when we try to learn something new and mess up."
+                        }
                     </Subtitle>
                 </Box>
 
                 <Box width={[1, 1, 1 / 3]} px={[0, 0, 24]}>
-                    <Title>Passions</Title>
+                    <Title>{"Passions"}</Title>
                     <Subtitle>
-                        This mix of qualities and passions allows us to push
-                        boundaries and keep learning and innovating. So if you
-                        have a challenging project for us… bring it on!
+                        {
+                            "This mix of qualities and passions allows us to push boundaries and keep learning and innovating. So if you have a challenging project for us… bring it on!"
+                        }
                     </Subtitle>
                 </Box>
 
                 <Box width={[1, 1, 1 / 3]}>
-                    <Title>Experimenting</Title>
+                    <Title>{"Experimenting"}</Title>
                     <Subtitle>
-                        Right now we are experimenting with, and would like to
-                        work more on: machine learning, artificial intelligence,
-                        augmented reality, blockchain...and more
+                        {"Right now we are experimenting with, and would like to work more on: machine learning, artificial intelligence, augmented reality, blockchain...and more"}
                     </Subtitle>
                 </Box>
             </MaxWidthContainer>
 
             <MaxWidthContainer justifyContent="center">
                 <Link to="/about">
-                    <SquareButton>Services</SquareButton>
+                    <SquareButton>{"Services"}</SquareButton>
                 </Link>
             </MaxWidthContainer>
         </BackgroundStripe>

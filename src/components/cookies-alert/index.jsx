@@ -32,11 +32,9 @@ const CookiesAlert = ({ show, onHide }) => (
         <Flex margin={1} flexDirection="column">
             <Flex margin={2}>
                 <Subtitle>
-                    Questo sito fa uso di cookie per migliorare l’esperienza di
-                    navigazione degli utenti e per raccogliere informazioni
-                    sull’utilizzo del sito stesso. Proseguendo nella navigazione
-                    si accetta l’uso dei cookie; in caso contrario è possibile
-                    abbandonare il sito.
+                    {
+                        "Questo sito fa uso di cookie per migliorare l’esperienza di navigazione degli utenti e per raccogliere informazioni sull’utilizzo del sito stesso. Proseguendo nella navigazione si accetta l’uso dei cookie; in caso contrario è possibile abbandonare il sito."
+                    }
                 </Subtitle>
             </Flex>
             <Flex margin={2} justifyContent="flex-end">

@@ -59,7 +59,7 @@ const Blog = () => {
     return (
         <BackgroundStripe theme="light">
             <MaxWidthContainer justifyContent="center">
-                <Title>From our blog</Title>
+                <Title>{"From our blog"}</Title>
             </MaxWidthContainer>
 
             <Carousel {...settings}>
