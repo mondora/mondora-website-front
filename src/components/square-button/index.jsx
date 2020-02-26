@@ -5,9 +5,10 @@ const SquareButton = styled.button`
     background-color: var(--primary);
     text-align: center;
     text-decoration: none;
+    width: fit-content;
     padding: 8px 16px;
     font-size: 16px;
-    color: var(--black);
+    color: var(--text-dark-black);
     cursor: pointer;
     transition: all 0.5s ease;
    
