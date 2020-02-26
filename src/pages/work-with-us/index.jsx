@@ -43,41 +43,35 @@ const reasons = [
     { empty: true },
     {
         number: "01",
-        title: "Flat organization",
+        title: "Self managed work",
         description:
-            "Aliquam venenatis at risus ac auctor. Maecenas at magna mattis ante consequat ultrices a eu tortor. "
+            "you will be working with a team and organising work together."
     },
     {
         number: "02",
-        title: "Forget old technologies",
+        title: "Remote work",
         description:
-            "Integer sit amet est ac tellus posuere maximus. Suspendisse at metus vel mi congue rhoncus a mole."
+            "The possibility to work remotely wherever you want (from home, from the sea, from an alpin refuge…), to make you happier and lower your stress level."
     },
     {
         number: "03",
-        title: "Self-managed work",
+        title: "Continuous learning",
         description:
-            "Vivamus sit amet arcu quis arcu ullamcorper sagittis. In et sagittis elit. Morbi iaculis ante in erat tempus."
+            "Keep improving your skillset by collaborating with different peers coming from various backgrounds and by following specific training courses."
     },
     {
         number: "04",
-        title: "Unlimited holidays",
+        title: "Bring your impact",
         description:
-            "Aenean eu mi eget neque faucibus congue et in lectus. Suspendisse potenti. Etiam nec dolor vitae purus pellentesque elementum id a velit. "
+            "Bring you passions inside mondora so that we can work together toward creating positive impact!"
     },
     { empty: true },
     { empty: true },
     {
         number: "05",
-        title: "Remote work",
+        title: "Try out new technologies",
         description:
-            "Suspendisse potenti. Etiam nec dolor vitae purus pellentesque elementum id a velit."
-    },
-    {
-        number: "06",
-        title: "Laboratories and events",
-        description:
-            "Suspendisse potenti. Etiam nec dolor vitae purus pellentesque elementum id a velit. "
+            "Choose the best tools to acomplish your goals and share what you find interesting with your peers through an article on the blog or a 4to5."
     }
 ];
 
@@ -115,10 +109,15 @@ const WorkWithUs = () => {
                 <BackgroundStripe>
                     <Section header={true}>
                         <Section.LeftContainer>
-                            <Title>{"Meet the team"}</Title>
+                            <Title>{"Join the :m team!"}</Title>
                             <Subtitle>
                                 {
-                                    "Etiam gravida nibh erat, nec congue neque ultrices imperdiet. Etiam molestie augue sed risus aliquet, ut rhoncus purus fermentum. Aliquam ac tortor ligula. Nulla quis orci pulvinar. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate quam pharetra nunc molestie interdum. Sed nec lorem scelerisque, fermentum lacus a, congue lacus."
+                                    "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place through innovation, technology and software solutions."
+                                }
+                                <br />
+                                <br />
+                                {
+                                    "Do you want to change the world? This might just be the right place for you! Read on to learn more…"
                                 }
                             </Subtitle>
                         </Section.LeftContainer>
@@ -129,9 +128,9 @@ const WorkWithUs = () => {
 
                         <Section.RightContainer>
                             <JumboTitle>
-                                {"Our"}
+                                {"Work"}
                                 <br />
-                                {"Team!"}
+                                {"with us!"}
                             </JumboTitle>
                         </Section.RightContainer>
                     </Section>
@@ -140,14 +139,14 @@ const WorkWithUs = () => {
 
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
-                    <Title>{"Mondora Srl"}</Title>
+                    <Title>{"Mondora"}</Title>
                     <HandbookDescription>
                         {
-                            "We are a software development company working with selected clients who subscribe to our unique approach on agile, cloud development and cloud governance."
+                            "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place throug software solutions."
                         }
                     </HandbookDescription>
-                    <SuperA>
-                        <SquareButton>{"Our Handbook"}</SquareButton>
+                    <SuperA href={"https://github.com/mondora/handbook"}>
+                        <SquareButton>{"OUR HANDBOOK"}</SquareButton>
                     </SuperA>
                 </MaxWidthContainer>
             </BackgroundStripe>
