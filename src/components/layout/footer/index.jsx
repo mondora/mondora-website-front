@@ -143,7 +143,6 @@ const Footer = () => {
                         <Subtitle light={true}>{"SIDE PROJECTS"}</Subtitle>
                         <ExternalLink href={"http://www.hirebitto.com/"}>{"Hirebitto"}</ExternalLink>
                         <ExternalLink href={"https://cycle2work.io/"}>{"Cycle2Work"}</ExternalLink>
-                        <ExternalLink href={""}>{"Minicoder"}</ExternalLink>
                     </Flex>
                 </Flex>
             </MaxWidthContainer>
