@@ -4,31 +4,29 @@ import { useStaticQuery, graphql } from "gatsby";
 
 const voices = [
     {
-        key: "our-methodologies",
-        title: "Our Methodologies",
+        key: "failure-party",
+        title: "Failure party",
         description:
-            "We have been working with Agile Methodologies and Scrum since 2002 and many of us have Scrum Master and Product Owner certifications as well as being expert Scrum Developers - which means we are able to navigate complex projects and reach amazing results by collaborating with you!"
+            "We are a team of explorers who are allowed to have Failure Parties when we try to learn something new and mess up."
     },
     {
-        key: "innovative-technologies",
-        title: "Innovative technologies",
+        key: "passions",
+        title: "Passions",
         description:
-            "As a team, we have been developing cloud applications since 2007 and have gained valuable experience in these past years of work. We are strongly focused on innovation and emerging technologies and are always eager to test new things… and celebrate with a party when we fail ;)"
+            "This mix of qualities and passions allows us to push boundaries and keep learning and innovating. So if you have a challenging project for us… bring it on!"
     },
     {
-        key: "structure",
-        title: "Structure",
+        key: "experimenting",
+        title: "Experimenting",
         description:
-            "Keeping in mind that we are a self-managed, flat structured B corporation (that’s a lot of stuff) we cannot develop solutions that don’t make an impact, so benefit by design is a must-have in all our applications… as well as opting for open source as often as we can."
+            "Right now we are experimenting with, and would like to work more on: Machine Learning, Artificial Intelligence, Augmented Reality, Blockchain Technology...and more"
     }
 ];
 
-const miniTitle = "WHO WE ARE";
-const title = "Mondora, a really diverse group";
+const miniTitle = "Where are we dreaming of going together";
+const title = "We love innovation, new technologies and new challenges";
 const subtitle =
-    "We are a passionate and dedicated team of over 60 full-stack software developers, UX designers, system administrators… and a few farmers!";
-
-
+    "We are  a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems. ";
 const WhereAreWeDreamingOfGoingTogether = () => {
     const { workingImage } = useStaticQuery(graphql`
         query {
