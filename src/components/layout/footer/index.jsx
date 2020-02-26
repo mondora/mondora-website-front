@@ -24,6 +24,11 @@ const SectionLinks = styled(Link)`
     text-decoration: none;
     color: var(--white);
 `;
+const ExternalLink = styled.a`
+    font-size: 11pt;
+    text-decoration: none;
+    color: var(--white);
+`;
 
 const Socials = [
     {
@@ -127,21 +132,21 @@ const Footer = () => {
                         <SectionLinks to={"/work-with-us"}>
                             {"Work with us"}
                         </SectionLinks>
-                        <SectionLinks>{"Mondora handbook"}</SectionLinks>
+                        <ExternalLink href={"https://github.com/mondora/handbook"}>{"Mondora handbook"}</ExternalLink>
                     </Flex>
 
                     <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
                         <Subtitle light={true}>{"IMPACT"}</Subtitle>
                         <SectionLinks to={"/bcorp"}>{"Impact"}</SectionLinks>
-                        <SectionLinks>{"Blog BCalm BCorp"}</SectionLinks>
-                        <SectionLinks>{"Blog tecnico"}</SectionLinks>
+                        <ExternalLink href={"https://bcalmbcorp.com/"}>{"Blog BCalm BCorp"}</ExternalLink>
+                        <ExternalLink href={"https://medium.com/keep-calm-and-code-on"}>{"Blog tecnico"}</ExternalLink>
                     </Flex>
 
                     <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
                         <Subtitle light={true}>{"SIDE PROJECTS"}</Subtitle>
-                        <SectionLinks>{"Hirebitto"}</SectionLinks>
-                        <SectionLinks>{"Cycle2Work"}</SectionLinks>
-                        <SectionLinks>{"Minicoder"}</SectionLinks>
+                        <ExternalLink href={"http://www.hirebitto.com/"}>{"Hirebitto"}</ExternalLink>
+                        <ExternalLink href={"https://cycle2work.io/"}>{"Cycle2Work"}</ExternalLink>
+                        <ExternalLink href={""}>{"Minicoder"}</ExternalLink>
                     </Flex>
                 </Flex>
             </MaxWidthContainer>
