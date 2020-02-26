@@ -119,9 +119,6 @@ const Footer = () => {
                     <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
                         <Subtitle light={true}>{"ABOUT"}</Subtitle>
                         <SectionLinks to={"/about"}>{"About us"}</SectionLinks>
-                        <SectionLinks to={"/meet-the-team"}>
-                            {"Meet the team"}
-                        </SectionLinks>
                         <SectionLinks to={"/contacts"}>
                             {"Contacts"}
                         </SectionLinks>
