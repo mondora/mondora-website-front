@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql, Link } from "gatsby";
 
 import Image from "gatsby-image";
 import {
@@ -35,7 +35,7 @@ const links = [
 const blog = {
     to: "https://bcalmbcorp.com/",
     text: "BLOG"
-}
+};
 
 const MobileMenu = () => {
     const { miniLogoImage, blogLogoImage } = useStaticQuery(graphql`
@@ -80,12 +80,16 @@ const MobileMenu = () => {
                         href={blog.to}
                     >
                         {blog.text}
-                        <InlineLogo fixed={blogLogoImage.childImageSharp.fixed} />
+                        <InlineLogo
+                            fixed={blogLogoImage.childImageSharp.fixed}
+                        />
                     </BlogLink>
                 </MenuItem>
             </AnimatedMenu>
             <ToolbarGrid>
-                <Image fixed={miniLogoImage.childImageSharp.fixed} />
+                <Link to={"/"}>
+                    <Image fixed={miniLogoImage.childImageSharp.fixed} />
+                </Link>
 
                 <div onClick={handleToggle}>
                     <FeatherIcon
