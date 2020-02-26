@@ -39,14 +39,6 @@ const ReasonNumber = styled.h1`
     }
 `;
 
-const FormModule = styled.div`
-    height: fit-content;
-    padding: 40px 240px;
-    margin-top: 80px;
-    text-align: center;
-    background-color: var(--white);
-`;
-
 const reasons = [
     { empty: true },
     {
@@ -199,23 +191,6 @@ const WorkWithUs = () => {
                             </Flex>
                         ))}
                     </Flex>
-                </MaxWidthContainer>
-            </BackgroundStripe>
-            <Section position={"below"} />
-
-            <BackgroundStripe theme="light">
-                <MaxWidthContainer>
-                    <Title>{"Apply"}</Title>
-                    <FormModule>
-                        {/* TODO: insert contact module */}
-                        <div>
-                            {
-                                "Vivamus rutrum turpis sed turpis malesuada facilisis. Aliquam laoreet rhoncus est, ac vestibulum nunc mollis sed. Quisque dolor risus, vehicula non tempus in, venenatis fermentum enim."
-                            }
-                        </div>
-
-                        <SquareButton>{"Send"}</SquareButton>
-                    </FormModule>
                 </MaxWidthContainer>
             </BackgroundStripe>
         </Layout>
