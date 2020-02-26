@@ -7,7 +7,9 @@ import {
     AnimatedMenu,
     MenuItem,
     ToolbarGrid,
-    Spacer
+    Spacer,
+    BlogLink,
+    InlineLogo
 } from "./styled";
 import FeatherIcon from "../../../feather-icon";
 
@@ -31,19 +33,27 @@ const links = [
     {
         to: "/contacts",
         text: "CONTACTS"
-    },
-    {
-        to: "https://bcalmbcorp.com/",
-        text: "Blog :m"
     }
 ];
 
+const blog = {
+    to: "https://bcalmbcorp.com/",
+    text: "BLOG"
+}
+
 const MobileMenu = () => {
-    const { miniLogoImage } = useStaticQuery(graphql`
+    const { miniLogoImage, blogLogoImage } = useStaticQuery(graphql`
         query {
             miniLogoImage: file(relativePath: { eq: "logo/small-light.png" }) {
                 childImageSharp {
                     fixed(height: 32) {
+                        ...GatsbyImageSharpFixed
+                    }
+                }
+            }
+            blogLogoImage: file(relativePath: { eq: "logo/small-light.png" }) {
+                childImageSharp {
+                    fixed(height: 16) {
                         ...GatsbyImageSharpFixed
                     }
                 }
@@ -61,12 +71,22 @@ const MobileMenu = () => {
         <>
             <AnimatedMenu open={open}>
                 {links.map(link => (
-                    <MenuItem key={link.to}>
+                    <MenuItem background={"dark"} key={link.to}>
                         <MenuLink to={link.to} activeClassName={"active"}>
                             {link.text}
                         </MenuLink>
                     </MenuItem>
                 ))}
+                <MenuItem background={"light"}>
+                    <BlogLink
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={blog.to}
+                    >
+                        {blog.text}
+                        <InlineLogo fixed={blogLogoImage.childImageSharp.fixed} />
+                    </BlogLink>
+                </MenuItem>
             </AnimatedMenu>
             <ToolbarGrid>
                 <Image fixed={miniLogoImage.childImageSharp.fixed} />
