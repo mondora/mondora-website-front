@@ -25,10 +25,11 @@ const QuestionWrapper = styled.div`
 const Question = styled.div`
     font-size: 16px;
     padding-right: 8px;
+    color: var(--text-dark-black);
 `;
 const Answer = styled.div`
     box-sizing: border-box;
-    color: var(--variant-black);
+    color: var(--text-gray);
     margin-bottom: 16px;
     max-height: ${props => (props.open ? "100vh" : 0)};
     transition: all ease 0.5s;
