@@ -2,13 +2,12 @@ import React from "react";
 
 import { Box } from "reflexbox";
 
-import { Link, useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql } from "gatsby";
 import Image from "gatsby-image";
 
 import Title from "../../../title";
 import Subtitle from "../../../subtitle";
 import MaxWidthContainer from "../../../max-width-container";
-import SquareButton from "../../../square-button";
 import BackgroundStripe from "../../../background-stripe";
 
 const WhatWeCanDo = () => {
@@ -63,15 +62,11 @@ const WhatWeCanDo = () => {
                 <Box width={[1, 1, 1 / 3]}>
                     <Title>{"Experimenting"}</Title>
                     <Subtitle>
-                        {"Right now we are experimenting with, and would like to work more on: machine learning, artificial intelligence, augmented reality, blockchain...and more"}
+                        {
+                            "Right now we are experimenting with, and would like to work more on: machine learning, artificial intelligence, augmented reality, blockchain...and more"
+                        }
                     </Subtitle>
                 </Box>
-            </MaxWidthContainer>
-
-            <MaxWidthContainer justifyContent="center">
-                <Link to="/about">
-                    <SquareButton>{"Services"}</SquareButton>
-                </Link>
             </MaxWidthContainer>
         </BackgroundStripe>
     );
