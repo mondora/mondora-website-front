@@ -38,11 +38,11 @@ const projects = [
         graphic: HireBittoGraphic
     },
     {
-        title: "Farming",
-        caption: " ",
-        text: "",
-        link: "http://www.hirebitto.com/",
-        button: "Visit Website",
+        title: "Hire a Farmer",
+        caption: "Cultivating the soil",
+        text: "mondora has a policy whereby for every 20 employees, the company hires a farmer to work the land and grow organic produce. There is a clause in all work contracts from 2017 onwards that states the joint responsibility of the company and the employee to ensure that this policy is upheld. We hire farmers because we believe their work is extremely important: without farming we would not be able to nourish ourselves, live a healthy life and get our work done!",
+        link: "https://www.youtube.com/watch?v=joSs4zWNNpw",
+        button: "Watch video",
         graphic: FarmingGraphic
     }
 ];
