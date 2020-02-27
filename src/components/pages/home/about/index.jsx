@@ -37,9 +37,13 @@ const About = () => {
                     <Section.RightContainer>
                         <Box my={48}>
                             <Title light={true}>{"About Mondora"}</Title>
-                            <Subtitle light={true}>
-                                {"We are a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."}
-                            </Subtitle>
+                            <Box mt={24}>
+                                <Subtitle light={true}>
+                                    {
+                                        "We are a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
+                                    }
+                                </Subtitle>
+                            </Box>
                         </Box>
                     </Section.RightContainer>
                 </Section>
