@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import FeatherIcon from "../feather-icon";
 
 export const SocialName = styled.div`
@@ -28,17 +28,30 @@ const SocialContainer = styled.a`
     border: 2px solid;
     border-radius: 40px;
 
-    color: var(--black);
-    border-color: var(--white);
-    background: var(--white);
-
-    &:hover {
-        color: var(--white);
-        border-color: var(--dark);
-        background: var(--dark);
-    }
-
     transition: all ease 0.4s;
+
+    ${props =>
+        props.theme === lightTheme
+            ? css`
+                  color: var(--black);
+                  background: var(--white);
+                  border-color: var(--white);
+                  &:hover {
+                      color: var(--white);
+                      border-color: var(--dark);
+                      background: var(--dark);
+                  }
+              `
+            : css`
+                  color: var(--white);
+                  background: var(--background-dark-gray);
+                  border-color: var(--background-dark-gray);
+                  &:hover {
+                      color: var(--background-dark-gray);
+                      border-color: var(--background-dark-gray);
+                      background: var(--white);
+                  }
+              `}
 `;
 
 const SocialText = styled.span`
@@ -52,14 +65,18 @@ export const SocialLink = props => (
     </SocialContainer>
 );
 
+const lightTheme = "light";
+const darkTheme = "dark";
+
 SocialLink.propTypes = {
     icon: PropTypes.string,
     text: PropTypes.string,
-    href: PropTypes.string
+    href: PropTypes.string,
+    theme: PropTypes.string
 };
 
 SocialLink.defaultProps = {
-    type: "light"
+    theme: lightTheme
 };
 
 export default SocialLink;
