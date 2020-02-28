@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Flex } from "reflexbox";
-
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
 import Title from "../../components/title";
@@ -9,10 +7,10 @@ import Subtitle from "../../components/subtitle";
 import JumboTitle from "../../components/jumbo-title";
 import BackgroundStripe from "../../components/background-stripe";
 import FaqElement from "../../components/faq-element";
-import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 import Divider from "../../components/divider";
 import BenefitCarousel from "../../components/benefit-carousel";
+import ImpactReport from "../../components/impact-report";
 
 import HireBittoGraphic from "../../../static/images/hirebitto.png";
 import Cycle2WorkGraphic from "../../../static/images/c2w.png";
@@ -40,7 +38,8 @@ const projects = [
     {
         title: "Hire a Farmer",
         caption: "Cultivating the soil",
-        text: "mondora has a policy whereby for every 20 employees, the company hires a farmer to work the land and grow organic produce. There is a clause in all work contracts from 2017 onwards that states the joint responsibility of the company and the employee to ensure that this policy is upheld. We hire farmers because we believe their work is extremely important: without farming we would not be able to nourish ourselves, live a healthy life and get our work done!",
+        text:
+            "mondora has a policy whereby for every 20 employees, the company hires a farmer to work the land and grow organic produce. There is a clause in all work contracts from 2017 onwards that states the joint responsibility of the company and the employee to ensure that this policy is upheld. We hire farmers because we believe their work is extremely important: without farming we would not be able to nourish ourselves, live a healthy life and get our work done!",
         link: "https://www.youtube.com/watch?v=joSs4zWNNpw",
         button: "Watch video",
         graphic: FarmingGraphic
@@ -180,9 +179,9 @@ const BCorp = () => (
                         </Subtitle>
                     </Section.LeftContainer>
 
-            <Section.DividerContainer>
-                <Divider />
-            </Section.DividerContainer>
+                    <Section.DividerContainer>
+                        <Divider />
+                    </Section.DividerContainer>
 
                     <Section.RightContainer>
                         <JumboTitle>
@@ -209,17 +208,11 @@ const BCorp = () => (
         <BackgroundStripe theme="light">
             <MaxWidthContainer justifyContent="space-around">
                 {reports.map(report => (
-                    <Flex
-                        flexDirection="column"
-                        justifyContent="center"
-                        alignItems="center"
+                    <ImpactReport
                         key={report.year}
-                    >
-                        <Title>{report.title}</Title>
-                        <SquareButton to={report.to}>
-                            {report.button}
-                        </SquareButton>
-                    </Flex>
+                        width={[1, 3 / 4, 3 / 4, 1 / 3]}
+                        report={report}
+                    />
                 ))}
             </MaxWidthContainer>
         </BackgroundStripe>
