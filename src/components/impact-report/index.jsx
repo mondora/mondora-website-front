@@ -9,7 +9,7 @@ import { Flex } from "reflexbox";
 import ParagraphTitle from "../paragraph-title";
 import SquareButton from "../square-button";
 
-import ReportHeart from "../assets/heart.svg";
+import ReportHeart from "./assets/heart.svg";
 
 const ReportDescription = styled.div`
     margin: 16px;
