@@ -46,7 +46,7 @@ export const ImpactReport = ({ width, report }) => (
             <ReportDescription>
                 <ParagraphTitle>{report.title}</ParagraphTitle>
                 <Link to={report.to}>
-                    <SquareButton>{report.button}</SquareButton>
+                    <SquareButton theme={"light"}>{report.button}</SquareButton>
                 </Link>
             </ReportDescription>
         </Report>
