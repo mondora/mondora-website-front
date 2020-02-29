@@ -4,7 +4,7 @@ import { graphql, useStaticQuery } from "gatsby";
 
 import styled from "styled-components";
 
-import { Flex } from "reflexbox";
+import { Flex, Box } from "reflexbox";
 
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
@@ -38,6 +38,39 @@ const ReasonNumber = styled.h1`
         content: "°  ";
     }
 `;
+
+const carouselSettings = {
+    arrows: true,
+    dots: true,
+    slidesToScroll: 1,
+    responsive: [
+        {
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 4
+            }
+        },
+        {
+            breakpoint: 960,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                dots: false
+            }
+        }
+    ]
+};
 
 const reasons = [
     { empty: true },
@@ -151,19 +184,20 @@ const WorkWithUs = () => {
                 </MaxWidthContainer>
             </BackgroundStripe>
 
-            <Carousel
-                slidesToShow={3}
-                slidesToScroll={3}
-                fullWidth={true}
-                arrows={false}
-            >
-                {allInstaNode.edges.map(instagram => (
-                    <FullWidthImage
-                        key={instagram.node.id}
-                        fluid={instagram.node.localFile.childImageSharp.fluid}
-                    />
-                ))}
-            </Carousel>
+            <Box mb={5}>
+                <Carousel {...carouselSettings}>
+                    {allInstaNode.edges.map(instagram => (
+                        <Box p={3} key={instagram.node.id}>
+                            <FullWidthImage
+                                fluid={
+                                    instagram.node.localFile.childImageSharp
+                                        .fluid
+                                }
+                            />
+                        </Box>
+                    ))}
+                </Carousel>
+            </Box>
 
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
