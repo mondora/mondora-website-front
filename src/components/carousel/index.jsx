@@ -18,6 +18,7 @@ const CarouselContainer = styled.div`
 `;
 
 const ArrowContainer = styled.div`
+    width: auto;
     color: var(--text-dark-black);
     transition: 0.3s ease;
     &:hover {
@@ -25,6 +26,20 @@ const ArrowContainer = styled.div`
     }
     &::before {
         content: "";
+    }
+`;
+
+const CustomSlider = styled(Slider)`
+    display: block;
+    .slick-dots li.slick-active button:before {
+        color: var(--primary);
+        font-size: 16px;
+        opacity: 1;
+    }
+    .slick-dots li button:before {
+        color: var(--gray);
+        font-size: 16px;
+        opacity: 1;
     }
 `;
 
@@ -37,22 +52,22 @@ const Carousel = ({ children, fullWidth, ...rest }) => {
 
     return (
         <CarouselContainer fullWidth={fullWidth}>
-            <Slider
+            <CustomSlider
                 {...settings}
                 {...rest}
                 nextArrow={
                     <ArrowContainer>
-                        <FeatherIcon size={24} name="chevron-right" />
+                        <FeatherIcon size={32} name="chevron-right" />
                     </ArrowContainer>
                 }
                 prevArrow={
                     <ArrowContainer>
-                        <FeatherIcon size={24} name="chevron-left" />
+                        <FeatherIcon size={32} name="chevron-left" />
                     </ArrowContainer>
                 }
             >
                 {children}
-            </Slider>
+            </CustomSlider>
         </CarouselContainer>
     );
 };
