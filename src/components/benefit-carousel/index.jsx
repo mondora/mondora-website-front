@@ -4,14 +4,23 @@ import PropTypes from "prop-types";
 import BenefitSlide from "../benefit-slide";
 
 import Carousel from "../carousel";
+import { Box } from "reflexbox";
+
+const settings = {
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    dots: true
+};
 
 const BenefitCarousel = ({ projects }) => {
     return (
-        <Carousel slidesToScroll={1} slidesToShow={1}>
-            {projects.map((project, i) => (
-                <BenefitSlide key={i} project={project} />
-            ))}
-        </Carousel>
+        <Box mb={48}>
+            <Carousel {...settings}>
+                {projects.map((project, i) => (
+                    <BenefitSlide key={i} project={project} />
+                ))}
+            </Carousel>
+        </Box>
     );
 };
 
