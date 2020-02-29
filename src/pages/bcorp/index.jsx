@@ -146,22 +146,22 @@ const faqs = [
 
 const reports = [
     {
-        year: "2016",
-        title: "Impact Report 2016",
-        button: "Leggi il report",
-        to: "/report2016.pdf"
-    },
-    {
         year: "2017",
         title: "Impact Report 2017",
-        button: "Leggi il report",
-        to: "/report2017.pdf"
+        button: "Read report >",
+        to: "../impact-reports/impact-report-2017.pdf"
     },
     {
         year: "2018",
         title: "Impact Report 2018",
-        button: "Leggi il report",
-        to: "/report2018.pdf"
+        button: "Read report >",
+        to: "../impact-reports/impact-report-2017.pdf"
+    },
+    {
+        year: "2019",
+        title: "Impact Report 2019",
+        button: "Read report >",
+        to: "https://app.gitbook.com/@mondora/s/relazione-di-impatto-2019/"
     }
 ];
 

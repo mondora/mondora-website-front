@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Link } from "gatsby";
-
 import styled from "styled-components";
 import { Flex } from "reflexbox";
 
@@ -45,9 +43,9 @@ export const ImpactReport = ({ width, report }) => (
 
             <ReportDescription>
                 <ParagraphTitle>{report.title}</ParagraphTitle>
-                <Link to={report.to}>
+                <a href={report.to}>
                     <SquareButton theme={"light"}>{report.button}</SquareButton>
-                </Link>
+                </a>
             </ReportDescription>
         </Report>
     </Flex>

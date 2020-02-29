@@ -72,7 +72,7 @@ SocialLink.propTypes = {
     icon: PropTypes.string,
     text: PropTypes.string,
     href: PropTypes.string,
-    theme: PropTypes.string
+    theme: PropTypes.PropTypes.oneOf([lightTheme, darkTheme])
 };
 
 SocialLink.defaultProps = {
