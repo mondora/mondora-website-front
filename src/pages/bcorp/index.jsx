@@ -195,8 +195,8 @@ const BCorp = () => (
                 </Section>
             </MaxWidthContainer>
         </BackgroundStripe>
-        
-        <Title center>{"Benefit Projects"}</Title>
+
+        <Title center={true}>{"Benefit Projects"}</Title>
         <BenefitCarousel projects={projects} />
 
         <MaxWidthContainer pb={5} justifyContent="center">

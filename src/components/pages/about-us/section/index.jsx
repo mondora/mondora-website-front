@@ -6,6 +6,7 @@ import { Flex } from "reflexbox";
 
 import Title from "../../../title";
 import Subtitle from "../../../subtitle";
+import ParagraphTitle from "../../../paragraph-title";
 import SectionComponent from "../../../section";
 import FullWidthImage from "../../../full-width-image";
 import BackgroundStripe from "../../../background-stripe";
@@ -13,6 +14,7 @@ import MaxWidthContainer from "../../../max-width-container";
 import SubtleTitle from "../../../subtle-title";
 
 export const Section = ({
+    rightImage,
     image,
     miniTitle,
     title,
@@ -33,17 +35,37 @@ export const Section = ({
         <BackgroundStripe theme={dark ? "dark" : "light"}>
             <MaxWidthContainer>
                 <SectionComponent>
-                    <SectionComponent.LeftContainer>
-                        <FullWidthImage fluid={image} />
-                    </SectionComponent.LeftContainer>
+                    {rightImage ? (
+                        <>
+                            <SectionComponent.LeftContainer>
+                                <FullWidthImage fluid={image} />
+                            </SectionComponent.LeftContainer>
+                            <SectionComponent.RightContainer>
+                                <SubtleTitle light={dark}>
+                                    {miniTitle}
+                                </SubtleTitle>
 
-                    <SectionComponent.RightContainer>
-                        <SubtleTitle light={dark}>{miniTitle}</SubtleTitle>
+                                <Title light={dark}>{title}</Title>
 
-                        <Title light={dark}>{title}</Title>
+                                <Subtitle light={dark}>{subtitle}</Subtitle>
+                            </SectionComponent.RightContainer>
+                        </>
+                    ) : (
+                        <>
+                            <SectionComponent.LeftContainer>
+                                <SubtleTitle light={dark}>
+                                    {miniTitle}
+                                </SubtleTitle>
 
-                        <Subtitle light={dark}>{subtitle}</Subtitle>
-                    </SectionComponent.RightContainer>
+                                <Title light={dark}>{title}</Title>
+
+                                <Subtitle light={dark}>{subtitle}</Subtitle>
+                            </SectionComponent.LeftContainer>
+                            <SectionComponent.RightContainer>
+                                <FullWidthImage fluid={image} />
+                            </SectionComponent.RightContainer>
+                        </>
+                    )}
                 </SectionComponent>
 
                 <FullWidthImage fluid={underlinesImage.publicURL} />
@@ -56,7 +78,7 @@ export const Section = ({
                             key={index}
                             padding={2}
                         >
-                            <Title light={dark}>{title}</Title>
+                            <ParagraphTitle light={dark}>{title}</ParagraphTitle>
                             <Subtitle light={dark}>{description}</Subtitle>
                         </Flex>
                     ))}
