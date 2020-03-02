@@ -23,13 +23,10 @@ const BenefitSlide = ({ project }) => {
             </Section.LeftContainer>
 
             <Section.RightContainer sideOnTop={"left"}>
-                <Flex
-                    flexDirection="column"
-                    justifyContent="center"
-                >
+                <Flex flexDirection="column" justifyContent="center">
                     <SubtleTitle>{project.caption}</SubtleTitle>
                     <Title>{project.title}</Title>
-                    <Subtitle>{project.text}</Subtitle>
+                    <Subtitle margin="24px 0">{project.text}</Subtitle>
                     <SquareButton>{project.button}</SquareButton>
                 </Flex>
             </Section.RightContainer>

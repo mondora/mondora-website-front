@@ -6,9 +6,9 @@ import Title from "../../../title";
 
 import Subtitle from "../../../subtitle";
 
-import EmailIcon from   "./assets/email.svg";
-import PhoneIcon from   "./assets/phone.svg";
-import MobileIcon from  "./assets/mobile.svg";
+import EmailIcon from "./assets/email.svg";
+import PhoneIcon from "./assets/phone.svg";
+import MobileIcon from "./assets/mobile.svg";
 
 import { Flex } from "reflexbox";
 
@@ -28,8 +28,10 @@ const ContactBody = styled.div`
 const KeepInTouch = () => (
     <>
         <Title>{"Keep in touch"}</Title>
-        <Subtitle>
-            {"Whether you are interested in working with us on a custom software solution for your business, or are just curious about the :m world, we would love to get in touch!"}
+        <Subtitle margin="32px 0">
+            {
+                "Whether you are interested in working with us on a custom software solution for your business, or are just curious about the :m world, we would love to get in touch!"
+            }
         </Subtitle>
 
         <Flex justifyContent="center">

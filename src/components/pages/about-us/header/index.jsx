@@ -1,7 +1,5 @@
 import React from "react";
 
-import {Box} from "reflexbox";
-
 import Divider from "../../../divider";
 import Title from "../../../title";
 import Subtitle from "../../../subtitle";
@@ -20,13 +18,11 @@ const Header = () => (
                             "We Design and Build Software that generates Positive Impact"
                         }
                     </Title>
-                    <Box pt={32}>
-                        <Subtitle>
-                            {
-                                "Mondora is a software and advisory company specialising in custom cloud solutions for all kinds of businesses."
-                            }
-                        </Subtitle>
-                    </Box>
+                    <Subtitle margin="32px 0">
+                        {
+                            "Mondora is a software and advisory company specialising in custom cloud solutions for all kinds of businesses."
+                        }
+                    </Subtitle>
                 </Section.LeftContainer>
 
                 <Section.DividerContainer>

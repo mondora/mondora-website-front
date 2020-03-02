@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Box } from "reflexbox";
-
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
 import Title from "../../components/title";
@@ -174,13 +172,11 @@ const BCorp = () => (
                 <Section header={true}>
                     <Section.LeftContainer>
                         <Title>{"Mondora impact"}</Title>
-                        <Box mt={32}>
-                            <Subtitle>
-                                {
-                                    "In mondora we all work towards a shared purpose: making the world a better place. In fact, if you want to join the team, you first have to tell us how you will contribute to changing the world. You can focus on whatever you are most passionate about: an environmental issue, the local community, giving free coding classes to kids, teaching something to your colleagues… anything that has an impact!"
-                                }
-                            </Subtitle>
-                        </Box>
+                        <Subtitle margin="32px 0">
+                            {
+                                "In mondora we all work towards a shared purpose: making the world a better place. In fact, if you want to join the team, you first have to tell us how you will contribute to changing the world. You can focus on whatever you are most passionate about: an environmental issue, the local community, giving free coding classes to kids, teaching something to your colleagues… anything that has an impact!"
+                            }
+                        </Subtitle>
                     </Section.LeftContainer>
 
                     <Section.DividerContainer>

@@ -138,7 +138,7 @@ const WorkWithUs = () => {
                     <Section header={true}>
                         <Section.LeftContainer>
                             <Title>{"Join the :m team!"}</Title>
-                            <Subtitle>
+                            <Subtitle margin="32px 0">
                                 {
                                     "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place through innovation, technology and software solutions."
                                 }
