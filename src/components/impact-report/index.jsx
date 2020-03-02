@@ -10,7 +10,7 @@ import SquareButton from "../square-button";
 import ReportHeart from "./assets/heart.svg";
 
 const ReportDescription = styled.div`
-    margin: 16px;
+    margin: 32px 8px 16px 0;
 `;
 const Report = styled(Flex)`
     position: relative;

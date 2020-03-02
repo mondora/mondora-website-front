@@ -30,7 +30,7 @@ const Question = styled.div`
 const Answer = styled.div`
     box-sizing: border-box;
     color: var(--text-gray);
-    margin-bottom: 16px;
+    margin-bottom: ${props => (props.open ? "64px" : "16px")};
     max-height: ${props => (props.open ? "100vh" : 0)};
     transition: all ease 0.5s;
     overflow: hidden;
