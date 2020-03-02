@@ -18,11 +18,11 @@ const Image = styled.img`
 const BenefitSlide = ({ project }) => {
     return (
         <Section>
-            <Section.LeftContainer>
+            <Section.LeftContainer sideOnTop={"left"}>
                 <Image src={project.graphic} />
             </Section.LeftContainer>
 
-            <Section.RightContainer>
+            <Section.RightContainer sideOnTop={"left"}>
                 <Flex
                     flexDirection="column"
                     justifyContent="center"

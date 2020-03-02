@@ -29,7 +29,7 @@ const Header = () => {
         <BackgroundStripe>
             <MaxWidthContainer>
                 <Section header={true}>
-                    <Section.LeftContainer>
+                    <Section.LeftContainer sideOnTop={"left"}>
                         <Title>{"Welcome to the :mondora world!"}</Title>
 
                         <Box  mt={32}>
@@ -40,10 +40,10 @@ const Header = () => {
                             </Subtitle>
                         </Box>
                     </Section.LeftContainer>
-                    <Section.DividerContainer>
+                    <Section.DividerContainer sideOnTop={"left"}>
                         <Divider />
                     </Section.DividerContainer>
-                    <Section.RightContainer>
+                    <Section.RightContainer sideOnTop={"left"}>
                         <FullWidthImage
                             fluid={headerImage.childImageSharp.fluid}
                         />

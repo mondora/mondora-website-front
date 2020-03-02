@@ -37,10 +37,10 @@ export const Section = ({
                 <SectionComponent>
                     {rightImage ? (
                         <>
-                            <SectionComponent.LeftContainer>
+                            <SectionComponent.LeftContainer sideOnTop={"left"}>
                                 <FullWidthImage fluid={image} />
                             </SectionComponent.LeftContainer>
-                            <SectionComponent.RightContainer>
+                            <SectionComponent.RightContainer sideOnTop={"left"}>
                                 <SubtleTitle light={dark}>
                                     {miniTitle}
                                 </SubtleTitle>

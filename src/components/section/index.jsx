@@ -15,9 +15,11 @@ const SectionContainer = styled.div`
         grid-template-columns: 1fr;
     }
 
-    ${props => props.header && css`
-        min-height: 448px;
-    `}
+    ${props =>
+        props.header &&
+        css`
+            min-height: 448px;
+        `}
 `;
 
 const Container = styled.div`
@@ -38,7 +40,8 @@ const LeftContainer = styled(Container)`
     margin: 32px 0;
 
     @media (max-width: 768px) {
-        grid-area: 1 / 1 / 2 / 2;
+        grid-area: ${props =>
+            props.sideOnTop === "left" ? "1 / 1 / 2 / 2" : "4 / 1 / 4 / 2"};
     }
 `;
 
@@ -47,10 +50,9 @@ const RightContainer = styled(Container)`
     margin: 32px 0;
 
     @media (max-width: 768px) {
-        ${props =>
-            props.middleDivider
-                ? "grid-area: 3 / 1 / 4 / 2"
-                : "grid-area: 3 / 1 / 4 / 2"}
+        margin: 0;
+        grid-area: ${props =>
+            props.sideOnTop === "left" ? "3 / 1 / 4 / 2" : "1 / 1 / 2 / 2"};
     }
 `;
 
@@ -58,10 +60,8 @@ const DividerContainer = styled.div`
     grid-area: 1 / 2 / 2 / 3;
 
     @media (max-width: 768px) {
-        ${props =>
-            props.middleDivider
-                ? "grid-area: 2 / 1 / 3 / 2"
-                : "grid-area: 3 / 1 / 4 / 2"}
+        grid-area: ${props =>
+            props.sideOnTop === "left" ? "6 / 1 / 2 / 2" : "1 / 1 / 1 / 2"};
     }
 `;
 
@@ -81,7 +81,12 @@ Section.propTypes = {
     children: PropTypes.array,
     gutter: PropTypes.number,
     margin: PropTypes.string,
-    header: PropTypes.bool
+    header: PropTypes.bool,
+    sideOnTop: PropTypes.string
+};
+
+Section.defaultProps = {
+    sideOnTop: "right"
 };
 
 Section.defaultProps = {

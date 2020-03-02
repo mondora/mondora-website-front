@@ -16,13 +16,13 @@ const Contacts = () => (
         <MaxWidthContainer>
             <BackgroundStripe>
                 <Section header={true}>
-                    <Section.LeftContainer>
+                    <Section.LeftContainer sideOnTop={"left"}>
                         <KeepInTouch />
                     </Section.LeftContainer>
-                    <Section.DividerContainer>
+                    <Section.DividerContainer sideOnTop={"left"}>
                         <Divider />
                     </Section.DividerContainer>
-                    <Section.RightContainer>
+                    <Section.RightContainer sideOnTop={"left"}>
                         <WhereToFindUs />
                     </Section.RightContainer>
                 </Section>
