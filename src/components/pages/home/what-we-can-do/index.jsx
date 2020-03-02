@@ -42,8 +42,10 @@ const WhatWeCanDo = () => {
             </MaxWidthContainer>
 
             <MaxWidthContainer my={32}>
-                <Box width={[1, 1, 1 / 3]}>
-                    <ParagraphTitle>{"Failure party"}</ParagraphTitle>
+                <Box width={[1, 1, 1 / 3]} pt={[24, 0]}>
+                    <ParagraphTitle center={[true, false]}>
+                        {"Failure party"}
+                    </ParagraphTitle>
                     <Subtitle center={[true, false]}>
                         {
                             "We are a team of explorers who are allowed to have failure parties when we try to learn something new and mess up."
@@ -51,8 +53,10 @@ const WhatWeCanDo = () => {
                     </Subtitle>
                 </Box>
 
-                <Box width={[1, 1, 1 / 3]} px={[0, 0, 24]}>
-                    <ParagraphTitle>{"Passions"}</ParagraphTitle>
+                <Box width={[1, 1, 1 / 3]} px={[0, 0, 24]} pt={[24, 0]}>
+                    <ParagraphTitle center={[true, false]}>
+                        {"Passions"}
+                    </ParagraphTitle>
                     <Subtitle center={[true, false]}>
                         {
                             "This mix of qualities and passions allows us to push boundaries and keep learning and innovating. So if you have a challenging project for us… bring it on!"
@@ -60,8 +64,10 @@ const WhatWeCanDo = () => {
                     </Subtitle>
                 </Box>
 
-                <Box width={[1, 1, 1 / 3]}>
-                    <ParagraphTitle>{"Experimenting"}</ParagraphTitle>
+                <Box width={[1, 1, 1 / 3]} pt={[24, 0]}>
+                    <ParagraphTitle center={[true, false]}>
+                        {"Experimenting"}
+                    </ParagraphTitle>
                     <Subtitle center={[true, false]}>
                         {
                             "Right now we are experimenting with, and would like to work more on: machine learning, artificial intelligence, augmented reality, blockchain...and more"

@@ -19,7 +19,7 @@ import FarmingGraphic from "../../../static/images/farmers.png";
 const projects = [
     {
         title: "Cycle2Work",
-        caption: "Each one of us is responsible",
+        caption: "For a healthier, happier world",
         text:
             "Cycle2Work.io is an app that rewards employees for commuting to work, whilst safeguarding the environment. It’s connected to the app Strava, where people can join their company team and earn € 0.20/km for cycling rather than driving to the office, as well as saving an average of 4.32 kg of CO2 each day! If you would like your company to take part in the programme, get in touch! ",
         link: "http://www.hirebitto.com/",
@@ -28,7 +28,7 @@ const projects = [
     },
     {
         title: "HireBitto",
-        caption: "For a healthier, happier world",
+        caption: "Each one of us is responsible",
         text:
             "HireBitto is a project which benefits local farmers and cheesemakers who choose to work with traditional methods, without the use of chemicals or industrial machinery. For every new employee, the company buys a wheel of Storico Ribelle cheese. Once matured, the cheese is auctioned and the earnings are reinvested in the community. The cheese is paid for by mondora, but it belongs to the community. The employee is responsible for this benefit creation process.",
         link: "http://www.hirebitto.com/",

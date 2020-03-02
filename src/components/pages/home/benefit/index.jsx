@@ -28,7 +28,7 @@ const Benefit = () => {
         <MaxWidthContainer>
             <Section>
                 <Section.DividerContainer>
-                    <Divider />
+                    <Divider hideOnMobile={true}/>
                 </Section.DividerContainer>
                 <Section.RightContainer>
                     <Box my={48} backgroundColor="white">

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Flex } from "reflexbox";
+import { Flex, Box } from "reflexbox";
 
 import ParagraphTitle from "../../../paragraph-title";
 import Subtitle from "../../../subtitle";
@@ -35,26 +35,33 @@ const Socials = [
 
 const WhereToFindUs = () => (
     <Flex flexDirection="column" backgroundColor="white">
-        <ParagraphTitle>{"Operative Office:"}</ParagraphTitle>
-        <Subtitle>
-            {"Via Europa 1250, 23020 Berbenno di Valtellina (SO)"}
-        </Subtitle>
-
-        <ParagraphTitle>{"Legal Office:"}</ParagraphTitle>
-        <Subtitle>
-            {"Via Uberto Visconti di Modrone 33, 20122, Milano"}
-        </Subtitle>
-
-        <ParagraphTitle>{"Follow us on:"}</ParagraphTitle>
-        <Subtitle>
-            <Flex margin={-1} justifyContent={["center", "center", "flex-start"]}>
-                {Socials.map(social => (
-                    <Flex margin={1} key={social.icon}>
-                        <SocialLink theme={"dark"} {...social} />
-                    </Flex>
-                ))}
-            </Flex>
-        </Subtitle>
+        <Box m={2}>
+            <ParagraphTitle>{"Operative Office:"}</ParagraphTitle>
+            <Subtitle>
+                {"Via Europa 1250, 23020 Berbenno di Valtellina (SO)"}
+            </Subtitle>
+        </Box>
+        <Box m={2}>
+            <ParagraphTitle>{"Legal Office:"}</ParagraphTitle>
+            <Subtitle>
+                {"Via Uberto Visconti di Modrone 33, 20122, Milano"}
+            </Subtitle>
+        </Box>
+        <Box m={2}>
+            <ParagraphTitle>{"Follow us on:"}</ParagraphTitle>
+            <Subtitle>
+                <Flex
+                    margin={1}
+                    justifyContent={["center", "center", "flex-start"]}
+                >
+                    {Socials.map(social => (
+                        <Flex margin={1} key={social.icon}>
+                            <SocialLink theme={"dark"} {...social} />
+                        </Flex>
+                    ))}
+                </Flex>
+            </Subtitle>
+        </Box>
     </Flex>
 );
 

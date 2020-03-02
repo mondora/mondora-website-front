@@ -28,13 +28,12 @@ const About = () => {
         <BackgroundStripe theme="dark">
             <MaxWidthContainer>
                 <Section>
-                    <Section.LeftContainer>
+                    <Section.LeftContainer sideOnTop="left">
                         <FullWidthImage
                             fluid={brothersImage.childImageSharp.fluid}
                         />
                     </Section.LeftContainer>
-                    <Section.DividerContainer />
-                    <Section.RightContainer>
+                    <Section.RightContainer sideOnTop="left">
                         <Box my={48}>
                             <Title light={true}>{"About Mondora"}</Title>
                             <Subtitle light={true} margin="32px 0">

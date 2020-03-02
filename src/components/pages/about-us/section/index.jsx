@@ -47,7 +47,9 @@ export const Section = ({
 
                                 <Title light={dark}>{title}</Title>
 
-                                <Subtitle light={dark}>{subtitle}</Subtitle>
+                                <Subtitle margin={"24px 0"} light={dark}>
+                                    {subtitle}
+                                </Subtitle>
                             </SectionComponent.RightContainer>
                         </>
                     ) : (
@@ -59,7 +61,9 @@ export const Section = ({
 
                                 <Title light={dark}>{title}</Title>
 
-                                <Subtitle light={dark}>{subtitle}</Subtitle>
+                                <Subtitle margin={"24px 0"} light={dark}>
+                                    {subtitle}
+                                </Subtitle>
                             </SectionComponent.LeftContainer>
                             <SectionComponent.RightContainer>
                                 <FullWidthImage fluid={image} />
@@ -78,7 +82,12 @@ export const Section = ({
                             key={index}
                             padding={2}
                         >
-                            <ParagraphTitle center={[false, false]} light={dark}>{title}</ParagraphTitle>
+                            <ParagraphTitle
+                                center={[false, false]}
+                                light={dark}
+                            >
+                                {title}
+                            </ParagraphTitle>
                             <Subtitle light={dark}>{description}</Subtitle>
                         </Flex>
                     ))}
