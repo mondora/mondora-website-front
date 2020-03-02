@@ -78,7 +78,7 @@ export const Section = ({
                             key={index}
                             padding={2}
                         >
-                            <ParagraphTitle light={dark}>{title}</ParagraphTitle>
+                            <ParagraphTitle center={[false, false]} light={dark}>{title}</ParagraphTitle>
                             <Subtitle light={dark}>{description}</Subtitle>
                         </Flex>
                     ))}

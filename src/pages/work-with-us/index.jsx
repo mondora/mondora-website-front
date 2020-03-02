@@ -18,11 +18,6 @@ import FullWidthImage from "../../components/full-width-image";
 import Carousel from "../../components/carousel";
 import JumboTitle from "../../components/jumbo-title";
 
-const HandbookDescription = styled.div`
-    color: var(--text-dark-gray);
-    margin: 16px;
-`;
-
 const SuperA = styled.a`
     text-decoration: none;
 `;
@@ -173,11 +168,13 @@ const WorkWithUs = () => {
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
                     <Title>{"Mondora"}</Title>
-                    <HandbookDescription>
-                        {
-                            "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place throug software solutions."
-                        }
-                    </HandbookDescription>
+                    <MaxWidthContainer>
+                        <Subtitle center={[true, true]}>
+                            {
+                                "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place throug software solutions."
+                            }
+                        </Subtitle>
+                    </MaxWidthContainer>
                     <SuperA href={"https://github.com/mondora/handbook"}>
                         <SquareButton>{"OUR HANDBOOK"}</SquareButton>
                     </SuperA>

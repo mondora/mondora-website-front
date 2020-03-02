@@ -44,7 +44,7 @@ const WhatWeCanDo = () => {
             <MaxWidthContainer my={32}>
                 <Box width={[1, 1, 1 / 3]}>
                     <ParagraphTitle>{"Failure party"}</ParagraphTitle>
-                    <Subtitle>
+                    <Subtitle center={[true, false]}>
                         {
                             "We are a team of explorers who are allowed to have failure parties when we try to learn something new and mess up."
                         }
@@ -53,7 +53,7 @@ const WhatWeCanDo = () => {
 
                 <Box width={[1, 1, 1 / 3]} px={[0, 0, 24]}>
                     <ParagraphTitle>{"Passions"}</ParagraphTitle>
-                    <Subtitle>
+                    <Subtitle center={[true, false]}>
                         {
                             "This mix of qualities and passions allows us to push boundaries and keep learning and innovating. So if you have a challenging project for us… bring it on!"
                         }
@@ -62,7 +62,7 @@ const WhatWeCanDo = () => {
 
                 <Box width={[1, 1, 1 / 3]}>
                     <ParagraphTitle>{"Experimenting"}</ParagraphTitle>
-                    <Subtitle>
+                    <Subtitle center={[true, false]}>
                         {
                             "Right now we are experimenting with, and would like to work more on: machine learning, artificial intelligence, augmented reality, blockchain...and more"
                         }

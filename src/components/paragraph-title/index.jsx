@@ -8,14 +8,22 @@ const ParagraphTitle = styled.div`
     margin: 4px 0;
     line-height: 1.5;
 
+    @media (max-width: 768px) {
+        text-align: ${props => (props.center[0] ? "center" : "inherit")};
+    }
+
     color: ${props =>
         props.light ? "var(--white)" : "var(--text-dark-black)"};
-    text-align: ${props => (props.center ? "center" : "inherit")};
+    text-align: ${props => (props.center[1] ? "center" : "inherit")};
 `;
+
+ParagraphTitle.defaultProps = {
+    center: [false, false]
+}
 
 ParagraphTitle.propTypes = {
     light: PropTypes.bool,
-    center: PropTypes.bool
+    center: PropTypes.array
 };
 
 export default ParagraphTitle;
