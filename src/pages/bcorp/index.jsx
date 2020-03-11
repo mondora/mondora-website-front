@@ -61,22 +61,22 @@ const faqs = [
         details: [
             {
                 title: "Cycle2Work ",
-                desription:
+                description:
                     "to reduce Co2 emissions from commuting. For each employee who takes part in this project, the company pays 0,20 euros for every km traveled by bicycle or on foot."
             },
             {
                 title: "Waste reduction: ",
-                desription:
+                description:
                     "we have a system that is able to measure the amount of waste produced in the office, so that we can set reduction targets and work together to reach them and limit our waste."
             },
             {
                 title: "Plastic free: ",
-                desription:
+                description:
                     "we support an initiative against the use of single-use plastic through the purchase of reusable water bottles for each employee, because we believe it is important to reduce waste."
             },
             {
                 title: "Paper free: ",
-                desription:
+                description:
                     "we continue to be a paper-free company and we also try to help our clients to limit their use of paper."
             }
         ]
@@ -179,6 +179,7 @@ const BCorp = () => (
                     key={i}
                     question={faq.question}
                     answer={faq.answer}
+                    details={faq.details}
                 />
             ))}
         </MaxWidthContainer>
