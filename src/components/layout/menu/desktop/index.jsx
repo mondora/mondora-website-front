@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
+import AniLink from "gatsby-plugin-transition-link/AniLink";
 
 import styled from "styled-components";
 
@@ -7,7 +8,7 @@ import Image from "gatsby-image";
 
 import { Flex } from "reflexbox";
 
-const SuperLink = styled(Link)`
+const SuperLink = styled(AniLink)`
     font-size: ${props => props.theme.size.text.menu};
     text-decoration: none;
     color: var(--black);
@@ -74,7 +75,14 @@ const DesktopMenu = () => {
 
             <Flex justifyContent="space-between" alignItems="center">
                 {links.map((link, i) => (
-                    <SuperLink key={i} to={link.to} activeClassName="active">
+                    <SuperLink
+                        key={i}
+                        to={link.to}
+                        paintDrip
+                        direction="none"
+                        color="white"
+                        activeClassName="active"
+                    >
                         {link.text}
                     </SuperLink>
                 ))}

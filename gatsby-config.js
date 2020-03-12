@@ -1,24 +1,11 @@
-// const env = require("@mondora/env").default;
-
-// const nodeEnv = env("NODE_ENV", { default: "development" });
-
-// require("dotenv").config({
-//     path: `${__dirname}/.env.${nodeEnv}`
-// });
-
-// const contentfulSpaceId = env("CONTENTFUL_SPACE_ID", { required: true });
-// const contentfulAccessToken = env("CONTENTFUL_ACCESS_TOKEN", {
-//     required: true
-// });
-
 module.exports = {
     siteMetadata: {
         title: ":mondora's website",
-        // TODO: write a decent description.
         description: ":mondora",
         author: "mondora-team"
     },
     plugins: [
+        "gatsby-plugin-transition-link",
         "gatsby-plugin-react-helmet",
         "gatsby-plugin-styled-components",
         "gatsby-transformer-sharp",
