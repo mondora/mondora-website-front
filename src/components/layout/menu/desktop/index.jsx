@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql } from "gatsby";
 import AniLink from "gatsby-plugin-transition-link/AniLink";
 
 import styled from "styled-components";
@@ -69,9 +69,9 @@ const DesktopMenu = () => {
 
     return (
         <Flex my={32} justifyContent="space-between" alignItems="center">
-            <Link to="/">
+            <AniLink to="/" paintDrip direction="none" color="white">
                 <Image fixed={miniLogoImage.childImageSharp.fixed} />
-            </Link>
+            </AniLink>
 
             <Flex justifyContent="space-between" alignItems="center">
                 {links.map((link, i) => (
