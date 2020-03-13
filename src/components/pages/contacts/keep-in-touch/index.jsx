@@ -3,27 +3,28 @@ import React from "react";
 import styled from "styled-components";
 
 import Title from "../../../title";
-
+import ParagraphTitle from "../../../paragraph-title";
 import Subtitle from "../../../subtitle";
 
 import EmailIcon from "./assets/email.svg";
 import PhoneIcon from "./assets/phone.svg";
 import MobileIcon from "./assets/mobile.svg";
 
-import { Flex } from "reflexbox";
+import { Flex, Box } from "reflexbox";
 
 const ContactIcon = styled.img`
-    height: 48px;
+    height: 64px;
 `;
 
-const ContactName = styled.div`
-    margin: 8px;
+const ContactInfo = styled(Subtitle)`
+    word-break: break-all;
 `;
 
-const ContactBody = styled.div`
-    font-size: 16px;
-    color: var(--text-dark-gray);
-`;
+const contacts = [
+    { icon: EmailIcon, title: "Email:", value: "info@mondora.com" },
+    { icon: PhoneIcon, title: "Phone:", value: "+39 0342 1856 456" },
+    { icon: MobileIcon, title: "Mobile:", value: "+39 345 9960 097" }
+];
 
 const KeepInTouch = () => (
     <>
@@ -34,37 +35,14 @@ const KeepInTouch = () => (
             }
         </Subtitle>
 
-        <Flex justifyContent="center">
-            <Flex
-                width={[1 / 2, 1 / 3]}
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <ContactIcon src={EmailIcon} />
-                <ContactName>{"Email:"}</ContactName>
-                <ContactBody>{"info@mondora.com"}</ContactBody>
-            </Flex>
-            <Flex
-                width={[1 / 2, 1 / 3]}
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <ContactIcon src={PhoneIcon} />
-                <ContactName>{"Phone:"}</ContactName>
-                <ContactBody>{"+39 0342 1856 456"}</ContactBody>
-            </Flex>
-            <Flex
-                width={[1 / 2, 1 / 3]}
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <ContactIcon src={MobileIcon} />
-                <ContactName>{"Mobile:"}</ContactName>
-                <ContactBody>{"+39 345 9960 097"}</ContactBody>
-            </Flex>
+        <Flex flexWrap="wrap">
+            {contacts.map((contact, i) => (
+                <Box key={i} width={[1, 1 / 3]} p={2} textAlign="center">
+                    <ContactIcon src={contact.icon} />
+                    <ParagraphTitle>{contact.title}</ParagraphTitle>
+                    <ContactInfo>{contact.value}</ContactInfo>
+                </Box>
+            ))}
         </Flex>
     </>
 );
