@@ -45,8 +45,9 @@ const Benefit = () => {
                     </Box>
                 </Section.RightContainer>
             </Section>
-
-            <FullWidthImage fluid={impactImage.childImageSharp.fluid} />
+            <Box width={[0, 1]}>
+                <FullWidthImage fluid={impactImage.childImageSharp.fluid} />
+            </Box>
         </MaxWidthContainer>
     );
 };
