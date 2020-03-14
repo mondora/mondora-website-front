@@ -5,6 +5,7 @@
     "author": "Mondora team <info@mondora.com>",
     "dependencies": {
         "@rehooks/window-size": "^1.0.2",
+        "@umijs/hooks": "^1.7.1",
         "color": "^3.1.2",
         "feather-icons": "^4.25.0",
         "gatsby": "2.19.10",
@@ -19,7 +20,6 @@
         "nuka-carousel": "^4.6.2",
         "prop-types": "^15.7.2",
         "react": "^16.11.0",
-        "react-cookie": "^4.0.3",
         "react-dom": "^16.12.0",
         "react-helmet": "^5.2.1",
         "react-slick": "^0.25.2",
