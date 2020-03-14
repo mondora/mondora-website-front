@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useStaticQuery, graphql } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 
 import { Box } from "reflexbox";
 
@@ -10,6 +10,7 @@ import BackgroundStripe from "../../../background-stripe";
 import MaxWidthContainer from "../../../max-width-container";
 import Section from "../../../section";
 import Subtitle from "../../../subtitle";
+import SquareButton from "../../../square-button";
 
 const About = () => {
     const { brothersImage } = useStaticQuery(graphql`
@@ -41,6 +42,9 @@ const About = () => {
                                     "We are a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
                                 }
                             </Subtitle>
+                            <Link to="/about">
+                                <SquareButton>{"ABOUT US"}</SquareButton>
+                            </Link>
                         </Box>
                     </Section.RightContainer>
                 </Section>
