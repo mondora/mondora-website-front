@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useStaticQuery, graphql } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 
 import { Box } from "reflexbox";
 
@@ -10,6 +10,7 @@ import Section from "../../../section";
 import MaxWidthContainer from "../../../max-width-container";
 import Subtitle from "../../../subtitle";
 import Title from "../../../title";
+import SquareButton from "../../../square-button";
 
 const Benefit = () => {
     const { impactImage } = useStaticQuery(graphql`
@@ -28,7 +29,7 @@ const Benefit = () => {
         <MaxWidthContainer>
             <Section>
                 <Section.DividerContainer>
-                    <Divider hideOnMobile={true}/>
+                    <Divider hideOnMobile={true} />
                 </Section.DividerContainer>
                 <Section.RightContainer>
                     <Box my={48} backgroundColor="white">
@@ -38,6 +39,9 @@ const Benefit = () => {
                                 "We are a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
                             }
                         </Subtitle>
+                        <Link to="/bcorp">
+                            <SquareButton>{"IMPACT"}</SquareButton>
+                        </Link>
                     </Box>
                 </Section.RightContainer>
             </Section>
