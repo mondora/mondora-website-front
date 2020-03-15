@@ -18,6 +18,8 @@ import FullWidthImage from "../../components/full-width-image";
 import Carousel from "../../components/carousel";
 import JumboTitle from "../../components/jumbo-title";
 
+import SwirlSeparator from "../../../static/images/separator.svg";
+
 const SuperA = styled.a`
     text-decoration: none;
 `;
@@ -138,7 +140,7 @@ const WorkWithUs = () => {
                     <Section header={true}>
                         <Section.LeftContainer>
                             <Title>{"Join the :m team!"}</Title>
-                            <Subtitle margin="32px 0">
+                            <Subtitle margin="32px 0 0 0">
                                 {
                                     "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place through innovation, technology and software solutions."
                                 }
@@ -164,7 +166,11 @@ const WorkWithUs = () => {
                     </Section>
                 </BackgroundStripe>
             </MaxWidthContainer>
-
+            <MaxWidthContainer justifyContent={"center"}>
+                <Box width={[1 / 2, 1 / 4, 0]}>
+                    <img alt="" src={SwirlSeparator} />
+                </Box>
+            </MaxWidthContainer>
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
                     <Title>{"Mondora"}</Title>
@@ -195,7 +201,11 @@ const WorkWithUs = () => {
                     ))}
                 </Carousel>
             </Box>
-
+            <MaxWidthContainer justifyContent={"center"}>
+                <Box width={[1 / 2, 1 / 4, 0]}>
+                    <img alt="" src={SwirlSeparator} />
+                </Box>
+            </MaxWidthContainer>
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
                     <Title>{"Why work with us?"}</Title>
