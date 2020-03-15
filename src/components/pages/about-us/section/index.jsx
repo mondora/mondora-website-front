@@ -6,12 +6,13 @@ import { Flex } from "reflexbox";
 
 import Title from "../../../title";
 import Subtitle from "../../../subtitle";
-import ParagraphTitle from "../../../paragraph-title";
 import SectionComponent from "../../../section";
 import FullWidthImage from "../../../full-width-image";
 import BackgroundStripe from "../../../background-stripe";
 import MaxWidthContainer from "../../../max-width-container";
 import SubtleTitle from "../../../subtle-title";
+
+import Voice from "../voice";
 
 export const Section = ({
     rightImage,
@@ -75,21 +76,13 @@ export const Section = ({
                 <FullWidthImage fluid={underlinesImage.publicURL} />
 
                 <Flex flexWrap="wrap" padding={-2}>
-                    {voices.map(({ title, description }, index) => (
-                        <Flex
-                            width={[1, 1 / 3]}
-                            flexDirection="column"
-                            key={index}
-                            padding={2}
-                        >
-                            <ParagraphTitle
-                                center={[false, false]}
-                                light={dark}
-                            >
-                                {title}
-                            </ParagraphTitle>
-                            <Subtitle light={dark}>{description}</Subtitle>
-                        </Flex>
+                    {voices.map(({ title, description }, i) => (
+                        <Voice
+                            key={i}
+                            title={title}
+                            description={description}
+                            dark={dark}
+                        />
                     ))}
                 </Flex>
 
