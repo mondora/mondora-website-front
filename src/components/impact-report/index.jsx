@@ -12,19 +12,23 @@ import ReportHeart from "./assets/heart.svg";
 const ReportDescription = styled.div`
     margin: 32px 8px 16px 0;
 `;
+
 const Report = styled(Flex)`
     position: relative;
-    box-shadow: 0 0 10px gray;
+    box-shadow: 0 4px 14px 0 var(--border-gray);
+    border-radius: 2px;
     background-color: var(--white);
 `;
+
 const ReportIcon = styled.img`
     width: 120px;
     padding: 16px;
 `;
+
 const ReportYear = styled.div`
     position: absolute;
-    top: 44px;
-    left: 48px;
+    top: 50px;
+    left: 58px;
     transform: rotate(-4deg);
     font-weight: bold;
     font-size: 24px;
@@ -33,13 +37,11 @@ const ReportYear = styled.div`
     margin: 16px auto;
 `;
 
-export const ImpactReport = ({ width, report }) => (
-    <Flex marginY={16} maxWidth={400} width={width}>
-        <Report marginX={2}>
-            <div>
-                <ReportIcon src={ReportHeart} />
-                <ReportYear>{report.year}</ReportYear>
-            </div>
+export const ImpactReport = ({ report }) => (
+    <Report margin={3}>
+        <Flex margin={2}>
+            <ReportIcon src={ReportHeart} />
+            <ReportYear>{report.year}</ReportYear>
 
             <ReportDescription>
                 <ParagraphTitle>{report.title}</ParagraphTitle>
@@ -47,8 +49,8 @@ export const ImpactReport = ({ width, report }) => (
                     <SquareButton theme={"light"}>{report.button}</SquareButton>
                 </a>
             </ReportDescription>
-        </Report>
-    </Flex>
+        </Flex>
+    </Report>
 );
 
 ImpactReport.propTypes = {

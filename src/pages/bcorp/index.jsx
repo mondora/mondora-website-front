@@ -185,13 +185,10 @@ const BCorp = () => (
         </MaxWidthContainer>
 
         <BackgroundStripe theme="light">
+            <Title center={true}>{"Impact reports"}</Title>
             <MaxWidthContainer justifyContent="space-around">
                 {reports.map(report => (
-                    <ImpactReport
-                        key={report.year}
-                        width={[1, 3 / 4, 3 / 4, 1 / 3]}
-                        report={report}
-                    />
+                    <ImpactReport key={report.year} report={report} />
                 ))}
             </MaxWidthContainer>
         </BackgroundStripe>
