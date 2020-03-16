@@ -86,6 +86,16 @@ const DesktopMenu = () => {
                         {link.text}
                     </SuperLink>
                 ))}
+
+                <SuperLink
+                    as="a"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://bcalmbcorp.com/remote-working-dalla-programmazione-al-caff%C3%A8-virtuale-come-si-fa-in-mondora-adf42dc5e43d"
+                >
+                    {"Smart Culture"}
+                </SuperLink>
+
                 <BlogButton
                     target="_blank"
                     rel="noopener noreferrer"
