@@ -14,7 +14,7 @@ import Subtitle from "../../subtitle";
 
 const FooterContainer = styled.div`
     display: flex;
-    border-top: 1px solid var(--white);
+    border-top: 1px solid var(--border-dark-gray);
     background: var(--background-dark-gray);
     color: var(--white);
 `;
@@ -129,20 +129,34 @@ const Footer = () => {
                         <SectionLinks to={"/work-with-us"}>
                             {"Work with us"}
                         </SectionLinks>
-                        <ExternalLink href={"https://github.com/mondora/handbook"}>{"Mondora handbook"}</ExternalLink>
+                        <ExternalLink
+                            href={"https://github.com/mondora/handbook"}
+                        >
+                            {"Mondora handbook"}
+                        </ExternalLink>
                     </Flex>
 
                     <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
                         <Subtitle light={true}>{"IMPACT"}</Subtitle>
                         <SectionLinks to={"/bcorp"}>{"Impact"}</SectionLinks>
-                        <ExternalLink href={"https://bcalmbcorp.com/"}>{"Blog BCalm BCorp"}</ExternalLink>
-                        <ExternalLink href={"https://medium.com/keep-calm-and-code-on"}>{"Blog tecnico"}</ExternalLink>
+                        <ExternalLink href={"https://bcalmbcorp.com/"}>
+                            {"Blog BCalm BCorp"}
+                        </ExternalLink>
+                        <ExternalLink
+                            href={"https://medium.com/keep-calm-and-code-on"}
+                        >
+                            {"Blog tecnico"}
+                        </ExternalLink>
                     </Flex>
 
                     <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
                         <Subtitle light={true}>{"SIDE PROJECTS"}</Subtitle>
-                        <ExternalLink href={"http://www.hirebitto.com/"}>{"Hirebitto"}</ExternalLink>
-                        <ExternalLink href={"https://cycle2work.io/"}>{"Cycle2Work"}</ExternalLink>
+                        <ExternalLink href={"http://www.hirebitto.com/"}>
+                            {"Hirebitto"}
+                        </ExternalLink>
+                        <ExternalLink href={"https://cycle2work.io/"}>
+                            {"Cycle2Work"}
+                        </ExternalLink>
                     </Flex>
                 </Flex>
             </MaxWidthContainer>
