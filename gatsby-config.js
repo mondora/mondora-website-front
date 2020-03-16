@@ -1,7 +1,9 @@
 module.exports = {
     siteMetadata: {
-        title: ":mondora's website",
-        description: ":mondora",
+        siteUrl: "https://mondora.com",
+        title: ":mondora - Building software, creating benefit",
+        description:
+            "Software and advisory company specialized in custom cloud solutions. Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact.",
         author: "mondora-team"
     },
     plugins: [
@@ -24,8 +26,8 @@ module.exports = {
                 name: ":mondora",
                 short_name: ":m",
                 start_url: "/",
-                background_color: "#663399",
-                theme_color: "#663399",
+                background_color: "#f2f2f2",
+                theme_color: "#ffda01",
                 display: "minimal-ui"
             }
         },

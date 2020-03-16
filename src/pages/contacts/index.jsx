@@ -1,6 +1,7 @@
 import React from "react";
 
 import Divider from "../../components/divider";
+import PageMetadata from "../../components/page-metadata";
 
 import KeepInTouch from "../../components/pages/contacts/keep-in-touch";
 import WhereToFindUs from "../../components/pages/contacts/where-to-find-us";
@@ -13,6 +14,10 @@ import BackgroundStripe from "../../components/background-stripe";
 
 const Contacts = () => (
     <Layout>
+        <PageMetadata
+            title="Contacts - mondora - Software and advisory company specilized in custom cloud solutions"
+            description="Whether you are interested in working with us on a custom software solution for your business, or are just curious about the :m world, we would love to get in touch!"
+        />
         <MaxWidthContainer>
             <BackgroundStripe>
                 <Section header={true}>
