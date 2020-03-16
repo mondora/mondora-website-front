@@ -36,16 +36,10 @@ const Socials = [
 const WhereToFindUs = () => (
     <Flex flexDirection="column" backgroundColor="white">
         <Box m={2}>
-            <ParagraphTitle>{"Operative Office:"}</ParagraphTitle>
-            <Subtitle>
-                {"Via Europa 1250, 23020 Berbenno di Valtellina (SO)"}
-            </Subtitle>
-        </Box>
-        <Box m={2}>
-            <ParagraphTitle>{"Legal Office:"}</ParagraphTitle>
-            <Subtitle>
-                {"Via Uberto Visconti di Modrone 33, 20122, Milano"}
-            </Subtitle>
+            <ParagraphTitle>{"Office:"}</ParagraphTitle>
+            <Subtitle>{"Via Europa 1250"}</Subtitle>
+            <Subtitle>{"Berbenno di Valtellina"}</Subtitle>
+            <Subtitle>{"23020 (SO) Italy"}</Subtitle>
         </Box>
         <Box m={2}>
             <ParagraphTitle>{"Follow us on:"}</ParagraphTitle>
