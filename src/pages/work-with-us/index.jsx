@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import { Flex, Box } from "reflexbox";
 
+import PageMetadata from "../../components/page-metadata";
 import SquareButton from "../../components/square-button";
 import Section from "../../components/section";
 import Divider from "../../components/divider";
@@ -135,6 +136,10 @@ const WorkWithUs = () => {
 
     return (
         <Layout>
+            <PageMetadata
+                title="Join the :m team! - Work with us - mondora"
+                description="We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place throug software solutions."
+            />
             <MaxWidthContainer>
                 <BackgroundStripe>
                     <Section header={true}>

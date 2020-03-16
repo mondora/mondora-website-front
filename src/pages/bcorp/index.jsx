@@ -2,6 +2,7 @@ import React from "react";
 
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
+import PageMetadata from "../../components/page-metadata";
 import Title from "../../components/title";
 import Subtitle from "../../components/subtitle";
 import JumboTitle from "../../components/jumbo-title";
@@ -142,6 +143,10 @@ const reports = [
 
 const BCorp = () => (
     <Layout>
+        <PageMetadata
+            title="Let’s change the world together - Certified B Corp company - :mondora"
+            description="In mondora we all work towards a shared purpose: making the world a better place. "
+        />
         <BackgroundStripe>
             <MaxWidthContainer>
                 <Section header={true}>

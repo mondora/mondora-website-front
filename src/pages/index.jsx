@@ -1,6 +1,8 @@
 import React from "react";
 
 import Layout from "../components/layout";
+import PageMetadata from "../components/page-metadata";
+
 import Header from "../components/pages/home/header";
 import WhatWeCanDo from "../components/pages/home/what-we-can-do";
 
@@ -21,6 +23,7 @@ const rebassTheme = {
 const Homepage = () => (
     <Layout>
         <ThemeProvider theme={rebassTheme}>
+            <PageMetadata />
             <Header />
             <WhatWeCanDo />
             <Blog />
