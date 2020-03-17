@@ -93,7 +93,7 @@ const DesktopMenu = () => {
                     rel="noopener noreferrer"
                     href="https://bcalmbcorp.com/remote-working-dalla-programmazione-al-caff%C3%A8-virtuale-come-si-fa-in-mondora-adf42dc5e43d"
                 >
-                    {"Smart Culture"}
+                    {"Remote Culture"}
                 </SuperLink>
 
                 <BlogButton
