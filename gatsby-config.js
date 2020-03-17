@@ -1,3 +1,7 @@
+require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}`
+});
+
 module.exports = {
     siteMetadata: {
         siteUrl: "https://mondora.com",
@@ -53,7 +57,7 @@ module.exports = {
         {
             resolve: "gatsby-plugin-google-tagmanager",
             options: {
-                id: "GATSBY_GOOGLE_TAGMANAGER_ID"
+                id: process.env.GOOGLE_TAGMANAGER_ID
             }
         }
     ]
