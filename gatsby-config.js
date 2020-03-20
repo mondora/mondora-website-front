@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 module.exports = {
     siteMetadata: {
         siteUrl: "https://mondora.com",
@@ -13,16 +15,16 @@ module.exports = {
         "gatsby-transformer-sharp",
         "gatsby-plugin-sharp",
         {
-            resolve: `gatsby-source-rss-feed`,
+            resolve: "gatsby-source-rss-feed",
             options: {
-                url: `https://bcalmbcorp.com/feed/`,
-                name: `BcalmBcorp`
+                url: "https://bcalmbcorp.com/feed/",
+                name: "BcalmBcorp"
             }
         },
         {
             resolve: "gatsby-plugin-manifest",
             options: {
-                icon: `src/images/logo/square.png`,
+                icon: "src/images/logo/square.png",
                 name: ":mondora",
                 short_name: ":m",
                 start_url: "/",
@@ -39,17 +41,22 @@ module.exports = {
             }
         },
         {
-            resolve: `gatsby-source-instagram`,
+            resolve: "gatsby-source-instagram",
             options: {
-                username: `mondoracom`
+                username: "mondoracom"
+            }
+        },
+        {
+            resolve: "gatsby-plugin-sitemap",
+            options: {
+                exclude: ["/meet-the-team/"]
+            }
+        },
+        {
+            resolve: "gatsby-plugin-google-tagmanager",
+            options: {
+                id: process.env.GOOGLE_TAGMANAGER_ID
             }
         }
-        // {
-        //     resolve: `gatsby-source-contentful`,
-        //     options: {
-        //         spaceId: process.env.CONTENTFUL_SPACE_ID,
-        //         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
-        //     }
-        // }
     ]
 };
