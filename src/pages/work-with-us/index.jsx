@@ -116,7 +116,6 @@ const WorkWithUs = () => {
                         username
                         likes
                         caption
-                        comments
                         localFile {
                             childImageSharp {
                                 fluid(
