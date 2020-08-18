@@ -57,6 +57,13 @@ module.exports = {
             options: {
                 id: process.env.GOOGLE_TAGMANAGER_ID
             }
+        },
+        {
+            resolve: `gatsby-source-contentful`,
+            options: {
+                spaceId: process.env.CONTENTFUL_SPACE_ID,
+                accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+            }
         }
     ]
 };

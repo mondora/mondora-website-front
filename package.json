@@ -13,6 +13,7 @@
         "gatsby-plugin-google-tagmanager": "^2.1.27",
         "gatsby-plugin-sharp": "^2.3.13",
         "gatsby-plugin-sitemap": "^2.2.30",
+        "gatsby-source-contentful": "^2.3.28",
         "gatsby-source-filesystem": "^2.1.47",
         "gatsby-source-instagram": "^0.6.1",
         "gatsby-source-rss-feed": "^1.1.1",
