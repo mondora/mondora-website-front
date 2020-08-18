@@ -15,7 +15,7 @@
         "gatsby-plugin-sitemap": "^2.2.30",
         "gatsby-source-contentful": "^2.3.28",
         "gatsby-source-filesystem": "^2.1.47",
-        "gatsby-source-instagram": "^0.6.1",
+        "gatsby-source-instagram": "^0.8.0",
         "gatsby-source-rss-feed": "^1.1.1",
         "gatsby-transformer-sharp": "^2.3.13",
         "google-map-react": "^1.1.5",

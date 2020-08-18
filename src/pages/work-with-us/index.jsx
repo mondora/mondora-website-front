@@ -109,7 +109,7 @@ const reasons = [
 const WorkWithUs = () => {
     const { allInstaNode } = useStaticQuery(graphql`
         query ScrapingQuery {
-            allInstaNode {
+            allInstaNode(limit: 12) {
                 edges {
                     node {
                         id
