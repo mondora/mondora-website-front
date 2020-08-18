@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useStaticQuery, graphql } from "gatsby";
+
 import Divider from "../../components/divider";
 import PageMetadata from "../../components/page-metadata";
 
@@ -12,30 +14,71 @@ import MaxWidthContainer from "../../components/max-width-container";
 import Section from "../../components/section";
 import BackgroundStripe from "../../components/background-stripe";
 
-const Contacts = () => (
-    <Layout>
-        <PageMetadata
-            title="Contacts - mondora - Software and advisory company specilized in custom cloud solutions"
-            description="Whether you are interested in working with us on a custom software solution for your business, or are just curious about the :m world, we would love to get in touch!"
-        />
-        <MaxWidthContainer>
-            <BackgroundStripe>
-                <Section header={true}>
-                    <Section.LeftContainer sideOnTop={"left"}>
-                        <KeepInTouch />
-                    </Section.LeftContainer>
-                    <Section.DividerContainer sideOnTop={"left"}>
-                        <Divider />
-                    </Section.DividerContainer>
-                    <Section.RightContainer sideOnTop={"left"}>
-                        <WhereToFindUs />
-                    </Section.RightContainer>
-                </Section>
-            </BackgroundStripe>
-        </MaxWidthContainer>
-
-        <Map />
-    </Layout>
-);
+const Contacts = () => {
+    const { contentfulContactsPage } = useStaticQuery(graphql`
+        query {
+            contentfulContactsPage {
+                description
+                header
+                metaTitle {
+                    metaTitle
+                }
+                metaDescr {
+                    metaDescr
+                }
+                contacts {
+                    email
+                    facebook
+                    github
+                    instagram
+                    phoneNumber
+                    partitaIva
+                    mobileNumber
+                    legalAddress
+                    linkedIn
+                    officeAddress
+                    twitter
+                    youtube
+                    officeCoordinates {
+                        lat
+                        lon
+                    }
+                }
+            }
+        }
+    `);
+    return (
+        <Layout>
+            <PageMetadata
+                title={contentfulContactsPage.metaTitle.metaTitle}
+                description={contentfulContactsPage.metaDescr.metaDescr}
+            />
+            <MaxWidthContainer>
+                <BackgroundStripe>
+                    <Section header={true}>
+                        <Section.LeftContainer sideOnTop={"left"}>
+                            <KeepInTouch
+                                contactInfo={contentfulContactsPage.contacts}
+                                header={contentfulContactsPage.header}
+                                description={contentfulContactsPage.description}
+                            />
+                        </Section.LeftContainer>
+                        <Section.DividerContainer sideOnTop={"left"}>
+                            <Divider />
+                        </Section.DividerContainer>
+                        <Section.RightContainer sideOnTop={"left"}>
+                            <WhereToFindUs
+                                contacts={contentfulContactsPage.contacts}
+                            />
+                        </Section.RightContainer>
+                    </Section>
+                </BackgroundStripe>
+            </MaxWidthContainer>
+            <Map
+                coordinates={contentfulContactsPage.contacts.officeCoordinates}
+            />
+        </Layout>
+    );
+};
 
 export default Contacts;

@@ -1,15 +1,21 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import ContactsMap from "../../../contacts-map";
 
-const Map = () => (
+const Map = ({ coordinates }) => (
     <ContactsMap
         position={{
-            lat: 46.16153,
-            lng: 9.758879
+            lat: coordinates.lat,
+            lng: coordinates.lon
         }}
         zoom={15}
     />
 );
+
+Map.propTypes = {
+    coordinates: PropTypes.object
+};
 
 export default Map;
