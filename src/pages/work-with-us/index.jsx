@@ -1,5 +1,6 @@
 import React from "react";
 
+import rehypeReact from "rehype-react";
 import { graphql, useStaticQuery } from "gatsby";
 
 import styled from "styled-components";
@@ -20,6 +21,10 @@ import Carousel from "../../components/carousel";
 import JumboTitle from "../../components/jumbo-title";
 
 import SwirlSeparator from "../../../static/images/separator.svg";
+
+const marginSubtitle = styled(Subtitle)`
+    margin: 32px 0 0 0;
+`;
 
 const SuperA = styled.a`
     text-decoration: none;
@@ -97,6 +102,7 @@ const WorkWithUs = () => {
             contentfulWorkWithUsPage {
                 handbookButton
                 handbookLink
+                handbookTitle
                 handbookDescription {
                     handbookDescription
                 }
@@ -107,7 +113,24 @@ const WorkWithUs = () => {
                     reason
                     description
                 }
-                title
+                leftHeader {
+                    childMarkdownRemark {
+                        headings {
+                            id
+                            value
+                        }
+                        htmlAst
+                    }
+                }
+                rightHeader {
+                    childMarkdownRemark {
+                        headings {
+                            id
+                            value
+                        }
+                        htmlAst
+                    }
+                }
                 metaDescr {
                     metaDescr
                 }
@@ -118,7 +141,10 @@ const WorkWithUs = () => {
         }
     `);
 
-    console.log(contentfulWorkWithUsPage);
+    const renderAst = new rehypeReact({
+        createElement: React.createElement,
+        components: { h1: JumboTitle, h2: Title, p: marginSubtitle }
+    }).Compiler;
 
     return (
         <Layout>
@@ -130,17 +156,10 @@ const WorkWithUs = () => {
                 <BackgroundStripe>
                     <Section header={true}>
                         <Section.LeftContainer>
-                            <Title>{contentfulWorkWithUsPage.title}</Title>
-                            <Subtitle margin="32px 0 0 0">
-                                {
-                                    "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place through innovation, technology and software solutions."
-                                }
-                                <br />
-                                <br />
-                                {
-                                    "Do you want to change the world? This might just be the right place for you! Read on to learn more…"
-                                }
-                            </Subtitle>
+                            {renderAst(
+                                contentfulWorkWithUsPage.leftHeader
+                                    .childMarkdownRemark.htmlAst
+                            )}
                         </Section.LeftContainer>
 
                         <Section.DividerContainer>
@@ -148,11 +167,10 @@ const WorkWithUs = () => {
                         </Section.DividerContainer>
 
                         <Section.RightContainer>
-                            <JumboTitle>
-                                {"Work"}
-                                <br />
-                                {"with us!"}
-                            </JumboTitle>
+                            {renderAst(
+                                contentfulWorkWithUsPage.rightHeader
+                                    .childMarkdownRemark.htmlAst
+                            )}
                         </Section.RightContainer>
                     </Section>
                 </BackgroundStripe>
@@ -164,11 +182,12 @@ const WorkWithUs = () => {
             </MaxWidthContainer>
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
-                    <Title>{"Mondora"}</Title>
+                    <Title>{contentfulWorkWithUsPage.handbookTitle}</Title>
                     <MaxWidthContainer>
                         <Subtitle center={[true, true]}>
                             {
-                                "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place throug software solutions."
+                                contentfulWorkWithUsPage.handbookDescription
+                                    .handbookDescription
                             }
                         </Subtitle>
                     </MaxWidthContainer>

@@ -17,6 +17,7 @@
         "gatsby-source-filesystem": "^2.1.47",
         "gatsby-source-instagram": "^0.8.0",
         "gatsby-source-rss-feed": "^1.1.1",
+        "gatsby-transformer-remark": "^2.8.28",
         "gatsby-transformer-sharp": "^2.3.13",
         "google-map-react": "^1.1.5",
         "gsap": "^3.2.4",
@@ -28,6 +29,7 @@
         "react-slick": "^0.25.2",
         "reflexbox": "^4.0.6",
         "rehooks": "^0.0.4",
+        "rehype-react": "^6.1.0",
         "sharp": "^0.24.0",
         "slick-carousel": "^1.8.1",
         "styled-components": "^5.0.0"
