@@ -18,43 +18,9 @@ import Divider from "../../components/divider";
 import BenefitCarousel from "../../components/benefit-carousel";
 import ImpactReport from "../../components/impact-report";
 
-import HireBittoGraphic from "../../../static/images/hirebitto.png";
-import Cycle2WorkGraphic from "../../../static/images/c2w.png";
-import FarmingGraphic from "../../../static/images/farmers.png";
-
 const marginSubtitle = styled(Subtitle)`
     margin: 32px 0 0 0;
 `;
-
-const projects = [
-    {
-        title: "Cycle2Work",
-        caption: "For a healthier, happier world",
-        text:
-            "Cycle2Work.io is an app that rewards employees for commuting to work, whilst safeguarding the environment. It’s connected to the app Strava, where people can join their company team and earn € 0.20/km for cycling rather than driving to the office, as well as saving an average of 4.32 kg of CO2 each day! If you would like your company to take part in the programme, get in touch! ",
-        link: "http://www.hirebitto.com/",
-        button: "Visit Website",
-        graphic: Cycle2WorkGraphic
-    },
-    {
-        title: "HireBitto",
-        caption: "Each one of us is responsible",
-        text:
-            "HireBitto is a project which benefits local farmers and cheesemakers who choose to work with traditional methods, without the use of chemicals or industrial machinery. For every new employee, the company buys a wheel of Storico Ribelle cheese. Once matured, the cheese is auctioned and the earnings are reinvested in the community. The cheese is paid for by mondora, but it belongs to the community. The employee is responsible for this benefit creation process.",
-        link: "http://www.hirebitto.com/",
-        button: "Visit Website",
-        graphic: HireBittoGraphic
-    },
-    {
-        title: "Hire a Farmer",
-        caption: "Cultivating the soil",
-        text:
-            "mondora has a policy whereby for every 20 employees, the company hires a farmer to work the land and grow organic produce. There is a clause in all work contracts from 2017 onwards that states the joint responsibility of the company and the employee to ensure that this policy is upheld. We hire farmers because we believe their work is extremely important: without farming we would not be able to nourish ourselves, live a healthy life and get our work done!",
-        link: "https://www.youtube.com/watch?v=joSs4zWNNpw",
-        button: "Watch video",
-        graphic: FarmingGraphic
-    }
-];
 
 const faqs = [
     {
@@ -179,6 +145,21 @@ const BCorp = () => {
                     }
                 }
                 projectsTitle
+                benefitProjects {
+                    link
+                    buttonText
+                    motto
+                    projectName
+                    description {
+                        description
+                    }
+                    projectGraphics {
+                        title
+                        fluid(quality: 100) {
+                            ...GatsbyContentfulFluid
+                        }
+                    }
+                }
                 faqsTitle
                 reportsTitle
             }
@@ -220,7 +201,7 @@ const BCorp = () => {
             </BackgroundStripe>
 
             <Title center={true}>{contentfulImpactPage.projectsTitle}</Title>
-            <BenefitCarousel projects={projects} />
+            <BenefitCarousel projects={contentfulImpactPage.benefitProjects} />
 
             <MaxWidthContainer pb={5} justifyContent="center">
                 <MaxWidthContainer p={4}>
