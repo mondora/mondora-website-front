@@ -70,44 +70,8 @@ const carouselSettings = {
     ]
 };
 
-const reasons = [
-    { empty: true },
-    {
-        number: "01",
-        title: "Self managed work",
-        description:
-            "you will be working with a team and organising work together."
-    },
-    {
-        number: "02",
-        title: "Remote work",
-        description:
-            "The possibility to work remotely wherever you want (from home, from the sea, from an alpin refuge…), to make you happier and lower your stress level."
-    },
-    {
-        number: "03",
-        title: "Continuous learning",
-        description:
-            "Keep improving your skillset by collaborating with different peers coming from various backgrounds and by following specific training courses."
-    },
-    {
-        number: "04",
-        title: "Bring your impact",
-        description:
-            "Bring you passions inside mondora so that we can work together toward creating positive impact!"
-    },
-    { empty: true },
-    { empty: true },
-    {
-        number: "05",
-        title: "Try out new technologies",
-        description:
-            "Choose the best tools to acomplish your goals and share what you find interesting with your peers through an article on the blog or a 4to5."
-    }
-];
-
 const WorkWithUs = () => {
-    const { allInstaNode } = useStaticQuery(graphql`
+    const { allInstaNode, contentfulWorkWithUsPage } = useStaticQuery(graphql`
         query ScrapingQuery {
             allInstaNode(limit: 12) {
                 edges {
@@ -130,20 +94,43 @@ const WorkWithUs = () => {
                     }
                 }
             }
+            contentfulWorkWithUsPage {
+                handbookButton
+                handbookLink
+                handbookDescription {
+                    handbookDescription
+                }
+                reasonsTitle
+                reasons {
+                    empty
+                    number
+                    reason
+                    description
+                }
+                title
+                metaDescr {
+                    metaDescr
+                }
+                metaTitle {
+                    metaTitle
+                }
+            }
         }
     `);
+
+    console.log(contentfulWorkWithUsPage);
 
     return (
         <Layout>
             <PageMetadata
-                title="Join the :m team! - Work with us - mondora"
-                description="We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place throug software solutions."
+                title={contentfulWorkWithUsPage.metaTitle.metaTitle}
+                description={contentfulWorkWithUsPage.metaDescr.metaDescr}
             />
             <MaxWidthContainer>
                 <BackgroundStripe>
                     <Section header={true}>
                         <Section.LeftContainer>
-                            <Title>{"Join the :m team!"}</Title>
+                            <Title>{contentfulWorkWithUsPage.title}</Title>
                             <Subtitle margin="32px 0 0 0">
                                 {
                                     "We are a diverse team of passionate people putting our unique skills to work towards a shared purpose: making the world a better place through innovation, technology and software solutions."
@@ -185,8 +172,10 @@ const WorkWithUs = () => {
                             }
                         </Subtitle>
                     </MaxWidthContainer>
-                    <SuperA href={"https://github.com/mondora/handbook"}>
-                        <SquareButton>{"OUR HANDBOOK"}</SquareButton>
+                    <SuperA href={contentfulWorkWithUsPage.handbookLink}>
+                        <SquareButton>
+                            {contentfulWorkWithUsPage.handbookButton}
+                        </SquareButton>
                     </SuperA>
                 </MaxWidthContainer>
             </BackgroundStripe>
@@ -212,28 +201,31 @@ const WorkWithUs = () => {
             </MaxWidthContainer>
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
-                    <Title>{"Why work with us?"}</Title>
+                    <Title>{contentfulWorkWithUsPage.reasonsTitle}</Title>
+
                     <Flex flexWrap="wrap" padding={-4}>
-                        {reasons.map((reason, index) => (
-                            <Flex
-                                key={index}
-                                width={[1, 1 / 2, 1 / 3]}
-                                flexDirection="column"
-                                padding={4}
-                            >
-                                {!reason.empty && (
-                                    <>
-                                        <ReasonNumber>
-                                            {reason.number}
-                                        </ReasonNumber>
-                                        <Title>{reason.title}</Title>
-                                        <Subtitle>
-                                            {reason.description}
-                                        </Subtitle>
-                                    </>
-                                )}
-                            </Flex>
-                        ))}
+                        {contentfulWorkWithUsPage.reasons.map(
+                            (reason, index) => (
+                                <Flex
+                                    key={index}
+                                    width={[1, 1 / 2, 1 / 3]}
+                                    flexDirection="column"
+                                    padding={4}
+                                >
+                                    {!reason.empty && (
+                                        <>
+                                            <ReasonNumber>
+                                                {reason.number}
+                                            </ReasonNumber>
+                                            <Title>{reason.reason}</Title>
+                                            <Subtitle>
+                                                {reason.description}
+                                            </Subtitle>
+                                        </>
+                                    )}
+                                </Flex>
+                            )
+                        )}
                     </Flex>
                 </MaxWidthContainer>
             </BackgroundStripe>
