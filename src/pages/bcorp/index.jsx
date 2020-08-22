@@ -1,5 +1,10 @@
 import React from "react";
 
+import rehypeReact from "rehype-react";
+import { graphql, useStaticQuery } from "gatsby";
+
+import styled from "styled-components";
+
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
 import PageMetadata from "../../components/page-metadata";
@@ -16,6 +21,10 @@ import ImpactReport from "../../components/impact-report";
 import HireBittoGraphic from "../../../static/images/hirebitto.png";
 import Cycle2WorkGraphic from "../../../static/images/c2w.png";
 import FarmingGraphic from "../../../static/images/farmers.png";
+
+const marginSubtitle = styled(Subtitle)`
+    margin: 32px 0 0 0;
+`;
 
 const projects = [
     {
@@ -141,63 +150,104 @@ const reports = [
     }
 ];
 
-const BCorp = () => (
-    <Layout>
-        <PageMetadata
-            title="Let’s change the world together - Certified B Corp company - :mondora"
-            description="In mondora we all work towards a shared purpose: making the world a better place. "
-        />
-        <BackgroundStripe>
-            <MaxWidthContainer>
-                <Section header={true}>
-                    <Section.LeftContainer>
-                        <Title>{"Mondora impact"}</Title>
-                        <Subtitle margin="32px 0">
-                            {
-                                "In mondora we all work towards a shared purpose: making the world a better place. In fact, if you want to join the team, you first have to tell us how you will contribute to changing the world. You can focus on whatever you are most passionate about: an environmental issue, the local community, giving free coding classes to kids, teaching something to your colleagues… anything that has an impact!"
-                            }
-                        </Subtitle>
-                    </Section.LeftContainer>
+const BCorp = () => {
+    const { contentfulImpactPage } = useStaticQuery(graphql`
+        query {
+            contentfulImpactPage {
+                metaDescr {
+                    metaDescr
+                }
+                metaTitle {
+                    metaTitle
+                }
+                leftHeader {
+                    childMarkdownRemark {
+                        headings {
+                            id
+                            value
+                        }
+                        htmlAst
+                    }
+                }
+                rightHeader {
+                    childMarkdownRemark {
+                        headings {
+                            id
+                            value
+                        }
+                        htmlAst
+                    }
+                }
+                projectsTitle
+                faqsTitle
+                reportsTitle
+            }
+        }
+    `);
 
-                    <Section.DividerContainer>
-                        <Divider />
-                    </Section.DividerContainer>
+    const renderAst = new rehypeReact({
+        createElement: React.createElement,
+        components: { h1: JumboTitle, h2: Title, p: marginSubtitle }
+    }).Compiler;
 
-                    <Section.RightContainer>
-                        <JumboTitle>
-                            {"Let’s change the world together"}
-                        </JumboTitle>
-                    </Section.RightContainer>
-                </Section>
-            </MaxWidthContainer>
-        </BackgroundStripe>
+    return (
+        <Layout>
+            <PageMetadata
+                title={contentfulImpactPage.metaTitle.metaTitle}
+                description={contentfulImpactPage.metaDescr.metaDescr}
+            />
+            <BackgroundStripe>
+                <MaxWidthContainer>
+                    <Section header={true}>
+                        <Section.LeftContainer>
+                            {renderAst(
+                                contentfulImpactPage.leftHeader
+                                    .childMarkdownRemark.htmlAst
+                            )}
+                        </Section.LeftContainer>
 
-        <Title center={true}>{"Benefit Projects"}</Title>
-        <BenefitCarousel projects={projects} />
+                        <Section.DividerContainer>
+                            <Divider />
+                        </Section.DividerContainer>
+                        <Section.RightContainer>
+                            {renderAst(
+                                contentfulImpactPage.rightHeader
+                                    .childMarkdownRemark.htmlAst
+                            )}
+                        </Section.RightContainer>
+                    </Section>
+                </MaxWidthContainer>
+            </BackgroundStripe>
 
-        <MaxWidthContainer pb={5} justifyContent="center">
-            <MaxWidthContainer p={4}>
-                <Title center={true}>{"FAQ"}</Title>
-            </MaxWidthContainer>
-            {faqs.map((faq, i) => (
-                <FaqElement
-                    key={i}
-                    question={faq.question}
-                    answer={faq.answer}
-                    details={faq.details}
-                />
-            ))}
-        </MaxWidthContainer>
+            <Title center={true}>{contentfulImpactPage.projectsTitle}</Title>
+            <BenefitCarousel projects={projects} />
 
-        <BackgroundStripe theme="light">
-            <Title center={true}>{"Impact reports"}</Title>
-            <MaxWidthContainer justifyContent="space-around">
-                {reports.map(report => (
-                    <ImpactReport key={report.year} report={report} />
+            <MaxWidthContainer pb={5} justifyContent="center">
+                <MaxWidthContainer p={4}>
+                    <Title center={true}>
+                        {contentfulImpactPage.faqsTitle}
+                    </Title>
+                </MaxWidthContainer>
+                {faqs.map((faq, i) => (
+                    <FaqElement
+                        key={i}
+                        question={faq.question}
+                        answer={faq.answer}
+                        details={faq.details}
+                    />
                 ))}
             </MaxWidthContainer>
-        </BackgroundStripe>
-    </Layout>
-);
+
+            <BackgroundStripe theme="light">
+                <Title center={true}>{contentfulImpactPage.reportsTitle}</Title>
+                <MaxWidthContainer justifyContent="space-around">
+                    {reports.map(report => (
+                        <ImpactReport key={report.year} report={report} />
+                    ))}
+                </MaxWidthContainer>
+            </BackgroundStripe>
+        </Layout>
+    );
+};
 
 export default BCorp;
