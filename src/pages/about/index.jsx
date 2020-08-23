@@ -1,5 +1,7 @@
 import React from "react";
 
+import { graphql, useStaticQuery } from "gatsby";
+
 import Layout from "../../components/layout";
 import PageMetadata from "../../components/page-metadata";
 
@@ -8,17 +10,45 @@ import WhoWeAre from "../../components/pages/about-us/who-we-are";
 import WhereDoWeComeFrom from "../../components/pages/about-us/where-do-we-come-from";
 import WhereAreWeDreamingOfGoingTogether from "../../components/pages/about-us/where-are-we-dreaming-of-going-together";
 
-const About = () => (
-    <Layout>
-        <PageMetadata
-            title="Software and advisory company specilized in custom cloud solutions - mondora"
-            description="mondora: a passionate and dedicated team of over 60 full-stack software developers, UX designers, system administrators… and a few farmers!"
-        />
-        <Header />
-        <WhoWeAre />
-        <WhereDoWeComeFrom />
-        <WhereAreWeDreamingOfGoingTogether />
-    </Layout>
-);
+const About = () => {
+    const { contentfulAboutUsPage } = useStaticQuery(graphql`
+        query {
+            contentfulAboutUsPage {
+                id
+                metaDescr {
+                    metaDescr
+                }
+                metaTitle {
+                    metaTitle
+                }
+                rightHeader {
+                    childMarkdownRemark {
+                        htmlAst
+                    }
+                }
+                leftHeader {
+                    childMarkdownRemark {
+                        htmlAst
+                    }
+                }
+            }
+        }
+    `);
+
+    console.log(contentfulAboutUsPage);
+
+    return (
+        <Layout>
+            <PageMetadata
+                title={contentfulAboutUsPage.metaTitle.metaTitle}
+                description={contentfulAboutUsPage.metaDescr.metaDescr}
+            />
+            <Header />
+            <WhoWeAre />
+            <WhereDoWeComeFrom />
+            <WhereAreWeDreamingOfGoingTogether />
+        </Layout>
+    );
+};
 
 export default About;
