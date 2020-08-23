@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
+import rehypeReact from "rehype-react";
+
 import styled, { css } from "styled-components";
 
 import Subtitle from "../subtitle";
@@ -39,8 +41,13 @@ const Detail = styled.li`
     margin: 8px;
 `;
 
-const FaqElement = ({ question, answer, details }) => {
+const FaqElement = ({ question, answer }) => {
     const [open, setOpen] = useState(false);
+
+    const renderAst = new rehypeReact({
+        createElement: React.createElement,
+        components: { li: Detail, p: Subtitle }
+    }).Compiler;
 
     return (
         <div>
@@ -52,18 +59,7 @@ const FaqElement = ({ question, answer, details }) => {
                 />
             </QuestionWrapper>
             <Answer open={open}>
-                <Subtitle>
-                    {answer}
-                    <ul>
-                        {details &&
-                            details.map((detail, i) => (
-                                <Detail key={i}>
-                                    <b>{detail.title}</b>
-                                    {detail.description}
-                                </Detail>
-                            ))}
-                    </ul>
-                </Subtitle>
+                <Subtitle>{renderAst(answer)}</Subtitle>
             </Answer>
         </div>
     );
@@ -71,8 +67,7 @@ const FaqElement = ({ question, answer, details }) => {
 
 FaqElement.propTypes = {
     question: PropTypes.string,
-    answer: PropTypes.string,
-    details: PropTypes.array
+    answer: PropTypes.object
 };
 
 export default FaqElement;
