@@ -1,26 +1,16 @@
 import React from "react";
 
-import rehypeReact from "rehype-react";
 import { graphql, useStaticQuery } from "gatsby";
 
-import styled from "styled-components";
-
+import Header from "../../components/header";
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
 import PageMetadata from "../../components/page-metadata";
 import Title from "../../components/title";
-import Subtitle from "../../components/subtitle";
-import JumboTitle from "../../components/jumbo-title";
 import BackgroundStripe from "../../components/background-stripe";
 import FaqElement from "../../components/faq-element";
-import Section from "../../components/section";
-import Divider from "../../components/divider";
 import BenefitCarousel from "../../components/benefit-carousel";
 import ImpactReport from "../../components/impact-report";
-
-const marginSubtitle = styled(Subtitle)`
-    margin: 32px 0 0 0;
-`;
 
 const BCorp = () => {
     const { contentfulImpactPage } = useStaticQuery(graphql`
@@ -88,39 +78,20 @@ const BCorp = () => {
         }
     `);
 
-    const renderAst = new rehypeReact({
-        createElement: React.createElement,
-        components: { h1: JumboTitle, h2: Title, p: marginSubtitle }
-    }).Compiler;
-
     return (
         <Layout>
             <PageMetadata
                 title={contentfulImpactPage.metaTitle.metaTitle}
                 description={contentfulImpactPage.metaDescr.metaDescr}
             />
-            <BackgroundStripe>
-                <MaxWidthContainer>
-                    <Section header={true}>
-                        <Section.LeftContainer>
-                            {renderAst(
-                                contentfulImpactPage.leftHeader
-                                    .childMarkdownRemark.htmlAst
-                            )}
-                        </Section.LeftContainer>
-
-                        <Section.DividerContainer>
-                            <Divider />
-                        </Section.DividerContainer>
-                        <Section.RightContainer>
-                            {renderAst(
-                                contentfulImpactPage.rightHeader
-                                    .childMarkdownRemark.htmlAst
-                            )}
-                        </Section.RightContainer>
-                    </Section>
-                </MaxWidthContainer>
-            </BackgroundStripe>
+            <Header
+                left={
+                    contentfulImpactPage.leftHeader.childMarkdownRemark.htmlAst
+                }
+                right={
+                    contentfulImpactPage.rightHeader.childMarkdownRemark.htmlAst
+                }
+            />
 
             <Title center={true}>{contentfulImpactPage.projectsTitle}</Title>
             <BenefitCarousel projects={contentfulImpactPage.benefitProjects} />

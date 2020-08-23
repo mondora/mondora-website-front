@@ -1,6 +1,5 @@
 import React from "react";
 
-import rehypeReact from "rehype-react";
 import { graphql, useStaticQuery } from "gatsby";
 
 import styled from "styled-components";
@@ -9,8 +8,7 @@ import { Flex, Box } from "reflexbox";
 
 import PageMetadata from "../../components/page-metadata";
 import SquareButton from "../../components/square-button";
-import Section from "../../components/section";
-import Divider from "../../components/divider";
+import Header from "../../components/header";
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
 import BackgroundStripe from "../../components/background-stripe";
@@ -18,13 +16,8 @@ import Subtitle from "../../components/subtitle";
 import Title from "../../components/title";
 import FullWidthImage from "../../components/full-width-image";
 import Carousel from "../../components/carousel";
-import JumboTitle from "../../components/jumbo-title";
 
 import SwirlSeparator from "../../../static/images/separator.svg";
-
-const marginSubtitle = styled(Subtitle)`
-    margin: 32px 0 0 0;
-`;
 
 const SuperA = styled.a`
     text-decoration: none;
@@ -141,40 +134,22 @@ const WorkWithUs = () => {
         }
     `);
 
-    const renderAst = new rehypeReact({
-        createElement: React.createElement,
-        components: { h1: JumboTitle, h2: Title, p: marginSubtitle }
-    }).Compiler;
-
     return (
         <Layout>
             <PageMetadata
                 title={contentfulWorkWithUsPage.metaTitle.metaTitle}
                 description={contentfulWorkWithUsPage.metaDescr.metaDescr}
             />
-            <MaxWidthContainer>
-                <BackgroundStripe>
-                    <Section header={true}>
-                        <Section.LeftContainer>
-                            {renderAst(
-                                contentfulWorkWithUsPage.leftHeader
-                                    .childMarkdownRemark.htmlAst
-                            )}
-                        </Section.LeftContainer>
-
-                        <Section.DividerContainer>
-                            <Divider />
-                        </Section.DividerContainer>
-
-                        <Section.RightContainer>
-                            {renderAst(
-                                contentfulWorkWithUsPage.rightHeader
-                                    .childMarkdownRemark.htmlAst
-                            )}
-                        </Section.RightContainer>
-                    </Section>
-                </BackgroundStripe>
-            </MaxWidthContainer>
+            <Header
+                left={
+                    contentfulWorkWithUsPage.leftHeader.childMarkdownRemark
+                        .htmlAst
+                }
+                right={
+                    contentfulWorkWithUsPage.rightHeader.childMarkdownRemark
+                        .htmlAst
+                }
+            />
             <MaxWidthContainer justifyContent={"center"}>
                 <Box width={[1 / 2, 1 / 4, 0]}>
                     <img alt="" src={SwirlSeparator} />
