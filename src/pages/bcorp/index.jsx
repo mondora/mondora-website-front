@@ -22,27 +22,6 @@ const marginSubtitle = styled(Subtitle)`
     margin: 32px 0 0 0;
 `;
 
-const reports = [
-    {
-        year: "2017",
-        title: "Impact Report 2017",
-        button: "Read report >",
-        to: "../impact-reports/impact-report-2017.pdf"
-    },
-    {
-        year: "2018",
-        title: "Impact Report 2018",
-        button: "Read report >",
-        to: "../impact-reports/impact-report-2017.pdf"
-    },
-    {
-        year: "2019",
-        title: "Impact Report 2019",
-        button: "Read report >",
-        to: "https://app.gitbook.com/@mondora/s/relazione-di-impatto-2019/"
-    }
-];
-
 const BCorp = () => {
     const { contentfulImpactPage } = useStaticQuery(graphql`
         query {
@@ -99,6 +78,12 @@ const BCorp = () => {
                     }
                 }
                 reportsTitle
+                impactReports {
+                    buttonLink
+                    buttonText
+                    title
+                    year
+                }
             }
         }
     `);
@@ -158,7 +143,7 @@ const BCorp = () => {
             <BackgroundStripe theme="light">
                 <Title center={true}>{contentfulImpactPage.reportsTitle}</Title>
                 <MaxWidthContainer justifyContent="space-around">
-                    {reports.map(report => (
+                    {contentfulImpactPage.impactReports.map(report => (
                         <ImpactReport key={report.year} report={report} />
                     ))}
                 </MaxWidthContainer>

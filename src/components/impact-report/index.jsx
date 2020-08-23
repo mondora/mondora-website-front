@@ -45,8 +45,8 @@ export const ImpactReport = ({ report }) => (
 
             <ReportDescription>
                 <ParagraphTitle>{report.title}</ParagraphTitle>
-                <a href={report.to}>
-                    <SquareButton theme={"light"}>{report.button}</SquareButton>
+                <a href={report.buttonLink}>
+                    <SquareButton theme={"light"}>{report.buttonText}</SquareButton>
                 </a>
             </ReportDescription>
         </Flex>
