@@ -52,6 +52,11 @@ const Homepage = () => {
                         description
                     }
                 }
+                blogTitle
+                blogButton {
+                    link
+                    text
+                }
             }
         }
     `);
@@ -75,7 +80,10 @@ const Homepage = () => {
                             .htmlAst
                     }
                 />
-                <Blog />
+                <Blog
+                    title={contentfulHomepage.blogTitle}
+                    button={contentfulHomepage.blogButton}
+                />
                 <Benefit />
                 <About />
             </ThemeProvider>
