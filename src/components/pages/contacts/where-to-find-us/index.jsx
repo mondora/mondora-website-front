@@ -51,17 +51,17 @@ const WhereToFindUs = ({ contacts }) => {
                         margin={1}
                         justifyContent={["center", "center", "flex-start"]}
                     >
-                        {Socials.map(social => {
-                            if (social.href)
-                                return (
+                        {Socials.map(
+                            social =>
+                                social.href && (
                                     <Flex margin={1} key={social.icon}>
                                         <SocialLink
                                             theme={"dark"}
                                             {...social}
                                         />
                                     </Flex>
-                                );
-                        })}
+                                )
+                        )}
                     </Flex>
                 </Subtitle>
             </Box>
