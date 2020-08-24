@@ -1,9 +1,9 @@
 import React from "react";
 
+import { graphql, useStaticQuery } from "gatsby";
 import { useLocalStorageState } from "@umijs/hooks";
 
 import styled from "styled-components";
-
 import { Flex, Box } from "reflexbox";
 
 import Subtitle from "../../subtitle";
@@ -23,6 +23,16 @@ export const Container = styled.div`
 
 const CookiesAlert = () => {
     const [isCookieOk, setCookieOk] = useLocalStorageState("isCookieOk", false);
+    const { contentfulCookiesMessage } = useStaticQuery(graphql`
+        query {
+            contentfulCookiesMessage {
+                buttonText
+                text {
+                    text
+                }
+            }
+        }
+    `);
 
     return (
         !isCookieOk && (
@@ -30,14 +40,12 @@ const CookiesAlert = () => {
                 <Flex margin={3} flexDirection="column">
                     <Box m={1}>
                         <Subtitle>
-                            {
-                                "Questo sito fa uso di cookie per migliorare l’esperienza di navigazione degli utenti e per raccogliere informazioni sull’utilizzo del sito stesso. Proseguendo nella navigazione si accetta l’uso dei cookie; in caso contrario è possibile abbandonare il sito."
-                            }
+                            {contentfulCookiesMessage.text.text}
                         </Subtitle>
                     </Box>
                     <Flex m={1}>
                         <SquareButton onClick={() => setCookieOk(true)}>
-                            {"Continua la navigazione"}
+                            {contentfulCookiesMessage.buttonText}
                         </SquareButton>
                     </Flex>
                 </Flex>
