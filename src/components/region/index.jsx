@@ -5,7 +5,7 @@ import { Link } from "gatsby";
 
 import styled from "styled-components";
 
-import Underline from "../../../static/images/separator.svg";
+import Underline from "../../images/separator.svg";
 
 const RegionContainer = styled.div`
     background-color: white;

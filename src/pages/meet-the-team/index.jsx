@@ -13,7 +13,7 @@ import Title from "../../components/title";
 import Subtitle from "../../components/subtitle";
 import JumboTitle from "../../components/jumbo-title";
 
-import Logo from "../../../static/images/regions/Japan-icon.png";
+import Logo from "../../images/logo-square.png";
 
 const Regions = [
     {

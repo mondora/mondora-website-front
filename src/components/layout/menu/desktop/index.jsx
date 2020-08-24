@@ -18,7 +18,7 @@ const SuperLink = styled(AniLink)`
     margin-right: 16px;
 
     &.active {
-        background-image: url(${require("../../../../../static/images/underlines.svg")});
+        background-image: url(${require("../../../../images/underlines.svg")});
         background-repeat: no-repeat;
         background-size: 48px;
         background-position-y: bottom;

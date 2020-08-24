@@ -14,7 +14,7 @@ import SubtleTitle from "../../../subtle-title";
 
 import Voice from "../voice";
 
-import Underline from "../../../../../static/images/separator.svg";
+import Underline from "../../../../images/separator.svg";
 
 const DividerSwirl = styled.img`
     width: 20%;

@@ -3,7 +3,7 @@ import PropTypes, { number } from "prop-types";
 
 import GoogleMapReact from "google-map-react";
 
-import PointerSrc from "../../../static/images/pointer.svg";
+import PointerSrc from "../../images/pointer.svg";
 import { MapContainer, PointerImg } from "./styled";
 
 const ContactsMap = ({ position, zoom }) => {

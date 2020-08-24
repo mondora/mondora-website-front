@@ -17,7 +17,7 @@ import Title from "../../components/title";
 import FullWidthImage from "../../components/full-width-image";
 import Carousel from "../../components/carousel";
 
-import SwirlSeparator from "../../../static/images/separator.svg";
+import SwirlSeparator from "../../images/separator.svg";
 
 const SuperA = styled.a`
     text-decoration: none;
