@@ -49,7 +49,7 @@ const Voice = ({ title, description, dark }) => {
                 </ParagraphTitle>
                 <Bob>
                     <FeatherIcon
-                        color={dark && "var(--white)"}
+                        color={dark ? "var(--white)" : ""}
                         size={32}
                         name={open ? "chevron-up" : "chevron-down"}
                     />

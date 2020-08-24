@@ -6,9 +6,7 @@ import Layout from "../../components/layout";
 import PageMetadata from "../../components/page-metadata";
 
 import Header from "../../components/header";
-import WhoWeAre from "../../components/pages/about-us/who-we-are";
-import WhereDoWeComeFrom from "../../components/pages/about-us/where-do-we-come-from";
-import WhereAreWeDreamingOfGoingTogether from "../../components/pages/about-us/where-are-we-dreaming-of-going-together";
+import AboutSection from "../../components/pages/about-us/about-section";
 
 const About = () => {
     const { contentfulAboutUsPage } = useStaticQuery(graphql`
@@ -31,6 +29,30 @@ const About = () => {
                         htmlAst
                     }
                 }
+                sections {
+                    sectionName
+                    imageRight
+                    darkTheme
+                    title
+                    description {
+                        description
+                    }
+                    subtitle {
+                        subtitle
+                    }
+                    voices {
+                        title
+                        description {
+                            description
+                        }
+                    }
+                    graphic {
+                        title
+                        fluid(quality: 100) {
+                            ...GatsbyContentfulFluid
+                        }
+                    }
+                }
             }
         }
     `);
@@ -50,9 +72,10 @@ const About = () => {
                         .htmlAst
                 }
             />
-            <WhoWeAre />
-            <WhereDoWeComeFrom />
-            <WhereAreWeDreamingOfGoingTogether />
+
+            {contentfulAboutUsPage.sections.map((section, i) => (
+                <AboutSection section={section} key={i} />
+            ))}
         </Layout>
     );
 };
