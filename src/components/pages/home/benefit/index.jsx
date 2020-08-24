@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Link, useStaticQuery, graphql } from "gatsby";
+import PropTypes from "prop-types";
+import { Link } from "gatsby";
 
 import { Box } from "reflexbox";
 
@@ -12,44 +13,32 @@ import Subtitle from "../../../subtitle";
 import Title from "../../../title";
 import SquareButton from "../../../square-button";
 
-const Benefit = () => {
-    const { impactImage } = useStaticQuery(graphql`
-        query {
-            impactImage: file(relativePath: { eq: "home/impact.png" }) {
-                childImageSharp {
-                    fluid {
-                        ...GatsbyImageSharpFluid
-                    }
-                }
-            }
-        }
-    `);
+const Benefit = ({ data }) => (
+    <MaxWidthContainer>
+        <Section>
+            <Section.DividerContainer>
+                <Divider hideOnMobile={true} />
+            </Section.DividerContainer>
+            <Section.RightContainer>
+                <Box my={48} backgroundColor="white">
+                    <Title>{data.sectionName}</Title>
+                    <Subtitle margin="32px 0">
+                        {data.description.description}
+                    </Subtitle>
+                    <Link to={data.button.link}>
+                        <SquareButton>{data.button.text}</SquareButton>
+                    </Link>
+                </Box>
+            </Section.RightContainer>
+        </Section>
+        <Box width={[0, 1]}>
+            <FullWidthImage fluid={data.graphic.fluid} />
+        </Box>
+    </MaxWidthContainer>
+);
 
-    return (
-        <MaxWidthContainer>
-            <Section>
-                <Section.DividerContainer>
-                    <Divider hideOnMobile={true} />
-                </Section.DividerContainer>
-                <Section.RightContainer>
-                    <Box my={48} backgroundColor="white">
-                        <Title>{"Benefit projects"}</Title>
-                        <Subtitle margin="32px 0">
-                            {
-                                "We are a team of open-minded and kind people who always offer each other help to overcome obstacles and create cutting edge solutions to problems."
-                            }
-                        </Subtitle>
-                        <Link to="/bcorp">
-                            <SquareButton>{"IMPACT"}</SquareButton>
-                        </Link>
-                    </Box>
-                </Section.RightContainer>
-            </Section>
-            <Box width={[0, 1]}>
-                <FullWidthImage fluid={impactImage.childImageSharp.fluid} />
-            </Box>
-        </MaxWidthContainer>
-    );
+Benefit.propTypes = {
+    data: PropTypes.object
 };
 
 export default Benefit;

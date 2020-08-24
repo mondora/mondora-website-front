@@ -57,6 +57,36 @@ const Homepage = () => {
                     link
                     text
                 }
+                aboutSection {
+                    sectionName
+                    button {
+                        link
+                        text
+                    }
+                    description {
+                        description
+                    }
+                    graphic {
+                        fluid(quality: 100) {
+                            ...GatsbyContentfulFluid
+                        }
+                    }
+                }
+                benefitSection {
+                    sectionName
+                    button {
+                        link
+                        text
+                    }
+                    description {
+                        description
+                    }
+                    graphic {
+                        fluid(quality: 100) {
+                            ...GatsbyContentfulFluid
+                        }
+                    }
+                }
             }
         }
     `);
@@ -84,7 +114,7 @@ const Homepage = () => {
                     title={contentfulHomepage.blogTitle}
                     button={contentfulHomepage.blogButton}
                 />
-                <Benefit />
+                <Benefit data={contentfulHomepage.benefitSection} />
                 <About />
             </ThemeProvider>
         </Layout>
