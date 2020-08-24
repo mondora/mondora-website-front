@@ -73,6 +73,17 @@ const MobileMenu = () => {
                         </MenuLink>
                     </MenuItem>
                 ))}
+                <MenuItem background={"dark"}>
+                    <BlogLink
+                        as="a"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://bcalmbcorp.com/remote-working-dalla-programmazione-al-caff%C3%A8-virtuale-come-si-fa-in-mondora-adf42dc5e43d"
+                    >
+                        {"REMOTE CULTURE"}
+                    </BlogLink>
+                </MenuItem>
+
                 <MenuItem background={"light"}>
                     <BlogLink
                         target="_blank"
