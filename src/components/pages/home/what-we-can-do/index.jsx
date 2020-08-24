@@ -1,8 +1,10 @@
 import React from "react";
 
-import { Box } from "reflexbox";
+import rehypeReact from "rehype-react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
-import { useStaticQuery, graphql } from "gatsby";
+import { Box } from "reflexbox";
 import Image from "gatsby-image";
 
 import Title from "../../../title";
@@ -11,72 +13,48 @@ import ParagraphTitle from "../../../paragraph-title";
 import MaxWidthContainer from "../../../max-width-container";
 import BackgroundStripe from "../../../background-stripe";
 
-const WhatWeCanDo = () => {
-    const { bCorpImage } = useStaticQuery(graphql`
-        query {
-            bCorpImage: file(relativePath: { eq: "home/b-corp-logo.png" }) {
-                childImageSharp {
-                    fixed(width: 80) {
-                        ...GatsbyImageSharpFixed
-                    }
-                }
-            }
-        }
-    `);
+const MarginSubtitle = styled(Subtitle)`
+    margin: 16px 24px 0 24px;
+    text-align: center;
+`;
+const CenterTitle = styled(Title)`
+    text-align: center;
+`;
 
-    return (
-        <BackgroundStripe>
-            <MaxWidthContainer justifyContent="center">
-                <Image fixed={bCorpImage.childImageSharp.fixed} />
-            </MaxWidthContainer>
-            <MaxWidthContainer justifyContent="center" mt={16}>
-                <Title>{"What we can do for you"}</Title>
-            </MaxWidthContainer>
+const renderAst = new rehypeReact({
+    createElement: React.createElement,
+    components: {
+        h2: CenterTitle,
+        p: MarginSubtitle
+    }
+}).Compiler;
 
-            <MaxWidthContainer textAlign="center" mt={16}>
-                <Subtitle>
-                    {
-                        "Our aim is to create benefit for all stakeholders through software solutions designed for positive impact. Together with our customers and suppliers, we support humans and nature with projects that benefit the community and land."
-                    }
-                </Subtitle>
-            </MaxWidthContainer>
+const WhatWeCanDo = ({ logo, reasons, paragraph }) => (
+    <BackgroundStripe>
+        <MaxWidthContainer justifyContent="center">
+            <Image fixed={logo} />
+        </MaxWidthContainer>
+        <MaxWidthContainer mt={16}>{renderAst(paragraph)}</MaxWidthContainer>
 
-            <MaxWidthContainer my={32}>
-                <Box width={[1, 1, 1 / 3]} pt={[24, 0]}>
+        <MaxWidthContainer my={32}>
+            {reasons.map((reason, i) => (
+                <Box key={i} width={[1, 1, 1 / 3]} px={[0, 0, 24]} pt={[24, 0]}>
                     <ParagraphTitle center={[true, false]}>
-                        {"Failure party"}
+                        {reason.title}
                     </ParagraphTitle>
                     <Subtitle center={[true, false]}>
-                        {
-                            "We are a team of explorers who are allowed to have failure parties when we try to learn something new and mess up."
-                        }
+                        {reason.description.description}
                     </Subtitle>
                 </Box>
+            ))}
+        </MaxWidthContainer>
+    </BackgroundStripe>
+);
 
-                <Box width={[1, 1, 1 / 3]} px={[0, 0, 24]} pt={[24, 0]}>
-                    <ParagraphTitle center={[true, false]}>
-                        {"Passions"}
-                    </ParagraphTitle>
-                    <Subtitle center={[true, false]}>
-                        {
-                            "This mix of qualities and passions allows us to push boundaries and keep learning and innovating. So if you have a challenging project for us… bring it on!"
-                        }
-                    </Subtitle>
-                </Box>
-
-                <Box width={[1, 1, 1 / 3]} pt={[24, 0]}>
-                    <ParagraphTitle center={[true, false]}>
-                        {"Experimenting"}
-                    </ParagraphTitle>
-                    <Subtitle center={[true, false]}>
-                        {
-                            "Right now we are experimenting with, and would like to work more on: machine learning, artificial intelligence, augmented reality, blockchain...and more"
-                        }
-                    </Subtitle>
-                </Box>
-            </MaxWidthContainer>
-        </BackgroundStripe>
-    );
+WhatWeCanDo.propTypes = {
+    logo: PropTypes.object,
+    reasons: PropTypes.array,
+    paragraph: PropTypes.object
 };
 
 export default WhatWeCanDo;

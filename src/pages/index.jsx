@@ -36,6 +36,22 @@ const Homepage = () => {
                         htmlAst
                     }
                 }
+                bcorpLogo {
+                    fixed(width: 80) {
+                        ...GatsbyContentfulFixed
+                    }
+                }
+                reasonsTitle {
+                    childMarkdownRemark {
+                        htmlAst
+                    }
+                }
+                reasons {
+                    title
+                    description {
+                        description
+                    }
+                }
             }
         }
     `);
@@ -51,7 +67,14 @@ const Homepage = () => {
                     }
                     rightImage={contentfulHomepage.rightImage.fluid}
                 />
-                <WhatWeCanDo />
+                <WhatWeCanDo
+                    logo={contentfulHomepage.bcorpLogo.fixed}
+                    reasons={contentfulHomepage.reasons}
+                    paragraph={
+                        contentfulHomepage.reasonsTitle.childMarkdownRemark
+                            .htmlAst
+                    }
+                />
                 <Blog />
                 <Benefit />
                 <About />

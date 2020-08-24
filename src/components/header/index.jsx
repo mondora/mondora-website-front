@@ -23,8 +23,7 @@ const renderAst = new rehypeReact({
     components: {
         h1: JumboTitle,
         h2: Title,
-        p: marginSubtitle,
-        img: FullWidthImage
+        p: marginSubtitle
     }
 }).Compiler;
 
