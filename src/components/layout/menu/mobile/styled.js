@@ -36,11 +36,13 @@ export const AnimatedMenu = styled.div`
 export const MenuLink = styled(Link)`
     text-decoration: none;
     color: var(--white);
+    text-transform: uppercase;
 `;
 
 export const BlogLink = styled.a`
     text-decoration: none;
     color: var(--white);
+    text-transform: uppercase;
 `;
 
 export const InlineLogo = styled(Image)`

@@ -1,4 +1,6 @@
 import React from "react";
+
+import PropTypes from "prop-types";
 import { useStaticQuery, graphql } from "gatsby";
 import AniLink from "gatsby-plugin-transition-link/AniLink";
 
@@ -33,34 +35,13 @@ const BlogButton = styled.a`
     text-decoration: none;
 `;
 
-const links = [
-    {
-        to: "/about",
-        text: "About Us"
-    },
-    {
-        to: "/bcorp",
-        text: "Impact"
-    },
-    {
-        to: "/work-with-us",
-        text: "Work with us"
-    },
-    {
-        to: "/contacts",
-        text: "Contacts"
-    }
-];
-
-const DesktopMenu = () => {
-    const { miniLogoImage } = useStaticQuery(graphql`
+const DesktopMenu = ({ internal, external, blog }) => {
+    const { contentfulMenu } = useStaticQuery(graphql`
         query {
-            miniLogoImage: file(
-                relativePath: { eq: "logo/extended-dark.png" }
-            ) {
-                childImageSharp {
+            contentfulMenu {
+                desktopLogo {
                     fixed(width: 156) {
-                        ...GatsbyImageSharpFixed
+                        ...GatsbyContentfulFixed
                     }
                 }
             }
@@ -70,14 +51,14 @@ const DesktopMenu = () => {
     return (
         <Flex my={32} justifyContent="space-between" alignItems="center">
             <AniLink to="/" paintDrip direction="none" color="white">
-                <Image fixed={miniLogoImage.childImageSharp.fixed} />
+                <Image fixed={contentfulMenu.desktopLogo.fixed} />
             </AniLink>
 
             <Flex justifyContent="space-between" alignItems="center">
-                {links.map((link, i) => (
+                {internal.map((link, i) => (
                     <SuperLink
                         key={i}
-                        to={link.to}
+                        to={link.link}
                         paintDrip
                         direction="none"
                         color="white"
@@ -87,25 +68,34 @@ const DesktopMenu = () => {
                     </SuperLink>
                 ))}
 
-                <SuperLink
-                    as="a"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://bcalmbcorp.com/remote-working-dalla-programmazione-al-caff%C3%A8-virtuale-come-si-fa-in-mondora-adf42dc5e43d"
-                >
-                    {"Remote Culture"}
-                </SuperLink>
+                {external.map((link, i) => (
+                    <SuperLink
+                        key={i}
+                        as="a"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={link.link}
+                    >
+                        {link.text}
+                    </SuperLink>
+                ))}
 
                 <BlogButton
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://bcalmbcorp.com/"
+                    href={blog.link}
                 >
-                    {"Blog :m"}
+                    {blog.text}
                 </BlogButton>
             </Flex>
         </Flex>
     );
+};
+
+DesktopMenu.propTypes = {
+    internal: PropTypes.array,
+    external: PropTypes.array,
+    blog: PropTypes.object
 };
 
 export default DesktopMenu;
