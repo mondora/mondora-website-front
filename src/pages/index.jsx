@@ -115,7 +115,7 @@ const Homepage = () => {
                     button={contentfulHomepage.blogButton}
                 />
                 <Benefit data={contentfulHomepage.benefitSection} />
-                <About />
+                <About data={contentfulHomepage.aboutSection} />
             </ThemeProvider>
         </Layout>
     );
