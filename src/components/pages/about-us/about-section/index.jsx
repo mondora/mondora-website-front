@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { useStaticQuery, graphql } from "gatsby";
 import { Flex } from "reflexbox";
+import styled from "styled-components";
 
 import Title from "../../../title";
 import Subtitle from "../../../subtitle";
@@ -14,15 +14,13 @@ import SubtleTitle from "../../../subtle-title";
 
 import Voice from "../voice";
 
-export const AboutSection = ({ section }) => {
-    const { underlinesImage } = useStaticQuery(graphql`
-        query {
-            underlinesImage: file(relativePath: { eq: "underlines.svg" }) {
-                publicURL
-            }
-        }
-    `);
+import Underline from "../../../../../static/images/separator.svg";
 
+const DividerSwirl = styled.img`
+    width: 20%;
+`;
+
+export const AboutSection = ({ section }) => {
     return (
         <BackgroundStripe theme={section.darkTheme ? "dark" : "light"}>
             <MaxWidthContainer>
@@ -44,6 +42,7 @@ export const AboutSection = ({ section }) => {
                                 >
                                     {section.description.description}
                                 </Subtitle>
+                                <DividerSwirl src={Underline} />
                             </SectionComponent.LeftContainer>
                             <SectionComponent.RightContainer>
                                 <FullWidthImage
@@ -75,12 +74,11 @@ export const AboutSection = ({ section }) => {
                                 >
                                     {section.description.description}
                                 </Subtitle>
+                                <DividerSwirl src={Underline} />
                             </SectionComponent.RightContainer>
                         </>
                     )}
                 </SectionComponent>
-
-                <FullWidthImage scr={underlinesImage.publicURL} />
 
                 <Flex flexWrap="wrap" padding={-2}>
                     {section.voices.map((voice, i) => (
