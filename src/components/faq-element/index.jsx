@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import rehypeReact from "rehype-react";
-
 import styled, { css } from "styled-components";
 
 import Subtitle from "../subtitle";
+import AstText from "../ast-text";
 
 import FeatherIcon from "../feather-icon";
 
@@ -37,17 +36,9 @@ const Answer = styled.div`
     transition: all ease 0.5s;
     overflow: hidden;
 `;
-const Detail = styled.li`
-    margin: 8px;
-`;
 
 const FaqElement = ({ question, answer }) => {
     const [open, setOpen] = useState(false);
-
-    const renderAst = new rehypeReact({
-        createElement: React.createElement,
-        components: { li: Detail, p: Subtitle }
-    }).Compiler;
 
     return (
         <div>
@@ -59,7 +50,9 @@ const FaqElement = ({ question, answer }) => {
                 />
             </QuestionWrapper>
             <Answer open={open}>
-                <Subtitle>{renderAst(answer)}</Subtitle>
+                <Subtitle>
+                    <AstText data={answer} />
+                </Subtitle>
             </Answer>
         </div>
     );
