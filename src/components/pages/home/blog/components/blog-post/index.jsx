@@ -53,7 +53,7 @@ const BlogPost = ({ node }) => {
 
     return (
         <PostWrapper target="_blank" href={node.link} rel="noopener noreferrer">
-            <PostImage src={imgUrl} />
+            <PostImage src={imgUrl} alt="" />
             <Divider />
             <PostCreator>{node.creator}</PostCreator>
             <PostTitle>{node.title}</PostTitle>

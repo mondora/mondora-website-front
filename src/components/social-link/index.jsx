@@ -59,7 +59,7 @@ const SocialText = styled.span`
 `;
 
 export const SocialLink = props => (
-    <SocialContainer {...props}>
+    <SocialContainer {...props} role="img" aria-label={props.icon}>
         <FeatherIcon name={props.icon} size={18} />
         {props.text && <SocialText {...props}>{props.text}</SocialText>}
     </SocialContainer>

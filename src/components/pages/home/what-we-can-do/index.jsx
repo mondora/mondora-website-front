@@ -14,7 +14,7 @@ import AstText from "../../../ast-text";
 const WhatWeCanDo = ({ logo, reasons, paragraph }) => (
     <BackgroundStripe>
         <MaxWidthContainer justifyContent="center">
-            <Image fixed={logo} />
+            <Image fixed={logo.fixed} alt={logo.title} />
         </MaxWidthContainer>
         <MaxWidthContainer mt={16}>
             <AstText data={paragraph} />

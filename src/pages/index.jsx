@@ -27,6 +27,7 @@ const Homepage = () => {
             contentfulHomepage {
                 pageName
                 rightImage {
+                    title
                     fluid(quality: 100) {
                         ...GatsbyContentfulFluid
                     }
@@ -37,6 +38,7 @@ const Homepage = () => {
                     }
                 }
                 bcorpLogo {
+                    title
                     fixed(width: 80) {
                         ...GatsbyContentfulFixed
                     }
@@ -67,6 +69,7 @@ const Homepage = () => {
                         description
                     }
                     graphic {
+                        title
                         fluid(quality: 100) {
                             ...GatsbyContentfulFluid
                         }
@@ -82,6 +85,7 @@ const Homepage = () => {
                         description
                     }
                     graphic {
+                        title
                         fluid(quality: 100) {
                             ...GatsbyContentfulFluid
                         }
@@ -100,10 +104,10 @@ const Homepage = () => {
                         contentfulHomepage.leftHeader.childMarkdownRemark
                             .htmlAst
                     }
-                    rightImage={contentfulHomepage.rightImage.fluid}
+                    rightImage={contentfulHomepage.rightImage}
                 />
                 <WhatWeCanDo
-                    logo={contentfulHomepage.bcorpLogo.fixed}
+                    logo={contentfulHomepage.bcorpLogo}
                     reasons={contentfulHomepage.reasons}
                     paragraph={
                         contentfulHomepage.reasonsTitle.childMarkdownRemark

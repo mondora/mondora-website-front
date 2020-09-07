@@ -32,7 +32,10 @@ const Benefit = ({ data }) => (
             </Section.RightContainer>
         </Section>
         <Box width={[0, 1]}>
-            <FullWidthImage fluid={data.graphic.fluid} />
+            <FullWidthImage
+                fluid={data.graphic.fluid}
+                alt={data.graphic.title}
+            />
         </Box>
     </MaxWidthContainer>
 );

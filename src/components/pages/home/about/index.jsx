@@ -18,7 +18,10 @@ const About = ({ data }) => (
         <MaxWidthContainer>
             <Section>
                 <Section.LeftContainer sideOnTop="left">
-                    <FullWidthImage fluid={data.graphic.fluid} />
+                    <FullWidthImage
+                        fluid={data.graphic.fluid}
+                        alt={data.graphic.title}
+                    />
                 </Section.LeftContainer>
                 <Section.RightContainer sideOnTop="left">
                     <Box my={48}>

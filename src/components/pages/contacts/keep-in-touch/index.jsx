@@ -43,7 +43,7 @@ const KeepInTouch = ({ contactInfo, header, description }) => {
             <Flex flexWrap="wrap">
                 {contacts.map((contact, i) => (
                     <Box key={i} width={[1, 1 / 3]} p={2} textAlign="center">
-                        <ContactIcon src={contact.icon} />
+                        <ContactIcon src={contact.icon} alt="" />
                         <ParagraphTitle>{contact.title}</ParagraphTitle>
                         <ContactInfo>{contact.value}</ContactInfo>
                     </Box>

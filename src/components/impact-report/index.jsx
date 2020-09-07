@@ -40,13 +40,15 @@ const ReportYear = styled.div`
 export const ImpactReport = ({ report }) => (
     <Report margin={3}>
         <Flex margin={2}>
-            <ReportIcon src={ReportHeart} />
+            <ReportIcon src={ReportHeart} alt="" />
             <ReportYear>{report.year}</ReportYear>
 
             <ReportDescription>
                 <ParagraphTitle>{report.title}</ParagraphTitle>
                 <a href={report.buttonLink}>
-                    <SquareButton theme={"light"}>{report.buttonText}</SquareButton>
+                    <SquareButton theme={"light"}>
+                        {report.buttonText}
+                    </SquareButton>
                 </a>
             </ReportDescription>
         </Flex>

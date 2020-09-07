@@ -15,14 +15,24 @@ const Header = ({ left, right, rightImage, leftImage }) => (
             <Section header={true}>
                 <Section.LeftContainer>
                     {left && <AstText data={left} />}
-                    {leftImage && <FullWidthImage fluid={leftImage} />}
+                    {leftImage && (
+                        <FullWidthImage
+                            fluid={leftImage.fluid}
+                            alt={rightImage.title}
+                        />
+                    )}
                 </Section.LeftContainer>
                 <Section.DividerContainer>
                     <Divider />
                 </Section.DividerContainer>
                 <Section.RightContainer>
                     {right && <AstText data={right} />}
-                    {rightImage && <FullWidthImage fluid={rightImage} />}
+                    {rightImage && (
+                        <FullWidthImage
+                            fluid={rightImage.fluid}
+                            alt={rightImage.title}
+                        />
+                    )}
                 </Section.RightContainer>
             </Section>
         </MaxWidthContainer>

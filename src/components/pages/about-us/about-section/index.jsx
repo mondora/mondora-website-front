@@ -42,7 +42,7 @@ export const AboutSection = ({ section }) => {
                                 >
                                     {section.description.description}
                                 </Subtitle>
-                                <DividerSwirl src={Underline} />
+                                <DividerSwirl src={Underline} alt="" />
                             </SectionComponent.LeftContainer>
                             <SectionComponent.RightContainer>
                                 <FullWidthImage
@@ -74,7 +74,7 @@ export const AboutSection = ({ section }) => {
                                 >
                                     {section.description.description}
                                 </Subtitle>
-                                <DividerSwirl src={Underline} />
+                                <DividerSwirl src={Underline} alt="" />
                             </SectionComponent.RightContainer>
                         </>
                     )}
