@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import { Link } from "gatsby";
 
 import styled from "styled-components";
+import Image from "gatsby-image";
+
+import SquareButton from "../square-button";
 
 import Underline from "../../images/separator.svg";
 
@@ -11,9 +14,6 @@ const RegionContainer = styled.div`
     background-color: white;
     margin: 20px;
     height: fit-content;
-`;
-const RegionImage = styled.img`
-    width: 100%;
 `;
 const RegionNumber = styled.div`
     font-size: ${props => props.theme.size.text.megaM};
@@ -27,31 +27,25 @@ const DividerSwirl = styled.img`
 const RegionName = styled.div`
     margin: 16px auto;
 `;
-const SuperLink = styled(Link)`
-    display: block;
-    border: 1pt solid var(--border-gray);
-    padding: 8px;
-    margin: 16px auto;
-    width: fit-content;
-    color: var(--variant-black);
-    text-decoration: none;
-`;
 
-const RegionMiniature = ({ image, number, name, link, button }) => (
+const RegionMiniature = ({ image, people, name, button }) => (
     <RegionContainer>
-        <RegionImage src={image} />
-        <RegionNumber>{number}</RegionNumber>
+        {image && <Image fluid={image.fluid} alt={image.title} />}
+        <RegionNumber>{people ? people.length : "0"}</RegionNumber>
         <DividerSwirl src={Underline} />
         <RegionName>{name}</RegionName>
-        <SuperLink to={link}>{button}</SuperLink>
+        {button && (
+            <Link to={button.link}>
+                <SquareButton theme="light">{button.text}</SquareButton>
+            </Link>
+        )}
     </RegionContainer>
 );
 RegionMiniature.propTypes = {
-    image: PropTypes.string,
-    number: PropTypes.string,
+    image: PropTypes.object,
+    people: PropTypes.array,
     name: PropTypes.string,
-    link: PropTypes.string,
-    button: PropTypes.string,
+    button: PropTypes.object,
     region: PropTypes.string
 };
 export default RegionMiniature;
