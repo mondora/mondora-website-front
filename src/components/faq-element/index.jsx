@@ -31,7 +31,7 @@ const Question = styled.div`
     color: var(--text-dark-black);
 `;
 const Answer = styled.div`
-    margin-bottom: ${props => (props.open ? "64px" : "16px")};
+    margin-bottom: ${props => (props.open ? "32px" : "16px")};
     max-height: ${props => (props.open ? "100vh" : 0)};
     transition: all ease 0.5s;
     overflow: hidden;

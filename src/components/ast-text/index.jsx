@@ -13,7 +13,7 @@ const Detail = styled.li`
     margin: 8px;
 `;
 const marginSubtitle = styled(Subtitle)`
-    margin: 32px 0 0 0;
+    margin: 32px 0 32px 0;
 `;
 const CenterTitle = styled(Title)`
     text-align: center;

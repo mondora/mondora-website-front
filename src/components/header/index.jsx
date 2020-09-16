@@ -8,8 +8,16 @@ import MaxWidthContainer from "../max-width-container";
 import BackgroundStripe from "../background-stripe";
 import FullWidthImage from "../full-width-image";
 import AstText from "../ast-text";
+import SquareButton from "../square-button";
 
-const Header = ({ left, right, rightImage, leftImage }) => (
+const Header = ({
+    left,
+    right,
+    rightImage,
+    leftImage,
+    leftButton,
+    rightButton
+}) => (
     <BackgroundStripe>
         <MaxWidthContainer>
             <Section header={true}>
@@ -20,6 +28,11 @@ const Header = ({ left, right, rightImage, leftImage }) => (
                             fluid={leftImage.fluid}
                             alt={rightImage.title}
                         />
+                    )}
+                    {leftButton && (
+                        <a href={leftButton.link}>
+                            <SquareButton>{leftButton.text}</SquareButton>
+                        </a>
                     )}
                 </Section.LeftContainer>
                 <Section.DividerContainer>
@@ -33,6 +46,11 @@ const Header = ({ left, right, rightImage, leftImage }) => (
                             alt={rightImage.title}
                         />
                     )}
+                    {rightButton && (
+                        <a href={rightButton.link}>
+                            <SquareButton>{rightButton.text}</SquareButton>
+                        </a>
+                    )}
                 </Section.RightContainer>
             </Section>
         </MaxWidthContainer>
@@ -43,7 +61,9 @@ Header.propTypes = {
     left: PropTypes.object,
     right: PropTypes.object,
     rightImage: PropTypes.object,
-    leftImage: PropTypes.object
+    leftImage: PropTypes.object,
+    leftButton: PropTypes.object,
+    rightButton: PropTypes.object
 };
 
 export default Header;
