@@ -37,7 +37,7 @@ const RegionMiniature = ({ data }) => (
         <DividerSwirl src={Underline} />
         <RegionName>{data.name}</RegionName>
         {data.buttonText && (
-            <Link to={`regions/ ${data.slug}`}>
+            <Link to={`regions/${data.slug}`}>
                 <SquareButton theme="light">{data.buttonText}</SquareButton>
             </Link>
         )}
