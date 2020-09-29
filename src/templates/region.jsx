@@ -7,6 +7,7 @@ import Layout from "../components/layout";
 import Header from "../components/header";
 import Carousel from "../components/carousel";
 import BackgroundStripe from "../components/background-stripe";
+import PersonSlide from "../components/person-slide";
 
 const settings = {
     slidesToShow: 5,
@@ -26,7 +27,7 @@ const RegionTemplate = ({ data }) => (
         <BackgroundStripe theme={"light"}>
             <Carousel {...settings}>
                 {data.contentfulRegion.people.map((person, i) => (
-                    <div key={i}> {person.name}</div>
+                    <PersonSlide key={i} person={person} />
                 ))}
             </Carousel>
         </BackgroundStripe>
@@ -60,6 +61,16 @@ export const query = graphql`
             }
             people {
                 name
+                role
+                description {
+                    description
+                }
+                picture {
+                    title
+                    fixed(width: 40) {
+                        ...GatsbyContentfulFixed
+                    }
+                }
             }
         }
     }
