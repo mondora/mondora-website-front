@@ -36,12 +36,10 @@ const MeetTheTeam = () => {
                 }
                 regions {
                     name
+                    slug
+                    buttonText
                     people {
                         id
-                    }
-                    button {
-                        link
-                        text
                     }
                     graphic {
                         title
@@ -71,13 +69,7 @@ const MeetTheTeam = () => {
             <BackgroundStripe theme="light">
                 <MaxWidthContainer>
                     {contentfulTeamPage.regions.map((region, i) => (
-                        <RegionMiniature
-                            key={i}
-                            image={region.graphic}
-                            people={region.people}
-                            name={region.name}
-                            button={region.button}
-                        />
+                        <RegionMiniature key={i} data={region} />
                     ))}
                 </MaxWidthContainer>
             </BackgroundStripe>

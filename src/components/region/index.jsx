@@ -28,24 +28,22 @@ const RegionName = styled.div`
     margin: 16px auto;
 `;
 
-const RegionMiniature = ({ image, people, name, button }) => (
+const RegionMiniature = ({ data }) => (
     <RegionContainer>
-        {image && <Image fluid={image.fluid} alt={image.title} />}
-        <RegionNumber>{people ? people.length : "0"}</RegionNumber>
+        {data.graphic && (
+            <Image fluid={data.graphic.fluid} alt={data.graphic.title} />
+        )}
+        <RegionNumber>{data.people ? data.people.length : "0"}</RegionNumber>
         <DividerSwirl src={Underline} />
-        <RegionName>{name}</RegionName>
-        {button && (
-            <Link to={button.link}>
-                <SquareButton theme="light">{button.text}</SquareButton>
+        <RegionName>{data.name}</RegionName>
+        {data.buttonText && (
+            <Link to={`regions/ ${data.slug}`}>
+                <SquareButton theme="light">{data.buttonText}</SquareButton>
             </Link>
         )}
     </RegionContainer>
 );
 RegionMiniature.propTypes = {
-    image: PropTypes.object,
-    people: PropTypes.array,
-    name: PropTypes.string,
-    button: PropTypes.object,
-    region: PropTypes.string
+    data: PropTypes.object
 };
 export default RegionMiniature;
