@@ -20,15 +20,24 @@ const settings = {
 const RegionTemplate = ({ data }) => (
     <Layout>
         <Header
-            left={data.contentfulRegion.leftHeader.childMarkdownRemark.htmlAst}
-            leftButton={data.contentfulRegion.returnButton}
-            rightImage={data.contentfulRegion.graphic}
+            left={
+                data.contentfulRegion.leftHeader &&
+                data.contentfulRegion.leftHeader.childMarkdownRemark.htmlAst
+            }
+            leftButton={
+                data.contentfulRegion.returnButton &&
+                data.contentfulRegion.returnButton
+            }
+            rightImage={
+                data.contentfulRegion.graphic && data.contentfulRegion.graphic
+            }
         />
         <BackgroundStripe theme={"light"}>
             <Carousel {...settings}>
-                {data.contentfulRegion.people.map((person, i) => (
-                    <PersonSlide key={i} person={person} />
-                ))}
+                {data.contentfulRegion.people &&
+                    data.contentfulRegion.people.map((person, i) => (
+                        <PersonSlide key={i} person={person} />
+                    ))}
             </Carousel>
         </BackgroundStripe>
     </Layout>
