@@ -7,18 +7,13 @@ import styled from "styled-components";
 import ParagraphTitle from "../paragraph-title";
 import SubtleTitle from "../subtle-title";
 import Subtitle from "../subtitle";
-
-import Underline from "../../images/separator.svg";
+import Swirl from "../swirl";
 
 const PersonContainer = styled.div`
     text-align: center;
     background-color: white;
     margin: 20px;
     height: fit-content;
-`;
-const DividerSwirl = styled.img`
-    width: 40%;
-    margin: auto;
 `;
 
 const PersonSlide = ({ person }) => {
@@ -30,7 +25,7 @@ const PersonSlide = ({ person }) => {
                     alt={person.picture.title}
                 />
             )}
-            <DividerSwirl src={Underline} />
+            <Swirl margin={"auto"}/>
             <ParagraphTitle center={"center"}>{person.name}</ParagraphTitle>
             <SubtleTitle>{person.role}</SubtleTitle>
             <Subtitle>

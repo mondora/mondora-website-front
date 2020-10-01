@@ -7,8 +7,7 @@ import styled from "styled-components";
 import Image from "gatsby-image";
 
 import SquareButton from "../square-button";
-
-import Underline from "../../images/separator.svg";
+import Swirl from "../swirl";
 
 const RegionContainer = styled.div`
     background-color: white;
@@ -20,10 +19,6 @@ const RegionNumber = styled.div`
     font-weight: bold;
     width: 100%;
 `;
-const DividerSwirl = styled.img`
-    width: 40%;
-    margin: auto;
-`;
 const RegionName = styled.div`
     margin: 16px auto;
 `;
@@ -34,7 +29,7 @@ const RegionMiniature = ({ data }) => (
             <Image fluid={data.graphic.fluid} alt={data.graphic.title} />
         )}
         <RegionNumber>{data.people ? data.people.length : "0"}</RegionNumber>
-        <DividerSwirl src={Underline} />
+        <Swirl margin={"auto"}/>
         <RegionName>{data.name}</RegionName>
         {data.buttonText && (
             <Link to={`regions/${data.slug}`}>

@@ -17,8 +17,6 @@ import Title from "../../components/title";
 import FullWidthImage from "../../components/full-width-image";
 import Carousel from "../../components/carousel";
 
-import SwirlSeparator from "../../images/separator.svg";
-
 const SuperA = styled.a`
     text-decoration: none;
 `;
@@ -150,11 +148,6 @@ const WorkWithUs = () => {
                         .htmlAst
                 }
             />
-            <MaxWidthContainer justifyContent={"center"}>
-                <Box width={[1 / 2, 1 / 4, 0]}>
-                    <img alt="" src={SwirlSeparator} />
-                </Box>
-            </MaxWidthContainer>
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
                     <Title>{contentfulWorkWithUsPage.handbookTitle}</Title>
@@ -188,11 +181,6 @@ const WorkWithUs = () => {
                     ))}
                 </Carousel>
             </Box>
-            <MaxWidthContainer justifyContent={"center"}>
-                <Box width={[1 / 2, 1 / 4, 0]}>
-                    <img alt="" src={SwirlSeparator} />
-                </Box>
-            </MaxWidthContainer>
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
                     <Title>{contentfulWorkWithUsPage.reasonsTitle}</Title>
