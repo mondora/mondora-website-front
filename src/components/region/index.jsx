@@ -7,20 +7,20 @@ import styled from "styled-components";
 import Image from "gatsby-image";
 
 import SquareButton from "../square-button";
+import ParagraphTitle from "../paragraph-title";
 import Swirl from "../swirl";
 
 const RegionContainer = styled.div`
     background-color: white;
     margin: 20px;
     height: fit-content;
+    text-align: center;
+    padding-bottom: 32px;
 `;
 const RegionNumber = styled.div`
     font-size: ${props => props.theme.size.text.megaM};
     font-weight: bold;
     width: 100%;
-`;
-const RegionName = styled.div`
-    margin: 16px auto;
 `;
 
 const RegionMiniature = ({ data }) => (
@@ -29,8 +29,8 @@ const RegionMiniature = ({ data }) => (
             <Image fluid={data.graphic.fluid} alt={data.graphic.title} />
         )}
         <RegionNumber>{data.people ? data.people.length : "0"}</RegionNumber>
-        <Swirl margin={"auto"}/>
-        <RegionName>{data.name}</RegionName>
+        <Swirl margin={"auto"} />
+        <ParagraphTitle>{data.name}</ParagraphTitle>
         {data.buttonText && (
             <Link to={`regions/${data.slug}`}>
                 <SquareButton theme="light">{data.buttonText}</SquareButton>
