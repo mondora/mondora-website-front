@@ -15,7 +15,29 @@ const settings = {
     slidesToScroll: 1,
     dots: true,
     centerMode: true,
-    centerPadding: "60px"
+    centerPadding: "48px",
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 1
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                
+                centerPadding: "0px",
+            }
+        }
+    ]
 };
 
 const RegionTemplate = ({ data }) => (

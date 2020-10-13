@@ -10,10 +10,11 @@ import Subtitle from "../subtitle";
 import Swirl from "../swirl";
 
 const PersonContainer = styled.div`
+    box-shadow: 0 4px 14px 0 var(--border-gray);
     text-align: center;
     background-color: white;
-    margin: 20px;
-    height: fit-content;
+    margin: 8px;
+    height: 400px;
 `;
 
 const PersonSlide = ({ person }) => {
