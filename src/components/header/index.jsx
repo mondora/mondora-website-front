@@ -22,6 +22,13 @@ const Header = ({
         <MaxWidthContainer>
             <Section header={true}>
                 <Section.LeftContainer>
+                    {leftButton && (
+                        <a href={leftButton.link}>
+                            <SquareButton margin="24px 0">
+                                {leftButton.text}
+                            </SquareButton>
+                        </a>
+                    )}
                     {left && <AstText data={left} />}
                     {leftImage && (
                         <FullWidthImage
@@ -29,27 +36,24 @@ const Header = ({
                             alt={rightImage.title}
                         />
                     )}
-                    {leftButton && (
-                        <a href={leftButton.link}>
-                            <SquareButton>{leftButton.text}</SquareButton>
-                        </a>
-                    )}
                 </Section.LeftContainer>
                 <Section.DividerContainer>
                     <Divider />
                 </Section.DividerContainer>
                 <Section.RightContainer>
+                    {rightButton && (
+                        <a href={rightButton.link}>
+                            <SquareButton margin="24px 0">
+                                {rightButton.text}
+                            </SquareButton>
+                        </a>
+                    )}
                     {right && <AstText data={right} />}
                     {rightImage && (
                         <FullWidthImage
                             fluid={rightImage.fluid}
                             alt={rightImage.title}
                         />
-                    )}
-                    {rightButton && (
-                        <a href={rightButton.link}>
-                            <SquareButton>{rightButton.text}</SquareButton>
-                        </a>
                     )}
                 </Section.RightContainer>
             </Section>

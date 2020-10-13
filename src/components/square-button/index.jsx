@@ -21,6 +21,7 @@ const SquareButton = styled.button`
     color: var(--text-dark-black);
     cursor: pointer;
     transition: all 0.5s ease;
+    margin: ${props => props.margin};
 
     &:hover {
         background-color: var(--primary-hover);
@@ -31,7 +32,8 @@ const lightTheme = "light";
 const yellowTheme = "primary";
 
 SquareButton.propTypes = {
-    theme: PropTypes.oneOf([lightTheme, yellowTheme])
+    theme: PropTypes.oneOf([lightTheme, yellowTheme]),
+    margin: PropTypes.string
 };
 
 SquareButton.defaultProps = {

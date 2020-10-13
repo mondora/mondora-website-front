@@ -25,8 +25,8 @@ const PersonSlide = ({ person }) => {
                     alt={person.picture.title}
                 />
             )}
-            <Swirl margin={"auto"}/>
-            <ParagraphTitle center={"center"}>{person.name}</ParagraphTitle>
+            <Swirl margin={"auto"} />
+            <ParagraphTitle center={[1, 1]}>{person.name}</ParagraphTitle>
             <SubtleTitle>{person.role}</SubtleTitle>
             <Subtitle>
                 {person.description && person.description.description}
