@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
 import Layout from "../components/layout";
+import PageMetadata from "../components/page-metadata";
 import Header from "../components/header";
 import Carousel from "../components/carousel";
 import BackgroundStripe from "../components/background-stripe";
@@ -19,6 +20,10 @@ const settings = {
 
 const RegionTemplate = ({ data }) => (
     <Layout>
+        <PageMetadata
+            title={data.contentfulRegion.metaTitle.metaTitle}
+            description={data.contentfulRegion.metaDescr.metaDescr}
+        />
         <Header
             left={
                 data.contentfulRegion.leftHeader &&
@@ -53,6 +58,12 @@ export const query = graphql`
     query($slug: String!) {
         contentfulRegion(slug: { eq: $slug }) {
             name
+            metaDescr {
+                metaDescr
+            }
+            metaTitle {
+                metaTitle
+            }
             leftHeader {
                 childMarkdownRemark {
                     htmlAst
