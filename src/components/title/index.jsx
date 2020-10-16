@@ -13,7 +13,6 @@ const Title = styled.h2`
     }};
 
     font-size: 26px;
-    font-family: "Playfair Display";
 
     text-align: ${props => (props.center ? "center" : "inherit")};
 `;

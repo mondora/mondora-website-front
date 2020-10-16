@@ -1,44 +1,37 @@
-// const env = require("@mondora/env").default;
-
-// const nodeEnv = env("NODE_ENV", { default: "development" });
-
-// require("dotenv").config({
-//     path: `${__dirname}/.env.${nodeEnv}`
-// });
-
-// const contentfulSpaceId = env("CONTENTFUL_SPACE_ID", { required: true });
-// const contentfulAccessToken = env("CONTENTFUL_ACCESS_TOKEN", {
-//     required: true
-// });
+require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}`
+});
 
 module.exports = {
     siteMetadata: {
-        title: ":mondora's website",
-        // TODO: write a decent description.
-        description: ":mondora",
+        siteUrl: "https://mondora.com",
+        title: ":mondora - Building software, creating benefit",
+        description:
+            "Software and advisory company specialized in custom cloud solutions. Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact.",
         author: "mondora-team"
     },
     plugins: [
+        "gatsby-plugin-transition-link",
         "gatsby-plugin-react-helmet",
         "gatsby-plugin-styled-components",
         "gatsby-transformer-sharp",
         "gatsby-plugin-sharp",
         {
-            resolve: `gatsby-source-rss-feed`,
+            resolve: "gatsby-source-rss-feed",
             options: {
-                url: `https://bcalmbcorp.com/feed/`,
-                name: `BcalmBcorp`
+                url: "https://bcalmbcorp.com/feed/",
+                name: "BcalmBcorp"
             }
         },
         {
             resolve: "gatsby-plugin-manifest",
             options: {
-                icon: `src/images/logo/square.png`,
+                icon: "src/images/logo-square.png",
                 name: ":mondora",
                 short_name: ":m",
                 start_url: "/",
-                background_color: "#663399",
-                theme_color: "#663399",
+                background_color: "#f2f2f2",
+                theme_color: "#ffda01",
                 display: "minimal-ui"
             }
         },
@@ -50,17 +43,39 @@ module.exports = {
             }
         },
         {
-            resolve: `gatsby-source-instagram`,
+            resolve: "gatsby-source-instagram",
             options: {
-                username: `mondoracom`
+                username: "1698981702"
+            }
+        },
+        {
+            resolve: "gatsby-plugin-sitemap",
+            options: {
+                exclude: ["/meet-the-team/"]
+            }
+        },
+        {
+            resolve: "gatsby-plugin-google-tagmanager",
+            options: {
+                id: process.env.GOOGLE_TAGMANAGER_ID
+            }
+        },
+        {
+            resolve: `gatsby-source-contentful`,
+            options: {
+                spaceId: process.env.CONTENTFUL_SPACE_ID,
+                accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+            }
+        },
+        {
+            resolve: `gatsby-transformer-remark`,
+            options: {
+                commonmark: true,
+                footnotes: true,
+                pedantic: true,
+                gfm: true,
+                plugins: []
             }
         }
-        // {
-        //     resolve: `gatsby-source-contentful`,
-        //     options: {
-        //         spaceId: process.env.CONTENTFUL_SPACE_ID,
-        //         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
-        //     }
-        // }
     ]
 };

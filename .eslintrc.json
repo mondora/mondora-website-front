@@ -19,7 +19,6 @@
         "no-var": ["error"],
         "prefer-arrow-callback": ["error"],
         "prefer-template": ["error"],
-        "react/jsx-boolean-value": ["warn", "always"],
         "react/jsx-key": ["error"],
         "react/jsx-no-duplicate-props": ["error"],
         "react/jsx-no-literals": ["warn"],

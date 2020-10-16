@@ -1,5 +1,8 @@
 import React from "react";
-import { Link, useStaticQuery, graphql } from "gatsby";
+
+import PropTypes from "prop-types";
+import { useStaticQuery, graphql } from "gatsby";
+import AniLink from "gatsby-plugin-transition-link/AniLink";
 
 import styled from "styled-components";
 
@@ -7,7 +10,7 @@ import Image from "gatsby-image";
 
 import { Flex } from "reflexbox";
 
-const SuperLink = styled(Link)`
+const SuperLink = styled(AniLink)`
     font-size: ${props => props.theme.size.text.menu};
     text-decoration: none;
     color: var(--black);
@@ -15,7 +18,7 @@ const SuperLink = styled(Link)`
     margin-right: 16px;
 
     &.active {
-        background-image: url(${require("../../../../../static/images/underlines.svg")});
+        background-image: url(${require("../../../../images/underlines.svg")});
         background-repeat: no-repeat;
         background-size: 48px;
         background-position-y: bottom;
@@ -32,38 +35,13 @@ const BlogButton = styled.a`
     text-decoration: none;
 `;
 
-const links = [
-    {
-        to: "/about",
-        text: "About Us"
-    },
-    {
-        to: "/meet-the-team",
-        text: "Meet the Team"
-    },
-    {
-        to: "/bcorp",
-        text: "Impact"
-    },
-    {
-        to: "/work-with-us",
-        text: "Work with us"
-    },
-    {
-        to: "/contacts",
-        text: "Contacts"
-    }
-];
-
-const DesktopMenu = () => {
-    const { miniLogoImage } = useStaticQuery(graphql`
+const DesktopMenu = ({ internal, external, blog }) => {
+    const { contentfulMenu } = useStaticQuery(graphql`
         query {
-            miniLogoImage: file(
-                relativePath: { eq: "logo/extended-dark.png" }
-            ) {
-                childImageSharp {
+            contentfulMenu {
+                desktopLogo {
                     fixed(width: 156) {
-                        ...GatsbyImageSharpFixed
+                        ...GatsbyContentfulFixed
                     }
                 }
             }
@@ -72,26 +50,52 @@ const DesktopMenu = () => {
 
     return (
         <Flex my={32} justifyContent="space-between" alignItems="center">
-            <Link to="/">
-                <Image fixed={miniLogoImage.childImageSharp.fixed} />
-            </Link>
+            <AniLink to="/" paintDrip direction="none" color="white">
+                <Image fixed={contentfulMenu.desktopLogo.fixed} />
+            </AniLink>
 
             <Flex justifyContent="space-between" alignItems="center">
-                {links.map((link, i) => (
-                    <SuperLink key={i} to={link.to} activeClassName="active">
+                {internal.map((link, i) => (
+                    <SuperLink
+                        key={i}
+                        to={link.link}
+                        paintDrip
+                        direction="none"
+                        color="white"
+                        activeClassName="active"
+                    >
                         {link.text}
                     </SuperLink>
                 ))}
+
+                {external.map((link, i) => (
+                    <SuperLink
+                        key={i}
+                        as="a"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={link.link}
+                    >
+                        {link.text}
+                    </SuperLink>
+                ))}
+
                 <BlogButton
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://bcalmbcorp.com/"
+                    href={blog.link}
                 >
-                    {"Blog :m"}
+                    {blog.text}
                 </BlogButton>
             </Flex>
         </Flex>
     );
+};
+
+DesktopMenu.propTypes = {
+    internal: PropTypes.array,
+    external: PropTypes.array,
+    blog: PropTypes.object
 };
 
 export default DesktopMenu;

@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 
 import styled, { css } from "styled-components";
 
+import Subtitle from "../subtitle";
+import AstText from "../ast-text";
+
 import FeatherIcon from "../feather-icon";
 
 const QuestionWrapper = styled.div`
@@ -25,11 +28,10 @@ const QuestionWrapper = styled.div`
 const Question = styled.div`
     font-size: 16px;
     padding-right: 8px;
+    color: var(--text-dark-black);
 `;
 const Answer = styled.div`
-    box-sizing: border-box;
-    color: var(--variant-black);
-    margin-bottom: 16px;
+    margin-bottom: ${props => (props.open ? "64px" : "16px")};
     max-height: ${props => (props.open ? "100vh" : 0)};
     transition: all ease 0.5s;
     overflow: hidden;
@@ -42,16 +44,23 @@ const FaqElement = ({ question, answer }) => {
         <div>
             <QuestionWrapper open={open} onClick={() => setOpen(!open)}>
                 <Question>{question}</Question>
-                <FeatherIcon size={24} name={open ? "chevron-up" : "chevron-down"} />
+                <FeatherIcon
+                    size={24}
+                    name={open ? "chevron-up" : "chevron-down"}
+                />
             </QuestionWrapper>
-            <Answer open={open}>{answer} </Answer>
+            <Answer open={open}>
+                <Subtitle>
+                    <AstText data={answer} />
+                </Subtitle>
+            </Answer>
         </div>
     );
 };
 
 FaqElement.propTypes = {
     question: PropTypes.string,
-    answer: PropTypes.string
+    answer: PropTypes.object
 };
 
 export default FaqElement;

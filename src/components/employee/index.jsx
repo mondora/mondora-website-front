@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
-import Underline from "../../../static/images/separator.svg";
+import Underline from "../../images/separator.svg";
 
 const EmployeeContainer = styled.div`
     background-color: white;

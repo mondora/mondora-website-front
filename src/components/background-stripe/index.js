@@ -10,7 +10,7 @@ const BackgroundStripe = styled.div`
     padding: 32px 0;
 
     background-position: center;
-    background-size: contain;
+    background-size: 592px;
 
     ${props =>
         props.theme === darkTheme &&
@@ -29,7 +29,7 @@ const lightTheme = "light";
 const darkTheme = "dark";
 
 BackgroundStripe.propTypes = {
-    theme: PropTypes.oneOf(lightTheme, darkTheme)
+    theme: PropTypes.oneOf([lightTheme, darkTheme])
 };
 
 export default BackgroundStripe;

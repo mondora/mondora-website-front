@@ -4,11 +4,11 @@ import { graphql, useStaticQuery } from "gatsby";
 
 import styled from "styled-components";
 
-import { Flex } from "reflexbox";
+import { Flex, Box } from "reflexbox";
 
+import PageMetadata from "../../components/page-metadata";
 import SquareButton from "../../components/square-button";
-import Section from "../../components/section";
-import Divider from "../../components/divider";
+import Header from "../../components/header";
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
 import BackgroundStripe from "../../components/background-stripe";
@@ -16,12 +16,8 @@ import Subtitle from "../../components/subtitle";
 import Title from "../../components/title";
 import FullWidthImage from "../../components/full-width-image";
 import Carousel from "../../components/carousel";
-import JumboTitle from "../../components/jumbo-title";
 
-const HandbookDescription = styled.div`
-    color: var(--text-dark-gray);
-    margin: 16px;
-`;
+import SwirlSeparator from "../../images/separator.svg";
 
 const SuperA = styled.a`
     text-decoration: none;
@@ -39,67 +35,49 @@ const ReasonNumber = styled.h1`
     }
 `;
 
-const FormModule = styled.div`
-    height: fit-content;
-    padding: 40px 240px;
-    margin-top: 80px;
-    text-align: center;
-    background-color: var(--white);
-`;
-
-const reasons = [
-    { empty: true },
-    {
-        number: "01",
-        title: "Flat organization",
-        description:
-            "Aliquam venenatis at risus ac auctor. Maecenas at magna mattis ante consequat ultrices a eu tortor. "
-    },
-    {
-        number: "02",
-        title: "Forget old technologies",
-        description:
-            "Integer sit amet est ac tellus posuere maximus. Suspendisse at metus vel mi congue rhoncus a mole."
-    },
-    {
-        number: "03",
-        title: "Self-managed work",
-        description:
-            "Vivamus sit amet arcu quis arcu ullamcorper sagittis. In et sagittis elit. Morbi iaculis ante in erat tempus."
-    },
-    {
-        number: "04",
-        title: "Unlimited holidays",
-        description:
-            "Aenean eu mi eget neque faucibus congue et in lectus. Suspendisse potenti. Etiam nec dolor vitae purus pellentesque elementum id a velit. "
-    },
-    { empty: true },
-    { empty: true },
-    {
-        number: "05",
-        title: "Remote work",
-        description:
-            "Suspendisse potenti. Etiam nec dolor vitae purus pellentesque elementum id a velit."
-    },
-    {
-        number: "06",
-        title: "Laboratories and events",
-        description:
-            "Suspendisse potenti. Etiam nec dolor vitae purus pellentesque elementum id a velit. "
-    }
-];
+const carouselSettings = {
+    arrows: true,
+    dots: true,
+    slidesToScroll: 1,
+    responsive: [
+        {
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 4
+            }
+        },
+        {
+            breakpoint: 960,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                dots: false
+            }
+        }
+    ]
+};
 
 const WorkWithUs = () => {
-    const { allInstaNode } = useStaticQuery(graphql`
+    const { allInstaNode, contentfulWorkWithUsPage } = useStaticQuery(graphql`
         query ScrapingQuery {
-            allInstaNode {
+            allInstaNode(limit: 12) {
                 edges {
                     node {
                         id
                         username
                         likes
                         caption
-                        comments
                         localFile {
                             childImageSharp {
                                 fluid(
@@ -114,110 +92,135 @@ const WorkWithUs = () => {
                     }
                 }
             }
+            contentfulWorkWithUsPage {
+                handbookButton
+                handbookLink
+                handbookTitle
+                handbookDescription {
+                    handbookDescription
+                }
+                reasonsTitle
+                reasons {
+                    empty
+                    number
+                    reason
+                    description
+                }
+                leftHeader {
+                    childMarkdownRemark {
+                        headings {
+                            id
+                            value
+                        }
+                        htmlAst
+                    }
+                }
+                rightHeader {
+                    childMarkdownRemark {
+                        headings {
+                            id
+                            value
+                        }
+                        htmlAst
+                    }
+                }
+                metaDescr {
+                    metaDescr
+                }
+                metaTitle {
+                    metaTitle
+                }
+            }
         }
     `);
 
     return (
         <Layout>
-            <MaxWidthContainer>
-                <BackgroundStripe>
-                    <Section header={true}>
-                        <Section.LeftContainer>
-                            <Title>{"Meet the team"}</Title>
-                            <Subtitle>
-                                Etiam gravida nibh erat, nec congue neque
-                                ultrices imperdiet. Etiam molestie augue sed
-                                risus aliquet, ut rhoncus purus fermentum.
-                                Aliquam ac tortor ligula. Nulla quis orci
-                                pulvinar. Lorem ipsum dolor sit amet,
-                                consectetur adipiscing elit. Maecenas vulputate
-                                quam pharetra nunc molestie interdum. Sed nec
-                                lorem scelerisque, fermentum lacus a, congue
-                                lacus.
-                            </Subtitle>
-                        </Section.LeftContainer>
-
-                        <Section.DividerContainer>
-                            <Divider />
-                        </Section.DividerContainer>
-
-                        <Section.RightContainer>
-                            <JumboTitle>
-                                {"Our"}
-                                <br />
-                                {"Team!"}
-                            </JumboTitle>
-                        </Section.RightContainer>
-                    </Section>
-                </BackgroundStripe>
+            <PageMetadata
+                title={contentfulWorkWithUsPage.metaTitle.metaTitle}
+                description={contentfulWorkWithUsPage.metaDescr.metaDescr}
+            />
+            <Header
+                left={
+                    contentfulWorkWithUsPage.leftHeader.childMarkdownRemark
+                        .htmlAst
+                }
+                right={
+                    contentfulWorkWithUsPage.rightHeader.childMarkdownRemark
+                        .htmlAst
+                }
+            />
+            <MaxWidthContainer justifyContent={"center"}>
+                <Box width={[1 / 2, 1 / 4, 0]}>
+                    <img alt="" src={SwirlSeparator} />
+                </Box>
             </MaxWidthContainer>
-
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
-                    <Title>{"Mondora Srl"}</Title>
-                    <HandbookDescription>
-                        We are a software development company working with
-                        selected clients who subscribe to our unique approach on
-                        agile, cloud development and cloud governance.
-                    </HandbookDescription>
-                    <SuperA>
-                        <SquareButton>{"Our Handbook"}</SquareButton>
+                    <Title>{contentfulWorkWithUsPage.handbookTitle}</Title>
+                    <MaxWidthContainer>
+                        <Subtitle center={[true, true]}>
+                            {
+                                contentfulWorkWithUsPage.handbookDescription
+                                    .handbookDescription
+                            }
+                        </Subtitle>
+                    </MaxWidthContainer>
+                    <SuperA href={contentfulWorkWithUsPage.handbookLink}>
+                        <SquareButton>
+                            {contentfulWorkWithUsPage.handbookButton}
+                        </SquareButton>
                     </SuperA>
                 </MaxWidthContainer>
             </BackgroundStripe>
 
-            <Carousel slidesToShow={3} slidesToScroll={3} fullWidth={true} arrows={false}>
-                {allInstaNode.edges.map(instagram => (
-                    <FullWidthImage
-                        key={instagram.node.id}
-                        fluid={instagram.node.localFile.childImageSharp.fluid}
-                    />
-                ))}
-            </Carousel>
-
+            <Box mb={5}>
+                <Carousel {...carouselSettings}>
+                    {allInstaNode.edges.map(instagram => (
+                        <Box p={3} key={instagram.node.id}>
+                            <FullWidthImage
+                                fluid={
+                                    instagram.node.localFile.childImageSharp
+                                        .fluid
+                                }
+                            />
+                        </Box>
+                    ))}
+                </Carousel>
+            </Box>
+            <MaxWidthContainer justifyContent={"center"}>
+                <Box width={[1 / 2, 1 / 4, 0]}>
+                    <img alt="" src={SwirlSeparator} />
+                </Box>
+            </MaxWidthContainer>
             <BackgroundStripe>
                 <MaxWidthContainer justifyContent="center">
-                    <Title>{"Why work with us?"}</Title>
+                    <Title>{contentfulWorkWithUsPage.reasonsTitle}</Title>
+
                     <Flex flexWrap="wrap" padding={-4}>
-                        {reasons.map((reason, index) => (
-                            <Flex
-                                key={index}
-                                width={[1, 1 / 2, 1 / 3]}
-                                flexDirection="column"
-                                padding={4}
-                            >
-                                {!reason.empty && (
-                                    <>
-                                        <ReasonNumber>
-                                            {reason.number}
-                                        </ReasonNumber>
-                                        <Title>{reason.title}</Title>
-                                        <Subtitle>
-                                            {reason.description}
-                                        </Subtitle>
-                                    </>
-                                )}
-                            </Flex>
-                        ))}
+                        {contentfulWorkWithUsPage.reasons.map(
+                            (reason, index) => (
+                                <Flex
+                                    key={index}
+                                    width={[1, 1 / 2, 1 / 3]}
+                                    flexDirection="column"
+                                    padding={4}
+                                >
+                                    {!reason.empty && (
+                                        <>
+                                            <ReasonNumber>
+                                                {reason.number}
+                                            </ReasonNumber>
+                                            <Title>{reason.reason}</Title>
+                                            <Subtitle>
+                                                {reason.description}
+                                            </Subtitle>
+                                        </>
+                                    )}
+                                </Flex>
+                            )
+                        )}
                     </Flex>
-                </MaxWidthContainer>
-            </BackgroundStripe>
-            <Section position={"below"} />
-
-            <BackgroundStripe theme="light">
-                <MaxWidthContainer>
-                    <Title>{"Apply"}</Title>
-                    <FormModule>
-                        {/* TODO: insert contact module */}
-                        <div>
-                            Vivamus rutrum turpis sed turpis malesuada
-                            facilisis. Aliquam laoreet rhoncus est, ac
-                            vestibulum nunc mollis sed. Quisque dolor risus,
-                            vehicula non tempus in, venenatis fermentum enim.
-                        </div>
-
-                        <SquareButton>{"Send"}</SquareButton>
-                    </FormModule>
                 </MaxWidthContainer>
             </BackgroundStripe>
         </Layout>

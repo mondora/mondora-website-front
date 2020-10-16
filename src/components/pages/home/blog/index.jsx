@@ -1,5 +1,6 @@
 import React from "react";
 
+import PropTypes from "prop-types";
 import { graphql, useStaticQuery } from "gatsby";
 
 import BackgroundStripe from "../../../background-stripe";
@@ -10,7 +11,7 @@ import Title from "../../../title";
 
 import BlogPost from "./components/blog-post";
 
-const Blog = () => {
+const Blog = ({ title, button }) => {
     const { allFeedBcalmBcorp } = useStaticQuery(graphql`
         query {
             allFeedBcalmBcorp {
@@ -35,7 +36,7 @@ const Blog = () => {
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3,
-                    dots: true
+                    dots: false
                 }
             },
             {
@@ -59,7 +60,7 @@ const Blog = () => {
     return (
         <BackgroundStripe theme="light">
             <MaxWidthContainer justifyContent="center">
-                <Title>From our blog</Title>
+                <Title>{title}</Title>
             </MaxWidthContainer>
 
             <Carousel {...settings}>
@@ -69,16 +70,17 @@ const Blog = () => {
             </Carousel>
 
             <MaxWidthContainer justifyContent="center">
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://bcalmbcorp.com/"
-                >
-                    <SquareButton>{"Visit our blog"}</SquareButton>
+                <a target="_blank" rel="noopener noreferrer" href={button.link}>
+                    <SquareButton>{button.text}</SquareButton>
                 </a>
             </MaxWidthContainer>
         </BackgroundStripe>
     );
+};
+
+Blog.propTypes = {
+    title: PropTypes.string,
+    button: PropTypes.object
 };
 
 export default Blog;

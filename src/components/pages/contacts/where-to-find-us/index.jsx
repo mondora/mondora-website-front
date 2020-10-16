@@ -1,22 +1,76 @@
 import React from "react";
 
-import { Flex } from "reflexbox";
+import PropTypes from "prop-types";
 
-import Title from "../../../title";
+import { Flex, Box } from "reflexbox";
+
+import ParagraphTitle from "../../../paragraph-title";
 import Subtitle from "../../../subtitle";
+import SocialLink from "../../../social-link";
 
-const WhereToFindUs = () => (
-    <Flex flexDirection="column" backgroundColor="white">
-        <Title>{"Operative Office:"}</Title>
-        <Subtitle>
-            {"Via Europa 1250, 23020 Berbenno di Valtellina (SO)"}
-        </Subtitle>
+const WhereToFindUs = ({ contacts }) => {
+    const Socials = [
+        {
+            href: contacts.github,
+            icon: "github"
+        },
+        {
+            href: contacts.instagram,
+            icon: "instagram"
+        },
+        {
+            href: contacts.facebook,
+            icon: "facebook"
+        },
+        {
+            href: contacts.linkedIn,
+            icon: "linkedin"
+        },
+        {
+            href: contacts.twitter,
+            icon: "twitter"
+        },
+        {
+            href: contacts.youtube,
+            icon: "youtube"
+        }
+    ];
 
-        <Title>{"Legal Office:"}</Title>
-        <Subtitle>
-            {"Via Uberto Visconti di Modrone 33, 20122, Milano"}
-        </Subtitle>
-    </Flex>
-);
+    return (
+        <Flex flexDirection="column" backgroundColor="white">
+            <Box m={2}>
+                <ParagraphTitle>{"Office:"}</ParagraphTitle>
+                {contacts.officeAddress.map(line => (
+                    <Subtitle key={line}>{line}</Subtitle>
+                ))}
+            </Box>
+            <Box m={2}>
+                <ParagraphTitle>{"Follow us on:"}</ParagraphTitle>
+                <Subtitle>
+                    <Flex
+                        margin={1}
+                        justifyContent={["center", "center", "flex-start"]}
+                    >
+                        {Socials.map(
+                            social =>
+                                social.href && (
+                                    <Flex margin={1} key={social.icon}>
+                                        <SocialLink
+                                            theme={"dark"}
+                                            {...social}
+                                        />
+                                    </Flex>
+                                )
+                        )}
+                    </Flex>
+                </Subtitle>
+            </Box>
+        </Flex>
+    );
+};
+
+WhereToFindUs.propTypes = {
+    contacts: PropTypes.object
+};
 
 export default WhereToFindUs;

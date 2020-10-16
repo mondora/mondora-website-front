@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { Link, useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql } from "gatsby";
 import Image from "gatsby-image";
 
 import { Flex } from "reflexbox";
@@ -14,56 +14,77 @@ import Subtitle from "../../subtitle";
 
 const FooterContainer = styled.div`
     display: flex;
-    border-top: 1px solid var(--white);
+    border-top: 1px solid var(--border-dark-gray);
     background: var(--background-dark-gray);
     color: var(--white);
 `;
 
-const SectionLinks = styled(Link)`
+const ExternalLink = styled.a`
     font-size: 11pt;
     text-decoration: none;
     color: var(--white);
 `;
 
-const Socials = [
-    {
-        href: "https://github.com/mondora/",
-        icon: "github"
-    },
-    {
-        href: "https://www.instagram.com/mondoracom/",
-        icon: "instagram"
-    },
-    {
-        href: "https://it-it.facebook.com/mondoracom/",
-        icon: "facebook"
-    },
-    {
-        href: "https://www.linkedin.com/company/mondora-s-p-a-/",
-        icon: "linkedin"
-    },
-    {
-        href: "https://twitter.com/mondora",
-        icon: "twitter"
-    },
-    {
-        href: "https://www.youtube.com/channel/UCeAVpel9SZj6WKHWLEtVlsg",
-        icon: "youtube"
-    }
-];
-
 const Footer = () => {
-    const { miniLogoImage } = useStaticQuery(graphql`
+    const { contentfulFooter } = useStaticQuery(graphql`
         query {
-            miniLogoImage: file(relativePath: { eq: "logo/small-light.png" }) {
-                childImageSharp {
+            contentfulFooter {
+                motto
+                copyright
+                miniLogo {
                     fixed(width: 40) {
-                        ...GatsbyImageSharpFixed
+                        ...GatsbyContentfulFixed
                     }
+                }
+                contacts {
+                    legalAddress
+                    partitaIva
+                    email
+                    phoneNumber
+                    github
+                    instagram
+                    twitter
+                    youtube
+                    facebook
+                    linkedIn
+                }
+                columns {
+                    links {
+                        text
+                        link
+                    }
+                    title
                 }
             }
         }
     `);
+
+    const Socials = [
+        {
+            href: contentfulFooter.contacts.github,
+            icon: "github"
+        },
+        {
+            href: contentfulFooter.contacts.instagram,
+            icon: "instagram"
+        },
+        {
+            href: contentfulFooter.contacts.facebook,
+            icon: "facebook"
+        },
+        {
+            href: contentfulFooter.contacts.linkedIn,
+            icon: "linkedin"
+        },
+        {
+            href: contentfulFooter.contacts.twitter,
+            icon: "twitter"
+        },
+        {
+            href: contentfulFooter.contacts.youtube,
+            icon: "youtube"
+        }
+    ];
 
     return (
         <FooterContainer>
@@ -75,74 +96,58 @@ const Footer = () => {
                 <Flex width={[1, "auto"]} my={2}>
                     <Flex my={2}>
                         <Hidden smDown={true}>
-                            <Image
-                                fixed={miniLogoImage.childImageSharp.fixed}
-                            />
+                            <Image fixed={contentfulFooter.miniLogo.fixed} />
                         </Hidden>
                     </Flex>
 
                     <Flex flexDirection="column" px={3}>
                         <Subtitle light={true}>
-                            {"© 2018 mondora srl sb . All Rights Reserved."}
+                            {contentfulFooter.copyright}
                             <br />
-                            {
-                                "Via Uberto Visconti di Modrone 33 , 20122, Milano"
-                            }
+                            {contentfulFooter.contacts.legalAddress}
                             <br />
-                            {"P.IVA 03680680968"}
+                            {contentfulFooter.contacts.partitaIva}
                             <br />
-                            {"Made with love ❤ in Valtellina"}
+                            {contentfulFooter.motto}
                         </Subtitle>
 
                         <Subtitle light={true}>
-                            {"+39 0342 1856456 - info@mondora.com"}
+                            {contentfulFooter.contacts.phoneNumber}
+                            {" - "}
+                            {contentfulFooter.contacts.email}
                         </Subtitle>
 
                         <Subtitle>
                             <Flex margin={-1}>
-                                {Socials.map(social => (
-                                    <Flex margin={1} key={social.icon}>
-                                        <SocialLink {...social} />
-                                    </Flex>
-                                ))}
+                                {Socials.map(
+                                    social =>
+                                        social.href && (
+                                            <Flex margin={1} key={social.icon}>
+                                                <SocialLink {...social} />
+                                            </Flex>
+                                        )
+                                )}
                             </Flex>
                         </Subtitle>
                     </Flex>
                 </Flex>
 
                 <Flex width={[1, "auto"]} flexWrap="wrap" my={2}>
-                    <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
-                        <Subtitle light={true}>{"ABOUT"}</Subtitle>
-                        <SectionLinks to={"/about"}>{"About us"}</SectionLinks>
-                        <SectionLinks to={"/meet-the-team"}>
-                            {"Meet the team"}
-                        </SectionLinks>
-                        <SectionLinks to={"/contacts"}>
-                            {"Contacts"}
-                        </SectionLinks>
-                    </Flex>
-
-                    <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
-                        <Subtitle light={true}>{"WORK WITH US"}</Subtitle>
-                        <SectionLinks to={"/work-with-us"}>
-                            {"Work with us"}
-                        </SectionLinks>
-                        <SectionLinks>{"Mondora handbook"}</SectionLinks>
-                    </Flex>
-
-                    <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
-                        <Subtitle light={true}>{"IMPACT"}</Subtitle>
-                        <SectionLinks to={"/bcorp"}>{"Impact"}</SectionLinks>
-                        <SectionLinks>{"Blog BCalm BCorp"}</SectionLinks>
-                        <SectionLinks>{"Blog tecnico"}</SectionLinks>
-                    </Flex>
-
-                    <Flex flexDirection="column" width={[1 / 2, 1 / 4]} pl={3}>
-                        <Subtitle light={true}>{"SIDE PROJECTS"}</Subtitle>
-                        <SectionLinks>{"Hirebitto"}</SectionLinks>
-                        <SectionLinks>{"Cycle2Work"}</SectionLinks>
-                        <SectionLinks>{"Minicoder"}</SectionLinks>
-                    </Flex>
+                    {contentfulFooter.columns.map((column, i) => (
+                        <Flex
+                            key={i}
+                            flexDirection="column"
+                            width={[1 / 2, 1 / 4]}
+                            pl={3}
+                        >
+                            <Subtitle light={true}>{column.title}</Subtitle>
+                            {column.links.map((link, i) => (
+                                <ExternalLink key={i} href={link.link}>
+                                    {link.text}
+                                </ExternalLink>
+                            ))}
+                        </Flex>
+                    ))}
                 </Flex>
             </MaxWidthContainer>
         </FooterContainer>

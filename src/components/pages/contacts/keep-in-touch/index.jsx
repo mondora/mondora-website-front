@@ -1,72 +1,62 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import styled from "styled-components";
 
 import Title from "../../../title";
-
+import ParagraphTitle from "../../../paragraph-title";
 import Subtitle from "../../../subtitle";
 
-import EmailIcon from   "./assets/email.svg";
-import PhoneIcon from   "./assets/phone.svg";
-import MobileIcon from  "./assets/mobile.svg";
+import EmailIcon from "./assets/email.svg";
+import PhoneIcon from "./assets/phone.svg";
+import MobileIcon from "./assets/mobile.svg";
 
-import { Flex } from "reflexbox";
+import { Flex, Box } from "reflexbox";
 
 const ContactIcon = styled.img`
-    height: 48px;
+    height: 64px;
 `;
 
-const ContactName = styled.div`
-    margin: 8px;
+const ContactInfo = styled(Subtitle)`
+    word-break: break-all;
 `;
 
-const ContactBody = styled.div`
-    font-size: 16px;
-    color: var(--text-dark-gray);
-`;
+const KeepInTouch = ({ contactInfo, header, description }) => {
+    const contacts = [
+        { icon: EmailIcon, title: "Email:", value: contactInfo.email },
+        {
+            icon: PhoneIcon,
+            title: "Phone:",
+            value: contactInfo.phoneNumber
+        },
+        {
+            icon: MobileIcon,
+            title: "Mobile:",
+            value: contactInfo.mobileNumber
+        }
+    ];
+    return (
+        <>
+            <Title>{header}</Title>
+            <Subtitle margin="32px 0">{description}</Subtitle>
+            <Flex flexWrap="wrap">
+                {contacts.map((contact, i) => (
+                    <Box key={i} width={[1, 1 / 3]} p={2} textAlign="center">
+                        <ContactIcon src={contact.icon} alt="" />
+                        <ParagraphTitle>{contact.title}</ParagraphTitle>
+                        <ContactInfo>{contact.value}</ContactInfo>
+                    </Box>
+                ))}
+            </Flex>
+        </>
+    );
+};
 
-const KeepInTouch = () => (
-    <>
-        <Title>Keep in touch</Title>
-        <Subtitle>
-            Whether you are interested in working with us on a custom software
-            solution for your business, or are just curious about the :m world,
-            we would love to get in touch!
-        </Subtitle>
-
-        <Flex justifyContent="center">
-            <Flex
-                width={[1 / 2, 1 / 3]}
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <ContactIcon src={EmailIcon} />
-                <ContactName>Email:</ContactName>
-                <ContactBody>info@mondora.com</ContactBody>
-            </Flex>
-            <Flex
-                width={[1 / 2, 1 / 3]}
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <ContactIcon src={PhoneIcon} />
-                <ContactName>Phone:</ContactName>
-                <ContactBody>+39 0342 1856 456</ContactBody>
-            </Flex>
-            <Flex
-                width={[1 / 2, 1 / 3]}
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <ContactIcon src={MobileIcon} />
-                <ContactName>Mobile:</ContactName>
-                <ContactBody>+39 345 9960 097</ContactBody>
-            </Flex>
-        </Flex>
-    </>
-);
+KeepInTouch.propTypes = {
+    contactInfo: PropTypes.object,
+    header: PropTypes.string,
+    description: PropTypes.string
+};
 
 export default KeepInTouch;

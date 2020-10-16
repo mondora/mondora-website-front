@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useStaticQuery, graphql } from "gatsby";
+
+import PropTypes from "prop-types";
+import { useStaticQuery, graphql, Link } from "gatsby";
 
 import Image from "gatsby-image";
 import {
@@ -7,44 +9,24 @@ import {
     AnimatedMenu,
     MenuItem,
     ToolbarGrid,
-    Spacer
+    Spacer,
+    BlogLink,
+    InlineLogo
 } from "./styled";
 import FeatherIcon from "../../../feather-icon";
 
-const links = [
-    {
-        to: "/about",
-        text: "ABOUT US"
-    },
-    {
-        to: "/meet-the-team",
-        text: "MEET THE TEAM"
-    },
-    {
-        to: "/bcorp",
-        text: "IMPACT"
-    },
-    {
-        to: "/work-with-us",
-        text: "WORK WITH US"
-    },
-    {
-        to: "/contacts",
-        text: "CONTACTS"
-    },
-    {
-        to: "https://bcalmbcorp.com/",
-        text: "Blog :m"
-    }
-];
-
-const MobileMenu = () => {
-    const { miniLogoImage } = useStaticQuery(graphql`
+const MobileMenu = ({ internal, external, blog }) => {
+    const { contentfulMenu } = useStaticQuery(graphql`
         query {
-            miniLogoImage: file(relativePath: { eq: "logo/small-light.png" }) {
-                childImageSharp {
+            contentfulMenu {
+                mobileLogo {
                     fixed(height: 32) {
-                        ...GatsbyImageSharpFixed
+                        ...GatsbyContentfulFixed
+                    }
+                }
+                blogLogo {
+                    fixed(height: 16) {
+                        ...GatsbyContentfulFixed
                     }
                 }
             }
@@ -60,16 +42,50 @@ const MobileMenu = () => {
     return (
         <>
             <AnimatedMenu open={open}>
-                {links.map(link => (
-                    <MenuItem key={link.to}>
-                        <MenuLink to={link.to} activeClassName={"active"}>
+                {internal.map((link, i) => (
+                    <MenuItem background={"dark"} key={i}>
+                        <MenuLink to={link.link} activeClassName={"active"}>
                             {link.text}
                         </MenuLink>
                     </MenuItem>
                 ))}
+
+                {external.map((link, i) => (
+                    <MenuItem background={"dark"} key={i}>
+                        <BlogLink
+                            as="a"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={link.link}
+                        >
+                            {link.text}
+                        </BlogLink>
+                    </MenuItem>
+                ))}
+
+                <MenuItem background={"light"}>
+                    <BlogLink
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={blog.link}
+                    >
+                        {blog.text !== "Blog :m" ? (
+                            blog.text
+                        ) : (
+                            <>
+                                {"BLOG "}
+                                <InlineLogo
+                                    fixed={contentfulMenu.blogLogo.fixed}
+                                />
+                            </>
+                        )}
+                    </BlogLink>
+                </MenuItem>
             </AnimatedMenu>
             <ToolbarGrid>
-                <Image fixed={miniLogoImage.childImageSharp.fixed} />
+                <Link to={"/"}>
+                    <Image fixed={contentfulMenu.mobileLogo.fixed} />
+                </Link>
 
                 <div onClick={handleToggle}>
                     <FeatherIcon
@@ -82,6 +98,12 @@ const MobileMenu = () => {
             <Spacer />
         </>
     );
+};
+
+MobileMenu.propTypes = {
+    internal: PropTypes.array,
+    external: PropTypes.array,
+    blog: PropTypes.object
 };
 
 export default MobileMenu;

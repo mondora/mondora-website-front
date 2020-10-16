@@ -9,8 +9,7 @@ export const Container = styled.div`
     height: ${props => props.height};
     margin: 0 16px;
 
-    @media (max-width: ${props => props.theme.breakpoints.sm}px) {
-        height: 70px;
+    @media (max-width: 768px) {
         display: ${props => props.hideOnMobile && "none"};
     }
 `;
