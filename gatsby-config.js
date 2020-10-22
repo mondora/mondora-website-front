@@ -68,6 +68,20 @@ module.exports = {
             }
         },
         {
+            resolve: "@contentful/gatsby-transformer-contentful-richtext",
+            options: {
+                renderOptions: {
+                    renderNode: {
+                        paragraph: (node, next) =>
+                            `<p>${next(node.content).replace(
+                                /\n/g,
+                                `</br>`
+                            )}</p>`
+                    }
+                }
+            }
+        },
+        {
             resolve: `gatsby-transformer-remark`,
             options: {
                 commonmark: true,

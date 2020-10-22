@@ -4,6 +4,7 @@
     "version": "0.1.0",
     "author": "Mondora team <info@mondora.com>",
     "dependencies": {
+        "@contentful/gatsby-transformer-contentful-richtext": "^13.1.0",
         "@rehooks/window-size": "^1.0.2",
         "@umijs/hooks": "^1.7.1",
         "color": "^3.1.2",
