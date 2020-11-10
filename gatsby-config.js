@@ -8,7 +8,9 @@ module.exports = {
         title: ":mondora - Building software, creating benefit",
         description:
             "Software and advisory company specialized in custom cloud solutions. Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact.",
-        author: "mondora-team"
+        author: "mondora-team",
+        robots:
+            "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     },
     plugins: [
         "gatsby-plugin-transition-link",
@@ -61,28 +63,24 @@ module.exports = {
             }
         },
         {
-            resolve: `gatsby-source-contentful`,
+            resolve: "gatsby-plugin-google-fonts",
+            options: {
+                fonts: [
+                    "playfair display: 400, 700",
+                    "source sans pro:400,400i,600,600i"
+                ],
+                display: "swap"
+            }
+        },
+        {
+            resolve: "gatsby-source-contentful",
             options: {
                 spaceId: process.env.CONTENTFUL_SPACE_ID,
                 accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
             }
         },
         {
-            resolve: "@contentful/gatsby-transformer-contentful-richtext",
-            options: {
-                renderOptions: {
-                    renderNode: {
-                        paragraph: (node, next) =>
-                            `<p>${next(node.content).replace(
-                                /\n/g,
-                                `</br>`
-                            )}</p>`
-                    }
-                }
-            }
-        },
-        {
-            resolve: `gatsby-transformer-remark`,
+            resolve: "gatsby-transformer-remark",
             options: {
                 commonmark: true,
                 footnotes: true,

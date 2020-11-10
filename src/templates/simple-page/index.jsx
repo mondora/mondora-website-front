@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
 import Layout from "../../components/layout";
-import Content from "../../components/content";
-import MaxWidthContainer from "../../components/max-width-container";
+
+import PageContent from "../../components/page-content";
 import PageMetadata from "../../components/page-metadata";
 import PageTitle from "../../components/page-title";
 
@@ -16,16 +16,17 @@ export const pageQuery = graphql`
             metaDescription {
                 metaDescription
             }
+            metaRobots
             content {
-                childContentfulRichText {
-                    html
+                childMarkdownRemark {
+                    htmlAst
                 }
             }
         }
     }
 `;
 
-const BlogPost = ({ data: { contentfulSimplePage } }) => {
+const SimplePage = ({ data: { contentfulSimplePage } }) => {
     return (
         <Layout>
             <PageMetadata
@@ -33,31 +34,26 @@ const BlogPost = ({ data: { contentfulSimplePage } }) => {
                 description={
                     contentfulSimplePage.metaDescription.metaDescription
                 }
+                noRobots={contentfulSimplePage.metaRobots}
             />
-            <MaxWidthContainer width="100" justifyContent="center">
-                <PageTitle>{contentfulSimplePage.pageName}</PageTitle>
-            </MaxWidthContainer>
-            <MaxWidthContainer width="100" justifyContent="center">
-                <Content
-                    html={
-                        contentfulSimplePage.content.childContentfulRichText
-                            .html
-                    }
-                />
-            </MaxWidthContainer>
+            <PageTitle>{contentfulSimplePage.pageName}</PageTitle>
+            <PageContent>
+                {contentfulSimplePage.content.childMarkdownRemark.htmlAst}
+            </PageContent>
         </Layout>
     );
 };
 
-BlogPost.propTypes = {
+SimplePage.propTypes = {
     data: PropTypes.shape({
         contentfulSimplePage: PropTypes.shape({
             pageName: PropTypes.string.isRequired,
             metaTitle: PropTypes.string,
+            metaRobots: PropTypes.bool,
             metaDescription: PropTypes.object,
             content: PropTypes.object.isRequired
         }).isRequired
     }).isRequired
 };
 
-export default BlogPost;
+export default SimplePage;
