@@ -25,7 +25,6 @@ const Paragraph = styled.p`
     line-height: 1.7em;
     margin: 0 0 1em;
     color: var(--text-gray);
-    white-space: pre-wrap;
 `;
 
 const Bold = styled.strong`
@@ -50,10 +49,6 @@ const BlockQuote = styled.blockquote`
     font-size: calc(1.4em + 0.15vw);
     font-family: "Playfair Display", serif;
     font-weight: 400;
-`;
-
-const Image = styled.img`
-    max-width: 100%;
 `;
 
 const Table = styled.table`
@@ -84,16 +79,15 @@ const renderAst = new rehypeReact({
         strong: Bold,
         a: Link,
         li: ListElement,
-        img: Image,
         blockquote: BlockQuote,
-        table: Table
-    }
+        table: Table,
+    },
 }).Compiler;
 
 const Markdown = ({ data }) => <>{renderAst(data)}</>;
 
 Markdown.propTypes = {
-    data: PropTypes.object
+    data: PropTypes.object,
 };
 
 export default Markdown;
