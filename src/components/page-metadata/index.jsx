@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { graphql, useStaticQuery } from "gatsby";
 
-const PageMetadata = ({ title, description, noRobots }) => {
+const PageMetadata = ({ title, description, allowRobots }) => {
     const data = useStaticQuery(graphql`
         {
             site {
@@ -20,7 +20,7 @@ const PageMetadata = ({ title, description, noRobots }) => {
     const seo = {
         title: title || defaults.title,
         description: description || defaults.description,
-        robots: noRobots ? "none" : defaults.robots
+        robots: allowRobots ? defaults.robots : "none",
     };
 
     return (
@@ -35,7 +35,7 @@ const PageMetadata = ({ title, description, noRobots }) => {
 PageMetadata.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-    noRobots: PropTypes.bool
+    allowRobots: PropTypes.bool,
 };
 
 export default PageMetadata;

@@ -34,7 +34,7 @@ const SimplePage = ({ data: { contentfulSimplePage } }) => {
                 description={
                     contentfulSimplePage.metaDescription.metaDescription
                 }
-                noRobots={contentfulSimplePage.metaRobots}
+                allowRobots={contentfulSimplePage.metaRobots}
             />
             <PageTitle>{contentfulSimplePage.pageName}</PageTitle>
             <PageContent>
@@ -51,9 +51,9 @@ SimplePage.propTypes = {
             metaTitle: PropTypes.string,
             metaRobots: PropTypes.bool,
             metaDescription: PropTypes.object,
-            content: PropTypes.object.isRequired
-        }).isRequired
-    }).isRequired
+            content: PropTypes.object.isRequired,
+        }).isRequired,
+    }).isRequired,
 };
 
 export default SimplePage;
