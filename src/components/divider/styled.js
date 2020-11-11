@@ -6,11 +6,11 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
 
-    height: ${props => props.height};
+    height: ${(props) => props.height};
     margin: 0 16px;
 
     @media (max-width: 768px) {
-        display: ${props => props.hideOnMobile && "none"};
+        display: ${(props) => props.hideOnMobile && "none"};
     }
 `;
 
@@ -23,13 +23,13 @@ export const Line = styled.div`
 export const Circle = styled.div`
     display: none;
 
-    ${props =>
+    ${(props) =>
         props.show &&
         css`
             display: block;
             border: 2px solid var(--black);
-            height: ${props => props.theme.spacing.unit * 3}px;
-            width: ${props => props.theme.spacing.unit * 3}px;
-            border-radius: ${props => props.theme.spacing.unit * 4}px;
+            height: ${(props) => props.theme.spacing.unit * 3}px;
+            width: ${(props) => props.theme.spacing.unit * 3}px;
+            border-radius: ${(props) => props.theme.spacing.unit * 4}px;
         `}
 `;
