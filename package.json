@@ -51,7 +51,7 @@
     },
     "license": "MIT",
     "scripts": {
-        "prettier": "prettier src/**/*.js",
+        "prettier": "prettier -l src/**/*.js",
         "lint": "eslint src --ext .jsx --ext .js",
         "build": "gatsby build",
         "develop": "gatsby develop",
