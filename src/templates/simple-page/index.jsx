@@ -34,7 +34,7 @@ const SimplePage = ({ data: { contentfulSimplePage } }) => {
                 description={
                     contentfulSimplePage.metaDescription.metaDescription
                 }
-                allowRobots={contentfulSimplePage.metaRobots}
+                disableRobots={contentfulSimplePage.metaRobots}
             />
             <PageTitle>{contentfulSimplePage.pageName}</PageTitle>
             <PageContent>
