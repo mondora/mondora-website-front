@@ -5,6 +5,7 @@ import rehypeReact from "rehype-react";
 import styled from "styled-components";
 
 const PrimaryTitle = styled.h1`
+    font-weight: 400;
     font-size: 2em;
 
     @media (min-width: ${(props) => props.theme.breakpoints[1]}px) {
@@ -15,7 +16,7 @@ const PrimaryTitle = styled.h1`
 const SecondaryTitle = styled.h2`
     font-family: "Source Sans Pro", sans-serif;
     font-size: 1.75em;
-    font-weight: bold;
+    font-weight: 600;
     margin: calc(1.25em + 0.15vw) 0 calc(0.75em + 0.15vw);
 
     @media (min-width: ${(props) => props.theme.breakpoints[1]}px) {
@@ -26,7 +27,7 @@ const SecondaryTitle = styled.h2`
 const TertiaryTitle = styled.h3`
     font-family: "Source Sans Pro", sans-serif;
     font-size: 1.5em;
-    font-weight: bold;
+    font-weight: 600;
     margin: calc(1em + 0.15vw) 0 calc(0.75em + 0.15vw);
 
     @media (min-width: ${(props) => props.theme.breakpoints[1]}px) {
