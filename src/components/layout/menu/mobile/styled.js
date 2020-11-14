@@ -17,7 +17,7 @@ export const ToolbarGrid = styled.div`
     right: 0;
     background: var(--background-dark-gray);
     height: ${toolbarHeight}px;
-    padding: 0 ${(props) => props.theme.spacing.unit * 4}px;
+    padding: 0 ${props => props.theme.spacing.unit * 4}px;
     z-index: 24;
     border-bottom: 2px solid #fff;
 `;
@@ -29,7 +29,7 @@ export const AnimatedMenu = styled.div`
     position: fixed;
     right: 0;
     left: 0;
-    top: ${(props) => (props.open ? "0" : "-100%")};
+    top: ${props => (props.open ? "0" : "-100%")};
     transition: top 0.3s ease-in-out;
 `;
 
@@ -57,12 +57,12 @@ export const MenuItem = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: ${(props) => props.theme.spacing.unit * 12}px;
+    height: ${props => props.theme.spacing.unit * 12}px;
     text-decoration: none;
     border-bottom: 1px solid var(--border-dark-gray);
-    padding: 0 ${(props) => props.theme.spacing.unit * 4}px;
+    padding: 0 ${props => props.theme.spacing.unit * 4}px;
     box-sizing: border-box;
-    ${(props) =>
+    ${props =>
         props.background === lightTheme &&
         css`
             background: rgba(255, 255, 255, 0.1);
@@ -73,5 +73,5 @@ const lightTheme = "light";
 const darkTheme = "dark";
 
 MenuItem.propTypes = {
-    theme: PropTypes.oneOf([lightTheme, darkTheme]),
+    theme: PropTypes.oneOf([lightTheme, darkTheme])
 };
