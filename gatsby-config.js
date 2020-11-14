@@ -1,5 +1,5 @@
 require("dotenv").config({
-    path: `.env.${process.env.NODE_ENV}`,
+    path: `.env.${process.env.NODE_ENV}`
 });
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
             "Software and advisory company specialized in custom cloud solutions. Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact.",
         author: "mondora-team",
         robots:
-            "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+            "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     },
     plugins: [
         "gatsby-plugin-transition-link",
@@ -22,8 +22,8 @@ module.exports = {
             resolve: "gatsby-source-rss-feed",
             options: {
                 url: "https://bcalmbcorp.com/feed/",
-                name: "BcalmBcorp",
-            },
+                name: "BcalmBcorp"
+            }
         },
         {
             resolve: "gatsby-plugin-manifest",
@@ -34,50 +34,50 @@ module.exports = {
                 start_url: "/",
                 background_color: "#f2f2f2",
                 theme_color: "#ffda01",
-                display: "minimal-ui",
-            },
+                display: "minimal-ui"
+            }
         },
         {
             resolve: "gatsby-source-filesystem",
             options: {
                 name: "images",
-                path: `${__dirname}/src/images`,
-            },
+                path: `${__dirname}/src/images`
+            }
         },
         {
             resolve: "gatsby-source-instagram",
             options: {
-                username: "1698981702",
-            },
+                username: "1698981702"
+            }
         },
         {
             resolve: "gatsby-plugin-sitemap",
             options: {
-                exclude: ["/meet-the-team/"],
-            },
+                exclude: ["/meet-the-team/"]
+            }
         },
         {
             resolve: "gatsby-plugin-google-tagmanager",
             options: {
-                id: process.env.GOOGLE_TAGMANAGER_ID,
-            },
+                id: process.env.GOOGLE_TAGMANAGER_ID
+            }
         },
         {
             resolve: "gatsby-plugin-google-fonts",
             options: {
                 fonts: [
                     "playfair display: 400,700",
-                    "source sans pro:400,400i,600,600i",
+                    "source sans pro:400,400i,600,600i"
                 ],
-                display: "swap",
-            },
+                display: "swap"
+            }
         },
         {
             resolve: "gatsby-source-contentful",
             options: {
                 spaceId: process.env.CONTENTFUL_SPACE_ID,
-                accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-            },
+                accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+            }
         },
         {
             resolve: "gatsby-transformer-remark",
@@ -97,24 +97,24 @@ module.exports = {
                             urlOverrides: [
                                 {
                                     id: "youtube",
-                                    embedURL: (videoId) =>
-                                        `https://www.youtube-nocookie.com/embed/${videoId}`,
-                                },
+                                    embedURL: videoId =>
+                                        `https://www.youtube-nocookie.com/embed/${videoId}`
+                                }
                             ],
-                            containerClass: "embedVideo-container",
-                        },
+                            containerClass: "embedVideo-container"
+                        }
                     },
                     {
                         resolve: "gatsby-remark-images-contentful",
                         options: {
                             maxWidth: 1136,
                             linkImagesToOriginal: false,
-                            withWebp: true,
-                        },
+                            withWebp: true
+                        }
                     },
-                    "gatsby-remark-responsive-iframe",
-                ],
-            },
-        },
-    ],
+                    "gatsby-remark-responsive-iframe"
+                ]
+            }
+        }
+    ]
 };
