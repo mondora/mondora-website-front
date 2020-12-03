@@ -43,8 +43,8 @@ const settings = {
 const RegionTemplate = ({ data }) => (
     <Layout>
         <PageMetadata
-            title={data.contentfulRegion.metaTitle.metaTitle}
-            description={data.contentfulRegion.metaDescr.metaDescr}
+            title={data.contentfulRegion.metaTitle && data.contentfulRegion.metaTitle.metaTitle}
+            description={data.contentfulRegion.metaDescr && data.contentfulRegion.metaDescr.metaDescr}
         />
         <Header
             left={
