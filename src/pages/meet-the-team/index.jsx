@@ -67,7 +67,7 @@ const MeetTheTeam = () => {
             />
 
             <BackgroundStripe theme="light">
-                <MaxWidthContainer>
+                <MaxWidthContainer justifyContent="center">
                     {contentfulTeamPage.regions.map((region, i) => (
                         <RegionMiniature key={i} data={region} />
                     ))}
