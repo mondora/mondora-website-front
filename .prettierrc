@@ -1,6 +1,8 @@
 {
-    "tabWidth": 4,
+    "arrowParens": "avoid",
     "proseWrap": "always",
+    "tabWidth": 4,
+    "trailingComma": "none",
     "overrides": [
         {
             "files": "*.md",

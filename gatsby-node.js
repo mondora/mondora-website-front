@@ -1,6 +1,6 @@
 const path = require("path");
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = ({ actions, graphql }) => {
     const { createPage } = actions;
     return new Promise((resolve, reject) => {
         const regionTemplate = path.resolve("src/templates/region.jsx");
@@ -14,6 +14,11 @@ exports.createPages = ({ graphql, actions }) => {
                                 name
                                 slug
                             }
+                        }
+                    }
+                    allContentfulSimplePage {
+                        nodes {
+                            slug
                         }
                     }
                 }
@@ -30,8 +35,19 @@ exports.createPages = ({ graphql, actions }) => {
                         }
                     });
                 });
+                result.data.allContentfulSimplePage.nodes.forEach(node => {
+                    const { slug } = node;
+                    createPage({
+                        path: `/${slug}/`,
+                        component: path.resolve("./src/templates/simple-page/index.jsx"),
+                        context: {
+                            slug
+                        }
+                    });
+                });
                 return;
             })
         );
     });
+
 };

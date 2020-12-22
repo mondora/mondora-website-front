@@ -4,7 +4,7 @@ export const Item = styled.div`
     text-align: left;
     @media (max-width: ${props => props.theme.breakpoints.sm}px) {
         text-align: center;
-        & < {
+        & > {
             padding: 0;
         }
     }
