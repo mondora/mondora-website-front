@@ -32,7 +32,7 @@ const RegionMiniature = ({ data }) => (
         <Swirl margin={"auto"} />
         <ParagraphTitle>{data.name}</ParagraphTitle>
         {data.buttonText && (
-            <Link to={`regions/${data.slug}`}>
+            <Link to={`../regions/${data.slug}`}>
                 <SquareButton theme="light">{data.buttonText}</SquareButton>
             </Link>
         )}
