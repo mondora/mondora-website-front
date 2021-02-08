@@ -20,11 +20,13 @@ const MobileMenu = ({ internal, external, blog }) => {
         query {
             contentfulMenu {
                 mobileLogo {
+                    title
                     fixed(height: 32) {
                         ...GatsbyContentfulFixed
                     }
                 }
                 blogLogo {
+                    title
                     fixed(height: 16) {
                         ...GatsbyContentfulFixed
                     }
@@ -76,6 +78,7 @@ const MobileMenu = ({ internal, external, blog }) => {
                                 {"BLOG "}
                                 <InlineLogo
                                     fixed={contentfulMenu.blogLogo.fixed}
+                                    alt={contentfulMenu.blogLogo.title}
                                 />
                             </>
                         )}
@@ -84,7 +87,10 @@ const MobileMenu = ({ internal, external, blog }) => {
             </AnimatedMenu>
             <ToolbarGrid>
                 <Link to={"/"}>
-                    <Image fixed={contentfulMenu.mobileLogo.fixed} />
+                    <Image
+                        fixed={contentfulMenu.mobileLogo.fixed}
+                        alt={contentfulMenu.mobileLogo.title}
+                    />
                 </Link>
 
                 <div onClick={handleToggle}>

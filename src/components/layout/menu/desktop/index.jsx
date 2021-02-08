@@ -40,6 +40,7 @@ const DesktopMenu = ({ internal, external, blog }) => {
         query {
             contentfulMenu {
                 desktopLogo {
+                    title
                     fixed(width: 156) {
                         ...GatsbyContentfulFixed
                     }
@@ -51,7 +52,10 @@ const DesktopMenu = ({ internal, external, blog }) => {
     return (
         <Flex my={32} justifyContent="space-between" alignItems="center">
             <AniLink to="/" paintDrip direction="none" color="white">
-                <Image fixed={contentfulMenu.desktopLogo.fixed} />
+                <Image
+                    fixed={contentfulMenu.desktopLogo.fixed}
+                    alt={contentfulMenu.desktopLogo.title}
+                />
             </AniLink>
 
             <Flex justifyContent="space-between" alignItems="center">
