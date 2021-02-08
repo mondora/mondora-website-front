@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { graphql, useStaticQuery } from "gatsby";
 
-const PageMetadata = ({ title, description, disableRobots }) => {
+const PageMetadata = ({ title, description, disableRobots, locale }) => {
     const data = useStaticQuery(graphql`
         {
             site {
@@ -11,6 +11,7 @@ const PageMetadata = ({ title, description, disableRobots }) => {
                     title
                     description
                     robots
+                    locale
                 }
             }
         }
@@ -21,10 +22,15 @@ const PageMetadata = ({ title, description, disableRobots }) => {
         title: title || defaults.title,
         description: description || defaults.description,
         robots: disableRobots ? "none" : defaults.robots,
+        locale: locale || defaults.locale
     };
 
     return (
-        <Helmet>
+        <Helmet
+            htmlAttributes={{
+                lang: seo.locale
+            }}
+        >
             <title>{seo.title}</title>
             <meta name="description" content={seo.description} />
             <meta name="robots" content={seo.robots} />
@@ -36,6 +42,7 @@ PageMetadata.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
     disableRobots: PropTypes.bool,
+    locale: PropTypes.string
 };
 
 export default PageMetadata;
