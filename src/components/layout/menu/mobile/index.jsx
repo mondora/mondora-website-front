@@ -42,7 +42,7 @@ const MobileMenu = ({ internal, external, blog }) => {
     };
 
     return (
-        <>
+        <nav role="navigation" aria-label="Main">
             <AnimatedMenu open={open}>
                 {internal.map((link, i) => (
                     <MenuItem background={"dark"} key={i}>
@@ -102,7 +102,7 @@ const MobileMenu = ({ internal, external, blog }) => {
                 </div>
             </ToolbarGrid>
             <Spacer />
-        </>
+        </nav>
     );
 };
 

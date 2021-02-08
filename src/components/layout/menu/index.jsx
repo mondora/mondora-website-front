@@ -29,22 +29,24 @@ const Menu = () => {
     `);
 
     return (
-        <MaxWidthContainer>
-            <Hidden smUp={true}>
-                <MobileMenu
-                    internal={contentfulMenu.internalLinks}
-                    external={contentfulMenu.externalLinks}
-                    blog={contentfulMenu.blogLink}
-                />
-            </Hidden>
-            <Hidden smDown={true}>
-                <DesktopMenu
-                    internal={contentfulMenu.internalLinks}
-                    external={contentfulMenu.externalLinks}
-                    blog={contentfulMenu.blogLink}
-                />
-            </Hidden>
-        </MaxWidthContainer>
+        <header role="banner">
+            <MaxWidthContainer>
+                <Hidden smUp={true}>
+                    <MobileMenu
+                        internal={contentfulMenu.internalLinks}
+                        external={contentfulMenu.externalLinks}
+                        blog={contentfulMenu.blogLink}
+                    />
+                </Hidden>
+                <Hidden smDown={true}>
+                    <DesktopMenu
+                        internal={contentfulMenu.internalLinks}
+                        external={contentfulMenu.externalLinks}
+                        blog={contentfulMenu.blogLink}
+                    />
+                </Hidden>
+            </MaxWidthContainer>
+        </header>
     );
 };
 

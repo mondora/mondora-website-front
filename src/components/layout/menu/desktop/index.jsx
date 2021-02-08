@@ -57,41 +57,42 @@ const DesktopMenu = ({ internal, external, blog }) => {
                     alt={contentfulMenu.desktopLogo.title}
                 />
             </AniLink>
+            <nav role="navigation" aria-label="Main">
+                <Flex justifyContent="space-between" alignItems="center">
+                    {internal.map((link, i) => (
+                        <SuperLink
+                            key={i}
+                            to={link.link}
+                            paintDrip
+                            direction="none"
+                            color="white"
+                            activeClassName="active"
+                        >
+                            {link.text}
+                        </SuperLink>
+                    ))}
 
-            <Flex justifyContent="space-between" alignItems="center">
-                {internal.map((link, i) => (
-                    <SuperLink
-                        key={i}
-                        to={link.link}
-                        paintDrip
-                        direction="none"
-                        color="white"
-                        activeClassName="active"
-                    >
-                        {link.text}
-                    </SuperLink>
-                ))}
+                    {external.map((link, i) => (
+                        <SuperLink
+                            key={i}
+                            as="a"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={link.link}
+                        >
+                            {link.text}
+                        </SuperLink>
+                    ))}
 
-                {external.map((link, i) => (
-                    <SuperLink
-                        key={i}
-                        as="a"
+                    <BlogButton
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={link.link}
+                        href={blog.link}
                     >
-                        {link.text}
-                    </SuperLink>
-                ))}
-
-                <BlogButton
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={blog.link}
-                >
-                    {blog.text}
-                </BlogButton>
-            </Flex>
+                        {blog.text}
+                    </BlogButton>
+                </Flex>
+            </nav>
         </Flex>
     );
 };
