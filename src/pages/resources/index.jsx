@@ -5,9 +5,11 @@ import { graphql, useStaticQuery } from "gatsby";
 import Header from "../../components/header";
 import Layout from "../../components/layout";
 import PageMetadata from "../../components/page-metadata";
+import MaxWidthContainer from "../../components/max-width-container";
+import Resource from "../../components/resource";
 
 const Resources = () => {
-    const { contentfulResourcesPage } = useStaticQuery(graphql`
+    const { contentfulResourcesPage, allContentfulResource } = useStaticQuery(graphql`
         query {
             contentfulResourcesPage {
                 metaDescr {
@@ -32,6 +34,22 @@ const Resources = () => {
                     }
                 }
             }
+            allContentfulResource {
+                nodes {
+                  title
+                  type
+                  date
+                  button {
+                    link
+                    text
+                  }
+                  areas
+                  tags
+                  description {
+                    description
+                  }
+                }
+              }
         }
     `);
 
@@ -47,6 +65,12 @@ const Resources = () => {
                 }
                 rightImage={contentfulResourcesPage.rightImage}
             />
+            <MaxWidthContainer>
+                {
+                allContentfulResource.nodes.map((resouce, i) => (
+                    <Resource data={resouce} key={i}/>
+                ))}
+            </MaxWidthContainer>
         </Layout>
     );
 };
