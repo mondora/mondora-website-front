@@ -1,12 +1,10 @@
 import React from "react";
 
-import { Link } from "gatsby";
-
+import Button from "../../components/button";
 import Layout from "../../components/layout";
 import Section from "../../components/section";
 import RegionMiniature from "../../components/region";
 import Divider from "../../components/divider";
-import SquareButton from "../../components/square-button";
 import MaxWidthContainer from "../../components/max-width-container";
 import BackgroundStripe from "../../components/background-stripe";
 import Title from "../../components/title";
@@ -87,9 +85,9 @@ const MeetTheTeam = () => (
                         </Subtitle>
 
                         <Subtitle>
-                            <Link to={"/work-with-us"}>
-                                <SquareButton>{"Join the team !"}</SquareButton>
-                            </Link>
+                            <Button to={"/work-with-us"}>
+                                {"Join the team !"}
+                            </Button>
                         </Subtitle>
                     </Section.LeftContainer>
 
