@@ -11,7 +11,7 @@ import CookiesAlert from "./cookies-alert";
 const Layout = ({ children }) => (
     <ThemeProvider theme={theme}>
         <Menu />
-        {children}
+        <main>{children}</main>
         <Footer />
         <CookiesAlert />
     </ThemeProvider>
