@@ -33,8 +33,8 @@ const settings = {
             breakpoint: 480,
             settings: {
                 slidesToShow: 1,
-                
-                centerPadding: "0px",
+
+                centerPadding: "0px"
             }
         }
     ]
@@ -43,10 +43,17 @@ const settings = {
 const RegionTemplate = ({ data }) => (
     <Layout>
         <PageMetadata
-            title={data.contentfulRegion.metaTitle && data.contentfulRegion.metaTitle.metaTitle}
-            description={data.contentfulRegion.metaDescr && data.contentfulRegion.metaDescr.metaDescr}
+            title={
+                data.contentfulRegion.metaTitle &&
+                data.contentfulRegion.metaTitle.metaTitle
+            }
+            description={
+                data.contentfulRegion.metaDescr &&
+                data.contentfulRegion.metaDescr.metaDescr
+            }
         />
         <Header
+            sideOnTop={"left"}
             left={
                 data.contentfulRegion.leftHeader &&
                 data.contentfulRegion.leftHeader.childMarkdownRemark.htmlAst

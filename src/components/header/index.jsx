@@ -11,6 +11,7 @@ import AstText from "../ast-text";
 import SquareButton from "../square-button";
 
 const Header = ({
+    sideOnTop,
     left,
     right,
     rightImage,
@@ -21,7 +22,7 @@ const Header = ({
     <BackgroundStripe>
         <MaxWidthContainer>
             <Section header={true}>
-                <Section.LeftContainer>
+                <Section.LeftContainer sideOnTop={sideOnTop}>
                     {leftButton && (
                         <a href={leftButton.link}>
                             <SquareButton margin="24px 0">
@@ -37,10 +38,10 @@ const Header = ({
                         />
                     )}
                 </Section.LeftContainer>
-                <Section.DividerContainer>
+                <Section.DividerContainer sideOnTop={sideOnTop}>
                     <Divider />
                 </Section.DividerContainer>
-                <Section.RightContainer>
+                <Section.RightContainer sideOnTop={sideOnTop}>
                     {rightButton && (
                         <a href={rightButton.link}>
                             <SquareButton margin="24px 0">
@@ -62,6 +63,7 @@ const Header = ({
 );
 
 Header.propTypes = {
+    sideOnTop: PropTypes.string,
     left: PropTypes.object,
     right: PropTypes.object,
     rightImage: PropTypes.object,
