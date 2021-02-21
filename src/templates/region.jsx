@@ -14,9 +14,13 @@ const settings = {
     slidesToShow: 5,
     slidesToScroll: 1,
     dots: true,
-    centerMode: true,
-    centerPadding: "48px",
     responsive: [
+        {
+            breakpoint: 1280,
+            settings: {
+                slidesToShow: 4
+            }
+        },
         {
             breakpoint: 1024,
             settings: {
@@ -26,15 +30,13 @@ const settings = {
         {
             breakpoint: 768,
             settings: {
-                slidesToShow: 1
+                slidesToShow: 2
             }
         },
         {
-            breakpoint: 480,
+            breakpoint: 520,
             settings: {
-                slidesToShow: 1,
-
-                centerPadding: "0px"
+                slidesToShow: 1
             }
         }
     ]
@@ -66,7 +68,7 @@ const RegionTemplate = ({ data }) => (
                 data.contentfulRegion.graphic && data.contentfulRegion.graphic
             }
         />
-        <BackgroundStripe theme={"light"}>
+        <BackgroundStripe theme={"light"} padding={"96px 0"}>
             <Carousel {...settings}>
                 {data.contentfulRegion.people &&
                     data.contentfulRegion.people.map((person, i) => (
@@ -116,7 +118,7 @@ export const query = graphql`
                 }
                 picture {
                     title
-                    fixed(width: 40) {
+                    fixed(width: 120, height: 120) {
                         ...GatsbyContentfulFixed
                     }
                 }
