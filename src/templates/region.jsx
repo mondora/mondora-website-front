@@ -3,12 +3,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
+import { Flex, Box } from "reflexbox";
+
 import Layout from "../components/layout";
 import PageMetadata from "../components/page-metadata";
 import Header from "../components/header";
 import Carousel from "../components/carousel";
 import BackgroundStripe from "../components/background-stripe";
 import PersonSlide from "../components/person-slide";
+import Hidden from "../components/hidden";
 
 const settings = {
     slidesToShow: 5,
@@ -69,12 +72,28 @@ const RegionTemplate = ({ data }) => (
             }
         />
         <BackgroundStripe theme={"light"} padding={"96px 0"}>
-            <Carousel {...settings}>
-                {data.contentfulRegion.people &&
-                    data.contentfulRegion.people.map((person, i) => (
-                        <PersonSlide key={i} person={person} />
-                    ))}
-            </Carousel>
+            <Hidden smDown={true}>
+                <Carousel {...settings}>
+                    {data.contentfulRegion.people &&
+                        data.contentfulRegion.people.map((person, i) => (
+                            <PersonSlide
+                                key={i}
+                                mobile={false}
+                                person={person}
+                            />
+                        ))}
+                </Carousel>
+            </Hidden>
+            <Hidden smUp={true}>
+                <Flex flexWrap="wrap" padding={2}>
+                    {data.contentfulRegion.people &&
+                        data.contentfulRegion.people.map((person, i) => (
+                            <Box key={i} width={[1, 1 / 2, 1 / 3]} padding={4} alignItems="center">
+                                <PersonSlide mobile={true} person={person} />
+                            </Box>
+                        ))}
+                </Flex>
+            </Hidden>
         </BackgroundStripe>
     </Layout>
 );

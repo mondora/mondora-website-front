@@ -33,6 +33,7 @@ const Header = ({
                     {left && <AstText data={left} />}
                     {leftImage && (
                         <FullWidthImage
+                            margin={"32px 0"}
                             fluid={leftImage.fluid}
                             alt={rightImage.title}
                         />
@@ -52,6 +53,7 @@ const Header = ({
                     {right && <AstText data={right} />}
                     {rightImage && (
                         <FullWidthImage
+                            margin={"32px 0"}
                             fluid={rightImage.fluid}
                             alt={rightImage.title}
                         />

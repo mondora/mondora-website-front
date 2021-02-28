@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import ParagraphTitle from "../paragraph-title";
 import SubtleTitle from "../subtle-title";
+import Subtitle from "../subtitle";
 import Swirl from "../swirl";
 
 const PersonContainer = styled.div`
@@ -15,7 +16,10 @@ const PersonContainer = styled.div`
     margin: 24px 12px;
     min-width: 192px;
     max-width: 240px;
-    height: 280px;
+    height: 360px;
+    @media (max-width: ${props => props.theme.breakpoints[1]}px) {
+        margin: 0 auto;
+    }
 `;
 
 const ProfilePicture = styled(Image)`
@@ -38,6 +42,9 @@ const PersonSlide = ({ person }) => {
             <Swirl margin={"auto"} />
             <ParagraphTitle center={[1, 1]}>{person.name}</ParagraphTitle>
             <SubtleTitle>{person.role}</SubtleTitle>
+            <Subtitle>
+                {person.description && person.description.description}
+            </Subtitle>
         </PersonContainer>
     );
 };
