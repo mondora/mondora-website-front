@@ -2,8 +2,7 @@ import React from "react";
 
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
-
-import { Flex, Box } from "reflexbox";
+import { Box } from "reflexbox";
 
 import Layout from "../components/layout";
 import PageMetadata from "../components/page-metadata";
@@ -12,6 +11,7 @@ import Carousel from "../components/carousel";
 import BackgroundStripe from "../components/background-stripe";
 import PersonSlide from "../components/person-slide";
 import Hidden from "../components/hidden";
+import MaxWidthContainer from "../components/max-width-container";
 
 const settings = {
     slidesToShow: 5,
@@ -78,21 +78,24 @@ const RegionTemplate = ({ data }) => (
                         data.contentfulRegion.people.map((person, i) => (
                             <PersonSlide
                                 key={i}
-                                mobile={false}
                                 person={person}
                             />
                         ))}
                 </Carousel>
             </Hidden>
             <Hidden smUp={true}>
-                <Flex flexWrap="wrap" padding={2}>
+                <MaxWidthContainer justifyContent="center">
                     {data.contentfulRegion.people &&
                         data.contentfulRegion.people.map((person, i) => (
-                            <Box key={i} width={[1, 1 / 2, 1 / 3]} padding={4} alignItems="center">
-                                <PersonSlide mobile={true} person={person} />
+                            <Box
+                                key={i}
+                                width={[1, 1 / 2, 1 / 3]}
+                                padding={4}
+                            >
+                                <PersonSlide person={person} />
                             </Box>
                         ))}
-                </Flex>
+                </MaxWidthContainer>
             </Hidden>
         </BackgroundStripe>
     </Layout>
