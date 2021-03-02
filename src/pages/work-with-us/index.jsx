@@ -91,6 +91,7 @@ const WorkWithUs = () => {
                 }
             }
             contentfulWorkWithUsPage {
+                node_locale
                 handbookButton
                 handbookLink
                 handbookTitle
@@ -137,6 +138,7 @@ const WorkWithUs = () => {
             <PageMetadata
                 title={contentfulWorkWithUsPage.metaTitle.metaTitle}
                 description={contentfulWorkWithUsPage.metaDescr.metaDescr}
+                locale={contentfulWorkWithUsPage.node_locale}
             />
             <Header
                 left={

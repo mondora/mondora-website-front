@@ -18,6 +18,7 @@ const Contacts = () => {
     const { contentfulContactsPage } = useStaticQuery(graphql`
         query {
             contentfulContactsPage {
+                node_locale
                 description
                 header
                 metaTitle {
@@ -52,6 +53,7 @@ const Contacts = () => {
             <PageMetadata
                 title={contentfulContactsPage.metaTitle.metaTitle}
                 description={contentfulContactsPage.metaDescr.metaDescr}
+                locale={contentfulContactsPage.node_locale}
             />
             <MaxWidthContainer>
                 <BackgroundStripe>

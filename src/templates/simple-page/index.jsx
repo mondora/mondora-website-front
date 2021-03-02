@@ -11,6 +11,7 @@ import PageTitle from "../../components/page-title";
 export const pageQuery = graphql`
     query($slug: String!) {
         contentfulSimplePage(slug: { eq: $slug }) {
+            node_locale
             pageName
             metaTitle
             metaDescription {
@@ -35,6 +36,7 @@ const SimplePage = ({ data: { contentfulSimplePage } }) => {
                     contentfulSimplePage.metaDescription.metaDescription
                 }
                 disableRobots={contentfulSimplePage.metaRobots}
+                locale={contentfulSimplePage.node_locale}
             />
             <PageTitle>{contentfulSimplePage.pageName}</PageTitle>
             <PageContent>
@@ -47,13 +49,14 @@ const SimplePage = ({ data: { contentfulSimplePage } }) => {
 SimplePage.propTypes = {
     data: PropTypes.shape({
         contentfulSimplePage: PropTypes.shape({
+            node_locale: PropTypes.string.isRequired,
             pageName: PropTypes.string.isRequired,
             metaTitle: PropTypes.string,
             metaRobots: PropTypes.bool,
             metaDescription: PropTypes.object,
-            content: PropTypes.object.isRequired,
-        }).isRequired,
-    }).isRequired,
+            content: PropTypes.object.isRequired
+        }).isRequired
+    }).isRequired
 };
 
 export default SimplePage;
