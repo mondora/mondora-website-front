@@ -7,7 +7,7 @@ import lightBackground from "./assets/light_background.svg";
 
 const BackgroundStripe = styled.div`
     width: 100%;
-    padding: 32px 0;
+    padding: ${props => (props.padding ? props.padding : "32px 0")};
 
     background-position: center;
     background-size: 592px;
@@ -29,6 +29,7 @@ const lightTheme = "light";
 const darkTheme = "dark";
 
 BackgroundStripe.propTypes = {
+    padding: PropTypes.string,
     theme: PropTypes.oneOf([lightTheme, darkTheme])
 };
 

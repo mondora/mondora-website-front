@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 
 const SectionContainer = styled.div`
     display: grid;
+    width:100%;
     grid-template-columns: 1fr auto 1fr;
     grid-column-gap: ${props => props.gutter}px;
 
