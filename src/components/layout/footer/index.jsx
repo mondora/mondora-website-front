@@ -23,6 +23,11 @@ const ExternalLink = styled.a`
     font-size: 11pt;
     text-decoration: none;
     color: var(--white);
+    display: block;
+    transition: 0.3s ease;
+    &:hover {
+        color: var(--primary);
+    }
 `;
 
 const Footer = () => {
