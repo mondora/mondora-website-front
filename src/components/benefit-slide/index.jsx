@@ -5,9 +5,9 @@ import Image from "gatsby-image";
 
 import { Flex } from "reflexbox";
 
+import Button from "../button";
 import SubtleTitle from "../subtle-title";
 import Title from "../title";
-import SquareButton from "../square-button";
 import Subtitle from "../subtitle";
 import Section from "../section";
 
@@ -25,9 +25,9 @@ const BenefitSlide = ({ project }) => {
                     <Subtitle margin="24px 0">
                         {project.description.description}
                     </Subtitle>
-                    <a target="_blank" rel="noopener noreferrer" href={project.link}>
-                        <SquareButton>{project.buttonText}</SquareButton>
-                    </a>
+                    <Button target="_blank" to={project.link}>
+                        {project.buttonText}
+                    </Button>
                 </Flex>
             </Section.RightContainer>
         </Section>

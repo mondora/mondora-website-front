@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Flex } from "reflexbox";
 
+import Button from "../button";
 import ParagraphTitle from "../paragraph-title";
-import SquareButton from "../square-button";
 
 import ReportHeart from "./assets/heart.svg";
 
@@ -45,11 +45,9 @@ export const ImpactReport = ({ report }) => (
 
             <ReportDescription>
                 <ParagraphTitle>{report.title}</ParagraphTitle>
-                <a href={report.buttonLink}>
-                    <SquareButton theme={"light"}>
-                        {report.buttonText}
-                    </SquareButton>
-                </a>
+                <Button to={report.buttonLink} theme={"light"} target="_blank">
+                    {report.buttonText}
+                </Button>
             </ReportDescription>
         </Flex>
     </Report>

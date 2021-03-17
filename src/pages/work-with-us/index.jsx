@@ -6,8 +6,8 @@ import styled from "styled-components";
 
 import { Flex, Box } from "reflexbox";
 
+import Button from "../../components/button";
 import PageMetadata from "../../components/page-metadata";
-import SquareButton from "../../components/square-button";
 import Header from "../../components/header";
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
@@ -18,10 +18,6 @@ import FullWidthImage from "../../components/full-width-image";
 import Carousel from "../../components/carousel";
 
 import SwirlSeparator from "../../images/separator.svg";
-
-const SuperA = styled.a`
-    text-decoration: none;
-`;
 
 const ReasonNumber = styled.h1`
     position: relative;
@@ -168,11 +164,12 @@ const WorkWithUs = () => {
                             }
                         </Subtitle>
                     </MaxWidthContainer>
-                    <SuperA href={contentfulWorkWithUsPage.handbookLink}>
-                        <SquareButton>
-                            {contentfulWorkWithUsPage.handbookButton}
-                        </SquareButton>
-                    </SuperA>
+                    <Button
+                        to={contentfulWorkWithUsPage.handbookLink}
+                        target="_blank"
+                    >
+                        {contentfulWorkWithUsPage.handbookButton}
+                    </Button>
                 </MaxWidthContainer>
             </BackgroundStripe>
 
