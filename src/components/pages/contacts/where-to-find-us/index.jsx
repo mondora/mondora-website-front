@@ -39,12 +39,6 @@ const WhereToFindUs = ({ contacts }) => {
     return (
         <Flex flexDirection="column" backgroundColor="white">
             <Box m={2}>
-                <ParagraphTitle>{"Office:"}</ParagraphTitle>
-                {contacts.officeAddress.map(line => (
-                    <Subtitle key={line}>{line}</Subtitle>
-                ))}
-            </Box>
-            <Box m={2}>
                 <ParagraphTitle>{"Follow us on:"}</ParagraphTitle>
                 <Subtitle>
                     <Flex

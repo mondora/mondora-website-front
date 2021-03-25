@@ -7,7 +7,6 @@ import PageMetadata from "../../components/page-metadata";
 
 import KeepInTouch from "../../components/pages/contacts/keep-in-touch";
 import WhereToFindUs from "../../components/pages/contacts/where-to-find-us";
-import Map from "../../components/pages/contacts/map";
 
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
@@ -31,18 +30,10 @@ const Contacts = () => {
                     facebook
                     github
                     instagram
-                    phoneNumber
                     partitaIva
-                    mobileNumber
-                    legalAddress
                     linkedIn
-                    officeAddress
                     twitter
                     youtube
-                    officeCoordinates {
-                        lat
-                        lon
-                    }
                 }
             }
         }
@@ -74,9 +65,6 @@ const Contacts = () => {
                     </Section>
                 </BackgroundStripe>
             </MaxWidthContainer>
-            <Map
-                coordinates={contentfulContactsPage.contacts.officeCoordinates}
-            />
         </Layout>
     );
 };

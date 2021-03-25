@@ -40,7 +40,6 @@ const Footer = () => {
                     legalAddress
                     partitaIva
                     email
-                    phoneNumber
                     github
                     instagram
                     twitter
@@ -112,8 +111,6 @@ const Footer = () => {
                         </Subtitle>
 
                         <Subtitle light={true}>
-                            {contentfulFooter.contacts.phoneNumber}
-                            {" - "}
                             {contentfulFooter.contacts.email}
                         </Subtitle>
 

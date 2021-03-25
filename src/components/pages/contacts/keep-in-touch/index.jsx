@@ -9,8 +9,6 @@ import ParagraphTitle from "../../../paragraph-title";
 import Subtitle from "../../../subtitle";
 
 import EmailIcon from "./assets/email.svg";
-import PhoneIcon from "./assets/phone.svg";
-import MobileIcon from "./assets/mobile.svg";
 
 import { Flex, Box } from "reflexbox";
 
@@ -24,17 +22,7 @@ const ContactInfo = styled(Subtitle)`
 
 const KeepInTouch = ({ contactInfo, header, description }) => {
     const contacts = [
-        { icon: EmailIcon, title: "Email:", value: contactInfo.email },
-        {
-            icon: PhoneIcon,
-            title: "Phone:",
-            value: contactInfo.phoneNumber
-        },
-        {
-            icon: MobileIcon,
-            title: "Mobile:",
-            value: contactInfo.mobileNumber
-        }
+        { icon: EmailIcon, title: "Email:", value: contactInfo.email }
     ];
     return (
         <>
