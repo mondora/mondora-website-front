@@ -1,36 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { graphql, useStaticQuery } from "gatsby";
 
-import { Box } from "reflexbox";
-import { Label, Checkbox } from "@rebass/forms";
+import algoliasearch from "algoliasearch/lite";
+import {
+    InstantSearch,
+    RefinementList,
+    SearchBox,
+    Hits
+} from "react-instantsearch-dom";
 
 import Header from "../../components/header";
 import Layout from "../../components/layout";
 import PageMetadata from "../../components/page-metadata";
 import MaxWidthContainer from "../../components/max-width-container";
-import Resource from "../../components/resource";
-import BackgroundStripe from "../../components/background-stripe";
-import Title from "../../components/title";
+
+const searchClient = algoliasearch(
+    process.env.ALGOLIA_APPLICATION_ID,
+    process.env.ALGOLIA_SEARCH_KEY
+);
 
 const Resources = () => {
-    const [tags, setTags] = useState({});
-    console.log(tags);
-
-    const filterResource = resource => {
-        if (
-            Object.entries(tags).find(tag =>
-                tag[1] && resource.tags.includes(tag[0]) ? 1 : 0
-            ) ||
-            !Object.values(tags).find(value => value)
-        )
-            return resource;
-    };
-
-    const {
-        contentfulResourcesPage,
-        allContentfulResource
-    } = useStaticQuery(graphql`
+    const { contentfulResourcesPage } = useStaticQuery(graphql`
         query {
             contentfulResourcesPage {
                 metaDescr {
@@ -55,30 +46,6 @@ const Resources = () => {
                     }
                 }
             }
-            allContentfulResource {
-                group(field: tags) {
-                    totalCount
-                    fieldValue
-                }
-                group(field: tags) {
-                    totalCount
-                    fieldValue
-                }
-                nodes {
-                    title
-                    type
-                    date
-                    button {
-                        link
-                        text
-                    }
-                    areas
-                    tags
-                    description {
-                        description
-                    }
-                }
-            }
         }
     `);
 
@@ -96,35 +63,16 @@ const Resources = () => {
                 rightImage={contentfulResourcesPage.rightImage}
             />
             <MaxWidthContainer>
-                <BackgroundStripe theme="light">
-                    <Box as="form" onSubmit={e => e.preventDefault()}>
-                        <Title>{"Tags"}</Title>
-                        {allContentfulResource.group.map((tag, i) => (
-                            <Label key={i}>
-                                <Checkbox
-                                    id={tag.fieldValue}
-                                    name={tag.fieldValue}
-                                    onChange={event =>
-                                        setTags({
-                                            ...tags,
-                                            [tag.fieldValue]:
-                                                event.target.checked
-                                        })
-                                    }
-                                />
-                                {tag.fieldValue}
-                                {" - ( "}
-                                {tag.totalCount}
-                                {" ) "}
-                            </Label>
-                        ))}
-                    </Box>
-                </BackgroundStripe>
-                {allContentfulResource.nodes
-                    .filter(resource => filterResource(resource))
-                    .map((resouce, i) => (
-                        <Resource data={resouce} key={i} />
-                    ))}
+                <InstantSearch
+                    searchClient={searchClient}
+                    indexName="mondora_resources_en"
+                >
+                    <SearchBox />
+                    <RefinementList attribute="tags" />
+                    <RefinementList attribute="language" />
+                    <RefinementList attribute="type" />
+                    <Hits />
+                </InstantSearch>
             </MaxWidthContainer>
         </Layout>
     );
