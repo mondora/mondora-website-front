@@ -7,13 +7,14 @@ import {
     InstantSearch,
     RefinementList,
     SearchBox,
-    Hits
+    connectHits
 } from "react-instantsearch-dom";
 
 import Header from "../../components/header";
 import Layout from "../../components/layout";
 import PageMetadata from "../../components/page-metadata";
 import MaxWidthContainer from "../../components/max-width-container";
+import Resource from "../../components/resource";
 
 const searchClient = algoliasearch(
     process.env.ALGOLIA_APPLICATION_ID,
@@ -21,6 +22,10 @@ const searchClient = algoliasearch(
 );
 
 const Resources = () => {
+    const CustomHits = connectHits(({ hits }) =>
+        hits.map((hit, i) => <Resource key={i} data={hit} />)
+    );
+
     const { contentfulResourcesPage } = useStaticQuery(graphql`
         query {
             contentfulResourcesPage {
@@ -71,7 +76,7 @@ const Resources = () => {
                     <RefinementList attribute="tags" />
                     <RefinementList attribute="language" />
                     <RefinementList attribute="type" />
-                    <Hits />
+                    <CustomHits />
                 </InstantSearch>
             </MaxWidthContainer>
         </Layout>
