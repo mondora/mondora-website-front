@@ -3,18 +3,16 @@ import React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 
 import algoliasearch from "algoliasearch/lite";
-import {
-    InstantSearch,
-    RefinementList,
-    SearchBox,
-    connectHits
-} from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, connectHits } from "react-instantsearch-dom";
+
+import { Box } from "reflexbox";
 
 import Header from "../../components/header";
 import Layout from "../../components/layout";
 import PageMetadata from "../../components/page-metadata";
 import MaxWidthContainer from "../../components/max-width-container";
 import Resource from "../../components/resource";
+import RefinementBox from "../../components/refinement-box";
 
 const searchClient = algoliasearch(
     process.env.ALGOLIA_APPLICATION_ID,
@@ -22,7 +20,7 @@ const searchClient = algoliasearch(
 );
 
 const Resources = () => {
-    const CustomHits = connectHits(({ hits }) =>
+    const ResourcesList = connectHits(({ hits }) =>
         hits.map((hit, i) => <Resource key={i} data={hit} />)
     );
 
@@ -72,11 +70,19 @@ const Resources = () => {
                     searchClient={searchClient}
                     indexName="mondora_resources_en"
                 >
-                    <SearchBox />
-                    <RefinementList attribute="tags" />
-                    <RefinementList attribute="language" />
-                    <RefinementList attribute="type" />
-                    <CustomHits />
+                    <Box width={[3 / 4]}>
+                        <ResourcesList />
+                    </Box>
+                    <Box width={[1 / 4]} p={4}>
+                        <SearchBox />
+                        <RefinementBox
+                            fields={[
+                                { label: "Themes", field: "tags" },
+                                { label: "Format", field: "type" },
+                                { label: "Language", field: "language" }
+                            ]}
+                        />
+                    </Box>
                 </InstantSearch>
             </MaxWidthContainer>
         </Layout>
