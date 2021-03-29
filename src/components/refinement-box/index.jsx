@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { RefinementList } from "react-instantsearch-dom";
+import {
+    RefinementList,
+    connectCurrentRefinements
+} from "react-instantsearch-dom";
 
 import styled from "styled-components";
 
@@ -12,6 +15,16 @@ const FilterContainer = styled.div`
     width: 100%;
 `;
 
+const ClearButton = connectCurrentRefinements(({ items, refine }) => (
+    <SquareButton
+        onClick={() => refine(items)}
+        disabled={!items.length}
+        theme="light"
+    >
+        {"Clear filters"}
+    </SquareButton>
+));
+
 const RefinementBox = ({ fields }) => (
     <FilterContainer>
         {fields.map((field, i) => (
@@ -20,7 +33,7 @@ const RefinementBox = ({ fields }) => (
                 <RefinementList attribute={field.field} />
             </div>
         ))}
-        <SquareButton theme="light">{"Clear filters"}</SquareButton>
+        <ClearButton />
         <SquareButton theme="primary">{"Apply"}</SquareButton>
     </FilterContainer>
 );
