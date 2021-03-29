@@ -48,6 +48,15 @@ const Resources = () => {
                         ...GatsbyContentfulFluid
                     }
                 }
+                filtering {
+                    apply
+                    label
+                    clear
+                    contentfulfields {
+                        field
+                        label
+                    }
+                }
             }
         }
     `);
@@ -76,11 +85,7 @@ const Resources = () => {
                     <Box width={[1 / 4]} p={4}>
                         <SearchBox />
                         <RefinementBox
-                            fields={[
-                                { label: "Themes", field: "tags" },
-                                { label: "Format", field: "type" },
-                                { label: "Language", field: "language" }
-                            ]}
+                            fields={contentfulResourcesPage.filtering}
                         />
                     </Box>
                 </InstantSearch>

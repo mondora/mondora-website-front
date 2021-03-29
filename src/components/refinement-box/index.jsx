@@ -9,37 +9,39 @@ import {
 import styled from "styled-components";
 
 import SquareButton from "../square-button";
+import Title from "../title";
 
 const FilterContainer = styled.div`
     background-color: var(--background-light-gray);
     width: 100%;
 `;
 
-const ClearButton = connectCurrentRefinements(({ items, refine }) => (
+const ClearButton = connectCurrentRefinements(({ items, refine, label }) => (
     <SquareButton
         onClick={() => refine(items)}
         disabled={!items.length}
         theme="light"
     >
-        {"Clear filters"}
+        {label}
     </SquareButton>
 ));
 
 const RefinementBox = ({ fields }) => (
     <FilterContainer>
-        {fields.map((field, i) => (
+        <Title>{fields.label}</Title>
+        {fields.contentfulfields.map((field, i) => (
             <div key={i}>
                 {field.label}
                 <RefinementList attribute={field.field} />
             </div>
         ))}
-        <ClearButton />
-        <SquareButton theme="primary">{"Apply"}</SquareButton>
+        <ClearButton label={fields.clear} />
+        <SquareButton theme="primary">{fields.apply}</SquareButton>
     </FilterContainer>
 );
 
 RefinementBox.propTypes = {
-    fields: PropTypes.array
+    fields: PropTypes.object
 };
 
 export default RefinementBox;
