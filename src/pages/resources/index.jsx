@@ -15,8 +15,8 @@ import Resource from "../../components/resource";
 import RefinementBox from "../../components/refinement-box";
 
 const searchClient = algoliasearch(
-    process.env.ALGOLIA_APPLICATION_ID,
-    process.env.ALGOLIA_SEARCH_KEY
+    process.env.GATSBY_ALGOLIA_APPLICATION_ID,
+    process.env.GATSBY_ALGOLIA_SEARCH_KEY
 );
 
 const Resources = () => {
