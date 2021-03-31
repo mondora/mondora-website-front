@@ -8,38 +8,58 @@ import styled from "styled-components";
 import Title from "../title";
 import SubtleTitle from "../subtle-title";
 import Subtitle from "../subtitle";
+import ParagraphTitle from "../paragraph-title";
 
 import logo from "../../images/logo-square.png";
-import SquareButton from "../square-button";
 
 const Icon = styled.img`
     height: 100px;
 `;
 
-const RoundButton = styled.a`
-    padding: 2px 8px;
-    margin: 2px;
-    line-height: 2;
-    color: var(--black);
-    border: 1px solid var(--variant-black);
+const RoundButton = styled.div`
+    width: fit-content;
+    float: left;
+    padding: 2px 12px;
+    margin: 4px;
+    line-height: 1.5;
+    color: var(--text-dark-black);
     border-radius: 24px;
-    text-decoration: none;
+    background-color: var(--primary-hover);
+    font-size: 12px;
+    white-space: nowrap;
+`;
+
+const ResourceContainer = styled(Flex)`
+    background-color: var(--background-light-gray);
+    margin-top: 64px;
+    width: 100%;
+`;
+
+const AreaLabel = styled(ParagraphTitle)`
+    display: inline-block;
+    &::after {
+        content: ", ";
+        white-space: pre;
+    }
+    &:last-of-type ::after {
+        content: "";
+    }
 `;
 
 const Resource = ({ data }) => (
-    <Flex width="100%" flexWrap="wrap" p={4}>
-        <Box p="2">
+    <ResourceContainer flexDirection={"row"} flexWrap="wrap">
+        <Box p="2" width={1 / 8}>
             <Icon src={logo} />
         </Box>
-        <Box p="2">
-            {data.areas.map((area, i) => (
-                <SquareButton key={i} theme={"light"}>
-                    {area}
-                </SquareButton>
-            ))}
+        <Box p="2" width={3 / 4}>
+            <span>
+                {data.areas.map((area, i) => (
+                    <AreaLabel key={i}>{area}</AreaLabel>
+                ))}
+            </span>
             <Title>{data.title}</Title>
             <SubtleTitle>{data.date} </SubtleTitle>
-            <Subtitle>{data.description.description}</Subtitle>
+            <Subtitle>{data.description}</Subtitle>
 
             {data.tags.map((tag, i) => (
                 <RoundButton key={i} theme={"light"}>
@@ -47,7 +67,10 @@ const Resource = ({ data }) => (
                 </RoundButton>
             ))}
         </Box>
-    </Flex>
+        <Box p="2" width={1 / 8}>
+            <Icon src={logo} />
+        </Box>
+    </ResourceContainer>
 );
 
 Resource.propTypes = {
