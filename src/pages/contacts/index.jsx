@@ -26,6 +26,7 @@ const Contacts = () => {
                     metaDescr
                 }
                 contacts {
+                    legalAddress
                     email
                     facebook
                     github

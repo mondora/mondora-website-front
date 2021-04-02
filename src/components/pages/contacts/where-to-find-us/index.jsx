@@ -9,7 +9,14 @@ import Subtitle from "../../../subtitle";
 import SocialLink from "../../../social-link";
 
 const WhereToFindUs = ({ contacts }) => {
-    const Socials = [
+    const connects = [
+        {
+            href: contacts.email,
+            title: "Email"
+        }
+    ];
+
+    const socials = [
         {
             href: contacts.github,
             icon: "github"
@@ -39,13 +46,35 @@ const WhereToFindUs = ({ contacts }) => {
     return (
         <Flex flexDirection="column" backgroundColor="white">
             <Box m={2}>
+                <ParagraphTitle>{"Registered office:"}</ParagraphTitle>
+                <Subtitle>{contacts.legalAddress}</Subtitle>
+            </Box>
+            <Box m={2}>
+                <ParagraphTitle>{"Contact us:"}</ParagraphTitle>
+                <Subtitle>
+                    <Flex
+                        margin={1}
+                        justifyContent={["center", "center", "flex-start"]}
+                    >
+                        {connects.map(
+                            connect =>
+                                connect.href && (
+                                    <Flex margin={1} key={connect.title}>
+                                        <SocialLink theme={"dark"} />
+                                    </Flex>
+                                )
+                        )}
+                    </Flex>
+                </Subtitle>
+            </Box>
+            <Box m={2}>
                 <ParagraphTitle>{"Follow us on:"}</ParagraphTitle>
                 <Subtitle>
                     <Flex
                         margin={1}
                         justifyContent={["center", "center", "flex-start"]}
                     >
-                        {Socials.map(
+                        {socials.map(
                             social =>
                                 social.href && (
                                     <Flex margin={1} key={social.icon}>
