@@ -4,11 +4,13 @@ import PropTypes from "prop-types";
 import rehypeReact from "rehype-react";
 import styled from "styled-components";
 
+import Link from "../link";
+
 const PrimaryTitle = styled.h1`
     font-weight: 400;
     font-size: 2em;
 
-    @media (min-width: ${(props) => props.theme.breakpoints[1]}px) {
+    @media (min-width: ${props => props.theme.breakpoints[1]}px) {
         font-size: 3em;
     }
 `;
@@ -19,7 +21,7 @@ const SecondaryTitle = styled.h2`
     font-weight: 600;
     margin: calc(1.25em + 0.15vw) 0 calc(0.75em + 0.15vw);
 
-    @media (min-width: ${(props) => props.theme.breakpoints[1]}px) {
+    @media (min-width: ${props => props.theme.breakpoints[1]}px) {
         font-size: 2em;
     }
 `;
@@ -30,7 +32,7 @@ const TertiaryTitle = styled.h3`
     font-weight: 600;
     margin: calc(1em + 0.15vw) 0 calc(0.75em + 0.15vw);
 
-    @media (min-width: ${(props) => props.theme.breakpoints[1]}px) {
+    @media (min-width: ${props => props.theme.breakpoints[1]}px) {
         font-size: 1.5em;
     }
 `;
@@ -44,14 +46,6 @@ const Paragraph = styled.p`
 
 const Bold = styled.strong`
     color: var(--text-dark-black);
-`;
-
-const Link = styled.a`
-    color: var(--text-gray);
-
-    &:hover {
-        color: var(--text-dark-black);
-    }
 `;
 
 const ListElement = styled.li`
@@ -95,14 +89,14 @@ const renderAst = new rehypeReact({
         a: Link,
         li: ListElement,
         blockquote: BlockQuote,
-        table: Table,
-    },
+        table: Table
+    }
 }).Compiler;
 
 const Markdown = ({ data }) => <>{renderAst(data)}</>;
 
 Markdown.propTypes = {
-    data: PropTypes.object,
+    data: PropTypes.object
 };
 
 export default Markdown;

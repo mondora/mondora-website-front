@@ -1,27 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import styled from "styled-components";
+
 import { Link as GatsbyLink } from "gatsby";
+
+const StyledLink = styled.a`
+    color: var(--text-gray);
+
+    &:hover {
+        color: var(--text-dark-black);
+    }
+`;
 
 const Link = ({ children, to, activeClassName, partiallyActive, ...rest }) => {
     const internal = /^\/(?!\/)/.test(to);
 
     if (internal) {
         return (
-            <GatsbyLink
+            <StyledLink
+                as={GatsbyLink}
                 to={to}
                 activeClassName={activeClassName}
                 partiallyActive={partiallyActive}
                 {...rest}
             >
                 {children}
-            </GatsbyLink>
+            </StyledLink>
         );
     }
     return (
-        <a href={to} rel="noopener noreferrer" {...rest}>
+        <StyledLink href={to} rel="noopener noreferrer" {...rest}>
             {children}
-        </a>
+        </StyledLink>
     );
 };
 
