@@ -16,6 +16,7 @@ const BCorp = () => {
     const { contentfulImpactPage } = useStaticQuery(graphql`
         query {
             contentfulImpactPage {
+                node_locale
                 metaDescr {
                     metaDescr
                 }
@@ -83,6 +84,7 @@ const BCorp = () => {
             <PageMetadata
                 title={contentfulImpactPage.metaTitle.metaTitle}
                 description={contentfulImpactPage.metaDescr.metaDescr}
+                locale={contentfulImpactPage.node_locale}
             />
             <Header
                 left={

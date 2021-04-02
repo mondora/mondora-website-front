@@ -10,7 +10,8 @@ module.exports = {
             "Software and advisory company specialized in custom cloud solutions. Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact.",
         author: "mondora-team",
         robots:
-            "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+            "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+        locale: "en"
     },
     plugins: [
         "gatsby-plugin-transition-link",

@@ -1,7 +1,6 @@
 import React from "react";
 
 import PropTypes from "prop-types";
-import { Link } from "gatsby";
 
 import { Box } from "reflexbox";
 
@@ -11,7 +10,7 @@ import BackgroundStripe from "../../../background-stripe";
 import MaxWidthContainer from "../../../max-width-container";
 import Section from "../../../section";
 import Subtitle from "../../../subtitle";
-import SquareButton from "../../../square-button";
+import Button from "../../../button";
 
 const About = ({ data }) => (
     <BackgroundStripe theme="dark">
@@ -29,9 +28,9 @@ const About = ({ data }) => (
                         <Subtitle light={true} margin="32px 0">
                             {data.description.description}
                         </Subtitle>
-                        <Link to={data.button.link}>
-                            <SquareButton>{data.button.text}</SquareButton>
-                        </Link>
+                        <Button to={data.button.link}>
+                            {data.button.text}
+                        </Button>
                     </Box>
                 </Section.RightContainer>
             </Section>

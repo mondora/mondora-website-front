@@ -12,7 +12,7 @@ import SocialLink from "../../social-link";
 import Hidden from "../../hidden";
 import Subtitle from "../../subtitle";
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
     display: flex;
     border-top: 1px solid var(--border-dark-gray);
     background: var(--background-dark-gray);
@@ -23,6 +23,11 @@ const ExternalLink = styled.a`
     font-size: 11pt;
     text-decoration: none;
     color: var(--white);
+    display: block;
+    transition: 0.3s ease;
+    &:hover {
+        color: var(--primary);
+    }
 `;
 
 const Footer = () => {
@@ -86,7 +91,7 @@ const Footer = () => {
     ];
 
     return (
-        <FooterContainer>
+        <FooterContainer role="contentinfo">
             <MaxWidthContainer
                 width="100%"
                 my={4}
@@ -138,11 +143,13 @@ const Footer = () => {
                             pl={3}
                         >
                             <Subtitle light={true}>{column.title}</Subtitle>
-                            {column.links.map((link, i) => (
-                                <ExternalLink key={i} href={link.link}>
-                                    {link.text}
-                                </ExternalLink>
-                            ))}
+                            <nav role="navigation" aria-label={column.title}>
+                                {column.links.map((link, i) => (
+                                    <ExternalLink key={i} href={link.link}>
+                                        {link.text}
+                                    </ExternalLink>
+                                ))}
+                            </nav>
                         </Flex>
                     ))}
                 </Flex>

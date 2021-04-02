@@ -40,6 +40,7 @@ const DesktopMenu = ({ internal, external, blog }) => {
         query {
             contentfulMenu {
                 desktopLogo {
+                    title
                     fixed(width: 156) {
                         ...GatsbyContentfulFixed
                     }
@@ -51,43 +52,47 @@ const DesktopMenu = ({ internal, external, blog }) => {
     return (
         <Flex my={32} justifyContent="space-between" alignItems="center">
             <AniLink to="/" paintDrip direction="none" color="white">
-                <Image fixed={contentfulMenu.desktopLogo.fixed} />
+                <Image
+                    fixed={contentfulMenu.desktopLogo.fixed}
+                    alt={contentfulMenu.desktopLogo.title}
+                />
             </AniLink>
+            <nav role="navigation" aria-label="Main">
+                <Flex justifyContent="space-between" alignItems="center">
+                    {internal.map((link, i) => (
+                        <SuperLink
+                            key={i}
+                            to={link.link}
+                            paintDrip
+                            direction="none"
+                            color="white"
+                            activeClassName="active"
+                        >
+                            {link.text}
+                        </SuperLink>
+                    ))}
 
-            <Flex justifyContent="space-between" alignItems="center">
-                {internal.map((link, i) => (
-                    <SuperLink
-                        key={i}
-                        to={link.link}
-                        paintDrip
-                        direction="none"
-                        color="white"
-                        activeClassName="active"
-                    >
-                        {link.text}
-                    </SuperLink>
-                ))}
+                    {external.map((link, i) => (
+                        <SuperLink
+                            key={i}
+                            as="a"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={link.link}
+                        >
+                            {link.text}
+                        </SuperLink>
+                    ))}
 
-                {external.map((link, i) => (
-                    <SuperLink
-                        key={i}
-                        as="a"
+                    <BlogButton
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={link.link}
+                        href={blog.link}
                     >
-                        {link.text}
-                    </SuperLink>
-                ))}
-
-                <BlogButton
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={blog.link}
-                >
-                    {blog.text}
-                </BlogButton>
-            </Flex>
+                        {blog.text}
+                    </BlogButton>
+                </Flex>
+            </nav>
         </Flex>
     );
 };

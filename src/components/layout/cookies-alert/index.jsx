@@ -6,8 +6,8 @@ import { useLocalStorageState } from "@umijs/hooks";
 import styled from "styled-components";
 import { Flex, Box } from "reflexbox";
 
+import Button from "../../button";
 import Subtitle from "../../subtitle";
-import SquareButton from "../../square-button";
 
 export const Container = styled.div`
     background: var(--white);
@@ -44,9 +44,9 @@ const CookiesAlert = () => {
                         </Subtitle>
                     </Box>
                     <Flex m={1}>
-                        <SquareButton onClick={() => setCookieOk(true)}>
+                        <Button onClick={() => setCookieOk(true)}>
                             {contentfulCookiesMessage.buttonText}
-                        </SquareButton>
+                        </Button>
                     </Flex>
                 </Flex>
             </Container>

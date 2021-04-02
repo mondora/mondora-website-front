@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import { graphql, useStaticQuery } from "gatsby";
 
 import BackgroundStripe from "../../../background-stripe";
+import Button from "../../../button";
 import Carousel from "../../../carousel";
 import MaxWidthContainer from "../../../max-width-container";
-import SquareButton from "../../../square-button";
 import Title from "../../../title";
 
 import BlogPost from "./components/blog-post";
@@ -70,9 +70,9 @@ const Blog = ({ title, button }) => {
             </Carousel>
 
             <MaxWidthContainer justifyContent="center">
-                <a target="_blank" rel="noopener noreferrer" href={button.link}>
-                    <SquareButton>{button.text}</SquareButton>
-                </a>
+                <Button target="_blank" to={button.link}>
+                    {button.text}
+                </Button>
             </MaxWidthContainer>
         </BackgroundStripe>
     );
