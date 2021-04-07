@@ -2,20 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import styled, { css } from "styled-components";
+
+import Link from "../link";
 import FeatherIcon from "../feather-icon";
 
-export const SocialName = styled.div`
-    font-size: ${props => props.theme.spacing.unit * 3}px;
-`;
-
-export const LinkContainer = styled.a`
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
-    background: white;
-`;
-
-const SocialContainer = styled.a`
+const SocialContainer = styled(Link)`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +50,13 @@ const SocialText = styled.span`
 `;
 
 export const SocialLink = props => (
-    <SocialContainer {...props} role="img" aria-label={props.icon}>
+    <SocialContainer
+        {...props}
+        to={props.link}
+        role="img"
+        target="_blank"
+        aria-label={props.icon}
+    >
         <FeatherIcon name={props.icon} size={18} />
         {props.text && <SocialText {...props}>{props.text}</SocialText>}
     </SocialContainer>
@@ -71,7 +68,7 @@ const darkTheme = "dark";
 SocialLink.propTypes = {
     icon: PropTypes.string,
     text: PropTypes.string,
-    href: PropTypes.string,
+    link: PropTypes.string,
     theme: PropTypes.PropTypes.oneOf([lightTheme, darkTheme])
 };
 

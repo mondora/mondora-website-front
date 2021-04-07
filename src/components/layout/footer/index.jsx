@@ -45,7 +45,6 @@ const Footer = () => {
                     legalAddress
                     partitaIva
                     email
-                    phoneNumber
                     github
                     instagram
                     twitter
@@ -66,27 +65,27 @@ const Footer = () => {
 
     const Socials = [
         {
-            href: contentfulFooter.contacts.github,
+            link: contentfulFooter.contacts.github,
             icon: "github"
         },
         {
-            href: contentfulFooter.contacts.instagram,
+            link: contentfulFooter.contacts.instagram,
             icon: "instagram"
         },
         {
-            href: contentfulFooter.contacts.facebook,
+            link: contentfulFooter.contacts.facebook,
             icon: "facebook"
         },
         {
-            href: contentfulFooter.contacts.linkedIn,
+            link: contentfulFooter.contacts.linkedIn,
             icon: "linkedin"
         },
         {
-            href: contentfulFooter.contacts.twitter,
+            link: contentfulFooter.contacts.twitter,
             icon: "twitter"
         },
         {
-            href: contentfulFooter.contacts.youtube,
+            link: contentfulFooter.contacts.youtube,
             icon: "youtube"
         }
     ];
@@ -117,8 +116,6 @@ const Footer = () => {
                         </Subtitle>
 
                         <Subtitle light={true}>
-                            {contentfulFooter.contacts.phoneNumber}
-                            {" - "}
                             {contentfulFooter.contacts.email}
                         </Subtitle>
 
@@ -126,7 +123,7 @@ const Footer = () => {
                             <Flex margin={-1}>
                                 {Socials.map(
                                     social =>
-                                        social.href && (
+                                        social.link && (
                                             <Flex margin={1} key={social.icon}>
                                                 <SocialLink {...social} />
                                             </Flex>
