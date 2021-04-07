@@ -11,7 +11,7 @@ import BackgroundStripe from "../background-stripe";
 
 const ReasonsRow = ({ reasons }) => (
     <BackgroundStripe>
-        <MaxWidthContainer my={32}>
+        <MaxWidthContainer>
             {reasons.map((reason, i) => (
                 <Box key={i} width={[1, 1, 1 / 3]} px={[0, 0, 24]} pt={[24, 0]}>
                     <ParagraphTitle center={[true, false]}>
