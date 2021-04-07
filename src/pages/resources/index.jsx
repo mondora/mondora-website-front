@@ -13,6 +13,7 @@ import PageMetadata from "../../components/page-metadata";
 import MaxWidthContainer from "../../components/max-width-container";
 import Resource from "../../components/resource";
 import RefinementBox from "../../components/refinement-box";
+import ReasonsRow from "../../components/reasons-row";
 
 const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APPLICATION_ID,
@@ -48,6 +49,12 @@ const Resources = () => {
                         ...GatsbyContentfulFluid
                     }
                 }
+                sections {
+                    title
+                    description {
+                        description
+                    }
+                }
                 filtering {
                     apply
                     label
@@ -74,6 +81,7 @@ const Resources = () => {
                 }
                 rightImage={contentfulResourcesPage.rightImage}
             />
+            <ReasonsRow reasons={contentfulResourcesPage.sections} />
             <MaxWidthContainer>
                 <InstantSearch
                     searchClient={searchClient}
