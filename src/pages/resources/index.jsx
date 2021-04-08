@@ -56,12 +56,12 @@ const Resources = () => {
                     }
                 }
                 filtering {
-                    apply
                     label
                     clear
                     contentfulfields {
                         field
                         label
+                        type
                     }
                 }
             }

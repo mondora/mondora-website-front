@@ -27,7 +27,7 @@ const ClearButton = connectCurrentRefinements(({ items, refine, label }) => (
     </SquareButton>
 ));
 
-const CustomRefinementList = connectRefinementList(({ items, refine }) =>
+const CustomRefinementList = connectRefinementList(({ items, refine, type }) =>
     items.map(item => (
         <div
             key={item.label}
@@ -37,13 +37,29 @@ const CustomRefinementList = connectRefinementList(({ items, refine }) =>
                 refine(item.value);
             }}
         >
-            <input type="checkbox" name={item.label} checked={item.isRefined} />
-            <label htmlFor={item.label}>
-                {item.label}
-                {" ("}
-                {item.count}
-                {")"}
-            </label>
+            {type === "chip" ? (
+                <SquareButton theme={item.isRefined ? "primary" : "light"}>
+                    {item.label}
+                    {" ("}
+                    {item.count}
+                    {")"}
+                </SquareButton>
+            ) : (
+                <>
+                    <input
+                        type="checkbox"
+                        name={item.label}
+                        checked={item.isRefined}
+                        onChange={event => event.preventDefault()}
+                    />
+                    <label htmlFor={item.label}>
+                        {item.label}
+                        {" ("}
+                        {item.count}
+                        {")"}
+                    </label>
+                </>
+            )}
         </div>
     ))
 );
@@ -54,11 +70,14 @@ const RefinementBox = ({ fields }) => (
         {fields.contentfulfields.map((field, i) => (
             <div key={i}>
                 <ParagraphTitle>{field.label}</ParagraphTitle>
-                <CustomRefinementList limit={20} attribute={field.field} />
+                <CustomRefinementList
+                    limit={20}
+                    type={field.type}
+                    attribute={field.field}
+                />
             </div>
         ))}
         <ClearButton label={fields.clear} />
-        <SquareButton theme="primary">{fields.apply}</SquareButton>
     </FilterContainer>
 );
 
