@@ -3,7 +3,7 @@ import React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 
 import algoliasearch from "algoliasearch/lite";
-import { InstantSearch, SearchBox, connectHits } from "react-instantsearch-dom";
+import { InstantSearch, connectHits } from "react-instantsearch-dom";
 
 import { Box } from "reflexbox";
 
@@ -82,19 +82,20 @@ const Resources = () => {
                 rightImage={contentfulResourcesPage.rightImage}
             />
             <ReasonsRow reasons={contentfulResourcesPage.sections} />
-            <MaxWidthContainer>
+            <MaxWidthContainer
+                backgroundColor={" var(--background-light-gray)"}
+            >
                 <InstantSearch
                     searchClient={searchClient}
                     indexName="mondora_resources_en"
                 >
-                    <Box width={[3 / 4]}>
-                        <ResourcesList />
-                    </Box>
                     <Box width={[1 / 4]} p={4}>
-                        <SearchBox />
                         <RefinementBox
                             fields={contentfulResourcesPage.filtering}
                         />
+                    </Box>
+                    <Box width={[3 / 4]}>
+                        <ResourcesList />
                     </Box>
                 </InstantSearch>
             </MaxWidthContainer>

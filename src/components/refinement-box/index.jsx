@@ -11,9 +11,10 @@ import styled from "styled-components";
 import SquareButton from "../square-button";
 import Title from "../title";
 import ParagraphTitle from "../paragraph-title";
+import RoundButton from "../round-button";
 
 const FilterContainer = styled.div`
-    background-color: var(--background-light-gray);
+    background-color: var(--white);
     width: 100%;
 `;
 
@@ -31,19 +32,18 @@ const CustomRefinementList = connectRefinementList(({ items, refine, type }) =>
     items.map(item => (
         <div
             key={item.label}
-            style={{ fontWeight: item.isRefined ? "bold" : "" }}
+            style={{
+                fontWeight: item.isRefined ? "bold" : ""
+            }}
             onClick={event => {
                 event.preventDefault();
                 refine(item.value);
             }}
         >
             {type === "chip" ? (
-                <SquareButton theme={item.isRefined ? "primary" : "light"}>
+                <RoundButton theme={item.isRefined ? "yellow" : "gray"}>
                     {item.label}
-                    {" ("}
-                    {item.count}
-                    {")"}
-                </SquareButton>
+                </RoundButton>
             ) : (
                 <>
                     <input
@@ -68,7 +68,7 @@ const RefinementBox = ({ fields }) => (
     <FilterContainer>
         <Title>{fields.label}</Title>
         {fields.contentfulfields.map((field, i) => (
-            <div key={i}>
+            <div key={i} style={{ overflow: "hidden" }}>
                 <ParagraphTitle>{field.label}</ParagraphTitle>
                 <CustomRefinementList
                     limit={20}
