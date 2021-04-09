@@ -3,7 +3,12 @@ import React from "react";
 import { graphql, useStaticQuery } from "gatsby";
 
 import algoliasearch from "algoliasearch/lite";
-import { InstantSearch, connectHits } from "react-instantsearch-dom";
+import {
+    InstantSearch,
+    connectStateResults,
+    connectHits,
+    SortBy
+} from "react-instantsearch-dom";
 
 import { Box } from "reflexbox";
 
@@ -14,6 +19,7 @@ import MaxWidthContainer from "../../components/max-width-container";
 import Resource from "../../components/resource";
 import RefinementBox from "../../components/refinement-box";
 import ReasonsRow from "../../components/reasons-row";
+import ParagraphTitle from "../../components/paragraph-title";
 
 const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APPLICATION_ID,
@@ -24,6 +30,14 @@ const Resources = () => {
     const ResourcesList = connectHits(({ hits }) =>
         hits.map((hit, i) => <Resource key={i} data={hit} />)
     );
+
+    const NumberOfResults = connectStateResults(({ searchResults }) => (
+        <ParagraphTitle>
+            {searchResults && searchResults.nbHits
+                ? `${searchResults.nbHits} results:`
+                : "No results found"}
+        </ParagraphTitle>
+    ));
 
     const { contentfulResourcesPage } = useStaticQuery(graphql`
         query {
@@ -64,6 +78,13 @@ const Resources = () => {
                         type
                     }
                 }
+                sorting {
+                    label
+                    contentfulfields {
+                        label
+                        value
+                    }
+                }
             }
         }
     `);
@@ -95,6 +116,17 @@ const Resources = () => {
                         />
                     </Box>
                     <Box width={[3 / 4]}>
+                        <ParagraphTitle>
+                            {contentfulResourcesPage.sorting.label}
+                        </ParagraphTitle>
+                        <SortBy
+                            defaultRefinement="mondora_resources_en"
+                            items={
+                                contentfulResourcesPage.sorting.contentfulfields
+                            }
+                        />
+                        <NumberOfResults />
+
                         <ResourcesList />
                     </Box>
                 </InstantSearch>
