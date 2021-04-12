@@ -14,10 +14,7 @@ import MaxWidthContainer from "../../components/max-width-container";
 import Resource from "../../components/resource";
 import RefinementBox from "../../components/refinement-box";
 import ReasonsRow from "../../components/reasons-row";
-import ParagraphTitle from "../../components/paragraph-title";
-
-import NumberOfResults from "../../components/algolia-widgets/results-number";
-import SortDropdown from "../../components/algolia-widgets/sort-dropdown";
+import FilteringControls from "../../components/filtering-controls";
 
 const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APPLICATION_ID,
@@ -75,6 +72,10 @@ const Resources = () => {
                         value
                     }
                 }
+                search {
+                    value
+                    label
+                }
             }
         }
     `);
@@ -106,17 +107,10 @@ const Resources = () => {
                         />
                     </Box>
                     <Box width={[3 / 4]}>
-                        <ParagraphTitle>
-                            {contentfulResourcesPage.sorting.label}
-                        </ParagraphTitle>
-                        <SortDropdown
-                            defaultRefinement="mondora_resources_en"
-                            items={
-                                contentfulResourcesPage.sorting.contentfulfields
-                            }
+                        <FilteringControls
+                            sorting={contentfulResourcesPage.sorting}
+                            search={contentfulResourcesPage.search}
                         />
-                        <NumberOfResults />
-
                         <ResourcesList />
                     </Box>
                 </InstantSearch>
