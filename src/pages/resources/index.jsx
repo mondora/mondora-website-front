@@ -22,11 +22,14 @@ const searchClient = algoliasearch(
 );
 
 const Resources = () => {
-    const ResourcesList = connectHits(({ hits }) =>
-        hits.map((hit, i) => <Resource key={i} data={hit} />)
+    const ResourcesList = connectHits(({ hits, ...rest }) =>
+        hits.map((hit, i) => <Resource key={i} data={hit} {...rest} />)
     );
 
-    const { contentfulResourcesPage } = useStaticQuery(graphql`
+    const {
+        contentfulResourcesPage,
+        allContentfulResource
+    } = useStaticQuery(graphql`
         query {
             contentfulResourcesPage {
                 metaDescr {
@@ -76,6 +79,23 @@ const Resources = () => {
                     value
                     label
                 }
+                resourceImage {
+                    description
+                    fluid(quality: 50) {
+                        ...GatsbyContentfulFluid
+                    }
+                }
+            }
+            allContentfulResource {
+                nodes {
+                    image {
+                        description
+                        contentful_id
+                        fluid(quality: 50) {
+                            ...GatsbyContentfulFluid
+                        }
+                    }
+                }
             }
         }
     `);
@@ -111,7 +131,10 @@ const Resources = () => {
                             sorting={contentfulResourcesPage.sorting}
                             search={contentfulResourcesPage.search}
                         />
-                        <ResourcesList />
+                        <ResourcesList
+                            images={allContentfulResource.nodes}
+                            placeholder={contentfulResourcesPage.resourceImage}
+                        />
                     </Box>
                 </InstantSearch>
             </MaxWidthContainer>

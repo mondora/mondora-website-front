@@ -7,7 +7,6 @@ const SortDropdown = connectSortBy(({ items, refine }) => (
         onChange={event => {
             event.preventDefault();
             refine(event.target.value);
-            console.log(event.target.value);
         }}
     >
         {items.map(item => (

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Flex, Box } from "reflexbox";
 
 import styled from "styled-components";
+import Image from "gatsby-image";
 
 import Title from "../title";
 import SubtleTitle from "../subtle-title";
@@ -34,12 +35,22 @@ const AreaLabel = styled(ParagraphTitle)`
     }
 `;
 
-const Resource = ({ data }) => (
+const Resource = ({ data, images, placeholder }) => (
     <ResourceContainer flexDirection={"row"} flexWrap="wrap">
-        <Box p="2" width={1 / 8}>
-            <Icon src={logo} />
+        <Box p="2" width={1 / 4}>
+            <Image
+                fluid={
+                    data.featuredImageId
+                        ? images.find(
+                              ({ image }) =>
+                                  image &&
+                                  image.contentful_id === data.featuredImageId
+                          ).image.fluid
+                        : placeholder.fluid
+                }
+            />
         </Box>
-        <Box p="2" width={3 / 4}>
+        <Box p="2" width={5 / 8}>
             <span>
                 {data.areas.map((area, i) => (
                     <AreaLabel key={i}>{area}</AreaLabel>
@@ -56,13 +67,17 @@ const Resource = ({ data }) => (
             ))}
         </Box>
         <Box p="2" width={1 / 8}>
+            <a href={data.link}>
             <Icon src={logo} />
+            </a>
         </Box>
     </ResourceContainer>
 );
 
 Resource.propTypes = {
-    data: PropTypes.object
+    data: PropTypes.object,
+    images: PropTypes.array,
+    placeholder: PropTypes.object
 };
 
 export default Resource;
