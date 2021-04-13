@@ -4,6 +4,13 @@ import { connectRefinementList } from "react-instantsearch-dom";
 
 import RoundButton from "../../round-button";
 
+import styled from "styled-components";
+
+const CheckBox = styled.div`
+    margin: 4px 0;
+    color: var(--text-dark-black);
+`;
+
 const CustomRefinementList = connectRefinementList(({ items, refine, type }) =>
     items.map(item => (
         <div
@@ -21,7 +28,7 @@ const CustomRefinementList = connectRefinementList(({ items, refine, type }) =>
                     {item.label}
                 </RoundButton>
             ) : (
-                <>
+                <CheckBox>
                     <input
                         type="checkbox"
                         name={item.label}
@@ -34,7 +41,7 @@ const CustomRefinementList = connectRefinementList(({ items, refine, type }) =>
                         {item.count}
                         {")"}
                     </label>
-                </>
+                </CheckBox>
             )}
         </div>
     ))

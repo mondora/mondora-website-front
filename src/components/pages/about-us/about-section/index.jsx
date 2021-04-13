@@ -38,7 +38,7 @@ export const AboutSection = ({ section }) => {
 
                                 <Subtitle
                                     margin={"24px 0"}
-                                    light={section.darkTheme}
+                                    variant={section.darkTheme ? "light" : ""}
                                 >
                                     {section.description.description}
                                 </Subtitle>
@@ -70,7 +70,7 @@ export const AboutSection = ({ section }) => {
 
                                 <Subtitle
                                     margin={"24px 0"}
-                                    light={section.darkTheme}
+                                    variant={section.darkTheme ? "light" : ""}
                                 >
                                     {section.description.description}
                                 </Subtitle>
@@ -92,7 +92,7 @@ export const AboutSection = ({ section }) => {
                 </Flex>
 
                 <Flex width={1} margin={4} textAlign="center">
-                    <Subtitle light={section.darkTheme}>
+                    <Subtitle variant={section.darkTheme ? "light" : ""}>
                         {section.subtitle && section.subtitle.subtitle}
                     </Subtitle>
                 </Flex>

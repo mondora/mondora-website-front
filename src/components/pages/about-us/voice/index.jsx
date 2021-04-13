@@ -56,7 +56,7 @@ const Voice = ({ title, description, dark }) => {
                 </Bob>
             </Flex>
             <Description open={open}>
-                <Subtitle light={dark}>{description}</Subtitle>
+                <Subtitle variant={dark ? "light" : ""}>{description}</Subtitle>
             </Description>
         </VoiceWrapper>
     );

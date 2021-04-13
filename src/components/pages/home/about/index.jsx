@@ -26,7 +26,7 @@ const About = ({ data }) => (
                 <Section.RightContainer sideOnTop="left">
                     <Box my={48}>
                         <Title light={true}>{data.sectionName}</Title>
-                        <Subtitle light={true} margin="32px 0">
+                        <Subtitle variant={"light"} margin="32px 0">
                             {data.description.description}
                         </Subtitle>
                         <Link to={data.button.link}>

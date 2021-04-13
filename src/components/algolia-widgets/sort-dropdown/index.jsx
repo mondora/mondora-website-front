@@ -1,9 +1,19 @@
 import React from "react";
 
+import styled from "styled-components";
+
 import { connectSortBy } from "react-instantsearch-dom";
 
+const Dropdown = styled.select`
+    margin: 8px 0;
+    padding: 8px 8px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid var(--text-dark-black);
+`;
+
 const SortDropdown = connectSortBy(({ items, refine }) => (
-    <select
+    <Dropdown
         onChange={event => {
             event.preventDefault();
             refine(event.target.value);
@@ -14,7 +24,7 @@ const SortDropdown = connectSortBy(({ items, refine }) => (
                 {item.label}
             </option>
         ))}
-    </select>
+    </Dropdown>
 ));
 
 export default SortDropdown;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const ParagraphTitle = styled.div`
     font-weight: 600;
-    font-size: calc(18px);
+    font-size: ${props => (props.size ? props.size : "calc(18px)")};
     margin: 4px 0;
     line-height: 1.5;
 
@@ -19,11 +19,12 @@ const ParagraphTitle = styled.div`
 
 ParagraphTitle.defaultProps = {
     center: [false, false]
-}
+};
 
 ParagraphTitle.propTypes = {
     light: PropTypes.bool,
-    center: PropTypes.array
+    center: PropTypes.array,
+    size: PropTypes.string
 };
 
 export default ParagraphTitle;

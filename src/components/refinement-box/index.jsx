@@ -6,12 +6,12 @@ import styled from "styled-components";
 import Title from "../title";
 import ParagraphTitle from "../paragraph-title";
 
-import ClearButton from "../algolia-widgets/clear-button"
-import CustomRefinementList from "../algolia-widgets/refinement-list"
+import ClearButton from "../algolia-widgets/clear-button";
+import CustomRefinementList from "../algolia-widgets/refinement-list";
 
 const FilterContainer = styled.div`
     background-color: var(--white);
-    width: 100%;
+    padding: 16px;
 `;
 
 const RefinementBox = ({ fields }) => (

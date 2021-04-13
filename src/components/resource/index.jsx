@@ -7,21 +7,32 @@ import styled from "styled-components";
 import Image from "gatsby-image";
 
 import Title from "../title";
-import SubtleTitle from "../subtle-title";
 import Subtitle from "../subtitle";
 import ParagraphTitle from "../paragraph-title";
 import RoundButton from "../round-button";
 
-import logo from "../../images/logo-square.png";
+import pointer from "../../images/new-tab.svg";
 
-const Icon = styled.img`
-    height: 100px;
+const LinkIcon = styled.a`
+    display: block;
+    width: 40px;
+    margin: auto;
 `;
 
 const ResourceContainer = styled(Flex)`
     background-color: var(--white);
-    margin-top: 64px;
+    margin-bottom: 64px;
     width: 100%;
+    align-items: center;
+`;
+
+const Areas = styled.div`
+    margin: 4px 0;
+`;
+
+const Date = styled.div`
+    font-size: 12px;
+    margin: 20px 0 8px 0;
 `;
 
 const AreaLabel = styled(ParagraphTitle)`
@@ -51,14 +62,14 @@ const Resource = ({ data, images, placeholder }) => (
             />
         </Box>
         <Box p="2" width={5 / 8}>
-            <span>
+            <Areas>
                 {data.areas.map((area, i) => (
                     <AreaLabel key={i}>{area}</AreaLabel>
                 ))}
-            </span>
+            </Areas>
             <Title>{data.title}</Title>
-            <SubtleTitle>{data.date} </SubtleTitle>
-            <Subtitle>{data.description}</Subtitle>
+            <Date>{data.date} </Date>
+            <Subtitle variant={"dark"} spacing={"16px"}>{data.description}</Subtitle>
 
             {data.tags.map((tag, i) => (
                 <RoundButton disabled key={i}>
@@ -67,9 +78,9 @@ const Resource = ({ data, images, placeholder }) => (
             ))}
         </Box>
         <Box p="2" width={1 / 8}>
-            <a href={data.link}>
-            <Icon src={logo} />
-            </a>
+            <LinkIcon href={data.link}>
+                <img src={pointer} alt="link to resource" />
+            </LinkIcon>
         </Box>
     </ResourceContainer>
 );

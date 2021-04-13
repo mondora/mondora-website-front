@@ -101,7 +101,7 @@ const Footer = () => {
                     </Flex>
 
                     <Flex flexDirection="column" px={3}>
-                        <Subtitle light={true}>
+                        <Subtitle variant={"light"}>
                             {contentfulFooter.copyright}
                             <br />
                             {contentfulFooter.contacts.legalAddress}
@@ -111,7 +111,7 @@ const Footer = () => {
                             {contentfulFooter.motto}
                         </Subtitle>
 
-                        <Subtitle light={true}>
+                        <Subtitle variant={"light"}>
                             {contentfulFooter.contacts.phoneNumber}
                             {" - "}
                             {contentfulFooter.contacts.email}
@@ -140,7 +140,9 @@ const Footer = () => {
                             width={[1 / 2, 1 / 4]}
                             pl={3}
                         >
-                            <Subtitle light={true}>{column.title}</Subtitle>
+                            <Subtitle variant={"light"}>
+                                {column.title}
+                            </Subtitle>
                             {column.links.map((link, i) => (
                                 <ExternalLink key={i} href={link.link}>
                                     {link.text}
