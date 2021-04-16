@@ -19,6 +19,16 @@ const LinkIcon = styled.a`
     margin: auto;
 `;
 
+const MediaType = styled.div`
+    width: 80px;
+    padding: 5px;
+    text-align: center;
+    position: absolute;
+    align-self: start;
+    background-color: var(--primary);
+    z-index: 2;
+`;
+
 const ResourceContainer = styled(Flex)`
     background-color: var(--white);
     margin-bottom: 64px;
@@ -48,7 +58,8 @@ const AreaLabel = styled(ParagraphTitle)`
 
 const Resource = ({ data, images, placeholder }) => (
     <ResourceContainer flexDirection={"row"} flexWrap="wrap">
-        <Box p="2" width={1 / 4}>
+        <MediaType>{data.type}</MediaType>
+        <Box width={1 / 4}>
             <Image
                 fluid={
                     data.featuredImageId
@@ -69,7 +80,9 @@ const Resource = ({ data, images, placeholder }) => (
             </Areas>
             <Title>{data.title}</Title>
             <Date>{data.date} </Date>
-            <Subtitle variant={"dark"} spacing={"16px"}>{data.description}</Subtitle>
+            <Subtitle variant={"dark"} spacing={"16px"}>
+                {data.description}
+            </Subtitle>
 
             {data.tags.map((tag, i) => (
                 <RoundButton disabled key={i}>
