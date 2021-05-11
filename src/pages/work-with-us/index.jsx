@@ -14,9 +14,6 @@ import MaxWidthContainer from "../../components/max-width-container";
 import BackgroundStripe from "../../components/background-stripe";
 import Subtitle from "../../components/subtitle";
 import Title from "../../components/title";
-import FullWidthImage from "../../components/full-width-image";
-import Carousel from "../../components/carousel";
-
 import SwirlSeparator from "../../images/separator.svg";
 
 const ReasonNumber = styled.h1`
@@ -31,63 +28,9 @@ const ReasonNumber = styled.h1`
     }
 `;
 
-const carouselSettings = {
-    arrows: true,
-    dots: true,
-    slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 4
-            }
-        },
-        {
-            breakpoint: 960,
-            settings: {
-                slidesToShow: 3
-            }
-        },
-        {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 2
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                dots: false
-            }
-        }
-    ]
-};
-
 const WorkWithUs = () => {
-    const { allInstaNode, contentfulWorkWithUsPage } = useStaticQuery(graphql`
+    const { contentfulWorkWithUsPage } = useStaticQuery(graphql`
         query ScrapingQuery {
-            allInstaNode(limit: 12) {
-                edges {
-                    node {
-                        id
-                        username
-                        likes
-                        caption
-                        localFile {
-                            childImageSharp {
-                                fluid(
-                                    quality: 70
-                                    maxWidth: 600
-                                    maxHeight: 600
-                                ) {
-                                    ...GatsbyImageSharpFluid
-                                }
-                            }
-                        }
-                    }
-                }
-            }
             contentfulWorkWithUsPage {
                 node_locale
                 handbookButton
@@ -173,20 +116,6 @@ const WorkWithUs = () => {
                 </MaxWidthContainer>
             </BackgroundStripe>
 
-            <Box mb={5}>
-                <Carousel {...carouselSettings}>
-                    {allInstaNode.edges.map(instagram => (
-                        <Box p={3} key={instagram.node.id}>
-                            <FullWidthImage
-                                fluid={
-                                    instagram.node.localFile.childImageSharp
-                                        .fluid
-                                }
-                            />
-                        </Box>
-                    ))}
-                </Carousel>
-            </Box>
             <MaxWidthContainer justifyContent={"center"}>
                 <Box width={[1 / 2, 1 / 4, 0]}>
                     <img alt="" src={SwirlSeparator} />

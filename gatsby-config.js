@@ -46,12 +46,6 @@ module.exports = {
             }
         },
         {
-            resolve: "gatsby-source-instagram",
-            options: {
-                username: "1698981702"
-            }
-        },
-        {
             resolve: "gatsby-plugin-sitemap",
             options: {
                 exclude: ["/meet-the-team/"]
