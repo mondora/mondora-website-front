@@ -7,7 +7,6 @@ import PageMetadata from "../../components/page-metadata";
 
 import KeepInTouch from "../../components/pages/contacts/keep-in-touch";
 import WhereToFindUs from "../../components/pages/contacts/where-to-find-us";
-import Map from "../../components/pages/contacts/map";
 
 import Layout from "../../components/layout";
 import MaxWidthContainer from "../../components/max-width-container";
@@ -18,6 +17,7 @@ const Contacts = () => {
     const { contentfulContactsPage } = useStaticQuery(graphql`
         query {
             contentfulContactsPage {
+                node_locale
                 description
                 header
                 metaTitle {
@@ -27,22 +27,15 @@ const Contacts = () => {
                     metaDescr
                 }
                 contacts {
+                    legalAddress
                     email
                     facebook
                     github
                     instagram
-                    phoneNumber
                     partitaIva
-                    mobileNumber
-                    legalAddress
                     linkedIn
-                    officeAddress
                     twitter
                     youtube
-                    officeCoordinates {
-                        lat
-                        lon
-                    }
                 }
             }
         }
@@ -52,6 +45,7 @@ const Contacts = () => {
             <PageMetadata
                 title={contentfulContactsPage.metaTitle.metaTitle}
                 description={contentfulContactsPage.metaDescr.metaDescr}
+                locale={contentfulContactsPage.node_locale}
             />
             <MaxWidthContainer>
                 <BackgroundStripe>
@@ -74,9 +68,6 @@ const Contacts = () => {
                     </Section>
                 </BackgroundStripe>
             </MaxWidthContainer>
-            <Map
-                coordinates={contentfulContactsPage.contacts.officeCoordinates}
-            />
         </Layout>
     );
 };

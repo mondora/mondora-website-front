@@ -25,6 +25,7 @@ const Homepage = () => {
     const { contentfulHomepage } = useStaticQuery(graphql`
         query {
             contentfulHomepage {
+                node_locale
                 pageName
                 rightImage {
                     title
@@ -98,7 +99,7 @@ const Homepage = () => {
     return (
         <Layout>
             <ThemeProvider theme={rebassTheme}>
-                <PageMetadata />
+                <PageMetadata locale={contentfulHomepage.node_locale} />
                 <Header
                     left={
                         contentfulHomepage.leftHeader.childMarkdownRemark

@@ -12,7 +12,7 @@ import SocialLink from "../../social-link";
 import Hidden from "../../hidden";
 import Subtitle from "../../subtitle";
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
     display: flex;
     border-top: 1px solid var(--border-dark-gray);
     background: var(--background-dark-gray);
@@ -23,6 +23,11 @@ const ExternalLink = styled.a`
     font-size: 11pt;
     text-decoration: none;
     color: var(--white);
+    display: block;
+    transition: 0.3s ease;
+    &:hover {
+        color: var(--primary);
+    }
 `;
 
 const Footer = () => {
@@ -40,7 +45,6 @@ const Footer = () => {
                     legalAddress
                     partitaIva
                     email
-                    phoneNumber
                     github
                     instagram
                     twitter
@@ -61,33 +65,33 @@ const Footer = () => {
 
     const Socials = [
         {
-            href: contentfulFooter.contacts.github,
+            link: contentfulFooter.contacts.github,
             icon: "github"
         },
         {
-            href: contentfulFooter.contacts.instagram,
+            link: contentfulFooter.contacts.instagram,
             icon: "instagram"
         },
         {
-            href: contentfulFooter.contacts.facebook,
+            link: contentfulFooter.contacts.facebook,
             icon: "facebook"
         },
         {
-            href: contentfulFooter.contacts.linkedIn,
+            link: contentfulFooter.contacts.linkedIn,
             icon: "linkedin"
         },
         {
-            href: contentfulFooter.contacts.twitter,
+            link: contentfulFooter.contacts.twitter,
             icon: "twitter"
         },
         {
-            href: contentfulFooter.contacts.youtube,
+            link: contentfulFooter.contacts.youtube,
             icon: "youtube"
         }
     ];
 
     return (
-        <FooterContainer>
+        <FooterContainer role="contentinfo">
             <MaxWidthContainer
                 width="100%"
                 my={4}
@@ -112,8 +116,6 @@ const Footer = () => {
                         </Subtitle>
 
                         <Subtitle variant={"light"}>
-                            {contentfulFooter.contacts.phoneNumber}
-                            {" - "}
                             {contentfulFooter.contacts.email}
                         </Subtitle>
 
@@ -121,7 +123,7 @@ const Footer = () => {
                             <Flex margin={-1}>
                                 {Socials.map(
                                     social =>
-                                        social.href && (
+                                        social.link && (
                                             <Flex margin={1} key={social.icon}>
                                                 <SocialLink {...social} />
                                             </Flex>
@@ -143,11 +145,13 @@ const Footer = () => {
                             <Subtitle variant={"light"}>
                                 {column.title}
                             </Subtitle>
-                            {column.links.map((link, i) => (
-                                <ExternalLink key={i} href={link.link}>
-                                    {link.text}
-                                </ExternalLink>
-                            ))}
+                            <nav role="navigation" aria-label={column.title}>
+                                {column.links.map((link, i) => (
+                                    <ExternalLink key={i} href={link.link}>
+                                        {link.text}
+                                    </ExternalLink>
+                                ))}
+                            </nav>
                         </Flex>
                     ))}
                 </Flex>

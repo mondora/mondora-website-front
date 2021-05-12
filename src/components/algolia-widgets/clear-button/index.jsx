@@ -2,16 +2,16 @@ import React from "react";
 
 import { connectCurrentRefinements } from "react-instantsearch-dom";
 
-import SquareButton from "../../square-button";
+import Button from "../../button";
 
 const ClearButton = connectCurrentRefinements(({ items, refine, label }) => (
-    <SquareButton
+    <Button
         onClick={() => refine(items)}
         disabled={!items.length}
         theme="light"
     >
         {label}
-    </SquareButton>
+    </Button>
 ));
 
 export default ClearButton;

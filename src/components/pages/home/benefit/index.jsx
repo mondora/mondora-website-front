@@ -1,17 +1,16 @@
 import React from "react";
 
 import PropTypes from "prop-types";
-import { Link } from "gatsby";
 
 import { Box } from "reflexbox";
 
+import Button from "../../../button";
 import Divider from "../../../divider";
 import FullWidthImage from "../../../full-width-image";
 import Section from "../../../section";
 import MaxWidthContainer from "../../../max-width-container";
 import Subtitle from "../../../subtitle";
 import Title from "../../../title";
-import SquareButton from "../../../square-button";
 
 const Benefit = ({ data }) => (
     <MaxWidthContainer>
@@ -25,9 +24,7 @@ const Benefit = ({ data }) => (
                     <Subtitle margin="32px 0">
                         {data.description.description}
                     </Subtitle>
-                    <Link to={data.button.link}>
-                        <SquareButton>{data.button.text}</SquareButton>
-                    </Link>
+                    <Button to={data.button.link}>{data.button.text}</Button>
                 </Box>
             </Section.RightContainer>
         </Section>

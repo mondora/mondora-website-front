@@ -13,6 +13,7 @@ const About = () => {
         query {
             contentfulAboutUsPage {
                 id
+                node_locale
                 metaDescr {
                     metaDescr
                 }
@@ -62,6 +63,7 @@ const About = () => {
             <PageMetadata
                 title={contentfulAboutUsPage.metaTitle.metaTitle}
                 description={contentfulAboutUsPage.metaDescr.metaDescr}
+                locale={contentfulAboutUsPage.node_locale}
             />
             <Header
                 left={

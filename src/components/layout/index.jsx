@@ -6,14 +6,12 @@ import { theme } from "../../styles/theme";
 
 import Menu from "./menu";
 import Footer from "./footer";
-import CookiesAlert from "./cookies-alert";
 
 const Layout = ({ children }) => (
     <ThemeProvider theme={theme}>
         <Menu />
-        {children}
+        <main>{children}</main>
         <Footer />
-        <CookiesAlert />
     </ThemeProvider>
 );
 
