@@ -35,7 +35,6 @@ const MediaType = styled.div`
 
 const ResourceContainer = styled(Flex)`
     background-color: var(--white);
-    margin-bottom: 64px;
     width: 100%;
     align-items: center;
 `;
@@ -64,7 +63,7 @@ const AreaLabel = styled(ParagraphTitle)`
 `;
 
 const Resource = ({ data, images, placeholder }) => (
-    <ResourceContainer flexDirection={"row"} flexWrap="wrap">
+    <ResourceContainer flexDirection={"row"} mb={5} flexWrap="wrap">
         <MediaType>{data.type}</MediaType>
         <Box width={[0, 1 / 4]}>
             <Image

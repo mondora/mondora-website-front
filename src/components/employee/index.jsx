@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
-import Underline from "../../images/separator.svg";
+import SwirlSeparator from "../swirl-separator";
 
 const EmployeeContainer = styled.div`
     background-color: white;
@@ -14,11 +14,6 @@ const EmployeeImage = styled.img`
     width: 60%;
     margin: 16px 20% 0 20%;
     border-radius: 50%;
-
-`;
-const DividerSwirl = styled.img`
-    width: 40%;
-    margin: auto;
 `;
 const EmployeeName = styled.div`
     margin: 8px auto;
@@ -38,10 +33,10 @@ const EmployeeDescription = styled.div`
 
 const Employee = ({ image, name, role, description }) => (
     <EmployeeContainer>
-        <EmployeeImage src={image}/>
+        <EmployeeImage src={image} />
         <EmployeeName>{name}</EmployeeName>
         <EmployeeRole>{role}</EmployeeRole>
-        <DividerSwirl src={Underline} />
+        <SwirlSeparator width={"40%"} margin={"auto"} />
         <EmployeeDescription>{description}</EmployeeDescription>
     </EmployeeContainer>
 );

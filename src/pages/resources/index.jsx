@@ -16,6 +16,8 @@ import RefinementBox from "../../components/refinement-box";
 import ReasonsRow from "../../components/reasons-row";
 import FilteringControls from "../../components/filtering-controls";
 import BackgroundStripe from "../../components/background-stripe";
+import AstText from "../../components/ast-text";
+import SwirlSeparator from "../../components/swirl-separator";
 
 const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APPLICATION_ID,
@@ -58,6 +60,11 @@ const Resources = () => {
                     title
                     description {
                         description
+                    }
+                }
+                intro {
+                    childMarkdownRemark {
+                        htmlAst
                     }
                 }
                 filtering {
@@ -116,6 +123,19 @@ const Resources = () => {
             />
             <ReasonsRow reasons={contentfulResourcesPage.sections} />
             <BackgroundStripe theme={"light"}>
+                <MaxWidthContainer
+                    m={4}
+                    flexDirection="column"
+                    alignItems="center"
+                >
+                    <AstText
+                        data={
+                            contentfulResourcesPage.intro.childMarkdownRemark
+                                .htmlAst
+                        }
+                    />
+                    <SwirlSeparator width="180px" margin="24px" />
+                </MaxWidthContainer>
                 <MaxWidthContainer>
                     <InstantSearch
                         searchClient={searchClient}

@@ -14,7 +14,7 @@ import MaxWidthContainer from "../../components/max-width-container";
 import BackgroundStripe from "../../components/background-stripe";
 import Subtitle from "../../components/subtitle";
 import Title from "../../components/title";
-import SwirlSeparator from "../../images/separator.svg";
+import SwirlSeparator from "../../components/swirl-separator";
 
 const ReasonNumber = styled.h1`
     position: relative;
@@ -93,7 +93,7 @@ const WorkWithUs = () => {
             />
             <MaxWidthContainer justifyContent={"center"}>
                 <Box width={[1 / 2, 1 / 4, 0]}>
-                    <img alt="" src={SwirlSeparator} />
+                    <SwirlSeparator width={"100%"} margin={"auto"} />
                 </Box>
             </MaxWidthContainer>
             <BackgroundStripe>
@@ -118,7 +118,7 @@ const WorkWithUs = () => {
 
             <MaxWidthContainer justifyContent={"center"}>
                 <Box width={[1 / 2, 1 / 4, 0]}>
-                    <img alt="" src={SwirlSeparator} />
+                    <SwirlSeparator width={"100%"} margin={"auto"} />
                 </Box>
             </MaxWidthContainer>
             <BackgroundStripe>

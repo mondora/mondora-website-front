@@ -5,7 +5,7 @@ import { Link } from "gatsby";
 
 import styled from "styled-components";
 
-import Underline from "../../images/separator.svg";
+import SwirlSeparator from "../swirl-separator";
 
 const RegionContainer = styled.div`
     background-color: white;
@@ -19,10 +19,6 @@ const RegionNumber = styled.div`
     font-size: ${props => props.theme.size.text.megaM};
     font-weight: bold;
     width: 100%;
-`;
-const DividerSwirl = styled.img`
-    width: 40%;
-    margin: auto;
 `;
 const RegionName = styled.div`
     margin: 16px auto;
@@ -41,7 +37,7 @@ const RegionMiniature = ({ image, number, name, link, button }) => (
     <RegionContainer>
         <RegionImage src={image} />
         <RegionNumber>{number}</RegionNumber>
-        <DividerSwirl src={Underline} />
+        <SwirlSeparator width={"40%"} margin={"auto"} />
         <RegionName>{name}</RegionName>
         <SuperLink to={link}>{button}</SuperLink>
     </RegionContainer>
