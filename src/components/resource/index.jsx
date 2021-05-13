@@ -10,6 +10,7 @@ import Title from "../title";
 import Subtitle from "../subtitle";
 import ParagraphTitle from "../paragraph-title";
 import RoundButton from "../round-button";
+import Hidden from "../hidden";
 
 import pointer from "../../images/new-tab.svg";
 
@@ -21,10 +22,13 @@ const LinkIcon = styled.a`
 
 const MediaType = styled.div`
     width: 80px;
-    padding: 5px;
+    padding: 4px;
     text-align: center;
     position: absolute;
     align-self: start;
+    @media (max-width: 640px) {
+        right: 32px;
+    }
     background-color: var(--primary);
     z-index: 2;
 `;
@@ -38,6 +42,9 @@ const ResourceContainer = styled(Flex)`
 
 const Areas = styled.div`
     margin: 4px 0;
+    @media (max-width: 640px) {
+        margin-top: 16px;
+    }
 `;
 
 const Date = styled.div`
@@ -59,7 +66,7 @@ const AreaLabel = styled(ParagraphTitle)`
 const Resource = ({ data, images, placeholder }) => (
     <ResourceContainer flexDirection={"row"} flexWrap="wrap">
         <MediaType>{data.type}</MediaType>
-        <Box width={1 / 4}>
+        <Box width={[0, 1 / 4]}>
             <Image
                 fluid={
                     data.featuredImageId
@@ -72,7 +79,7 @@ const Resource = ({ data, images, placeholder }) => (
                 }
             />
         </Box>
-        <Box p="2" width={5 / 8}>
+        <Box p={[4, 2, 2]} width={[1, 3 / 4, 5 / 8]}>
             <Areas>
                 {data.areas.map((area, i) => (
                     <AreaLabel key={i}>{area}</AreaLabel>
@@ -90,10 +97,13 @@ const Resource = ({ data, images, placeholder }) => (
                 </RoundButton>
             ))}
         </Box>
-        <Box p="2" width={1 / 8}>
-            <LinkIcon href={data.link}>
-                <img src={pointer} alt="link to resource" />
-            </LinkIcon>
+
+        <Box p="2" width={[0, 0, 1 / 8]}>
+            <Hidden smDown={true}>
+                <LinkIcon href={data.link}>
+                    <img src={pointer} alt="link to resource" />
+                </LinkIcon>
+            </Hidden>
         </Box>
     </ResourceContainer>
 );

@@ -15,6 +15,7 @@ import Resource from "../../components/resource";
 import RefinementBox from "../../components/refinement-box";
 import ReasonsRow from "../../components/reasons-row";
 import FilteringControls from "../../components/filtering-controls";
+import BackgroundStripe from "../../components/background-stripe";
 
 const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APPLICATION_ID,
@@ -114,30 +115,36 @@ const Resources = () => {
                 rightImage={contentfulResourcesPage.rightImage}
             />
             <ReasonsRow reasons={contentfulResourcesPage.sections} />
-            <MaxWidthContainer
-                backgroundColor={" var(--background-light-gray)"}
-            >
-                <InstantSearch
-                    searchClient={searchClient}
-                    indexName="mondora_resources_en"
-                >
-                    <Box width={[1 / 4]} pt={4}>
-                        <RefinementBox
-                            fields={contentfulResourcesPage.filtering}
-                        />
-                    </Box>
-                    <Box width={[3 / 4]} pl={4}>
-                        <FilteringControls
-                            sorting={contentfulResourcesPage.sorting}
-                            search={contentfulResourcesPage.search}
-                        />
-                        <ResourcesList
-                            images={allContentfulResource.nodes}
-                            placeholder={contentfulResourcesPage.resourceImage}
-                        />
-                    </Box>
-                </InstantSearch>
-            </MaxWidthContainer>
+            <BackgroundStripe theme={"light"}>
+                <MaxWidthContainer>
+                    <InstantSearch
+                        searchClient={searchClient}
+                        indexName="mondora_resources_en"
+                    >
+                        <Box width={[1, 1, 1, 1 / 4]} pt={4} p={[3, 3, 3, 0]}>
+                            <RefinementBox
+                                fields={contentfulResourcesPage.filtering}
+                            />
+                        </Box>
+                        <Box
+                            width={[1, 1, 1, 3 / 4]}
+                            pl={[3, 3, 3, 4]}
+                            pr={[3, 3, 3, 0]}
+                        >
+                            <FilteringControls
+                                sorting={contentfulResourcesPage.sorting}
+                                search={contentfulResourcesPage.search}
+                            />
+                            <ResourcesList
+                                images={allContentfulResource.nodes}
+                                placeholder={
+                                    contentfulResourcesPage.resourceImage
+                                }
+                            />
+                        </Box>
+                    </InstantSearch>
+                </MaxWidthContainer>
+            </BackgroundStripe>
         </Layout>
     );
 };
