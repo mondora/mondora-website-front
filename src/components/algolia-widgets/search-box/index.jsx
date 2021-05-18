@@ -8,7 +8,6 @@ const TextField = styled.input`
     margin: 8px 0;
     padding: 8px;
     height: 40px;
-    border-radius: 6px;
     border: 1px solid var(--text-dark-black);
     color: var(--text-dark-black);
 `;

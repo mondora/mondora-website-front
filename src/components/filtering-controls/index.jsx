@@ -16,14 +16,14 @@ const SearchContainer = styled(Box)`
 
 const FilteringControls = ({ sorting, search }) => (
     <Flex flexWrap="wrap" justify-content="space-between">
-        <Box width={[1 / 2]} mt={4} mb={2}>
+        <Box width={[1 / 2]} mb={2}>
             <ParagraphTitle>{sorting.label}</ParagraphTitle>
             <SortDropdown
                 defaultRefinement="mondora_resources_en"
                 items={sorting.contentfulfields}
             />
         </Box>
-        <SearchContainer width={[1 / 2]} mt={4} mb={2}>
+        <SearchContainer width={[1 / 2]} mb={2}>
             <ParagraphTitle>{search.label}</ParagraphTitle>
             <SearchBox placeholder={search.value} />
         </SearchContainer>

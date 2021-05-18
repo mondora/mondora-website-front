@@ -8,7 +8,6 @@ const Dropdown = styled.select`
     margin: 8px 0;
     padding: 8px 8px;
     height: 40px;
-    border-radius: 6px;
     border: 1px solid var(--text-dark-black);
 `;
 

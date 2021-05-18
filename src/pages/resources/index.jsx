@@ -141,7 +141,7 @@ const Resources = () => {
                         searchClient={searchClient}
                         indexName="mondora_resources_en"
                     >
-                        <Box width={[1, 1, 1, 1 / 4]} pt={4} p={[3, 3, 3, 0]}>
+                        <Box width={[1, 1, 1, 1 / 4]} pt={4} p={3}>
                             <RefinementBox
                                 fields={contentfulResourcesPage.filtering}
                             />

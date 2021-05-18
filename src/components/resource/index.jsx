@@ -14,10 +14,15 @@ import Hidden from "../hidden";
 
 import pointer from "../../images/new-tab.svg";
 
-const LinkIcon = styled.a`
+const LinkIcon = styled.img`
     display: block;
     width: 40px;
     margin: auto;
+`;
+
+const LinkContainer = styled.a`
+    text-decoration: none;
+    color: black;
 `;
 
 const MediaType = styled.div`
@@ -37,6 +42,12 @@ const ResourceContainer = styled(Flex)`
     background-color: var(--white);
     width: 100%;
     align-items: center;
+    text-decoration: none;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    &:hover {
+        transition: 0.1s;
+        box-shadow: 2px 2px 4px var(--primary);
+    }
 `;
 
 const Areas = styled.div`
@@ -63,48 +74,48 @@ const AreaLabel = styled(ParagraphTitle)`
 `;
 
 const Resource = ({ data, images, placeholder }) => (
-    <ResourceContainer flexDirection={"row"} mb={5} flexWrap="wrap">
-        <MediaType>{data.type}</MediaType>
-        <Box width={[0, 1 / 4]}>
-            <Image
-                fluid={
-                    data.featuredImageId
-                        ? images.find(
-                              ({ image }) =>
-                                  image &&
-                                  image.contentful_id === data.featuredImageId
-                          ).image.fluid
-                        : placeholder.fluid
-                }
-            />
-        </Box>
-        <Box p={[4, 2, 2]} width={[1, 3 / 4, 5 / 8]}>
-            <Areas>
-                {data.areas.map((area, i) => (
-                    <AreaLabel key={i}>{area}</AreaLabel>
+    <LinkContainer target="_blank" href={data.link}>
+        <ResourceContainer flexDirection={"row"} mb={5} flexWrap="wrap">
+            <MediaType>{data.type}</MediaType>
+            <Box width={[0, 1 / 4]}>
+                <Image
+                    fluid={
+                        data.featuredImageId
+                            ? images.find(
+                                  ({ image }) =>
+                                      image &&
+                                      image.contentful_id ===
+                                          data.featuredImageId
+                              ).image.fluid
+                            : placeholder.fluid
+                    }
+                />
+            </Box>
+            <Box p={[4, 2, 2]} width={[1, 3 / 4, 5 / 8]}>
+                <Areas>
+                    {data.areas.map((area, i) => (
+                        <AreaLabel key={i}>{area}</AreaLabel>
+                    ))}
+                </Areas>
+                <Title>{data.title}</Title>
+                <Date>{data.date} </Date>
+                <Subtitle variant={"dark"} spacing={"16px"}>
+                    {data.description}
+                </Subtitle>
+
+                {data.tags.map((tag, i) => (
+                    <RoundButton disabled key={i}>
+                        {tag}
+                    </RoundButton>
                 ))}
-            </Areas>
-            <Title>{data.title}</Title>
-            <Date>{data.date} </Date>
-            <Subtitle variant={"dark"} spacing={"16px"}>
-                {data.description}
-            </Subtitle>
-
-            {data.tags.map((tag, i) => (
-                <RoundButton disabled key={i}>
-                    {tag}
-                </RoundButton>
-            ))}
-        </Box>
-
-        <Box p="2" width={[0, 0, 1 / 8]}>
-            <Hidden smDown={true}>
-                <LinkIcon href={data.link}>
-                    <img src={pointer} alt="link to resource" />
-                </LinkIcon>
-            </Hidden>
-        </Box>
-    </ResourceContainer>
+            </Box>
+            <Box p="2" width={[0, 0, 1 / 8]}>
+                <Hidden smDown={true}>
+                    <LinkIcon src={pointer} alt="link to resource" />
+                </Hidden>
+            </Box>
+        </ResourceContainer>
+    </LinkContainer>
 );
 
 Resource.propTypes = {
