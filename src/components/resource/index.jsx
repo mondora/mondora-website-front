@@ -57,7 +57,7 @@ const Areas = styled.div`
     }
 `;
 
-const Date = styled.div`
+const Attributes = styled.div`
     font-size: 12px;
     margin: 20px 0 8px 0;
 `;
@@ -98,7 +98,13 @@ const Resource = ({ data, images, placeholder }) => (
                     ))}
                 </Areas>
                 <Title>{data.title}</Title>
-                <Date>{data.date} </Date>
+                <Attributes>
+                    {data.author}
+                    {data.author && data.date && " - "}
+                    {new Date(data.date).toLocaleDateString("fr-FR")}
+                    {data.date && data.readTime && " - "}
+                    {data.readTime}
+                </Attributes>
                 <Subtitle variant={"dark"} spacing={"16px"}>
                     {data.description}
                 </Subtitle>
