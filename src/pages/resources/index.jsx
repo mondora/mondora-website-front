@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { graphql, useStaticQuery } from "gatsby";
 
@@ -18,6 +18,8 @@ import FilteringControls from "../../components/filtering-controls";
 import BackgroundStripe from "../../components/background-stripe";
 import AstText from "../../components/ast-text";
 import SwirlSeparator from "../../components/swirl-separator";
+import Hidden from "../../components/hidden";
+import FiltersDrawer from "../../components/filters-drawer";
 
 const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APPLICATION_ID,
@@ -28,6 +30,8 @@ const Resources = () => {
     const ResourcesList = connectHits(({ hits, ...rest }) =>
         hits.map((hit, i) => <Resource key={i} data={hit} {...rest} />)
     );
+
+    const [drawerVisible, setVisible] = useState(false);
 
     const {
         contentfulResourcesPage,
@@ -142,10 +146,21 @@ const Resources = () => {
                         indexName="mondora_resources_en"
                     >
                         <Box width={[1, 1, 1, 1 / 4]} pt={4} p={3}>
-                            <RefinementBox
-                                fields={contentfulResourcesPage.filtering}
-                            />
+                            <Hidden xsDown={true}>
+                                <RefinementBox
+                                    fields={contentfulResourcesPage.filtering}
+                                />
+                            </Hidden>
+                            <Hidden xsUp={true}>
+                                <FiltersDrawer
+                                    visible={drawerVisible}
+                                    closeDrawer={() =>
+                                        setVisible(!drawerVisible)
+                                    }
+                                />
+                            </Hidden>
                         </Box>
+
                         <Box
                             width={[1, 1, 1, 3 / 4]}
                             pl={[3, 3, 3, 4]}
@@ -154,6 +169,7 @@ const Resources = () => {
                             <FilteringControls
                                 sorting={contentfulResourcesPage.sorting}
                                 search={contentfulResourcesPage.search}
+                                openFilters={() => setVisible(!drawerVisible)}
                             />
                             <ResourcesList
                                 images={allContentfulResource.nodes}
