@@ -153,6 +153,7 @@ const Resources = () => {
                             </Hidden>
                             <Hidden xsUp={true}>
                                 <FiltersDrawer
+                                    fields={contentfulResourcesPage.filtering}
                                     visible={drawerVisible}
                                     closeDrawer={() =>
                                         setVisible(!drawerVisible)

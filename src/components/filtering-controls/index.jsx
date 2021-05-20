@@ -5,12 +5,13 @@ import styled from "styled-components";
 import { Box, Flex } from "reflexbox";
 
 import ParagraphTitle from "../paragraph-title";
+import Button from "../button";
+import Hidden from "../hidden";
+import FeatherIcon from "../feather-icon";
 
 import NumberOfResults from "../algolia-widgets/results-number";
 import SortDropdown from "../algolia-widgets/sort-dropdown";
 import SearchBox from "../algolia-widgets/search-box";
-import Button from "../button";
-import Hidden from "../hidden";
 
 const SearchContainer = styled(Box)`
     text-align: right;
@@ -35,7 +36,15 @@ const FilteringControls = ({ sorting, search, openFilters }) => (
         <Box width={[1 / 2, 0]} mt={[2, 0]} mb={[4, 0]} textAlign={"right"}>
             <Hidden xsUp={true}>
                 <Button theme={"light"} onClick={openFilters}>
-                    {"Filter"}
+                    <Flex width={"72px"} justifyContent={"space-between"}>
+                        {"Filter "}
+                        <FeatherIcon
+                            align-self={"end"}
+                            size={16}
+                            fill={true}
+                            name="filter"
+                        />
+                    </Flex>
                 </Button>
             </Hidden>
         </Box>

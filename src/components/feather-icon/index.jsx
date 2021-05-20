@@ -6,9 +6,8 @@ import styled from "styled-components";
 
 const Container = styled.div`
     display: flex;
-
     & > svg {
-        fill: ${props => (props.fill ? "currentColor" : "none")};
+        fill: ${props => (props.full ? "currentColor" : "none")};
     }
 `;
 
@@ -23,7 +22,7 @@ const FeatherIcon = ({ name, color, size, fill, stroke }) => {
 
     return (
         <Container
-            fill={fill}
+            full={fill}
             dangerouslySetInnerHTML={{
                 __html: icon.toSvg({
                     color,
