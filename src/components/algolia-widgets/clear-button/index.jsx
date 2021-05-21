@@ -8,6 +8,7 @@ const ClearButton = connectCurrentRefinements(({ items, refine, label }) => (
     <Button
         onClick={() => refine(items)}
         disabled={!items.length}
+        size={"small"}
         theme="light"
     >
         {label}

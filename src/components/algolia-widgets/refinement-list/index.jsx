@@ -2,7 +2,7 @@ import React from "react";
 
 import { connectRefinementList } from "react-instantsearch-dom";
 
-import RoundButton from "../../round-button";
+import Tag from "../../tag";
 
 import styled, { css } from "styled-components";
 
@@ -41,9 +41,9 @@ const CustomRefinementList = connectRefinementList(
                 }}
             >
                 {type === "chip" ? (
-                    <RoundButton theme={item.isRefined ? "yellow" : "gray"}>
+                    <Tag theme={item.isRefined ? "primary" : "gray"}>
                         {item.label}
-                    </RoundButton>
+                    </Tag>
                 ) : (
                     <CheckBox appearance={appearance}>
                         <input

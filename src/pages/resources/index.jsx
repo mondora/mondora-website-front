@@ -31,7 +31,7 @@ const Resources = () => {
         hits.map((hit, i) => <Resource key={i} data={hit} {...rest} />)
     );
 
-    const [drawerVisible, setVisible] = useState(false);
+    const [drawerVisible, setDrawerVisible] = useState(false);
 
     const {
         contentfulResourcesPage,
@@ -145,7 +145,7 @@ const Resources = () => {
                         searchClient={searchClient}
                         indexName="mondora_resources_en"
                     >
-                        <Box width={[1, 1, 1, 1 / 4]} pt={4} p={3}>
+                        <Box width={[1, 1, 1, 1 / 4]} pt={4}>
                             <Hidden xsDown={true}>
                                 <RefinementBox
                                     fields={contentfulResourcesPage.filtering}
@@ -156,7 +156,7 @@ const Resources = () => {
                                     fields={contentfulResourcesPage.filtering}
                                     visible={drawerVisible}
                                     closeDrawer={() =>
-                                        setVisible(!drawerVisible)
+                                        setDrawerVisible(!drawerVisible)
                                     }
                                 />
                             </Hidden>
@@ -170,7 +170,9 @@ const Resources = () => {
                             <FilteringControls
                                 sorting={contentfulResourcesPage.sorting}
                                 search={contentfulResourcesPage.search}
-                                openFilters={() => setVisible(!drawerVisible)}
+                                openFilters={() =>
+                                    setDrawerVisible(!drawerVisible)
+                                }
                             />
                             <ResourcesList
                                 images={allContentfulResource.nodes}
