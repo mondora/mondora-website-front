@@ -106,6 +106,7 @@ const Resource = ({ data, images, placeholder }) => {
                 <MediaType>{type}</MediaType>
                 <Box width={[0, 1 / 4]} pr={3}>
                     <Image
+                        alt={title}
                         fluid={
                             featuredImageId
                                 ? images.find(
@@ -116,7 +117,6 @@ const Resource = ({ data, images, placeholder }) => {
                                   ).image.fluid
                                 : placeholder.fluid
                         }
-                        alt={title}
                     />
                 </Box>
                 <Box p={[4, 2, 2]} width={[1, 3 / 4, 5 / 8]}>
