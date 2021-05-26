@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import styled from "styled-components";
 import { Box, Flex } from "reflexbox";
+import { connectStateResults } from "react-instantsearch-dom";
 
 import Drawer from "../drawer";
 import Button from "../button";
@@ -32,6 +33,11 @@ const Footer = styled(Flex)`
     box-shadow: -2px -2px -4px rgba(0, 0, 0, 0.3);
 `;
 
+const ResultsNumber = connectStateResults(
+    ({ searchResults }) =>
+        searchResults && searchResults.nbHits && searchResults.nbHits
+);
+
 const FiltersDrawer = ({ visible, closeDrawer, fields }) => (
     <Drawer width={"100%"} visible={visible}>
         <Header>
@@ -47,7 +53,11 @@ const FiltersDrawer = ({ visible, closeDrawer, fields }) => (
         </Flex>
 
         <Footer>
-            <Button onClick={closeDrawer}>{"Show results"}</Button>
+            <Button onClick={closeDrawer}>
+                {"Show "}
+                <ResultsNumber />
+                {" results"}
+            </Button>
         </Footer>
     </Drawer>
 );
