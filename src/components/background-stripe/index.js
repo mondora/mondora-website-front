@@ -9,7 +9,6 @@ const BackgroundStripe = styled.div`
     width: 100%;
     padding: 32px 0;
 
-    background-position: center;
     background-size: 592px;
 
     ${props =>
