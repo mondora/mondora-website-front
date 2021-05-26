@@ -35,7 +35,7 @@ const Resources = () => {
 
     const {
         contentfulResourcesPage,
-        allContentfulResource
+        allContentfulAsset
     } = useStaticQuery(graphql`
         query {
             contentfulResourcesPage {
@@ -98,14 +98,11 @@ const Resources = () => {
                     }
                 }
             }
-            allContentfulResource {
+            allContentfulAsset {
                 nodes {
-                    image {
-                        description
-                        contentful_id
-                        fluid(quality: 50) {
-                            ...GatsbyContentfulFluid
-                        }
+                    contentful_id
+                    fluid(quality: 50, maxWidth: 400) {
+                        ...GatsbyContentfulFluid_withWebp
                     }
                 }
             }
@@ -175,7 +172,7 @@ const Resources = () => {
                                 }
                             />
                             <ResourcesList
-                                images={allContentfulResource.nodes}
+                                images={allContentfulAsset.nodes}
                                 placeholder={
                                     contentfulResourcesPage.resourceImage
                                 }

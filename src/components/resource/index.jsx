@@ -94,6 +94,10 @@ const Resource = ({ data, images, placeholder }) => {
         readTime
     ];
 
+    const image =
+        images.find(image => image.contentful_id === featuredImageId) ||
+        placeholder;
+
     return (
         <Link target="_blank" to={link}>
             <Container
@@ -105,19 +109,7 @@ const Resource = ({ data, images, placeholder }) => {
             >
                 <MediaType>{type}</MediaType>
                 <Box width={[0, 1 / 4]} pr={3}>
-                    <Image
-                        alt={title}
-                        fluid={
-                            featuredImageId
-                                ? images.find(
-                                      ({ image }) =>
-                                          image &&
-                                          image.contentful_id ===
-                                              featuredImageId
-                                  ).image.fluid
-                                : placeholder.fluid
-                        }
-                    />
+                    <Image alt={title} fluid={image.fluid} />
                 </Box>
                 <Box p={[4, 2, 2]} width={[1, 3 / 4, 5 / 8]}>
                     {areas && areas.length > 0 && (
