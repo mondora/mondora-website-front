@@ -1,67 +1,59 @@
 import React from "react";
-
 import { connectRefinementList } from "react-instantsearch-dom";
+import PropTypes from "prop-types";
 
+import Checkbox from "../../checkbox";
 import Tag from "../../tag";
 
-import styled, { css } from "styled-components";
-
-const CheckBox = styled.div`
-    margin: 4px 0;
-    color: var(--text-dark-black);
-    ${props =>
-        props.appearance
-            ? css`
-                  background-color: var(--background-light-gray);
-                  margin: 8px 0;
-                  border-radius: 4px;
-                  padding: 8px;
-                  width: 240px;
-                  display: flex;
-                  flex-direction: row-reverse;
-                  justify-content: space-between;
-                  align-items: center;
-              `
-            : css`
-                  margin: 4px 0;
-              `}
-`;
-
-const CustomRefinementList = connectRefinementList(
-    ({ items, refine, type, appearance }) =>
-        items.map(item => (
-            <div
-                key={item.label}
-                style={{
-                    fontWeight: item.isRefined ? "bold" : ""
-                }}
-                onClick={event => {
-                    event.preventDefault();
-                    refine(item.value);
-                }}
-            >
-                {type === "chip" ? (
-                    <Tag theme={item.isRefined ? "primary" : "gray"}>
-                        {item.label}
-                    </Tag>
-                ) : (
-                    <CheckBox appearance={appearance}>
-                        <input
-                            type="checkbox"
-                            name={item.label}
-                            checked={item.isRefined}
-                            onChange={event => event.preventDefault()}
-                        />
-                        <label htmlFor={item.label}>
-                            {item.label}
-                            {" ("}
-                            {item.count}
-                            {")"}
-                        </label>
-                    </CheckBox>
-                )}
-            </div>
-        ))
+const RefinementList = connectRefinementList(
+    ({ items, refine, type, appearance }) => {
+        return items
+            .sort((a, b) => a.label.localeCompare(b.label))
+            .map(({ count, isRefined, label, value }) => (
+                <div
+                    key={label}
+                    onClick={event => {
+                        event.preventDefault();
+                        refine(value);
+                    }}
+                >
+                    {(() => {
+                        switch (type) {
+                            case "chip":
+                                return (
+                                    <Tag theme={isRefined ? "primary" : "gray"}>
+                                        {label}
+                                    </Tag>
+                                );
+                            default:
+                                return (
+                                    <Checkbox
+                                        appearance={appearance}
+                                        checked={isRefined}
+                                        label={`${label} (${count})`}
+                                        onChange={event =>
+                                            event.preventDefault()
+                                        }
+                                        value={label}
+                                    />
+                                );
+                        }
+                    })()}
+                </div>
+            ));
+    }
 );
 
-export default CustomRefinementList;
+RefinementList.propTypes = {
+    items: PropTypes.shape({
+        label: PropTypes.string,
+        isRefined: PropTypes.bool,
+        value: PropTypes.string,
+        count: PropTypes.number
+    }),
+    refine: PropTypes.func,
+    type: PropTypes.string,
+    appearance: PropTypes.string
+};
+
+export default RefinementList;
