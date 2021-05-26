@@ -6,13 +6,67 @@ import { Flex, Box } from "reflexbox";
 import styled from "styled-components";
 import Image from "gatsby-image";
 
-import Title from "../title";
-import Subtitle from "../subtitle";
-import ParagraphTitle from "../paragraph-title";
-import RoundButton from "../round-button";
 import Hidden from "../hidden";
+import DefaultLink from "../link";
+import Tag from "../tag";
 
 import pointer from "../../images/new-tab.svg";
+
+const Link = styled(DefaultLink)`
+    text-decoration: none;
+    color: var(--black);
+`;
+
+const Container = styled(Flex)`
+    background-color: var(--white);
+    width: 100%;
+    text-decoration: none;
+    position: relative;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--white);
+    transition: all ease 0.3s;
+
+    &:hover {
+        border-color: var(--primary);
+    }
+`;
+
+const MediaType = styled.div`
+    padding: 6px 24px;
+    font-size: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    background-color: var(--primary);
+    z-index: 2;
+`;
+
+const Areas = styled.div`
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 600;
+
+    @media (max-width: 640px) {
+        margin-top: 16px;
+    }
+`;
+
+const Title = styled.h3`
+    font-size: 24px;
+    margin: 0 0 8px;
+`;
+
+const Attributes = styled.div`
+    font-size: 14px;
+    margin: 0 0 24px;
+`;
+
+const Description = styled.p`
+    font-size: 14px;
+    margin: 0 0 24px;
+`;
 
 const LinkIcon = styled.img`
     display: block;
@@ -20,109 +74,77 @@ const LinkIcon = styled.img`
     margin: auto;
 `;
 
-const LinkContainer = styled.a`
-    text-decoration: none;
-    color: black;
-`;
+const Resource = ({ data, images, placeholder }) => {
+    const {
+        link,
+        type,
+        featuredImageId,
+        areas,
+        title,
+        author,
+        date,
+        readTime,
+        tags,
+        description
+    } = data;
 
-const MediaType = styled.div`
-    width: 80px;
-    padding: 4px;
-    text-align: center;
-    position: absolute;
-    align-self: start;
-    @media (max-width: 640px) {
-        right: 32px;
-    }
-    background-color: var(--primary);
-    z-index: 2;
-`;
+    const attributes = [
+        author,
+        new Date(date).toLocaleDateString("fr-FR"),
+        readTime
+    ];
 
-const ResourceContainer = styled(Flex)`
-    background-color: var(--white);
-    width: 100%;
-    align-items: center;
-    text-decoration: none;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    &:hover {
-        transition: 0.1s;
-        box-shadow: 2px 2px 4px var(--primary);
-    }
-`;
-
-const Areas = styled.div`
-    margin: 4px 0;
-    @media (max-width: 640px) {
-        margin-top: 16px;
-    }
-`;
-
-const Attributes = styled.div`
-    font-size: 12px;
-    margin: 20px 0 8px 0;
-`;
-
-const AreaLabel = styled(ParagraphTitle)`
-    display: inline-block;
-    &::after {
-        content: ", ";
-        white-space: pre;
-    }
-    &:last-of-type ::after {
-        content: "";
-    }
-`;
-
-const Resource = ({ data, images, placeholder }) => (
-    <LinkContainer target="_blank" href={data.link}>
-        <ResourceContainer flexDirection={"row"} mb={5} flexWrap="wrap">
-            <MediaType>{data.type}</MediaType>
-            <Box width={[0, 1 / 4]}>
-                <Image
-                    fluid={
-                        data.featuredImageId
-                            ? images.find(
-                                  ({ image }) =>
-                                      image &&
-                                      image.contentful_id ===
-                                          data.featuredImageId
-                              ).image.fluid
-                            : placeholder.fluid
-                    }
-                />
-            </Box>
-            <Box p={[4, 2, 2]} width={[1, 3 / 4, 5 / 8]}>
-                <Areas>
-                    {data.areas.map((area, i) => (
-                        <AreaLabel key={i}>{area}</AreaLabel>
+    return (
+        <Link target="_blank" to={link}>
+            <Container
+                flexDirection={"row"}
+                mb={4}
+                p={2}
+                flexWrap="wrap"
+                alignItems="center"
+            >
+                <MediaType>{type}</MediaType>
+                <Box width={[0, 1 / 4]} pr={3}>
+                    <Image
+                        alt={title}
+                        fluid={
+                            featuredImageId
+                                ? images.find(
+                                      ({ image }) =>
+                                          image &&
+                                          image.contentful_id ===
+                                              featuredImageId
+                                  ).image.fluid
+                                : placeholder.fluid
+                        }
+                    />
+                </Box>
+                <Box p={[4, 2, 2]} width={[1, 3 / 4, 5 / 8]}>
+                    {areas && areas.length > 0 && (
+                        <Areas>{areas.join(", ")}</Areas>
+                    )}
+                    {title && <Title>{title}</Title>}
+                    {attributes && attributes.length > 0 && (
+                        <Attributes>
+                            {attributes.filter(attr => attr).join(" - ")}
+                        </Attributes>
+                    )}
+                    {description && <Description>{description}</Description>}
+                    {tags.map((tag, i) => (
+                        <Tag disabled key={i}>
+                            {tag}
+                        </Tag>
                     ))}
-                </Areas>
-                <Title>{data.title}</Title>
-                <Attributes>
-                    {data.author}
-                    {data.author && data.date && " - "}
-                    {new Date(data.date).toLocaleDateString("fr-FR")}
-                    {data.date && data.readTime && " - "}
-                    {data.readTime}
-                </Attributes>
-                <Subtitle variant={"dark"} spacing={"16px"}>
-                    {data.description}
-                </Subtitle>
-
-                {data.tags.map((tag, i) => (
-                    <RoundButton disabled key={i}>
-                        {tag}
-                    </RoundButton>
-                ))}
-            </Box>
-            <Box p="2" width={[0, 0, 1 / 8]}>
-                <Hidden smDown={true}>
-                    <LinkIcon src={pointer} alt="link to resource" />
-                </Hidden>
-            </Box>
-        </ResourceContainer>
-    </LinkContainer>
-);
+                </Box>
+                <Box p="2" width={[0, 0, 1 / 8]}>
+                    <Hidden smDown={true}>
+                        <LinkIcon src={pointer} alt="Link to resource" />
+                    </Hidden>
+                </Box>
+            </Container>
+        </Link>
+    );
+};
 
 Resource.propTypes = {
     data: PropTypes.object,

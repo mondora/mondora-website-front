@@ -1,9 +1,12 @@
 html {
     font-family: "Source Sans Pro", sans-serif;
+    height: -webkit-fill-available;
 }
 
 body {
     margin: 0;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
 }
 
 h1,
@@ -34,7 +37,7 @@ button {
 
 :root {
     --primary: rgb(255, 218, 3);
-    --primary-hover: rgba(255, 218, 3, 0.5);
+    --primary-hover: #000000;
 
     --text-dark-black: rgb(33, 43, 54);
     --text-dark-gray: rgb(84, 86, 90);

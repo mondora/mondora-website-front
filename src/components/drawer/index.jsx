@@ -10,7 +10,8 @@ const placements = {
 
 const Container = styled(Box)`
     background-color: var(--white);
-    height: 100vh;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     overflow-y: scroll;
     position: fixed;
     z-index: 100;

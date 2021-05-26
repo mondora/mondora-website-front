@@ -8,32 +8,31 @@ import ParagraphTitle from "../paragraph-title";
 
 import ClearButton from "../algolia-widgets/clear-button";
 import CustomRefinementList from "../algolia-widgets/refinement-list";
-import { Flex } from "reflexbox";
+import { Box, Flex } from "reflexbox";
 
-const FilterContainer = styled.div`
+const Container = styled(Flex)`
     background-color: var(--white);
-    padding: 16px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 `;
 
 const RefinementBox = ({ fields }) => (
-    <FilterContainer>
-        <Flex flexDirection="row" justifyContent="space-between">
+    <Container flexDirection="column" p={4}>
+        <Flex justifyContent="space-between" alignItems="center" mb={3}>
             <Title>{fields.label}</Title>
             <ClearButton label={fields.clear} />
         </Flex>
 
         {fields.contentfulfields.map((field, i) => (
-            <div key={i} style={{ overflow: "hidden" }}>
+            <Box key={i} mb={3}>
                 <ParagraphTitle>{field.label}</ParagraphTitle>
                 <CustomRefinementList
                     limit={20}
                     type={field.type}
                     attribute={field.field}
                 />
-            </div>
+            </Box>
         ))}
-    </FilterContainer>
+    </Container>
 );
 
 RefinementBox.propTypes = {
