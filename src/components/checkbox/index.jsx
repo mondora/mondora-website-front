@@ -6,11 +6,12 @@ import styled, { css } from "styled-components";
 import FeatherIcon from "../feather-icon";
 
 const Container = styled.div`
-    margin: 4px 64px;
     display: flex;
     align-items: center;
     color: var(--text-dark-black);
     transition: 0.1s ease;
+    font-weight: ${props => (props.checked ? "600" : "400")};
+
     ${props =>
         props.appearance === "mobile"
             ? css`
@@ -25,7 +26,7 @@ const Container = styled.div`
                   align-items: center;
               `
             : css`
-                  margin: 4px 0;
+                  margin: 0 0 12px;
               `}
     @media (min-width: 692px) {
         &:hover .checkmark {
@@ -65,7 +66,7 @@ const CheckMark = styled.div`
 `;
 
 const CheckBox = ({ appearance, label, checked }) => (
-    <Container appearance={appearance}>
+    <Container appearance={appearance} checked={checked}>
         <CheckMark
             className="checkmark"
             checked={checked}

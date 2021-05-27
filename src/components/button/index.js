@@ -21,6 +21,7 @@ const StyledButton = styled.button`
     border-radius: 2px;
     overflow: visible;
     transition: all 0.5s ease;
+    cursor: pointer;
 
     ${({ size }) =>
         size === SIZES.small

@@ -38,6 +38,7 @@ button {
 :root {
     --primary: rgb(255, 218, 3);
     --primary-hover: #000000;
+    --primary-light: rgba(255, 217, 3, 0.5);
 
     --text-dark-black: rgb(33, 43, 54);
     --text-dark-gray: rgb(84, 86, 90);

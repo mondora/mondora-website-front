@@ -9,7 +9,7 @@ const THEMES = {
 
 const Tag = styled.button`
     background-color: ${props =>
-        props.theme === THEMES.gray ? `var(--gray)` : `var(--primary)`};
+        props.theme === THEMES.gray ? `var(--gray)` : `var(--primary-light)`};
     width: fit-content;
     float: left;
     padding: 2px 12px;
