@@ -8,7 +8,6 @@ import lightBackground from "./assets/light_background.svg";
 const BackgroundStripe = styled.div`
     width: 100%;
     padding: 32px 0;
-
     background-size: 592px;
 
     ${props =>
