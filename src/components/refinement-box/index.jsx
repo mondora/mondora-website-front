@@ -31,7 +31,11 @@ const RefinementBox = ({ fields }) => (
         {fields.contentfulfields.map((field, i) => (
             <Box key={i} mb={3}>
                 <ParagraphTitle>{field.label}</ParagraphTitle>
-                <RefinementList type={field.type} attribute={field.field} />
+                <RefinementList
+                    limit={50}
+                    type={field.type}
+                    attribute={field.field}
+                />
             </Box>
         ))}
     </Container>
