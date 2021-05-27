@@ -11,6 +11,8 @@ const Container = styled.div`
     align-items: center;
     color: var(--text-dark-black);
     transition: 0.1s ease;
+    font-weight: ${props => (props.checked ? "600" : "400")};
+
     ${props =>
         props.appearance === "mobile"
             ? css`
@@ -65,7 +67,7 @@ const CheckMark = styled.div`
 `;
 
 const CheckBox = ({ appearance, label, checked }) => (
-    <Container appearance={appearance}>
+    <Container appearance={appearance} checked={checked}>
         <CheckMark
             className="checkmark"
             checked={checked}
