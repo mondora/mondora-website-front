@@ -37,7 +37,7 @@ const FeatherIcon = ({ name, color, size, fill, stroke }) => {
 
 FeatherIcon.propTypes = {
     name: PropTypes.string,
-    size: PropTypes.number,
+    size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     color: PropTypes.string,
     fill: PropTypes.bool,
     /** Color of the outline path. If provided will override `color` prop. */
