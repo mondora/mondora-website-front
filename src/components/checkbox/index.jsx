@@ -6,7 +6,6 @@ import styled, { css } from "styled-components";
 import FeatherIcon from "../feather-icon";
 
 const Container = styled.div`
-    margin: 4px 64px;
     display: flex;
     align-items: center;
     color: var(--text-dark-black);
@@ -27,7 +26,7 @@ const Container = styled.div`
                   align-items: center;
               `
             : css`
-                  margin: 4px 0;
+                  margin: 0 0 12px;
               `}
     @media (min-width: 692px) {
         &:hover .checkmark {
