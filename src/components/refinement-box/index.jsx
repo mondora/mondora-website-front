@@ -1,13 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { Box, Flex } from "reflexbox";
 import styled from "styled-components";
-
-import ParagraphTitle from "../paragraph-title";
 
 import ClearButton from "../algolia-widgets/clear-button";
 import RefinementList from "../algolia-widgets/refinement-list";
-import { Box, Flex } from "reflexbox";
 
 const Container = styled(Flex)`
     background-color: var(--white);
@@ -21,16 +18,23 @@ const Title = styled.h3`
     margin: 0;
 `;
 
+const GroupTitle = styled.h4`
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0 0 16px;
+`;
+
 const RefinementBox = ({ fields }) => (
-    <Container flexDirection="column" p={4}>
+    <Container flexDirection="column" p={4} pb={0}>
         <Flex justifyContent="space-between" alignItems="center" mb={4}>
             <Title>{fields.label}</Title>
             <ClearButton label={fields.clear} />
         </Flex>
 
         {fields.contentfulfields.map((field, i) => (
-            <Box key={i} mb={3}>
-                <ParagraphTitle>{field.label}</ParagraphTitle>
+            <Box key={i} mb={4}>
+                <GroupTitle>{field.label}</GroupTitle>
                 <RefinementList
                     limit={50}
                     type={field.type}
