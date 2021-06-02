@@ -30,7 +30,7 @@ const FilteringControls = ({ sorting, search, openFilters }) => (
             <ParagraphTitle>{search.label}</ParagraphTitle>
             <SearchBox placeholder={search.value} />
         </SearchContainer>
-        <Box width={[1 / 2, 1]} mt={2} mb={4}>
+        <Box width={[1 / 2, 1]} mt={4} mb={3}>
             <NumberOfResults />
         </Box>
         <Box width={[1 / 2, 0]} mt={[2, 0]} mb={[4, 0]} textAlign={"right"}>

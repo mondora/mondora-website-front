@@ -125,7 +125,7 @@ const Resources = () => {
             <ReasonsRow reasons={contentfulResourcesPage.sections} />
             <BackgroundStripe theme={"light"}>
                 <MaxWidthContainer
-                    m={4}
+                    mt={5} mb={4}
                     flexDirection="column"
                     alignItems="center"
                 >
@@ -135,14 +135,14 @@ const Resources = () => {
                                 .htmlAst
                         }
                     />
-                    <SwirlSeparator width="180px" margin="24px" />
+                    <SwirlSeparator width="180px" margin="16px" />
                 </MaxWidthContainer>
                 <MaxWidthContainer>
                     <InstantSearch
                         searchClient={searchClient}
                         indexName="mondora_resources_en"
                     >
-                        <Box width={[1, 1, 1, 1 / 4]} pt={4}>
+                        <Box width={[1, 1, 1, 1 / 4]}>
                             <Hidden xsDown={true}>
                                 <RefinementBox
                                     fields={contentfulResourcesPage.filtering}

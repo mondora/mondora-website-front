@@ -60,7 +60,7 @@ const Title = styled.h3`
 
 const Attributes = styled.div`
     font-size: 14px;
-    margin: 0 0 24px;
+    margin: 24px 0 12px;
 `;
 
 const Description = styled.p`
