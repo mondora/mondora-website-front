@@ -13,7 +13,7 @@
         "gatsby-plugin-react-helmet": "^3.3.14",
         "gatsby-plugin-sharp": "^2.7.1",
         "gatsby-plugin-sitemap": "^2.5.1",
-        "gatsby-plugin-styled-components": "^3.3.14",
+        "gatsby-plugin-styled-components": "^3.10.0",
         "gatsby-plugin-transition-link": "^1.20.5",
         "gatsby-remark-embed-video": "^3.0.10",
         "gatsby-remark-images-contentful": "^2.3.20",
