@@ -14,7 +14,12 @@ const TextField = styled.input`
 
 const SearchBox = connectSearchBox(
     ({ currentRefinement, refine, placeholder }) => (
-        <form noValidate action="" role="search">
+        <form
+            noValidate
+            action=""
+            role="search"
+            onSubmit={e => e.preventDefault()}
+        >
             <TextField
                 type="search"
                 placeholder={placeholder}
