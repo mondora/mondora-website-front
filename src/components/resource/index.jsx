@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { connectCurrentRefinements } from "react-instantsearch-dom";
+
 import { Flex, Box } from "reflexbox";
 
 import styled from "styled-components";
@@ -98,6 +100,23 @@ const Resource = ({ data, images, placeholder }) => {
         images.find(image => image.contentful_id === featuredImageId) ||
         placeholder;
 
+    const TagList = connectCurrentRefinements(({ items, tags }) =>
+        tags.map((tag, i) => (
+            <Tag
+                disabled
+                key={i}
+                theme={
+                    !items[0] ||
+                    items[0].currentRefinement.find(item => item === tag)
+                        ? "primary"
+                        : "gray"
+                }
+            >
+                {tag}
+            </Tag>
+        ))
+    );
+
     return (
         <Link target="_blank" to={link}>
             <Container
@@ -122,11 +141,7 @@ const Resource = ({ data, images, placeholder }) => {
                         </Attributes>
                     )}
                     {description && <Description>{description}</Description>}
-                    {tags.map((tag, i) => (
-                        <Tag disabled key={i}>
-                            {tag}
-                        </Tag>
-                    ))}
+                    <TagList tags={tags} />
                 </Box>
                 <Box p="2" width={[0, 0, 1 / 8]}>
                     <Hidden smDown={true}>

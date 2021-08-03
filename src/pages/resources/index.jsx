@@ -125,7 +125,8 @@ const Resources = () => {
             <ReasonsRow reasons={contentfulResourcesPage.sections} />
             <BackgroundStripe theme={"light"}>
                 <MaxWidthContainer
-                    mt={5} mb={4}
+                    mt={5}
+                    mb={4}
                     flexDirection="column"
                     alignItems="center"
                 >
