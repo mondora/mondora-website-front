@@ -106,7 +106,7 @@ const Resource = ({ data, images, placeholder }) => {
                 disabled
                 key={i}
                 theme={
-                    !items[0] ||
+                    items[0] &&
                     items[0].currentRefinement.find(item => item === tag)
                         ? "primary"
                         : "gray"
