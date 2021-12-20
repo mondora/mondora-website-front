@@ -42,8 +42,10 @@ const Footer = () => {
                     }
                 }
                 contacts {
+                    companyName
                     legalAddress
                     partitaIva
+                    codiceSdi
                     email
                     github
                     instagram
@@ -108,50 +110,61 @@ const Footer = () => {
                         <Subtitle light={true}>
                             {contentfulFooter.copyright}
                             <br />
+                            {contentfulFooter.contacts.companyName}
+                            <br />
                             {contentfulFooter.contacts.legalAddress}
                             <br />
                             {contentfulFooter.contacts.partitaIva}
                             <br />
-                            {contentfulFooter.motto}
-                        </Subtitle>
-
-                        <Subtitle light={true}>
+                            {contentfulFooter.contacts.codiceSdi}
+                            <br />
                             {contentfulFooter.contacts.email}
                         </Subtitle>
-
-                        <Subtitle>
-                            <Flex margin={-1}>
-                                {Socials.map(
-                                    social =>
-                                        social.link && (
-                                            <Flex margin={1} key={social.icon}>
-                                                <SocialLink {...social} />
-                                            </Flex>
-                                        )
-                                )}
-                            </Flex>
+                        <Subtitle light={true}>
+                            {contentfulFooter.motto}
                         </Subtitle>
                     </Flex>
                 </Flex>
 
-                <Flex width={[1, "auto"]} flexWrap="wrap" my={2}>
-                    {contentfulFooter.columns.map((column, i) => (
-                        <Flex
-                            key={i}
-                            flexDirection="column"
-                            width={[1 / 2, 1 / 4]}
-                            pl={3}
-                        >
-                            <Subtitle light={true}>{column.title}</Subtitle>
-                            <nav role="navigation" aria-label={column.title}>
-                                {column.links.map((link, i) => (
-                                    <ExternalLink key={i} href={link.link}>
-                                        {link.text}
-                                    </ExternalLink>
-                                ))}
-                            </nav>
-                        </Flex>
-                    ))}
+                <Flex
+                    width={[1, "auto"]}
+                    my={2}
+                    flexDirection={"column"}
+                    align={["start", "end"]}
+                >
+                    <Flex flexWrap="wrap">
+                        {contentfulFooter.columns.map((column, i) => (
+                            <Flex
+                                key={i}
+                                flexDirection="column"
+                                width={[1 / 2, 1 / 4]}
+                                pl={3}
+                            >
+                                <Subtitle light={true}>{column.title}</Subtitle>
+                                <nav
+                                    role="navigation"
+                                    aria-label={column.title}
+                                >
+                                    {column.links.map((link, i) => (
+                                        <ExternalLink key={i} href={link.link}>
+                                            {link.text}
+                                        </ExternalLink>
+                                    ))}
+                                </nav>
+                            </Flex>
+                        ))}
+                    </Flex>
+
+                    <Flex flexWrap="wrap" mt={40} ml={3}>
+                        {Socials.map(
+                            social =>
+                                social.link && (
+                                    <Flex margin={1} key={social.icon}>
+                                        <SocialLink {...social} />
+                                    </Flex>
+                                )
+                        )}
+                    </Flex>
                 </Flex>
             </MaxWidthContainer>
         </FooterContainer>
