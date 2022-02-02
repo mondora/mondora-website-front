@@ -9,8 +9,7 @@ module.exports = {
         description:
             "Software and advisory company specialized in custom cloud solutions. Our aim is to create benefit for all stakeholders by designing and building software solutions that maximise positive impact.",
         author: "mondora-team",
-        robots:
-            "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+        robots: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
         locale: "en"
     },
     plugins: [
@@ -72,6 +71,13 @@ module.exports = {
             options: {
                 spaceId: process.env.CONTENTFUL_SPACE_ID,
                 accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+            }
+        },
+        {
+            resolve: "gatsby-source-buzzsprout",
+            options: {
+                token: process.env.BUZZRPROUT_TOKEN,
+                podcastId: process.env.BUZZSPROUT_PODCAST_ID
             }
         },
         {
