@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { graphql, useStaticQuery } from "gatsby";
-import { Flex } from "reflexbox";
+import { Flex, Box } from "reflexbox";
 
 import styled from "styled-components";
 import Title from "../title";
@@ -9,9 +9,11 @@ import SubtleTitle from "../subtle-title";
 import Button from "../button";
 import HtmlParser from "../html-parser";
 
-const EpisodeContainer = styled.div`
-    width: 80%;
-    margin: 40px auto;
+const EpisodeContainer = styled(Box)`
+    margin: 40px 0;
+    background-color: var(--white);
+    padding: 24px;
+    border-radius: 16px;
 `;
 const EpisodeSubtitle = styled(SubtleTitle)`
     font-size: 18px;
@@ -21,7 +23,7 @@ const EpisodeTitle = styled(Title)`
     font-size: 24px;
 `;
 
-const PodcastEpisode = ({ episode }) => {
+const PodcastEpisode = ({ episode, width }) => {
     const { contentfulPodcastPage } = useStaticQuery(graphql`
         query {
             contentfulPodcastPage {
@@ -35,7 +37,7 @@ const PodcastEpisode = ({ episode }) => {
     const splitTitle = episode.title.split(" - ");
 
     return (
-        <EpisodeContainer>
+        <EpisodeContainer width={width}>
             <EpisodeTitle>{splitTitle[0]}</EpisodeTitle>
             <EpisodeSubtitle>{splitTitle[1]}</EpisodeSubtitle>
             <iframe
@@ -51,11 +53,11 @@ const PodcastEpisode = ({ episode }) => {
                 html={
                     showMore
                         ? episode.description
-                        : episode.description.substring(0, 250)
+                        : `${episode.description.substring(0, 250)} ......`
                 }
             />
             {episode.description.length > 500 && (
-                <Flex justifyContent={"center"} m={3}>
+                <Flex justifyContent={"center"} mt={3}>
                     <Button
                         className="btn"
                         onClick={() => setShowMore(!showMore)}
@@ -69,7 +71,8 @@ const PodcastEpisode = ({ episode }) => {
 };
 
 PodcastEpisode.propTypes = {
-    episode: PropTypes.object
+    episode: PropTypes.object,
+    width: PropTypes.array
 };
 
 export default PodcastEpisode;
