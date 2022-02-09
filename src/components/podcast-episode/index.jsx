@@ -10,7 +10,6 @@ import Button from "../button";
 import HtmlParser from "../html-parser";
 
 const EpisodeContainer = styled(Box)`
-    margin: 40px 0;
     background-color: var(--white);
     padding: 24px;
     border-radius: 16px;
@@ -37,7 +36,7 @@ const PodcastEpisode = ({ episode, width }) => {
     const splitTitle = episode.title.split(" - ");
 
     return (
-        <EpisodeContainer width={width}>
+        <EpisodeContainer width={width} mt={40}>
             <EpisodeTitle>{splitTitle[0]}</EpisodeTitle>
             <EpisodeSubtitle>{splitTitle[1]}</EpisodeSubtitle>
             <iframe

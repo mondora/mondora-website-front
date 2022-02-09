@@ -40,6 +40,7 @@ const Podcast = () => {
                 allBuzzsproutPodcastEpisode {
                     nodes {
                         id
+                        private
                         buzzsproutId
                         title
                         description
@@ -68,13 +69,16 @@ const Podcast = () => {
                             {contentfulPodcastPage.episodesSectionTitle}
                         </Title>
                     </Box>
-                    {allBuzzsproutPodcastEpisode.nodes.map(episode => (
-                        <PodcastEpisode
-                            width={[1, 0.8]}
-                            key={episode.id}
-                            episode={episode}
-                        />
-                    ))}
+                    {allBuzzsproutPodcastEpisode.nodes.map(
+                        episode =>
+                            !episode.private && (
+                                <PodcastEpisode
+                                    width={[1, 0.8]}
+                                    key={episode.id}
+                                    episode={episode}
+                                />
+                            )
+                    )}
                 </MaxWidthContainer>
             </BackgroundStripe>
         </Layout>
