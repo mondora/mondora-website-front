@@ -5,6 +5,7 @@ import { Box } from "reflexbox";
 
 import Layout from "../../components/layout";
 import Header from "../../components/header";
+import FullWidthImage from "../../components/full-width-image";
 import PageMetadata from "../../components/page-metadata";
 import MaxWidthContainer from "../../components/max-width-container";
 import PodcastEpisode from "../../components/podcast-episode";
@@ -35,6 +36,12 @@ const Podcast = () => {
                             htmlAst
                         }
                     }
+                    stripeImage {
+                        title
+                        fluid(quality: 100) {
+                            ...GatsbyContentfulFluid
+                        }
+                    }
                     episodesSectionTitle
                 }
                 allBuzzsproutPodcastEpisode {
@@ -62,6 +69,12 @@ const Podcast = () => {
                 }
                 rightImage={contentfulPodcastPage.rightImage}
             />
+            <MaxWidthContainer mb={4}>
+                <FullWidthImage
+                    fluid={contentfulPodcastPage.stripeImage.fluid}
+                    alt={contentfulPodcastPage.stripeImage.title}
+                />
+            </MaxWidthContainer>
             <BackgroundStripe theme="light">
                 <MaxWidthContainer justifyContent={"center"}>
                     <Box width={[1, 0.8]} mt={48} mb={24}>
