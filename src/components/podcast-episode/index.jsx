@@ -36,7 +36,7 @@ const PodcastEpisode = ({ episode, width }) => {
     const splitTitle = episode.title.split(" - ");
 
     return (
-        <EpisodeContainer width={width} mt={40}>
+        <EpisodeContainer width={width} mt={40} id={episode.buzzsproutId}>
             <EpisodeTitle>{splitTitle[0]}</EpisodeTitle>
             <EpisodeSubtitle>{splitTitle[1]}</EpisodeSubtitle>
             <iframe
