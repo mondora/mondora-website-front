@@ -57,7 +57,16 @@ export const SocialLink = props => (
         target="_blank"
         aria-label={props.icon}
     >
-        <FeatherIcon name={props.icon} size={18} />
+        {props.icon && (
+            <FeatherIcon name={props.icon} size={props.size || 18} />
+        )}
+        {props.image && (
+            <img
+                height={props.size}
+                src={props.image.file.url}
+                alt={props.image.title}
+            />
+        )}
         {props.text && <SocialText {...props}>{props.text}</SocialText>}
     </SocialContainer>
 );
@@ -67,8 +76,10 @@ const darkTheme = "dark";
 
 SocialLink.propTypes = {
     icon: PropTypes.string,
+    image: PropTypes.object,
     text: PropTypes.string,
     link: PropTypes.string,
+    size: PropTypes.number,
     theme: PropTypes.PropTypes.oneOf([lightTheme, darkTheme])
 };
 

@@ -11,6 +11,7 @@ import MaxWidthContainer from "../../components/max-width-container";
 import PodcastEpisode from "../../components/podcast-episode";
 import Title from "../../components/title";
 import BackgroundStripe from "../../components/background-stripe";
+import SocialLink from "../../components/social-link";
 
 const Podcast = () => {
     const { contentfulPodcastPage, allBuzzsproutPodcastEpisode } =
@@ -34,6 +35,18 @@ const Podcast = () => {
                     leftHeader {
                         childMarkdownRemark {
                             htmlAst
+                        }
+                    }
+                    externalPlatforms {
+                        id
+                        icon
+                        link
+                        text
+                        image {
+                            file {
+                                url
+                                contentType
+                            }
                         }
                     }
                     stripeImage {
@@ -69,7 +82,12 @@ const Podcast = () => {
                 }
                 rightImage={contentfulPodcastPage.rightImage}
             />
-            <MaxWidthContainer mb={4}>
+            <MaxWidthContainer mb={4} justifyContent={"center"}>
+                {contentfulPodcastPage.externalPlatforms.map(platform => (
+                    <Box m={2} key={platform.id}>
+                        <SocialLink {...platform} size={24} theme={"dark"} />
+                    </Box>
+                ))}
                 <FullWidthImage
                     fluid={contentfulPodcastPage.stripeImage.fluid}
                     alt={contentfulPodcastPage.stripeImage.title}
@@ -86,8 +104,8 @@ const Podcast = () => {
                         episode =>
                             !episode.private && (
                                 <PodcastEpisode
+                                    key={episode.buzzsproutId}
                                     width={[1, 0.8]}
-                                    key={episode.id}
                                     episode={episode}
                                 />
                             )
