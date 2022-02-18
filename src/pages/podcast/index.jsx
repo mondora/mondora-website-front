@@ -4,7 +4,6 @@ import { graphql, useStaticQuery } from "gatsby";
 import { Box, Flex } from "reflexbox";
 import styled from "styled-components";
 
-import { theme } from "../../styles/theme";
 import Layout from "../../components/layout";
 import FullWidthImage from "../../components/full-width-image";
 import PageMetadata from "../../components/page-metadata";
@@ -17,16 +16,33 @@ import Section from "../../components/section";
 import Divider from "../../components/divider";
 import AstText from "../../components/ast-text";
 import ParagraphTitle from "../../components/paragraph-title";
+import Hidden from "../../components/hidden";
 
 const PatformButtonContainer = styled(Box).attrs({
-    mr: [0, 3],
-    mb: 3,
     width: "fit-content"
 })``;
 const PatformButton = styled(SocialLink).attrs({
     size: 24,
     theme: "dark"
 })``;
+const PlatformContainer = styled(Flex)`
+    align-items: center;
+    gap: 10px;
+    @media (max-width: ${props => props.theme.breakpoints[0]}px) {
+        flex-direction: column;
+    }
+    @media (max-width: ${props => props.theme.breakpoints[1]}px) {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    @media (min-width: ${props => props.theme.breakpoints[1]}px) {
+        justify-content: start;
+        flex-wrap: nowrap;
+    }
+    @media (min-width: ${props => props.theme.breakpoints[0]}px) {
+        flex-direction: row;
+    }
+`;
 
 const Podcast = () => {
     const platformRef = useRef(null);
@@ -85,14 +101,6 @@ const Podcast = () => {
                 }
             }
         `);
-    const stripeImage =
-        contentfulPodcastPage.stripeImages[
-            typeof window !== "undefined" &&
-            window.innerWidth > theme.breakpoints[1]
-                ? 0
-                : 1
-        ];
-
     return (
         <Layout>
             <PageMetadata
@@ -116,11 +124,7 @@ const Podcast = () => {
                                     {contentfulPodcastPage.externalTitle}
                                 </ParagraphTitle>
                             </Box>
-                            <Flex
-                                flexDirection={["column", "row"]}
-                                justifyContent={["center", "start"]}
-                                alignItems={"center"}
-                            >
+                            <PlatformContainer>
                                 {contentfulPodcastPage.externalPlatforms
                                     .slice(0, 3)
                                     .map(platform => (
@@ -138,7 +142,7 @@ const Podcast = () => {
                                         icon={"plus"}
                                     />
                                 </PatformButtonContainer>
-                            </Flex>
+                            </PlatformContainer>
                         </Section.LeftContainer>
                         <Section.DividerContainer sideOnTop={"right"}>
                             <Divider />
@@ -154,10 +158,18 @@ const Podcast = () => {
             </MaxWidthContainer>
 
             <MaxWidthContainer mb={4} justifyContent={"center"}>
-                <FullWidthImage
-                    fluid={stripeImage.fluid}
-                    alt={stripeImage.title}
-                />
+                <Hidden xsDown={true}>
+                    <FullWidthImage
+                        fluid={contentfulPodcastPage.stripeImages[0].fluid}
+                        alt={contentfulPodcastPage.stripeImages[0].title}
+                    />
+                </Hidden>
+                <Hidden xsUp={true}>
+                    <FullWidthImage
+                        fluid={contentfulPodcastPage.stripeImages[1].fluid}
+                        alt={contentfulPodcastPage.stripeImages[1].title}
+                    />
+                </Hidden>
             </MaxWidthContainer>
             <BackgroundStripe theme="light">
                 <MaxWidthContainer justifyContent={"center"}>
@@ -185,7 +197,9 @@ const Podcast = () => {
                 m={4}
             >
                 <Box m={2} ref={platformRef}>
-                    <Title>{contentfulPodcastPage.externalTitle}</Title>
+                    <Title center={true}>
+                        {contentfulPodcastPage.externalTitle}
+                    </Title>
                 </Box>
                 <Box width={[1, 0.8]}>
                     <Flex flexWrap={"wrap"} justifyContent={"center"}>
