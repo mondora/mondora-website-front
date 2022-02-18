@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 import Link from "../link";
 import FeatherIcon from "../feather-icon";
 
-const SocialContainer = styled(Link)`
+const SocialContainer = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,9 +52,10 @@ const SocialText = styled.span`
 export const SocialLink = props => (
     <SocialContainer
         {...props}
+        as={props.link ? Link : "button"}
         to={props.link}
         role="img"
-        target="_blank"
+        target={props.newTab && "_blank"}
         aria-label={props.icon}
     >
         {props.icon && (
@@ -80,11 +81,13 @@ SocialLink.propTypes = {
     text: PropTypes.string,
     link: PropTypes.string,
     size: PropTypes.number,
+    newTab: PropTypes.bool,
     theme: PropTypes.PropTypes.oneOf([lightTheme, darkTheme])
 };
 
 SocialLink.defaultProps = {
-    theme: lightTheme
+    theme: lightTheme,
+    newTab: true
 };
 
 export default SocialLink;
