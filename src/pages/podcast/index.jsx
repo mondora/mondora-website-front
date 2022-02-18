@@ -87,7 +87,10 @@ const Podcast = () => {
         `);
     const stripeImage =
         contentfulPodcastPage.stripeImages[
-            window.innerWidth > theme.breakpoints[1] ? 0 : 1
+            typeof window !== "undefined" &&
+            window.innerWidth > theme.breakpoints[1]
+                ? 0
+                : 1
         ];
 
     return (
