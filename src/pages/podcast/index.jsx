@@ -21,6 +21,11 @@ import Hidden from "../../components/hidden";
 const PatformButtonContainer = styled(Box).attrs({
     width: "fit-content"
 })``;
+const RefBox = styled(Box).attrs({ m: 2 })`
+    @media (max-width: ${props => props.theme.breakpoints[1]}px) {
+        scroll-margin: 80px;
+    }
+`;
 const PatformButton = styled(SocialLink).attrs({
     size: 24,
     theme: "dark"
@@ -196,11 +201,11 @@ const Podcast = () => {
                 flexDirection={"column"}
                 m={4}
             >
-                <Box m={2} ref={platformRef}>
+                <RefBox ref={platformRef}>
                     <Title center={true}>
                         {contentfulPodcastPage.externalTitle}
                     </Title>
-                </Box>
+                </RefBox>
                 <Box width={[1, 0.8]}>
                     <Flex flexWrap={"wrap"} justifyContent={"center"}>
                         {contentfulPodcastPage.externalPlatforms.map(
