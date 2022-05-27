@@ -21,7 +21,7 @@ module.exports = {
         {
             resolve: "gatsby-source-rss-feed",
             options: {
-                url: "https://bcalmbcorp.com/feed/",
+                url: "https://medium.com/feed/b-calm-and-b-corp",
                 name: "BcalmBcorp"
             }
         },
