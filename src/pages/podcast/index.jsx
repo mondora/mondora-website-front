@@ -9,6 +9,7 @@ import FullWidthImage from "../../components/full-width-image";
 import PageMetadata from "../../components/page-metadata";
 import MaxWidthContainer from "../../components/max-width-container";
 import PodcastEpisode from "../../components/podcast-episode";
+import PodcastTrailer from "../../components/podcast-trailer";
 import Title from "../../components/title";
 import BackgroundStripe from "../../components/background-stripe";
 import SocialLink from "../../components/social-link";
@@ -93,6 +94,8 @@ const Podcast = () => {
                             ...GatsbyContentfulFluid
                         }
                     }
+                    trailerTitle
+                    trailerId
                     episodesSectionTitle
                 }
                 allBuzzsproutPodcastEpisode {
@@ -106,6 +109,14 @@ const Podcast = () => {
                 }
             }
         `);
+
+    const trailerEpisode =
+        allBuzzsproutPodcastEpisode &&
+        contentfulPodcastPage &&
+        allBuzzsproutPodcastEpisode.nodes.find(
+            episode => episode.buzzsproutId === contentfulPodcastPage.trailerId
+        );
+
     return (
         <Layout>
             <PageMetadata
@@ -176,6 +187,16 @@ const Podcast = () => {
                     />
                 </Hidden>
             </MaxWidthContainer>
+
+            {contentfulPodcastPage.trailerId && trailerEpisode && (
+                <MaxWidthContainer mb={4} mt={4}>
+                    <PodcastTrailer
+                        title={contentfulPodcastPage.trailerTitle}
+                        episode={trailerEpisode}
+                    />
+                </MaxWidthContainer>
+            )}
+
             <BackgroundStripe theme="light">
                 <MaxWidthContainer justifyContent={"center"}>
                     <Box width={[1, 0.8]} mt={48}>
@@ -183,9 +204,12 @@ const Podcast = () => {
                             {contentfulPodcastPage.episodesSectionTitle}
                         </Title>
                     </Box>
+
                     {allBuzzsproutPodcastEpisode.nodes.map(
                         episode =>
-                            !episode.private && (
+                            !episode.private &&
+                            episode.buzzsproutId !==
+                                contentfulPodcastPage.trailerId && (
                                 <PodcastEpisode
                                     key={episode.buzzsproutId}
                                     width={[1, 0.8]}
