@@ -18,6 +18,7 @@ import Divider from "../../components/divider";
 import AstText from "../../components/ast-text";
 import ParagraphTitle from "../../components/paragraph-title";
 import Hidden from "../../components/hidden";
+import PodcastVideo from "../../components/podcast-video";
 
 const PatformButtonContainer = styled(Box).attrs({
     width: "fit-content"
@@ -96,6 +97,19 @@ const Podcast = () => {
                     }
                     trailerTitle
                     trailerId
+                    trailerVideo {
+                        title
+                        file {
+                            url
+                            contentType
+                        }
+                    }
+                    mondoraLogo {
+                        title
+                        fixed(width: 50) {
+                            ...GatsbyContentfulFixed
+                        }
+                    }
                     episodesSectionTitle
                 }
                 allBuzzsproutPodcastEpisode {
@@ -164,9 +178,10 @@ const Podcast = () => {
                             <Divider />
                         </Section.DividerContainer>
                         <Section.RightContainer sideOnTop={"right"}>
-                            <FullWidthImage
-                                fluid={contentfulPodcastPage.rightImage.fluid}
-                                alt={contentfulPodcastPage.rightImage.title}
+                            <PodcastVideo
+                                image={contentfulPodcastPage.rightImage}
+                                video={contentfulPodcastPage.trailerVideo}
+                                logo={contentfulPodcastPage.mondoraLogo}
                             />
                         </Section.RightContainer>
                     </Section>
