@@ -9,6 +9,7 @@ import FullWidthImage from "../../components/full-width-image";
 import PageMetadata from "../../components/page-metadata";
 import MaxWidthContainer from "../../components/max-width-container";
 import PodcastEpisode from "../../components/podcast-episode";
+import PodcastTrailer from "../../components/podcast-trailer";
 import Title from "../../components/title";
 import BackgroundStripe from "../../components/background-stripe";
 import SocialLink from "../../components/social-link";
@@ -17,6 +18,7 @@ import Divider from "../../components/divider";
 import AstText from "../../components/ast-text";
 import ParagraphTitle from "../../components/paragraph-title";
 import Hidden from "../../components/hidden";
+import PodcastVideo from "../../components/podcast-video";
 
 const PatformButtonContainer = styled(Box).attrs({
     width: "fit-content"
@@ -93,6 +95,21 @@ const Podcast = () => {
                             ...GatsbyContentfulFluid
                         }
                     }
+                    trailerTitle
+                    trailerId
+                    trailerVideo {
+                        title
+                        file {
+                            url
+                            contentType
+                        }
+                    }
+                    mondoraLogo {
+                        title
+                        fixed(width: 50) {
+                            ...GatsbyContentfulFixed
+                        }
+                    }
                     episodesSectionTitle
                 }
                 allBuzzsproutPodcastEpisode {
@@ -106,6 +123,14 @@ const Podcast = () => {
                 }
             }
         `);
+
+    const trailerEpisode =
+        allBuzzsproutPodcastEpisode &&
+        contentfulPodcastPage &&
+        allBuzzsproutPodcastEpisode.nodes.find(
+            episode => episode.buzzsproutId === contentfulPodcastPage.trailerId
+        );
+
     return (
         <Layout>
             <PageMetadata
@@ -153,9 +178,10 @@ const Podcast = () => {
                             <Divider />
                         </Section.DividerContainer>
                         <Section.RightContainer sideOnTop={"right"}>
-                            <FullWidthImage
-                                fluid={contentfulPodcastPage.rightImage.fluid}
-                                alt={contentfulPodcastPage.rightImage.title}
+                            <PodcastVideo
+                                image={contentfulPodcastPage.rightImage}
+                                video={contentfulPodcastPage.trailerVideo}
+                                logo={contentfulPodcastPage.mondoraLogo}
                             />
                         </Section.RightContainer>
                     </Section>
@@ -176,6 +202,16 @@ const Podcast = () => {
                     />
                 </Hidden>
             </MaxWidthContainer>
+
+            {contentfulPodcastPage.trailerId && trailerEpisode && (
+                <MaxWidthContainer>
+                    <PodcastTrailer
+                        title={contentfulPodcastPage.trailerTitle}
+                        episode={trailerEpisode}
+                    />
+                </MaxWidthContainer>
+            )}
+
             <BackgroundStripe theme="light">
                 <MaxWidthContainer justifyContent={"center"}>
                     <Box width={[1, 0.8]} mt={48}>
@@ -183,9 +219,12 @@ const Podcast = () => {
                             {contentfulPodcastPage.episodesSectionTitle}
                         </Title>
                     </Box>
+
                     {allBuzzsproutPodcastEpisode.nodes.map(
                         episode =>
-                            !episode.private && (
+                            !episode.private &&
+                            episode.buzzsproutId !==
+                                contentfulPodcastPage.trailerId && (
                                 <PodcastEpisode
                                     key={episode.buzzsproutId}
                                     width={[1, 0.8]}
