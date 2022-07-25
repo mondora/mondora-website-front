@@ -204,7 +204,7 @@ const Podcast = () => {
             </MaxWidthContainer>
 
             {contentfulPodcastPage.trailerId && trailerEpisode && (
-                <MaxWidthContainer mb={4} mt={4}>
+                <MaxWidthContainer>
                     <PodcastTrailer
                         title={contentfulPodcastPage.trailerTitle}
                         episode={trailerEpisode}

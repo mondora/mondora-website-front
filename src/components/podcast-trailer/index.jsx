@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import styled from "styled-components";
-import JumboTitle from "../jumbo-title";
 
 import Underline from "../../images/separator.svg";
 
@@ -10,29 +9,40 @@ const DividerSwirl = styled.img.attrs({
     alt: "",
     src: Underline
 })`
-    margin: auto;
     width: 150px;
 `;
-
 const TrailerContainer = styled.div`
-    margin: auto;
+    margin: 64px auto;
+    width: 90%;
     display: grid;
     grid-template-columns: 1fr 2fr;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1200px) {
+        width: 100%;
+    }
+    @media (max-width: 960px) {
         grid-template-columns: 1fr;
         margin: 0 auto 48px auto;
     }
 `;
-
 const SideContainer = styled.div`
+    margin: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-
+    align-items: left;
+    text-align: left;
     align-self: stretch;
     justify-self: stretch;
+
+    @media (max-width: 960px) {
+        align-items: center;
+        text-align: center;
+    }
+`;
+const LeftTitle = styled.h1`
+    font-size: 72px;
+    margin: 8px;
 `;
 
 const PodcastTrailer = ({ title, episode }) => {
@@ -40,16 +50,16 @@ const PodcastTrailer = ({ title, episode }) => {
 
     return (
         <>
-            <DividerSwirl />
             <TrailerContainer>
                 <SideContainer>
-                    <JumboTitle>{title}</JumboTitle>
+                    <LeftTitle>{title}</LeftTitle>
+                    <DividerSwirl />
                 </SideContainer>
                 <SideContainer>
                     <iframe
                         src={url}
                         loading="lazy"
-                        width="80%"
+                        width="100%"
                         height="200px"
                         frameBorder="0"
                         scrolling="no"
@@ -57,7 +67,6 @@ const PodcastTrailer = ({ title, episode }) => {
                     />
                 </SideContainer>
             </TrailerContainer>
-            <DividerSwirl />
         </>
     );
 };

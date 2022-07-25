@@ -35,7 +35,7 @@ const PodcastVideo = ({ image, video, logo }) => {
     }, []);
     return (
         <VideoContainer>
-            {timedOut ? (
+            {timedOut && video ? (
                 <TrailerVideo>
                     <source
                         src={`https:${video.file.url}`}
@@ -45,7 +45,7 @@ const PodcastVideo = ({ image, video, logo }) => {
             ) : (
                 <FullWidthImage fluid={image.fluid} alt={image.title} />
             )}
-            <Logo fixed={logo.fixed} alt={logo.title}/>
+            <Logo fixed={logo.fixed} alt={logo.title} />
         </VideoContainer>
     );
 };
