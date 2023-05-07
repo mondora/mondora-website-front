@@ -46,9 +46,6 @@ module.exports = {
         },
         {
             resolve: "gatsby-plugin-sitemap",
-            options: {
-                exclude: ["/meet-the-team/"]
-            }
         },
         {
             resolve: "gatsby-plugin-google-tagmanager",
